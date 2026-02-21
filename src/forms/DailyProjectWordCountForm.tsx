@@ -1,8 +1,9 @@
 import type { SubmitEventHandler } from 'react';
 
+import Button from '../components/Button';
+import Dropdown from '../components/Dropdown';
 import Input from '../components/Input';
 import TextArea from '../components/TextArea';
-import Dropdown from '../components/Dropdown';
 
 const DailyProjectWordCountForm = () => {
   const handleSubmit: SubmitEventHandler<HTMLFormElement> = e => {
@@ -13,7 +14,7 @@ const DailyProjectWordCountForm = () => {
     console.log(formData);
   }
 
-  return <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
+  return <form onSubmit={handleSubmit} className='flex flex-col gap-4 bg-zinc-900 rounded-md p-2'>
     <Input
       label="Project name"
       name="projectName"
@@ -32,6 +33,7 @@ const DailyProjectWordCountForm = () => {
       label="Words written"
       name="pastedWords"
     />
+    <Button type="submit">Log word count</Button>
   </form>
 }
 

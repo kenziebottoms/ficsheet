@@ -21,7 +21,7 @@ const TextArea = ({
         value={value}
         onChange={e => setValue(e.target.value)}
         rows={4}
-        className='w-full rounded-md p-2 border-2 border-primary focus-within:border-primary-highlight outline-0'
+        className='w-full rounded-md p-2 border-2 border-primary/50 focus-within:border-primary outline-0'
       />
       <div className='color-secondary text-right'>{value.trim().split(' ').length} word{value.split(' ').length !== 1 ? 's' : ''}</div>
     </label>

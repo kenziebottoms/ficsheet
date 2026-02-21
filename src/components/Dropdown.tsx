@@ -15,7 +15,7 @@ const Dropdown = ({
       <div>{label}</div>
       <select
         name={name}
-        className='w-full rounded-md p-2 border-2 border-primary focus-within:border-primary-highlight outline-0'
+        className='w-full rounded-md p-2 border-2 border-primary/50 focus-within:border-primary outline-0'
     >
       <option value="">{placeholder}</option>
       {options.map(o => <option key={o} value={o}>
