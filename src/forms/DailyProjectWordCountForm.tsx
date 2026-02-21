@@ -1,5 +1,7 @@
 import type { SubmitEventHandler } from 'react';
 
+import type { DailyWordCountEntry } from '../types';
+
 import Button from '../components/Button';
 import DateInput from '../components/DateInput';
 import Dropdown from '../components/Dropdown';
@@ -26,7 +28,7 @@ const DailyProjectWordCountForm = () => {
     console.log({
       ...formData,
       wordCount: pastedWords.trim().split(' ').length,
-    });
+    } as DailyWordCountEntry);
   }
 
   return <form onSubmit={handleSubmit} className='flex flex-col gap-4 bg-zinc-900 rounded-md p-2'>
