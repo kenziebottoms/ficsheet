@@ -56,7 +56,7 @@ const History = () => {
             i === 0 ? "rounded-tl-xl" : "",
             i === 3 ? "rounded-tr-xl" : "",
             i % 4 === 0 ? "bg-pink-400/25" : "",
-            (i + 2) % 4 === 0 ? "bg-orange-300/25" : "",
+            (i + 2) % 4 === 0 ? "bg-orange-400/25" : "",
           ].join(" ")}
         >
           {label}
