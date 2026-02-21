@@ -5,19 +5,24 @@ type Props<T extends string> = {
   options: T[];
   value?: T | '';
   onChange?: (newValue: T) => void;
+  className?: string;
+  smallButtons?: boolean;
 }
 const ButtonGroup = <T extends string,>({
   label,
   options,
   value,
   onChange = () => {},
+  className = "",
+  smallButtons = false,
 }: Props<T>) => {
-  return <div className='flex flex-row bg-zinc-950 rounded-md p-2 items-center gap-2'>
+  return <div className={['flex flex-row', className].join(' ')}>
     <label><div>{label}</div></label>
     {options.map(o => <Button
       key={o}
       onClick={() => onChange(o)}
       style={value === o ? 'secondary' : 'subtle'}
+      small={smallButtons}
     >
       {o}
     </Button>)}
