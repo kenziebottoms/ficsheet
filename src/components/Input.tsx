@@ -1,12 +1,14 @@
-import { useState } from 'react'
+import { useState, type HTMLInputTypeAttribute } from 'react'
 
 type Props = {
   name: string;
+  type: HTMLInputTypeAttribute;
   label: string;
   placeholder?: string;
 }
-const TextArea = ({
+const Input = ({
   name,
+  type,
   label,
   placeholder,
 }: Props) => {
@@ -15,17 +17,16 @@ const TextArea = ({
   return <div className='flex flex-col'>
     <label>
       <div>{label}</div>
-      <textarea
+      <input
         name={name}
+        type={type}
         placeholder={placeholder}
         value={value}
         onChange={e => setValue(e.target.value)}
-        rows={4}
         className='w-full rounded-md p-2 border-2 border-primary focus-within:border-primary-highlight outline-0'
       />
-      <div className='color-secondary text-right'>{value.trim().split(' ').length} word{value.split(' ').length !== 1 ? 's' : ''}</div>
     </label>
   </div>
 }
 
-export default TextArea 
+export default Input 

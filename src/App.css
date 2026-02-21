@@ -4,11 +4,15 @@
   --color-primary: var(--color-pink-500);
   --color-primary-highlight: var(--color-pink-300);
   --color-secondary: var(--color-orange-300);
-  --default-ring-width: 3px;
+  --default-ring-width: 2px;
   --default-ring-color: var(--color-primary-highlight);
 }
 
 #root {
   height: 100vh;
   width: 100%;
+}
+
+label > div {
+  @apply text-gray-400;
 }
