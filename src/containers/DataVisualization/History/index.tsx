@@ -66,24 +66,24 @@ const History = () => {
     <tbody className="font-normal">
       {dailyEntries
         .sort(({ date: dateA }, { date: dateB }) => dateA.localeCompare(dateB))
-        .map((row, i) =>
+        .map((row, rowIndex) =>
           <tr
-            key={i}
+            key={rowIndex}
             className={[
               "border-x border-primary/50",
-              (i + 1) % 4 === 0 ? 'bg-pink-700/25' : '',
-              (i + 3) % 4 === 0 ? 'bg-orange-700/25' : '',
+              (rowIndex + 1) % 4 === 0 ? 'bg-pink-700/20' : '',
+              (rowIndex + 3) % 4 === 0 ? 'bg-orange-700/20' : '',
             ].join(' ')}>
             {[
               'date',
               'fic',
               'fandom',
               'wordCount'
-            ].map((col, j) => <td key={j} className={[
+            ].map((col, colIndex) => <td key={colIndex} className={[
               "p-2",
-              j % 4 === 0 ? "bg-pink-500/10" : "",
-              (j + 2) % 4 === 0 ? "bg-orange-500/10" : "",
-              i === dailyEntries.length - 1 ? 'border-b border-primary/50': ''
+              colIndex % 4 === 0 ? "bg-pink-500/10" : "",
+              (colIndex + 2) % 4 === 0 ? "bg-orange-500/10" : "",
+              rowIndex === dailyEntries.length - 1 ? 'border-b border-primary/50': ''
             ].join(' ')}>
               {row[col as keyof DailyWordCountEntry]}
             </td>)}
