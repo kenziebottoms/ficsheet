@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import Dropdown from '../../components/Dropdown'
+import ButtonGroup from '../../components/ButtonGroup';
 
 import Charts from './Charts';
 import History from './History';
@@ -11,8 +11,7 @@ const DataVisualization = () => {
   const [activeTab, setActiveTab] = useState<TabName>('history')
 
   return <>
-    <Dropdown
-      name="tab"
+    <ButtonGroup
       label="View:"
       value={activeTab}
       onChange={(newTab) => setActiveTab(newTab)}

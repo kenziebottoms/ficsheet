@@ -23,7 +23,7 @@ const DailyProjectWordCountForm = () => {
       pastedWords,
       ...formData
     } = Object.fromEntries(new FormData(e.target).entries()) as DailyProjectWordCountFormValues;
-    
+
     // TODO: store data
     console.log({
       ...formData,
@@ -54,7 +54,11 @@ const DailyProjectWordCountForm = () => {
       label="Words"
       name="pastedWords"
     />
-    <Button type="submit">Log word count</Button>
+    <Button
+      type="submit"
+      style="primary"
+    >
+      Log word count</Button>
   </form>
 }
 

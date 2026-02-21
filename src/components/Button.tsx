@@ -1,15 +1,29 @@
 import { type PropsWithChildren } from 'react'
 
+type ButtonStyle = 'primary' | 'secondary' | 'subtle';
+
 type Props = PropsWithChildren & {
-  type: "submit" | "reset" | "button";
+  type?: "submit" | "reset" | "button";
+  style?: ButtonStyle;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
+
+const ButtonClassNames: Record<ButtonStyle, string> = {
+  primary: 'bg-linear-45/shorter from-indigo-600 via-orange-400 to-indigo-500 from-15% via-80% to-90%',
+  secondary: 'bg-linear-45/oklab from-pink-500 via-pink-400 to-pink-700 from-30% via-80% to-90%',
+  subtle: 'bg-linear-45/shorter from-zinc-700 via-zinc-400/50 to-zinc-700 from-15% via-75% to-85%',
+}
+
 const Button = ({
-  type,
+  type = "button",
+  onClick = () => { },
+  style = 'subtle',
   children,
 }: Props) => {
   return <button
     type={type}
-    className='bg-pink-500/50 hover:bg-pink-500/75 transition-colors duration-200 ease-in-out cursor-pointer rounded-md px-3 py-2'
+    onClick={onClick}
+    className={`text-lg font-semibold text-white ${ButtonClassNames[style]} cursor-pointer rounded-lg py-1 px-3`}
   >
     {children}
   </button>
