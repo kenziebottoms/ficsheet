@@ -1,12 +1,24 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "SUSE Mono";
+  src: url('./assets/SUSEMono.ttf') format('truetype');
+}
+@font-face {
+  font-family: "SUSE Mono";
+  src: url('./assets/SUSEMono-Italic.ttf') format('truetype');
+  font-style: italic;
+}
+
 @theme {
   --color-background: var(--color-zinc-900);
   --color-foreground: var(--color-zinc-100);
   --color-primary: var(--color-pink-500);
+  --color-primary-highlight: var(--color-pink-300);
   --color-secondary: var(--color-orange-400);
   --default-ring-width: 2px;
   --default-ring-color: var(--color-pink-500);
+  --font-mono: "SUSE Mono", mono;
 }
 
 html {
@@ -29,27 +41,25 @@ html {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  @apply text-foreground bg-background;
+}
+@media (prefers-color-scheme: light) {
+  :root {
+    color-scheme: light;
+    @apply text-background bg-foreground;
+  }
 }
 
 a {
   font-weight: 500;
   text-decoration: inherit;
-  @apply text-primary/50;
-}
-a:hover {
-  @apply text-primary;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  @apply text-primary hover:text-primary-highlight;
 }
 
 h1, h2, h3, h4, h5, h6 {
   line-height: 1.1;
+  @apply font-mono;
 }
 h1 {
   font-size: 3rem;
@@ -68,27 +78,6 @@ h5 {
 }
 h6 {
   font-size: 0.8rem;
-}
-
-button:hover {
-  border-color: var(--color-primary);
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
 }
 
 label > div {

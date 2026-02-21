@@ -23,7 +23,7 @@ const Button = ({
   return <button
     type={type}
     onClick={onClick}
-    className={`text-lg font-semibold text-white ${ButtonClassNames[style]} cursor-pointer rounded-lg py-1 px-3`}
+    className={`text-xl font-mono font-medium text-white cursor-pointer rounded-lg py-2 px-3 transition duration-150 ease-in-out hover:brightness-100 brightness-125 hover:saturate-100 saturate-75 outline-primary-highlight focus-within:outline-primary-highlight ${ButtonClassNames[style]}`}
   >
     {children}
   </button>
