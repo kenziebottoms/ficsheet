@@ -1,5 +1,5 @@
 import DailyProjectWordCountForm from './forms/DailyProjectWordCountForm'
-import History from './components/History'
+import History from './containers/History'
 
 function App() {
   return (
