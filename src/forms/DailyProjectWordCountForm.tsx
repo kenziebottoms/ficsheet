@@ -1,11 +1,13 @@
 import type { SubmitEventHandler } from 'react';
 
 import Button from '../components/Button';
+import DateInput from '../components/DateInput';
 import Dropdown from '../components/Dropdown';
 import Input from '../components/Input';
 import TextArea from '../components/TextArea';
 
 export type DailyProjectWordCountFormValues = {
+  date: string;
   fic: string;
   fandom: string;
   pastedWords: string;
@@ -28,6 +30,10 @@ const DailyProjectWordCountForm = () => {
   }
 
   return <form onSubmit={handleSubmit} className='flex flex-col gap-4 bg-zinc-900 rounded-md p-2'>
+    <DateInput
+      name="date"
+      label="Date"
+    />
     <Input
       label="Fic"
       name="fic"
