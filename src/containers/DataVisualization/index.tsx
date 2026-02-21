@@ -11,15 +11,21 @@ const DataVisualization = () => {
   const [activeTab, setActiveTab] = useState<TabName>('history')
 
   return <>
-    <ButtonGroup
-      label="View:"
-      value={activeTab}
-      onChange={(newTab) => setActiveTab(newTab)}
-      options={['history', 'charts']}
-    />
+    <div className='bg-zinc-950 py-2 px-8'>
+      <ButtonGroup
+        label="View:"
+        value={activeTab}
+        onChange={(newTab) => setActiveTab(newTab)}
+        options={['history', 'charts']}
+        className='bg-zinc-800 rounded-full py-2 px-4 items-center justify-center gap-4'
+        smallButtons
+      />
+    </div>
 
-    {activeTab === 'charts' && <Charts />}
-    {activeTab === 'history' && <History />}
+    <div className='bg-zinc-800 p-3'>
+      {activeTab === 'charts' && <Charts />}
+      {activeTab === 'history' && <History />}
+    </div>
   </>
 }
 
