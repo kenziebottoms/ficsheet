@@ -5,19 +5,32 @@ import Dropdown from '../components/Dropdown';
 import Input from '../components/Input';
 import TextArea from '../components/TextArea';
 
+export type DailyProjectWordCountFormValues = {
+  fic: string;
+  fandom: string;
+  pastedWords: string;
+}
 const DailyProjectWordCountForm = () => {
   const handleSubmit: SubmitEventHandler<HTMLFormElement> = e => {
     // Prevent the browser from reloading the page
     e.preventDefault();
 
-    const formData = new FormData(e.target);
-    console.log(formData);
+    const {
+      pastedWords,
+      ...formData
+    } = Object.fromEntries(new FormData(e.target).entries()) as DailyProjectWordCountFormValues;
+    
+    // TODO: store data
+    console.log({
+      ...formData,
+      wordCount: pastedWords.trim().split(' ').length,
+    });
   }
 
   return <form onSubmit={handleSubmit} className='flex flex-col gap-4 bg-zinc-900 rounded-md p-2'>
     <Input
-      label="Project name"
-      name="projectName"
+      label="Fic"
+      name="fic"
       type="text"
     />
     <Dropdown
@@ -30,7 +43,7 @@ const DailyProjectWordCountForm = () => {
       ]}
     />
     <TextArea
-      label="Words written"
+      label="Words"
       name="pastedWords"
     />
     <Button type="submit">Log word count</Button>
