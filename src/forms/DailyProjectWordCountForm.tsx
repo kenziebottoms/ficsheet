@@ -27,7 +27,7 @@ const DailyProjectWordCountForm = () => {
     // TODO: store data
     console.log({
       ...formData,
-      wordCount: pastedWords.trim().split(' ').length,
+      wordCount: pastedWords.trim() === '' ? 0 : pastedWords.trim().split(' ').length,
     } as DailyWordCountEntry);
   }
 
