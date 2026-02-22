@@ -1,3 +1,5 @@
+import FandomPie from "./FandomPie";
+
 type Props = {
   className?: string;
 }
@@ -6,6 +8,7 @@ const Charts = ({
 }: Props) => {
   return <div className={["p-3", className].join(" ")}>
     <h2>Charts</h2>
+    <FandomPie />
   </div>
 }
 

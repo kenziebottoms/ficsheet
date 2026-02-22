@@ -1,50 +1,13 @@
 import type { DailyWordCountEntry } from "../../types"
 
+import dailyEntries from "../../assets/dailyEntries";
+
 type Props = {
   className?: string;
 }
 const History = ({
   className = ''
 }: Props) => {
-  const dailyEntries: DailyWordCountEntry[] = [
-    {
-      date: '2026-01-27',
-      fic: 'transception',
-      fandom: 'Inception',
-      wordCount: 131,
-    },
-    {
-      date: '2026-01-28',
-      fic: 'transception',
-      fandom: 'Inception',
-      wordCount: 13,
-    },
-    {
-      date: '2026-01-29',
-      fic: 'transception',
-      fandom: 'Inception',
-      wordCount: 24,
-    },
-    {
-      date: '2026-02-12',
-      fic: 'muzzled max 3',
-      fandom: 'Mad Max',
-      wordCount: 47,
-    },
-    {
-      date: '2026-02-13',
-      fic: 'muzzled max 3',
-      fandom: 'Mad Max',
-      wordCount: 64,
-    },
-    {
-      date: '2026-02-14',
-      fic: 'muzzled max 3',
-      fandom: 'Mad Max',
-      wordCount: 133,
-    },
-  ]
-
   return <div className={["p-3 space-y-3", className].join(" ")}>
     <h2>History</h2>
     <table className="font-mono w-full rounded-t-xl bg-zinc-950">
