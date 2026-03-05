@@ -1,6 +1,9 @@
-import type { DailyWordCountEntry } from "../../types"
+import { useEffect, useState } from "react";
 
-import dailyEntries from "../../assets/dailyEntries";
+import type { DailyWordCountEntry } from "../../types"
+import { seedDatabase, selectAllWordCounts } from "../../api";
+
+import Button from "../Button";
 
 type Props = {
   className?: string;
@@ -8,8 +11,17 @@ type Props = {
 const History = ({
   className = ''
 }: Props) => {
+  const [dailyEntries, setDailyEntries] = useState<DailyWordCountEntry[]>([])
+
+  useEffect(() => {
+    selectAllWordCounts().then(setDailyEntries)
+  }, [])
+  
   return <div className={["p-3 space-y-3", className].join(" ")}>
-    <h2>History</h2>
+    <div className="flex flex-row gap-2 space-between">
+      <h2>History</h2>
+      <Button onClick={() => seedDatabase()}>Reseed</Button>
+    </div>
     <table className="font-mono w-full rounded-t-xl bg-zinc-950">
       <thead className="font-medium">
         <tr className='rounded-t-xl bg-linear-45 from-pink-700/50 via-pink-400/50 to-pink-700/50 from-30% via-80% to-90%'>
