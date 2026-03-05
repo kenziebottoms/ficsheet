@@ -6,6 +6,7 @@ import type { DailyWordCountEntry } from "../../types";
 import Button from "../Button";
 
 import FandomPie from "./FandomPie";
+import MonthlyFandomBar from "./MonthlyFandomBar";
 
 type Props = {
   className?: string;
@@ -33,6 +34,7 @@ const Charts = ({
     </div>
     <div className="flex flex-row flex-wrap gap-3">
       <FandomPie dailyEntries={filteredData} />
+      <MonthlyFandomBar dailyEntries={dailyEntries} />
     </div>
   </div>
 }
