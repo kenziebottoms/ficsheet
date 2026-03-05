@@ -30,13 +30,6 @@ const FandomPie = ({
       series={[{ data }]}
       width={200}
       height={200}
-      slotProps={{
-        legend: {
-          sx: {
-            color: '#d4d4d8',
-          },
-        },
-      }}
     />
   </ChartWidget>
 }

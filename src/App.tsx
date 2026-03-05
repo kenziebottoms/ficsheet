@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import Charts from './components/Charts';
 import History from './components/History';
@@ -14,7 +15,8 @@ function App() {
   }, [])
 
   return (
-    <>
+    // For rendering MUI charts in dark mode
+    <ThemeProvider theme={createTheme({ palette: { mode: 'dark' } })}>
       <h1 className='p-2 text-center border-b-2 border-dashed border-zinc-500'>
         fic<span className='text-secondary'>sheet</span>
       </h1>
@@ -22,7 +24,7 @@ function App() {
         <Charts className='grow' dailyEntries={dailyEntries} />
         <History className='grow' dailyEntries={dailyEntries} />
       </div>
-    </>
+    </ThemeProvider>
   )
 }
 
