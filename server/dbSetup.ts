@@ -189,7 +189,7 @@ const seedTables = () => {
   });
   insertWordCount({
     date: "2026-02-22",
-    count: 53,
+    count: 43,
     fic: "muzzled max 3",
     fandom: "Mad Max",
   });
