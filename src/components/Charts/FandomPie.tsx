@@ -3,6 +3,8 @@ import _ from 'lodash'
 
 import type { DailyWordCountEntry } from '../../types'
 
+import ChartWidget from './ChartWidget';
+
 type Props = {
   dailyEntries: DailyWordCountEntry[];
 }
@@ -20,8 +22,10 @@ const FandomPie = ({
     color: colors[i % 3]
   }))
 
-  return <div className='rounded-lg border-2 border-dashed border-zinc-700 p-3'>
-    <h3 className='mb-2'>Word Count By Fandom</h3>
+  return <ChartWidget
+    dailyEntries={dailyEntries}
+    title="Word Count By Fandom"
+  >
     <PieChart
       series={[{ data }]}
       width={200}
@@ -34,7 +38,7 @@ const FandomPie = ({
         },
       }}
     />
-  </div>
+  </ChartWidget>
 }
 
 export default FandomPie
