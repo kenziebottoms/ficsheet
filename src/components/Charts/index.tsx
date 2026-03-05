@@ -25,6 +25,7 @@ const Charts = ({
     <div className="flex flex-row gap-2 justify-between">
       <h2 className="grow">Charts</h2>
       {Timeframes.map(t => <Button
+        key={t}
         style={t === timeframe ? "secondary": "subtle"}
         className="capitalize"
         onClick={() => setTimeframe(t)}

@@ -1,10 +1,11 @@
 import { BarChart } from '@mui/x-charts'
 import _ from 'lodash'
+import { format } from 'date-fns';
 
 import type { DailyWordCountEntry } from '../../types'
 
 import ChartWidget from './ChartWidget';
-import { format } from 'date-fns';
+import { colors } from './constants';
 
 type Props = {
   dailyEntries: DailyWordCountEntry[];
@@ -12,9 +13,6 @@ type Props = {
 const MonthlyFandomBar = ({
   dailyEntries,
 }: Props) => {
-  const colors = [
-    '#4f46e5', '#fb923c', '#f6339a'
-  ]
   const fandoms = Object.keys(_.countBy(dailyEntries, 'fandom')).sort()
 
   const entriesGroupedByMonth = _.groupBy(dailyEntries, ({ date }) => format(date, 'MMM'))
@@ -34,12 +32,12 @@ const MonthlyFandomBar = ({
     <BarChart
       dataset={monthlyTotalByFandom}
       xAxis={[{dataKey: 'month'}]}
-      series={fandoms.map((fandom, i) => ({
+      series={fandoms.map((fandom) => ({
         dataKey: fandom,
         label: fandom,
-        stack: 'total',
-        color: colors[i % colors.length]
+        stack: 'total'
       }))}
+      colors={colors}
       width={500}
       height={200}
     />
