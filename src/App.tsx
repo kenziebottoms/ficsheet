@@ -13,7 +13,7 @@ function App() {
 
         <DailyProjectWordCountForm />
       </div>
-      <div className='w-1/2 flex flex-col divide-y-2 divde-zinc-500 divide-dashed'>
+      <div className='w-1/2 flex flex-col divide-y-2 divide-zinc-500 divide-dashed'>
         <History className="h-1/2" />
         <Charts className="h-1/2" />
       </div>

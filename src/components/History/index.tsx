@@ -18,9 +18,9 @@ const History = ({
   }, [])
   
   return <div className={["p-3 space-y-3", className].join(" ")}>
-    <div className="flex flex-row gap-2 space-between">
-      <h2>History</h2>
-      <Button onClick={() => seedDatabase()}>Reseed</Button>
+    <div className="flex flex-row gap-2">
+      <h2 className="grow">History</h2>
+      <Button style="secondary" onClick={() => seedDatabase()}>Reseed</Button>
     </div>
     <table className="font-mono w-full rounded-t-xl bg-zinc-950">
       <thead className="font-medium">
@@ -59,7 +59,7 @@ const History = ({
                 'date',
                 'fic',
                 'fandom',
-                'wordCount'
+                'count'
               ].map((col, colIndex) => <td key={colIndex} className={[
                 "p-2",
                 colIndex % 4 === 0 ? "bg-pink-500/10" : "",
