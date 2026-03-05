@@ -19,8 +19,8 @@ function App() {
         fic<span className='text-secondary'>sheet</span>
       </h1>
       <div className='w-full h-full flex flex-col lg:flex-row lg:flex-wrap divide-y-2 lg:divide-y-0 lg:divide-x-2 lg divide-zinc-500 divide-dashed'>
-        <History className='grow' dailyEntries={dailyEntries} />
         <Charts className='grow' dailyEntries={dailyEntries} />
+        <History className='grow' dailyEntries={dailyEntries} />
       </div>
     </>
   )
