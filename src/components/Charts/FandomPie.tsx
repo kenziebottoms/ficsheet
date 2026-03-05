@@ -23,18 +23,21 @@ const FandomPie = () => {
     color: colors[i % 3]
   }))
 
-  return <PieChart
-    series={[{ data }]}
-    width={200}
-    height={200}
-    slotProps={{
-      legend: {
-        sx: {
-          color: '#d4d4d8',
+  return <div className='rounded-lg border-2 border-dashed border-zinc-700 p-3'>
+    <h3 className='mb-2'>Word Count By Fandom</h3>
+    <PieChart
+      series={[{ data }]}
+      width={200}
+      height={200}
+      slotProps={{
+        legend: {
+          sx: {
+            color: '#d4d4d8',
+          },
         },
-      },
-    }}
-  />
+      }}
+    />
+  </div>
 }
 
 export default FandomPie

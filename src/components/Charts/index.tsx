@@ -6,9 +6,11 @@ type Props = {
 const Charts = ({
   className = ''
 }: Props) => {
-  return <div className={["p-3", className].join(" ")}>
+  return <div className={["p-3 flex flex-col gap-3", className].join(" ")}>
     <h2>Charts</h2>
-    <FandomPie />
+    <div className="flex flex-row flex-wrap gap-3">
+      <FandomPie />
+    </div>
   </div>
 }
 
