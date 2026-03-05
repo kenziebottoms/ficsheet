@@ -1,12 +1,12 @@
 import type { SubmitEventHandler } from 'react';
 
-import type { DailyWordCountEntry } from '../types';
+import type { DailyWordCountEntry } from '../../types';
 
-import Button from '../components/Button';
-import DateInput from '../components/DateInput';
-import Dropdown from '../components/Dropdown';
-import Input from '../components/Input';
-import TextArea from '../components/TextArea';
+import Button from '../Button';
+import DateInput from '../DateInput';
+import Dropdown from '../Dropdown';
+import Input from '../Input';
+import TextArea from '../TextArea';
 
 export type DailyProjectWordCountFormValues = {
   date: string;
@@ -14,7 +14,12 @@ export type DailyProjectWordCountFormValues = {
   fandom: string;
   pastedWords: string;
 }
-const DailyProjectWordCountForm = () => {
+type Props = {
+  className: string;
+}
+const DailyProjectWordCountForm = ({
+  className = ''
+}: Props) => {
   const handleSubmit: SubmitEventHandler<HTMLFormElement> = e => {
     // Prevent the browser from reloading the page
     e.preventDefault();
@@ -31,7 +36,10 @@ const DailyProjectWordCountForm = () => {
     } as DailyWordCountEntry);
   }
 
-  return <form onSubmit={handleSubmit} className='flex flex-col gap-4 bg-zinc-900 rounded-md p-2'>
+  return <form
+    onSubmit={handleSubmit}
+    className={[className, 'flex flex-col gap-4 rounded-md p-3'].join(' ')}
+  >
     <DateInput
       name="date"
       label="Date"

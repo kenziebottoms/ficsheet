@@ -16,8 +16,3 @@ export async function selectAllWordCounts() {
 
   return (await response.json()) as DailyWordCountEntry[];
 }
-
-export const seedDatabase = () =>
-  fetch(`${API_URL}/seed`, {
-    method: "POST",
-  }).then((response) => response.json());

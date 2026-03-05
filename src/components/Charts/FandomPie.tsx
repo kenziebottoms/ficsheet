@@ -1,9 +1,17 @@
+import { useEffect, useState } from 'react'
 import { PieChart } from '@mui/x-charts'
 import _ from 'lodash'
 
-import dailyEntries from '../../assets/dailyEntries'
+import type { DailyWordCountEntry } from '../../types'
+import { selectAllWordCounts } from '../../api'
 
 const FandomPie = () => {
+  const [dailyEntries, setDailyEntries] = useState<DailyWordCountEntry[]>([])
+
+  useEffect(() => {
+    selectAllWordCounts().then(setDailyEntries)
+  }, [])
+
   const colors = [
     '#4f46e5', '#fb923c', '#f6339a'
   ]
@@ -11,7 +19,7 @@ const FandomPie = () => {
   const data = fandoms.map((fandom, i) => ({
     id: i,
     label: fandom,
-    value: _.sumBy(_.filter(dailyEntries, { fandom }), 'wordCount'),
+    value: _.sumBy(_.filter(dailyEntries, { fandom }), 'count'),
     color: colors[i % 3]
   }))
 

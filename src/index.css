@@ -80,6 +80,10 @@ h6 {
   font-size: 0.8rem;
 }
 
+input, select, textarea {
+  @apply bg-zinc-900;
+}
+
 label > div {
   @apply text-zinc-400;
 }

@@ -1,23 +1,16 @@
-import DailyProjectWordCountForm from './forms/DailyProjectWordCountForm'
-
 import Charts from './components/Charts';
 import History from './components/History';
 
 function App() {
-  return (
-    <div className='w-full h-full flex flex-row'>
-      <div className='w-1/2 border-r-2 border-zinc-500 border-dashed'>
-        <h1 className='py-3'>
-          fic<span className='text-secondary'>sheet</span>
-        </h1>
-
-        <DailyProjectWordCountForm />
-      </div>
-      <div className='w-1/2 flex flex-col divide-y-2 divide-zinc-500 divide-dashed'>
-        <History className="h-1/2" />
-        <Charts className="h-1/2" />
-      </div>
+  return (<>
+    <h1 className='p-2 text-center border-b-2 border-dashed border-zinc-500'>
+      fic<span className='text-secondary'>sheet</span>
+    </h1>
+    <div className='w-full h-full flex flex-col lg:flex-row lg:flex-wrap divide-y-2 lg:divide-y-0 lg:divide-x-2 lg divide-zinc-500 divide-dashed'>
+      <History />
+      <Charts />
     </div>
+  </>
   )
 }
 
