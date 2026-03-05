@@ -1,17 +1,14 @@
-import { useEffect, useState } from 'react'
 import { PieChart } from '@mui/x-charts'
 import _ from 'lodash'
 
 import type { DailyWordCountEntry } from '../../types'
-import { selectAllWordCounts } from '../../api'
 
-const FandomPie = () => {
-  const [dailyEntries, setDailyEntries] = useState<DailyWordCountEntry[]>([])
-
-  useEffect(() => {
-    selectAllWordCounts().then(setDailyEntries)
-  }, [])
-
+type Props = {
+  dailyEntries: DailyWordCountEntry[];
+}
+const FandomPie = ({
+  dailyEntries,
+}: Props) => {
   const colors = [
     '#4f46e5', '#fb923c', '#f6339a'
   ]

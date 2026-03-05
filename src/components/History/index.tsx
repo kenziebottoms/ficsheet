@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import type { DailyWordCountEntry } from "../../types"
-import { selectAllWordCounts } from "../../api";
 
 import Button from "../Button";
 
@@ -9,16 +8,13 @@ import DailyProjectWordCountForm from "./DailyProjectWordCountForm";
 
 type Props = {
   className?: string;
+  dailyEntries: DailyWordCountEntry[];
 }
 const History = ({
+  dailyEntries,
   className = ''
 }: Props) => {
-  const [dailyEntries, setDailyEntries] = useState<DailyWordCountEntry[]>([])
   const [showEntryForm, setShowEntryForm] = useState<boolean>(false)
-
-  useEffect(() => {
-    selectAllWordCounts().then(setDailyEntries)
-  }, [])
 
   return <div className={["p-3 space-y-3", className].join(" ")}>
     <div className="flex flex-row gap-2">
