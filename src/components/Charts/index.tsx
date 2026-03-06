@@ -1,7 +1,9 @@
 import { useState } from "react";
-import {format, isSameMonth} from 'date-fns'
+import _ from "lodash";
+import { parse } from 'date-fns'
 
-import type { DailyWordCountEntry } from "../../types";
+import { MonthNames, type DailyWordCountEntry, type MonthName } from "../../types";
+import { getMonthName } from "../../utils";
 
 import Button from "../Button";
 
@@ -12,32 +14,52 @@ type Props = {
   className?: string;
   dailyEntries: DailyWordCountEntry[];
 }
-type Timeframe = 'year' | 'month';
-const Timeframes: Timeframe[] = ['year', 'month']
+/** Year or month index */
+type Timeframe = number;
 const Charts = ({
   dailyEntries,
   className = ''
 }: Props) => {
-  const [timeframe, setTimeframe] = useState<Timeframe>('year')
-  const filteredData = dailyEntries.filter(({date}) => timeframe === 'year' || isSameMonth(new Date(), date))
+  const [timeframe, setTimeframe] = useState<Timeframe>(new Date().getFullYear())
 
-  return <div className={["p-3 flex flex-col gap-3", className].join(" ")}>
-    <div className="flex flex-row gap-2 justify-between">
+  const filteredData = dailyEntries.filter(({ date }) => {
+    const fnDate = parse(date, 'yyyy-MM-dd', new Date())
+    // if year
+    if (timeframe > 100) {
+      return fnDate.getFullYear() === timeframe
+    }
+    // if month
+    else {
+      return fnDate.getMonth() === timeframe
+    }
+  })
+  const monthlyEntries: Partial<Record<MonthName, DailyWordCountEntry[]>> = _.groupBy(dailyEntries, ({ date }) => getMonthName(parse(date, 'yyyy-MM-dd', new Date())))
+  const availableMonths = MonthNames.filter((monthName) => !!monthlyEntries[monthName])
+
+  return (
+    <div className={["p-3 flex flex-col gap-3", className].join(" ")}>
       <h2 className="grow">Charts</h2>
-      {Timeframes.map(t => <Button
-        key={t}
-        style={t === timeframe ? "secondary": "subtle"}
-        className="capitalize"
-        onClick={() => setTimeframe(t)}
-      >
-        {format(new Date(), t === 'year' ? 'yyyy' : 'MMMM')}
-      </Button>)}
+      <div className="flex flex-row gap-2">
+        {[
+          new Date().getFullYear(),
+          ...availableMonths.map((_month, i) => i),
+        ].map(t => <Button
+          key={t}
+          style={t === timeframe ? "secondary" : "subtle"}
+          className="capitalize"
+          onClick={() => setTimeframe(t)}
+        >
+          {t > 100 ? t : MonthNames[t].substring(0,3)}
+        </Button>)}
+      </div>
+      <div className="flex flex-row flex-wrap gap-3">
+        <FandomPie dailyEntries={filteredData} />
+
+        <h3 className="w-full my-2">Yearly Graphs</h3>
+        <MonthlyFandomBar dailyEntries={dailyEntries} />
+      </div>
     </div>
-    <div className="flex flex-row flex-wrap gap-3">
-      <FandomPie dailyEntries={filteredData} />
-      <MonthlyFandomBar dailyEntries={dailyEntries} />
-    </div>
-  </div>
+  )
 }
 
 export default Charts

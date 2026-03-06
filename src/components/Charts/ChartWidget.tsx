@@ -11,7 +11,7 @@ const ChartWidget = ({
   children,
 }: Props) => {
   return <div className='rounded-lg border-2 border-dashed border-zinc-700 p-3'>
-    <h3 className='mb-2'>{title}</h3>
+    <h4 className='mb-2'>{title}</h4>
     {children}
   </div>
 }
