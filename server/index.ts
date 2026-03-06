@@ -10,9 +10,16 @@ const PORT = 2000;
 app.use(cors());
 app.use(express.json());
 
-app.get("/wordCount", (_req, res) => {
+app.get("/entries", (_req, res) => {
   console.log("fetching word counts");
   const data = select("* FROM word_count ORDER BY date DESC");
+  res.json(data).status(200);
+});
+app.get("/runningTotal", (_req, res) => {
+  console.log("fetching running totals");
+  const data = select(
+    "date, SUM(count) OVER (ORDER BY date) AS running_total FROM word_count",
+  );
   res.json(data).status(200);
 });
 

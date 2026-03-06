@@ -1,10 +1,7 @@
 import type { PropsWithChildren } from "react";
 
-import type { DailyWordCountEntry } from "../../types";
-
 type Props = PropsWithChildren & {
   title: string;
-  dailyEntries: DailyWordCountEntry[];
 }
 const ChartWidget = ({
   title,

@@ -19,10 +19,7 @@ const FandomPie = ({
     value: _.sumBy(_.filter(dailyEntries, { fandom }), 'count'),
   }))
 
-  return <ChartWidget
-    dailyEntries={dailyEntries}
-    title="Word Count By Fandom"
-  >
+  return <ChartWidget title="Word Count By Fandom">
     <PieChart
       series={[{ data }]}
       width={200}

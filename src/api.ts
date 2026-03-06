@@ -1,18 +1,25 @@
-import type { DailyWordCountEntry } from "../types";
+import type { DailyWordCountEntry, RunningTotal } from "../src/types";
 
 const API_URL = "http://localhost:2000";
 
 const GlobalHeaders = new Headers();
 GlobalHeaders.set("Content-Type", "application/json");
 
-export async function selectAllWordCounts() {
-  const response = await fetch(`${API_URL}/wordCount`, {
-    headers: GlobalHeaders,
-  });
+const get = <TReturnType>(path: string): Promise<TReturnType> =>
+  new Promise((resolve, reject) =>
+    fetch(`${API_URL}/${path}`, {
+      headers: GlobalHeaders,
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          return reject(new Error(response.statusText));
+        }
+      })
+      .then((json) => resolve(json as TReturnType))
+      .catch((err) => reject(err)),
+  );
 
-  if (!response.ok) {
-    throw new Error(response.statusText);
-  }
-
-  return (await response.json()) as DailyWordCountEntry[];
-}
+export const selectAllWordCounts = () => get<DailyWordCountEntry[]>("entries");
+export const selectRunningTotal = () => get<RunningTotal[]>("runningTotal");
