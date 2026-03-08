@@ -1,7 +1,6 @@
 import { parse } from "date-fns";
 
-/** Year or month index */
-export type Timeframe = number;
+import type { Timeframe } from "../../types";
 
 export const filterByTimeframe = <T extends { date: string }>(
   items: T[],

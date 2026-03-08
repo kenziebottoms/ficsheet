@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { use } from "react";
 import _ from "lodash";
 import { parse } from 'date-fns'
 
+import { DataCacheContext } from "../../contexts/DataCache/DataCacheContext";
 import { MonthNames, type DailyWordCountEntry, type MonthName } from "../../types";
 import { getMonthName } from "../../utils";
 
@@ -10,17 +11,14 @@ import Button from "../Button";
 import FandomPie from "./FandomPie";
 import MonthlyFandomBar from "./MonthlyFandomBar";
 import RunningTotalLine from "./RunningTotalLine";
-import type { Timeframe } from "./utils";
 
 type Props = {
   className?: string;
-  dailyEntries: DailyWordCountEntry[];
 }
 const Charts = ({
-  dailyEntries,
   className = ''
 }: Props) => {
-  const [timeframe, setTimeframe] = useState<Timeframe>(new Date().getFullYear())
+  const { timeframe, setTimeframe, dailyEntries } = use(DataCacheContext)
 
   const monthlyEntries: Partial<Record<MonthName, DailyWordCountEntry[]>> = _.groupBy(dailyEntries, ({ date }) => getMonthName(parse(date, 'yyyy-MM-dd', new Date())))
   const availableMonths = MonthNames.filter((monthName) => !!monthlyEntries[monthName])
@@ -34,7 +32,7 @@ const Charts = ({
           ...availableMonths.map((_month, i) => i),
         ].map(t => <Button
           key={t}
-          style={t === timeframe ? "secondary" : "subtle"}
+          style={t === timeframe ? (t > 100 ? "primary" : "secondary") : "subtle"}
           className="capitalize"
           onClick={() => setTimeframe(t)}
         >

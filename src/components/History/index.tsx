@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { use, useState } from "react";
 
+import { DataCacheContext } from "../../contexts/DataCache/DataCacheContext";
 import type { DailyWordCountEntry } from "../../types"
 
 import Button from "../Button";
@@ -8,12 +9,11 @@ import DailyProjectWordCountForm from "./DailyProjectWordCountForm";
 
 type Props = {
   className?: string;
-  dailyEntries: DailyWordCountEntry[];
 }
 const History = ({
-  dailyEntries,
   className = ''
 }: Props) => {
+  const { dailyEntries } = use(DataCacheContext)
   const [showEntryForm, setShowEntryForm] = useState<boolean>(false)
 
   return <div className={["p-3 space-y-3", className].join(" ")}>
