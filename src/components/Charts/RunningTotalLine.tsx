@@ -5,7 +5,8 @@ import { format, isValid, parse } from 'date-fns';
 
 import { DataCacheContext } from '../../contexts/DataCache/DataCacheContext';
 
-import ChartWidget from './ChartWidget';
+import Widget from '../Widget';
+
 import { colors } from './constants';
 import { filterByTimeframe, } from './utils';
 
@@ -17,7 +18,7 @@ const RunningTotalLine = () => {
     timestamp: parse(rt.date, 'yyyy-MM-dd', new Date()).getTime()
   }))
 
-  return <ChartWidget title="Running Total">
+  return <Widget title="Running Total">
     <LineChart
       dataset={dataset}
       xAxis={[
@@ -40,7 +41,7 @@ const RunningTotalLine = () => {
       height={200}
       colors={colors}
     />
-  </ChartWidget>
+  </Widget>
 }
 
 export default RunningTotalLine

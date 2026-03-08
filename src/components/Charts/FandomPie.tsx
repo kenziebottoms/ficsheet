@@ -4,7 +4,8 @@ import _ from 'lodash'
 
 import { DataCacheContext } from '../../contexts/DataCache/DataCacheContext';
 
-import ChartWidget from './ChartWidget';
+import Widget from '../Widget';
+
 import { colors } from './constants';
 import { filterByTimeframe } from './utils';
 
@@ -17,14 +18,14 @@ const FandomPie = () => {
     value: _.sumBy(_.filter(filterByTimeframe(dailyEntries, timeframe), { fandom }), 'count'),
   }))
 
-  return <ChartWidget title="Word Count By Fandom">
+  return <Widget title="Word Count By Fandom">
     <PieChart
       series={[{ data }]}
       width={200}
       height={200}
       colors={colors}
     />
-  </ChartWidget>
+  </Widget>
 }
 
 export default FandomPie

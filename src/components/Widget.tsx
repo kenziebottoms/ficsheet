@@ -3,7 +3,7 @@ import type { PropsWithChildren } from "react";
 type Props = PropsWithChildren & {
   title: string;
 }
-const ChartWidget = ({
+const Widget = ({
   title,
   children,
 }: Props) => {
@@ -13,4 +13,4 @@ const ChartWidget = ({
   </div>
 }
 
-export default ChartWidget
+export default Widget

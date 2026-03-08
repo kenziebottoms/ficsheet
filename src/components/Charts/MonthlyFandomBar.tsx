@@ -5,7 +5,8 @@ import { format } from 'date-fns';
 
 import { DataCacheContext } from '../../contexts/DataCache/DataCacheContext';
 
-import ChartWidget from './ChartWidget';
+import Widget from '../Widget';
+
 import { colors } from './constants';
 
 const MonthlyFandomBar = () => {
@@ -22,7 +23,7 @@ const MonthlyFandomBar = () => {
     }
   }).reverse();
 
-  return <ChartWidget title="Monthly Word Count By Fandom">
+  return <Widget title="Monthly Word Count By Fandom">
     <BarChart
       dataset={monthlyTotalByFandom}
       xAxis={[{ dataKey: 'month' }]}
@@ -35,7 +36,7 @@ const MonthlyFandomBar = () => {
       width={500}
       height={200}
     />
-  </ChartWidget>
+  </Widget>
 }
 
 export default MonthlyFandomBar
