@@ -10,7 +10,7 @@ import Button from "../Button";
 import FandomPie from "./FandomPie";
 import MonthlyFandomBar from "./MonthlyFandomBar";
 import RunningTotalLine from "./RunningTotalLine";
-import { filterByTimeframe, type Timeframe } from "./utils";
+import type { Timeframe } from "./utils";
 
 type Props = {
   className?: string;
@@ -22,7 +22,6 @@ const Charts = ({
 }: Props) => {
   const [timeframe, setTimeframe] = useState<Timeframe>(new Date().getFullYear())
 
-  const filteredData = filterByTimeframe(dailyEntries, timeframe)
   const monthlyEntries: Partial<Record<MonthName, DailyWordCountEntry[]>> = _.groupBy(dailyEntries, ({ date }) => getMonthName(parse(date, 'yyyy-MM-dd', new Date())))
   const availableMonths = MonthNames.filter((monthName) => !!monthlyEntries[monthName])
 
@@ -39,11 +38,14 @@ const Charts = ({
           className="capitalize"
           onClick={() => setTimeframe(t)}
         >
-          {t > 100 ? t : MonthNames[t].substring(0,3)}
+          {t > 100 ? t : MonthNames[t].substring(0, 3)}
         </Button>)}
       </div>
       <div className="flex flex-row flex-wrap gap-3">
-        <FandomPie dailyEntries={filteredData} />
+        <FandomPie
+          timeframe={timeframe}
+          dailyEntries={dailyEntries}
+        />
         <RunningTotalLine timeframe={timeframe} />
 
         <h3 className="w-full my-2">Yearly Graphs</h3>
