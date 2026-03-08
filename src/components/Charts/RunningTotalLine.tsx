@@ -1,22 +1,19 @@
 import { use } from 'react';
 import { LineChart, } from '@mui/x-charts'
 import _ from 'lodash'
-import { format, isValid, parse } from 'date-fns';
+import { format, isValid } from 'date-fns';
 
 import { DataCacheContext } from '../../contexts/DataCache/DataCacheContext';
 
 import Widget from '../Widget';
 
 import { colors } from './constants';
-import { filterByTimeframe, } from './utils';
+import { addTimestamp, filterByTimeframe, } from './utils';
 
 const RunningTotalLine = () => {
   const { timeframe, runningTotal } = use(DataCacheContext)
 
-  const dataset = filterByTimeframe(runningTotal, timeframe).map(rt => ({
-    ...rt,
-    timestamp: parse(rt.date, 'yyyy-MM-dd', new Date()).getTime()
-  }))
+  const dataset = filterByTimeframe(runningTotal, timeframe).map(addTimestamp)
 
   return <Widget title="Running Total">
     <LineChart

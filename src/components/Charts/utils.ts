@@ -18,3 +18,15 @@ export const filterByTimeframe = <T extends { date: string }>(
     }
   });
 };
+
+/**
+ * Add the Epoch timestamp as a new property `timestamp`
+ * @param datedObject any object with a date property in the format 'yyyy-MM-dd'
+ * @returns the datedObject with an added Epoch timestamp
+ */
+export const addTimestamp = <T extends { date: string }>(datedObject: T) => {
+  return {
+    ...datedObject,
+    timestamp: parse(datedObject.date, "yyyy-MM-dd", new Date()).getTime(),
+  };
+};
