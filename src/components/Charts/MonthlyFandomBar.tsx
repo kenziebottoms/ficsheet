@@ -1,18 +1,15 @@
+import { use } from 'react';
 import { BarChart } from '@mui/x-charts'
 import _ from 'lodash'
 import { format } from 'date-fns';
 
-import type { DailyWordCountEntry } from '../../types'
+import { DataCacheContext } from '../../contexts/DataCache/DataCacheContext';
 
 import ChartWidget from './ChartWidget';
 import { colors } from './constants';
 
-type Props = {
-  dailyEntries: DailyWordCountEntry[];
-}
-const MonthlyFandomBar = ({
-  dailyEntries,
-}: Props) => {
+const MonthlyFandomBar = () => {
+  const { dailyEntries } = use(DataCacheContext)
   const fandoms = Object.keys(_.countBy(dailyEntries, 'fandom')).sort()
 
   const entriesGroupedByMonth = _.groupBy(dailyEntries, ({ date }) => format(date, 'MMM'))
@@ -25,13 +22,10 @@ const MonthlyFandomBar = ({
     }
   }).reverse();
 
-  return <ChartWidget
-    dailyEntries={dailyEntries}
-    title="Monthly Word Count By Fandom"
-  >
+  return <ChartWidget title="Monthly Word Count By Fandom">
     <BarChart
       dataset={monthlyTotalByFandom}
-      xAxis={[{dataKey: 'month'}]}
+      xAxis={[{ dataKey: 'month' }]}
       series={fandoms.map((fandom) => ({
         dataKey: fandom,
         label: fandom,

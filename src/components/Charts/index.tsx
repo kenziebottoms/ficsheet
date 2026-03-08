@@ -40,14 +40,11 @@ const Charts = ({
         </Button>)}
       </div>
       <div className="flex flex-row flex-wrap gap-3">
-        <FandomPie
-          timeframe={timeframe}
-          dailyEntries={dailyEntries}
-        />
-        <RunningTotalLine timeframe={timeframe} />
+        <FandomPie />
+        <RunningTotalLine />
 
         <h3 className="w-full my-2">Yearly Graphs</h3>
-        <MonthlyFandomBar dailyEntries={dailyEntries} />
+        <MonthlyFandomBar />
       </div>
     </div>
   )

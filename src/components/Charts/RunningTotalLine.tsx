@@ -1,33 +1,25 @@
-import { useEffect, useState } from 'react';
+import { use } from 'react';
 import { LineChart, } from '@mui/x-charts'
 import _ from 'lodash'
 import { format, isValid, parse } from 'date-fns';
 
-import { selectRunningTotal } from '../../api';
-import type { RunningTotal } from '../../types';
+import { DataCacheContext } from '../../contexts/DataCache/DataCacheContext';
 
 import ChartWidget from './ChartWidget';
 import { colors } from './constants';
-import { filterByTimeframe, type Timeframe } from './utils';
+import { filterByTimeframe, } from './utils';
 
-type Props = {
-  timeframe: Timeframe;
-}
-const RunningTotalLine = ({
-  timeframe
-}: Props) => {
-  const [runningTotal, setRunningTotal] = useState<RunningTotal[]>([])
+const RunningTotalLine = () => {
+  const { timeframe, runningTotal } = use(DataCacheContext)
 
-  useEffect(() => {
-    selectRunningTotal().then(response => setRunningTotal(response.map(rt => ({
-      ...rt,
-      timestamp: parse(rt.date, 'yyyy-MM-dd', new Date()).getTime()
-    }))))
-  }, [])
+  const dataset = filterByTimeframe(runningTotal, timeframe).map(rt => ({
+    ...rt,
+    timestamp: parse(rt.date, 'yyyy-MM-dd', new Date()).getTime()
+  }))
 
   return <ChartWidget title="Running Total">
     <LineChart
-      dataset={filterByTimeframe(runningTotal, timeframe)}
+      dataset={dataset}
       xAxis={[
         {
           scaleType: 'time',
@@ -41,7 +33,7 @@ const RunningTotalLine = ({
         },
       ]}
       series={[{
-        data: _.map(filterByTimeframe(runningTotal, timeframe), 'running_total'),
+        data: _.map(dataset, 'running_total'),
         showMark: false,
       }]}
       width={400}
