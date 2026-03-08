@@ -1,5 +1,6 @@
-/** Year or month index */
-export type Timeframe = number;
+/**
+ * Non-referential types, alphabetical
+ */
 
 export const MonthNames = [
   "January",
@@ -22,12 +23,19 @@ export type RunningTotal = {
   running_total: number;
 };
 
+/** Year or month index */
+export type Timeframe = number;
+
 export type WordCountEntry = {
   date: string;
   fic: string;
   fandom: string;
   count: number;
 };
+
+/**
+ * Referential types
+ */
 
 export type DataCache = {
   dailyEntries: WordCountEntry[];
