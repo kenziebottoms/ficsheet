@@ -3,7 +3,7 @@ import _ from "lodash";
 import { parse } from 'date-fns'
 
 import { DataCacheContext } from "../../contexts/DataCache/DataCacheContext";
-import { MonthNames, type DailyWordCountEntry, type MonthName } from "../../types";
+import { MonthNames, type WordCountEntry, type MonthName } from "../../types";
 import { getMonthName } from "../../utils";
 
 import Button from "../Button";
@@ -11,6 +11,7 @@ import Button from "../Button";
 import FandomPie from "./FandomPie";
 import MonthlyFandomBar from "./MonthlyFandomBar";
 import RunningTotalLine from "./RunningTotalLine";
+import AverageDailyWordCount from "./AverageDailyWordCount";
 
 type Props = {
   className?: string;
@@ -20,7 +21,7 @@ const Charts = ({
 }: Props) => {
   const { timeframe, setTimeframe, dailyEntries } = use(DataCacheContext)
 
-  const monthlyEntries: Partial<Record<MonthName, DailyWordCountEntry[]>> = _.groupBy(dailyEntries, ({ date }) => getMonthName(parse(date, 'yyyy-MM-dd', new Date())))
+  const monthlyEntries: Partial<Record<MonthName, WordCountEntry[]>> = _.groupBy(dailyEntries, ({ date }) => getMonthName(parse(date, 'yyyy-MM-dd', new Date())))
   const availableMonths = MonthNames.filter((monthName) => !!monthlyEntries[monthName])
 
   return (
@@ -39,6 +40,8 @@ const Charts = ({
           {t > 100 ? t : MonthNames[t].substring(0, 3)}
         </Button>)}
       </div>
+      <h3>Quick Stats</h3>
+      <AverageDailyWordCount />
       <div className="flex flex-row flex-wrap gap-3">
         <FandomPie />
         <RunningTotalLine />

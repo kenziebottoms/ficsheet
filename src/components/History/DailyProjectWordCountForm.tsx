@@ -1,6 +1,6 @@
 import type { SubmitEventHandler } from 'react';
 
-import type { DailyWordCountEntry } from '../../types';
+import type { WordCountEntry } from '../../types';
 
 import Button from '../Button';
 import DateInput from '../DateInput';
@@ -33,7 +33,7 @@ const DailyProjectWordCountForm = ({
     console.log({
       ...formData,
       count: pastedWords.trim() === '' ? 0 : pastedWords.trim().split(' ').length,
-    } as DailyWordCountEntry);
+    } as WordCountEntry);
   }
 
   return <form

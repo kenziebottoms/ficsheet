@@ -1,10 +1,3 @@
-export type DailyWordCountEntry = {
-  date: string;
-  fic: string;
-  fandom: string;
-  count: number;
-};
-
 /** Year or month index */
 export type Timeframe = number;
 
@@ -29,8 +22,15 @@ export type RunningTotal = {
   running_total: number;
 };
 
+export type WordCountEntry = {
+  date: string;
+  fic: string;
+  fandom: string;
+  count: number;
+};
+
 export type DataCache = {
-  dailyEntries: DailyWordCountEntry[];
+  dailyEntries: WordCountEntry[];
   runningTotal: RunningTotal[];
   timeframe: Timeframe;
   setTimeframe: (timeframe: Timeframe) => void;

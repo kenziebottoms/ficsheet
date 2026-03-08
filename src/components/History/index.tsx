@@ -1,7 +1,7 @@
 import { use, useState } from "react";
 
 import { DataCacheContext } from "../../contexts/DataCache/DataCacheContext";
-import type { DailyWordCountEntry } from "../../types"
+import type { WordCountEntry } from "../../types"
 
 import Button from "../Button";
 
@@ -66,7 +66,7 @@ const History = ({
               (colIndex + 2) % 4 === 0 ? "bg-orange-500/10" : "",
               rowIndex === dailyEntries.length - 1 ? 'border-b border-primary/50' : ''
             ].join(' ')}>
-              {row[col as keyof DailyWordCountEntry]}
+              {row[col as keyof WordCountEntry]}
             </td>)}
           </tr>
         )}
