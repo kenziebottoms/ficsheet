@@ -10,6 +10,13 @@ const PORT = 2000;
 app.use(cors());
 app.use(express.json());
 
+app.get("/dailyTotals", (_req, res) => {
+  console.log("fetching daily totals");
+  const data = select(
+    "date, SUM(count) as daily_total FROM word_count GROUP BY date",
+  );
+  res.json(data).status(200);
+});
 app.get("/entries", (_req, res) => {
   console.log("fetching word counts");
   const data = select("* FROM word_count ORDER BY date DESC");

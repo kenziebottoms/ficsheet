@@ -1,4 +1,8 @@
-import type { WordCountEntry, RunningTotal } from "../src/types";
+import {
+  type WordCountEntry,
+  type RunningTotal,
+  type DailyTotal,
+} from "../src/types";
 
 const API_URL = "http://localhost:2000";
 
@@ -22,4 +26,5 @@ const get = <TReturnType>(path: string): Promise<TReturnType> =>
   );
 
 export const selectAllWordCounts = () => get<WordCountEntry[]>("entries");
+export const selectDailyTotals = () => get<DailyTotal[]>("dailyTotals");
 export const selectRunningTotal = () => get<RunningTotal[]>("runningTotal");

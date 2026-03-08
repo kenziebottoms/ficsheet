@@ -12,6 +12,7 @@ import FandomPie from "./FandomPie";
 import MonthlyFandomBar from "./MonthlyFandomBar";
 import RunningTotalLine from "./RunningTotalLine";
 import QuickStats from "./QuickStats";
+import WeeklySparkline from "./WeeklySparkline";
 
 type Props = {
   className?: string;
@@ -27,6 +28,12 @@ const Charts = ({
   return (
     <div className={["p-3 flex flex-col gap-3", className].join(" ")}>
       <h2>Charts</h2>
+
+      <h3>This Week</h3>
+      <div className="flex flex-row gap-2">
+        <WeeklySparkline />
+      </div>
+
       <div className="flex flex-row gap-2">
         {[
           new Date().getFullYear(),
@@ -48,7 +55,7 @@ const Charts = ({
         <RunningTotalLine />
       </div>
 
-      <h3 className="w-full my-2">Yearly Graphs</h3>
+      <h3 className="w-full my-2">This Year</h3>
       <div className="flex flex-row flex-wrap gap-3">
         <MonthlyFandomBar />
       </div>

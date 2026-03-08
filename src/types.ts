@@ -2,6 +2,11 @@
  * Non-referential types, alphabetical
  */
 
+export type DailyTotal = {
+  date: string;
+  daily_total: number;
+};
+
 export const MonthNames = [
   "January",
   "February",
@@ -39,6 +44,7 @@ export type WordCountEntry = {
 
 export type DataCache = {
   dailyEntries: WordCountEntry[];
+  dailyTotals: DailyTotal[];
   runningTotal: RunningTotal[];
   timeframe: Timeframe;
   setTimeframe: (timeframe: Timeframe) => void;
