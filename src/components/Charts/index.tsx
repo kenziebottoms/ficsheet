@@ -11,7 +11,7 @@ import Button from "../Button";
 import FandomPie from "./FandomPie";
 import MonthlyFandomBar from "./MonthlyFandomBar";
 import RunningTotalLine from "./RunningTotalLine";
-import AverageDailyWordCount from "./AverageDailyWordCount";
+import QuickStats from "./QuickStats";
 
 type Props = {
   className?: string;
@@ -26,7 +26,7 @@ const Charts = ({
 
   return (
     <div className={["p-3 flex flex-col gap-3", className].join(" ")}>
-      <h2 className="grow">Charts</h2>
+      <h2>Charts</h2>
       <div className="flex flex-row gap-2">
         {[
           new Date().getFullYear(),
@@ -40,13 +40,16 @@ const Charts = ({
           {t > 100 ? t : MonthNames[t].substring(0, 3)}
         </Button>)}
       </div>
-      <h3>Quick Stats</h3>
-      <AverageDailyWordCount />
+
+      <QuickStats />
+
       <div className="flex flex-row flex-wrap gap-3">
         <FandomPie />
         <RunningTotalLine />
+      </div>
 
-        <h3 className="w-full my-2">Yearly Graphs</h3>
+      <h3 className="w-full my-2">Yearly Graphs</h3>
+      <div className="flex flex-row flex-wrap gap-3">
         <MonthlyFandomBar />
       </div>
     </div>
