@@ -66,12 +66,15 @@ h1 {
 }
 h2 {
   font-size: 2rem;
+  @apply text-primary-highlight;
 }
 h3 {
   font-size: 1.5rem;
+  @apply font-bold;
 }
 h4 {
   font-size: 1.2rem;
+  @apply font-medium text-zinc-400;
 }
 h5 {
   font-size: 1rem;

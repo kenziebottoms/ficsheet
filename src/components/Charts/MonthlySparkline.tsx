@@ -7,22 +7,22 @@ import Widget from "../Widget"
 
 import { DataCacheContext } from "../../contexts/DataCache/DataCacheContext"
 
-const WeeklySparkline = () => {
+const MonthlySparkline = () => {
   const { dailyTotals } = use(DataCacheContext)
 
-  const lastSevenDays = [new Date()]
-  for (let i = -1; i > -7; i--) {
-    lastSevenDays.push(addDays(new Date(), i))
+  const lastThirtyDays = [new Date()]
+  for (let i = -1; i > -30; i--) {
+    lastThirtyDays.push(addDays(new Date(), i))
   }
-  const data = lastSevenDays
+  const data = lastThirtyDays.reverse()
     .map(date => format(date, 'yyyy-MM-dd'))
     .map(date => _.find(dailyTotals, { date })?.daily_total || 0);
 
   return (
-    <Widget title="Weekly Trend">
+    <Widget title="Daily Word Count" subtitle="Last 30 Days">
       <SparkLineChart
         data={data}
-        width={200}
+        width={240}
         height={60}
         area
         sx={{
@@ -33,4 +33,4 @@ const WeeklySparkline = () => {
   )
 }
 
-export default WeeklySparkline
+export default MonthlySparkline

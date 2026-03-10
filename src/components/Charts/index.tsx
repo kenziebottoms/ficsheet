@@ -12,7 +12,7 @@ import FandomPie from "./FandomPie";
 import MonthlyFandomBar from "./MonthlyFandomBar";
 import RunningTotalLine from "./RunningTotalLine";
 import QuickStats from "./QuickStats";
-import WeeklySparkline from "./WeeklySparkline";
+import MonthlySparkline from "./MonthlySparkline";
 
 type Props = {
   className?: string;
@@ -31,7 +31,7 @@ const Charts = ({
 
       <h3>This Week</h3>
       <div className="flex flex-row gap-2">
-        <WeeklySparkline />
+        <MonthlySparkline />
       </div>
 
       <div className="flex flex-row gap-2">
