@@ -30,7 +30,7 @@ const Badge = ({
   return <div className={[
     className,
     BadgeContainerClassNames[style],
-    'flex flex-col rounded-lg border-2 border-dashed',
+    'flex flex-col rounded-lg border-2 border-dashed bg-background',
   ].join(" ")}>
     <h5 className={[
       ButtonClassNames[style],

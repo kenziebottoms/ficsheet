@@ -11,7 +11,7 @@ const QuickStats = () => {
   const { dailyEntries, timeframe } = use(DataCacheContext)
 
   return (
-    <div className='flex flex-row flex-wrap gap-3'>
+    <div className='flex flex-row flex-wrap gap-2'>
       <Badge title="Max. Daily Word Count" style="primary">
         <span className='font-semibold text-white'>{_.maxBy(filterByTimeframe(dailyEntries, timeframe), 'count')?.count || 0}</span> words
       </Badge>

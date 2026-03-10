@@ -13,6 +13,7 @@ import MonthlyFandomBar from "./MonthlyFandomBar";
 import RunningTotalLine from "./RunningTotalLine";
 import QuickStats from "./QuickStats";
 import MonthlySparkline from "./MonthlySparkline";
+import { ButtonClassNames } from "../constants";
 
 type Props = {
   className?: string;
@@ -29,7 +30,6 @@ const Charts = ({
     <div className={["p-3 flex flex-col gap-3", className].join(" ")}>
       <h2>Charts</h2>
 
-      <h3>This Week</h3>
       <div className="flex flex-row gap-2">
         <MonthlySparkline />
       </div>
@@ -41,25 +41,27 @@ const Charts = ({
         ].map(t => <Button
           key={t}
           style={t === timeframe ? (t > 100 ? "primary" : "secondary") : "subtle"}
-          className="capitalize"
+          className={["transition-all duration-100 capitalize", t === timeframe ? 'rounded-b-none mt-2' : 'mb-2'].join(" ")}
           onClick={() => setTimeframe(t)}
         >
           {t > 100 ? t : MonthNames[t].substring(0, 3)}
         </Button>)}
       </div>
 
-      <QuickStats />
+      <div className={[ButtonClassNames[timeframe > 100 ? 'primary' : 'secondary'], "-mt-3 rounded-tl-none rounded-md p-2 space-y-2"].join(' ')}>
+        <QuickStats />
 
-      <div className="flex flex-row flex-wrap gap-3">
-        <FandomPie />
-        <RunningTotalLine />
+        <div className="flex flex-row flex-wrap gap-2">
+          <FandomPie />
+          <RunningTotalLine />
+        </div>
       </div>
 
       <h3 className="w-full my-2">This Year</h3>
       <div className="flex flex-row flex-wrap gap-3">
         <MonthlyFandomBar />
       </div>
-    </div>
+    </div >
   )
 }
 
