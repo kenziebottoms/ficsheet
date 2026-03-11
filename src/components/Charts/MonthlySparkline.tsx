@@ -10,7 +10,7 @@ import { DataCacheContext } from "../../contexts/DataCache/DataCacheContext"
 const MonthlySparkline = () => {
   const { dailyTotals } = use(DataCacheContext)
 
-  const lastThirtyDays = [new Date()]
+  const lastThirtyDays = []
   for (let i = -1; i > -30; i--) {
     lastThirtyDays.push(addDays(new Date(), i))
   }
