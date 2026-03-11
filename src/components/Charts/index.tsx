@@ -7,13 +7,14 @@ import { MonthNames, type WordCountEntry, type MonthName } from "../../types";
 import { getMonthName } from "../../utils";
 
 import Button from "../Button";
+import { ButtonClassNames } from "../constants";
 
 import FandomPie from "./FandomPie";
 import MonthlyFandomBar from "./MonthlyFandomBar";
 import RunningTotalLine from "./RunningTotalLine";
 import QuickStats from "./QuickStats";
+import DayOfWeekRadar from "./DayOfWeekRadar";
 import MonthlySparkline from "./MonthlySparkline";
-import { ButtonClassNames } from "../constants";
 
 type Props = {
   className?: string;
@@ -54,6 +55,7 @@ const Charts = ({
         <div className="flex flex-row flex-wrap gap-3">
           <FandomPie />
           <RunningTotalLine />
+          <DayOfWeekRadar />
         </div>
       </div>
 

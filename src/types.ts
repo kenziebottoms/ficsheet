@@ -7,6 +7,17 @@ export type DailyTotal = {
   daily_total: number;
 };
 
+export const DaysOfWeek = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+] as const;
+export type DayOfWeek = (typeof DaysOfWeek)[number];
+
 export const MonthNames = [
   "January",
   "February",
