@@ -48,10 +48,10 @@ const Charts = ({
         </Button>)}
       </div>
 
-      <div className={[ButtonClassNames[timeframe > 100 ? 'primary' : 'secondary'], "-mt-3 rounded-tl-none rounded-md p-2 space-y-2"].join(' ')}>
+      <div className={[ButtonClassNames[timeframe > 100 ? 'primary' : 'secondary'], "-mt-3 rounded-tl-none rounded-md p-3 space-y-3"].join(' ')}>
         <QuickStats />
 
-        <div className="flex flex-row flex-wrap gap-2">
+        <div className="flex flex-row flex-wrap gap-3">
           <FandomPie />
           <RunningTotalLine />
         </div>
