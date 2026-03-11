@@ -1,10 +1,10 @@
 import { parse } from "date-fns";
 
-import type { Timeframe } from "../../types";
+import type { MonthYearTimeframe } from "./types";
 
 export const filterByTimeframe = <T extends { date: string }>(
   items: T[],
-  timeframe: Timeframe,
+  timeframe: MonthYearTimeframe,
 ) => {
   return items.filter((item) => {
     const fnDate = parse(item.date, "yyyy-MM-dd", new Date());

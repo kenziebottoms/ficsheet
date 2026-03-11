@@ -39,9 +39,6 @@ export type RunningTotal = {
   running_total: number;
 };
 
-/** Year or month index */
-export type Timeframe = number;
-
 export type WordCountEntry = {
   date: string;
   fic: string;
@@ -57,6 +54,4 @@ export type DataCache = {
   dailyEntries: WordCountEntry[];
   dailyTotals: DailyTotal[];
   runningTotal: RunningTotal[];
-  timeframe: Timeframe;
-  setTimeframe: (timeframe: Timeframe) => void;
 };

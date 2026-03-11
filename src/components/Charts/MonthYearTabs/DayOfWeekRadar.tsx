@@ -1,16 +1,23 @@
 import { use } from 'react'
 import { RadarChart } from '@mui/x-charts'
 import _ from 'lodash'
-
-import { DataCacheContext } from '../../contexts/DataCache/DataCacheContext'
-
-import Widget from '../Widget'
 import { parse } from 'date-fns'
-import { DaysOfWeek } from '../../types'
-import { filterByTimeframe } from './utils'
 
-const DayOfWeekRadar = () => {
-  const { timeframe, dailyTotals } = use(DataCacheContext);
+import { DataCacheContext } from '../../../contexts/DataCache/DataCacheContext'
+import { DaysOfWeek } from '../../../types'
+
+import Widget from '../../Widget'
+
+import { filterByTimeframe } from './utils'
+import type { MonthYearTimeframe } from './types'
+
+type Props = {
+  timeframe: MonthYearTimeframe;
+}
+const DayOfWeekRadar = ({
+  timeframe
+}: Props) => {
+  const { dailyTotals } = use(DataCacheContext);
   const dailyTotalsByWeekday = _.groupBy(filterByTimeframe(dailyTotals, timeframe), dt => parse(dt.date, 'yyyy-MM-dd', new Date()).getDay());
   const data = DaysOfWeek.map((_day, i) => _.meanBy(dailyTotalsByWeekday[i], 'daily_total') || 0)
 

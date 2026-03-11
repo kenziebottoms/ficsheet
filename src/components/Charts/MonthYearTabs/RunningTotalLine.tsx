@@ -3,16 +3,19 @@ import { LineChart, } from '@mui/x-charts'
 import _ from 'lodash'
 import { format, isValid } from 'date-fns';
 
-import { DataCacheContext } from '../../contexts/DataCache/DataCacheContext';
+import { DataCacheContext } from '../../../contexts/DataCache/DataCacheContext';
 
-import Widget from '../Widget';
+import Widget from '../../Widget';
 
-import { colors } from './constants';
+import { colors } from '../constants';
+
 import { addTimestamp, filterByTimeframe, } from './utils';
+import type { MonthYearChartProps } from './types';
 
-const RunningTotalLine = () => {
-  const { timeframe, runningTotal } = use(DataCacheContext)
-
+const RunningTotalLine = ({
+  timeframe
+}: MonthYearChartProps) => {
+  const { runningTotal } = use(DataCacheContext)
   const dataset = filterByTimeframe(runningTotal, timeframe).map(addTimestamp)
 
   return <Widget title="Running Total">

@@ -2,15 +2,19 @@ import { use } from 'react';
 import { PieChart } from '@mui/x-charts'
 import _ from 'lodash'
 
-import { DataCacheContext } from '../../contexts/DataCache/DataCacheContext';
+import { DataCacheContext } from '../../../contexts/DataCache/DataCacheContext';
 
-import Widget from '../Widget';
+import Widget from '../../Widget';
 
-import { colors } from './constants';
+import { colors } from '../constants';
+
 import { filterByTimeframe } from './utils';
+import type { MonthYearChartProps } from './types';
 
-const FandomPie = () => {
-  const { dailyEntries, timeframe } = use(DataCacheContext)
+const FandomPie = ({
+  timeframe
+}: MonthYearChartProps) => {
+  const { dailyEntries } = use(DataCacheContext)
   const fandoms = Object.keys(_.countBy(dailyEntries, 'fandom')).sort()
   const data = fandoms.map((fandom, i) => ({
     id: i,
