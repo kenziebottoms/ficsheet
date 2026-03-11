@@ -9,7 +9,6 @@ import { parse } from 'date-fns'
 import { DaysOfWeek } from '../../types'
 import { filterByTimeframe } from './utils'
 
-// TODO: populate 0-day totals
 const DayOfWeekRadar = () => {
   const { timeframe, dailyTotals } = use(DataCacheContext);
   const dailyTotalsByWeekday = _.groupBy(filterByTimeframe(dailyTotals, timeframe), dt => parse(dt.date, 'yyyy-MM-dd', new Date()).getDay());
