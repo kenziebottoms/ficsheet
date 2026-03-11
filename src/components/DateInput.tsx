@@ -3,12 +3,14 @@ import { useState } from 'react'
 type Props = {
   name: string;
   label: string;
+  defaultValue?: Date;
 }
 const DateInput = ({
   name,
   label,
+  defaultValue,
 }: Props) => {
-  const [value, setValue] = useState<string>(new Date().toLocaleDateString('en-CA'));
+  const [value, setValue] = useState<string>((defaultValue || new Date()).toLocaleDateString('en-CA'));
 
   return <div className='flex flex-col'>
     <label>

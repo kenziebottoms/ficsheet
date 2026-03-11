@@ -7,6 +7,7 @@ import DateInput from '../DateInput';
 import Dropdown from '../Dropdown';
 import Input from '../Input';
 import TextArea from '../TextArea';
+import { addDays, isBefore } from 'date-fns';
 
 export type DailyProjectWordCountFormValues = {
   date: string;
@@ -43,6 +44,8 @@ const DailyProjectWordCountForm = ({
     <DateInput
       name="date"
       label="Date"
+      // If after midnight but before 4am, log as day before
+      defaultValue={isBefore(new Date(), new Date().setHours(4)) ? addDays(new Date(), -1) : new Date()}
     />
     <Input
       label="Fic"
