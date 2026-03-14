@@ -1,14 +1,13 @@
-import fs, { lchown } from "fs";
+import fs from "fs";
 import { parse } from "csv-parse";
 import { format, isValid, parse as parseDate } from "date-fns";
-import { pipeline } from "stream/promises";
 import type { WordCountEntry } from "../src/types.ts";
 
 export const readWordCountSpreadsheetRow = (
   cells: string[],
   fandoms: string[],
   year: number,
-) => {
+): WordCountEntry[] => {
   // if it's a single-fic day
   if (!cells.some((cell) => cell.includes(","))) {
     const [month, day] = cells;
@@ -16,7 +15,7 @@ export const readWordCountSpreadsheetRow = (
     const fandomTotals = cells.slice(3, cells.length - 3);
     const nonZeroFandomTotalIndex = fandomTotals.findIndex((x) => x !== "");
     if (nonZeroFandomTotalIndex === -1) {
-      return null;
+      return [];
     }
     const count = parseInt(fandomTotals[nonZeroFandomTotalIndex], 10);
     const fandom = fandoms[nonZeroFandomTotalIndex];
@@ -32,11 +31,10 @@ export const readWordCountSpreadsheetRow = (
         fandom,
         count,
       };
-      return entry;
-    } else {
-      console.error(`invalid date ${date}`);
+      return [entry];
     }
   }
+  return [];
 };
 
 // Use stream.pipeline for proper backpressure handling and error propagation
@@ -54,9 +52,12 @@ export async function readCSV(inputFile: string, year: number) {
       if (i === 0) {
         fandoms = row.slice(3, row.length - 3);
       } else {
-        const entry = readWordCountSpreadsheetRow(row, fandoms, year);
-        if (entry != null) {
-          entries.push(entry);
+        const newEntries = readWordCountSpreadsheetRow(row, fandoms, year);
+        if (newEntries.length > 0) {
+          entries.push(...newEntries);
+          if (newEntries[0].date.includes("12-31")) {
+            break;
+          }
         }
       }
       i++;
