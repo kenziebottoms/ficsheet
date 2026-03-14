@@ -18,38 +18,18 @@ export const readWordCountSpreadsheetRow = (
     const fandomTotals = cells.slice(3, cells.length - 3);
     const projects = cells[cells.length - 3];
 
-    // if multiple fics in day
-    if (projects.includes(",")) {
-      let entries: WordCountEntry[] = [];
-      fandomTotals.forEach((fandomTotal, fandomTotalIndex) => {
-        if (fandomTotal !== "") {
-          entries.push({
-            fandom: fandoms[fandomTotalIndex].trim(),
-            count: parseInt(fandomTotal, 10),
-            fic: projects.split(",")[fandomTotalIndex].trim(),
-            date,
-          });
-        }
-      });
-      return entries;
-    }
-    // if it's a single-fic day
-    else {
-      const nonZeroFandomTotalIndex = fandomTotals.findIndex((x) => x !== "");
-      if (nonZeroFandomTotalIndex === -1) {
-        return [];
-      }
-      const count = parseInt(fandomTotals[nonZeroFandomTotalIndex], 10);
-      const fandom = fandoms[nonZeroFandomTotalIndex];
-      return [
-        {
+    let entries: WordCountEntry[] = [];
+    fandomTotals.forEach((fandomTotal, fandomTotalIndex) => {
+      if (fandomTotal !== "") {
+        entries.push({
+          fandom: fandoms[fandomTotalIndex].trim(),
+          count: parseInt(fandomTotal, 10),
+          fic: projects.split(",")[fandomTotalIndex].trim(),
           date,
-          fic: projects,
-          fandom,
-          count,
-        },
-      ];
-    }
+        });
+      }
+    });
+    return entries;
   } else {
     console.log(`invalid date '${dateString}'`);
   }
