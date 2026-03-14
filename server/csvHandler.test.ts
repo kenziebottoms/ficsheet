@@ -51,4 +51,43 @@ describe("readWordCountSpreadsheetRow", () => {
       ],
     );
   });
+  it("2 fics", () => {
+    assert.deepEqual(
+      readWordCountSpreadsheetRow(
+        [
+          "Oct",
+          "29",
+          "55",
+          "31",
+          "24",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "muzzled max 3, transception",
+          "25049",
+          "",
+        ],
+        fandoms,
+        2025,
+      ),
+      [
+        {
+          date: "2025-10-29",
+          fic: "muzzled max 3",
+          fandom: "Mad Max",
+          count: 31,
+        },
+        {
+          date: "2025-10-29",
+          fic: "transception",
+          fandom: "Inception",
+          count: 24,
+        },
+      ],
+    );
+  });
 });

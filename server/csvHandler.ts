@@ -1,6 +1,8 @@
 import fs from "fs";
+import _ from "lodash";
 import { parse } from "csv-parse";
 import { format, isValid, parse as parseDate } from "date-fns";
+
 import type { WordCountEntry } from "../src/types.ts";
 
 export const readWordCountSpreadsheetRow = (
@@ -8,31 +10,48 @@ export const readWordCountSpreadsheetRow = (
   fandoms: string[],
   year: number,
 ): WordCountEntry[] => {
-  // if it's a single-fic day
-  if (!cells.some((cell) => cell.includes(","))) {
-    const [month, day] = cells;
-    const fic = cells[cells.length - 3];
+  const [month, day] = cells;
+  const dateString = `${year} ${month} ${day}`;
+  const dateDate = parseDate(dateString, "yyyy MMM dd", new Date());
+  if (isValid(dateDate)) {
+    const date = format(dateDate, "yyyy-MM-dd");
     const fandomTotals = cells.slice(3, cells.length - 3);
-    const nonZeroFandomTotalIndex = fandomTotals.findIndex((x) => x !== "");
-    if (nonZeroFandomTotalIndex === -1) {
-      return [];
+    const projects = cells[cells.length - 3];
+
+    // if multiple fics in day
+    if (projects.includes(",")) {
+      let entries: WordCountEntry[] = [];
+      fandomTotals.forEach((fandomTotal, fandomTotalIndex) => {
+        if (fandomTotal !== "") {
+          entries.push({
+            fandom: fandoms[fandomTotalIndex].trim(),
+            count: parseInt(fandomTotal, 10),
+            fic: projects.split(",")[fandomTotalIndex].trim(),
+            date,
+          });
+        }
+      });
+      return entries;
     }
-    const count = parseInt(fandomTotals[nonZeroFandomTotalIndex], 10);
-    const fandom = fandoms[nonZeroFandomTotalIndex];
-    const date = parseDate(
-      `${year} ${month} ${day}`,
-      "yyyy MMM dd",
-      new Date(),
-    );
-    if (isValid(date)) {
-      const entry: WordCountEntry = {
-        date: format(date, "yyyy-MM-dd"),
-        fic,
-        fandom,
-        count,
-      };
-      return [entry];
+    // if it's a single-fic day
+    else {
+      const nonZeroFandomTotalIndex = fandomTotals.findIndex((x) => x !== "");
+      if (nonZeroFandomTotalIndex === -1) {
+        return [];
+      }
+      const count = parseInt(fandomTotals[nonZeroFandomTotalIndex], 10);
+      const fandom = fandoms[nonZeroFandomTotalIndex];
+      return [
+        {
+          date,
+          fic: projects,
+          fandom,
+          count,
+        },
+      ];
     }
+  } else {
+    console.log(`invalid date '${dateString}'`);
   }
   return [];
 };
@@ -51,6 +70,7 @@ export async function readCSV(inputFile: string, year: number) {
     for await (const row of parser) {
       if (i === 0) {
         fandoms = row.slice(3, row.length - 3);
+        console.log("fandoms", fandoms);
       } else {
         const newEntries = readWordCountSpreadsheetRow(row, fandoms, year);
         if (newEntries.length > 0) {
@@ -64,6 +84,7 @@ export async function readCSV(inputFile: string, year: number) {
     }
     console.log(entries.slice(0, 5), ` and ${entries.length - 5} more...`);
     console.log("Finished reading CSV file");
+    return entries;
   } catch (error) {
     console.error("Error:", error);
     throw error;
