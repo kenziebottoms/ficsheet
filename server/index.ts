@@ -33,7 +33,7 @@ app.post("/ingest", (req, res) => {
     res.status(400).send("please supply a valid year");
   }
   readCSV(filename, parseInt(year, 10))
-    .then(() => res.status(201))
+    .then((rows) => res.json(rows).status(201))
     .catch((error) => res.json(error).status(500));
 });
 app.get("/runningTotal", (_req, res) => {
