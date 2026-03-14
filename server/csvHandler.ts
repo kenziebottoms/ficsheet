@@ -12,23 +12,28 @@ export const readWordCountSpreadsheetRow = (
 ): WordCountEntry[] => {
   const [month, day] = cells;
   const dateString = `${year} ${month} ${day}`;
-  const dateDate = parseDate(dateString, "yyyy MMM dd", new Date());
+  const dateDate = parseDate(dateString, "yyyy MMMM dd", new Date());
   if (isValid(dateDate)) {
     const date = format(dateDate, "yyyy-MM-dd");
     const fandomTotals = cells.slice(3, cells.length - 3);
     const projects = cells[cells.length - 3];
 
     let entries: WordCountEntry[] = [];
-    fandomTotals.forEach((fandomTotal, fandomTotalIndex) => {
-      if (fandomTotal !== "") {
+    fandomTotals
+      .filter((x) => x !== "")
+      .forEach((fandomTotal, fandomTotalIndex) => {
+        if (projects.split(",")[fandomTotalIndex] === undefined) {
+          throw new Error(
+            `Entry for ${date} contains more word counts than fandoms.`,
+          );
+        }
         entries.push({
           fandom: fandoms[fandomTotalIndex].trim(),
           count: parseInt(fandomTotal, 10),
           fic: projects.split(",")[fandomTotalIndex].trim(),
           date,
         });
-      }
-    });
+      });
     return entries;
   } else {
     console.log(`invalid date '${dateString}'`);

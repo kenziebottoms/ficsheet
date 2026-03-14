@@ -51,6 +51,39 @@ describe("readWordCountSpreadsheetRow", () => {
       ],
     );
   });
+  it("1 fic in June", () => {
+    assert.deepEqual(
+      readWordCountSpreadsheetRow(
+        [
+          "June",
+          "26",
+          "30",
+          "30",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "muzzled max 3",
+          "27026",
+          "",
+        ],
+        fandoms,
+        2025,
+      ),
+      [
+        {
+          date: "2025-06-26",
+          fic: "muzzled max 3",
+          fandom: "Mad Max",
+          count: 30,
+        },
+      ],
+    );
+  });
   it("2 fics", () => {
     assert.deepEqual(
       readWordCountSpreadsheetRow(
