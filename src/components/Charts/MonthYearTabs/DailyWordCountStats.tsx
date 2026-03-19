@@ -18,14 +18,14 @@ const DailyWordCountStats = ({
     <>
       <div className='flex flex-row flex-wrap gap-3 bg-zinc-800 p-3 rounded-md'>
         <h4 className='w-full'>Daily Word Count</h4>
-        <Badge title="Max." style="primary">
-          <span className='font-semibold text-white'>{_.maxBy(filteredEntries, 'count')?.count || 0}</span> words
+        <Badge title="Maximum" style="primary">
+          <span className='font-semibold text-white'>{_.maxBy(filteredEntries, 'count')?.count || 0}</span>
         </Badge>
-        <Badge title="Avg." style="secondary">
-          <span className='font-semibold text-white'>{_.meanBy(filteredEntries, 'count').toFixed(1)}</span> words
+        <Badge title="Average" style="secondary">
+          <span className='font-semibold text-white'>{_.meanBy(filteredEntries, 'count').toFixed(1)}</span>
         </Badge>
-        <Badge title="Min." style="subtle">
-          <span className='font-semibold text-white'>{_.minBy(filteredEntries, 'count')?.count || 0}</span> words
+        <Badge title="Minimum" style="subtle">
+          <span className='font-semibold text-white'>{_.minBy(filteredEntries, 'count')?.count || 0}</span>
         </Badge>
       </div>
     </>
