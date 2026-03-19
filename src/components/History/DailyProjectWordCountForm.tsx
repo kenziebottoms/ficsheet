@@ -16,7 +16,7 @@ export type DailyProjectWordCountFormValues = {
   pastedWords: string;
 }
 type Props = {
-  className: string;
+  className?: string;
 }
 const DailyProjectWordCountForm = ({
   className = ''
