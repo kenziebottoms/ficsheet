@@ -7,11 +7,11 @@ import { MonthNames, type MonthName, type WordCountEntry } from '../../../types'
 import { getMonthName } from '../../../utils';
 
 import Button from '../../Button';
-import { ButtonClassNames } from '../../constants'
+import { ButtonBackgroundClassNames } from '../../constants'
 
 import DayOfWeekRadar from "./DayOfWeekRadar";
 import FandomPie from './FandomPie';
-import QuickStats from "./QuickStats";
+import DailyWordCountStats from "./DailyWordCountStats";
 import RunningTotalLine from "./RunningTotalLine";
 import type { MonthYearTimeframe } from './types';
 
@@ -36,8 +36,8 @@ const MonthYearTabs = () => {
         {t > 100 ? t : MonthNames[t].substring(0, 3)}
       </Button>)}
     </div>
-    <div className={[ButtonClassNames[timeframe > 100 ? 'primary' : 'secondary'], "-mt-3 rounded-tl-none rounded-md p-3 space-y-3"].join(' ')}>
-      <QuickStats timeframe={timeframe} />
+    <div className={[ButtonBackgroundClassNames[timeframe > 100 ? 'primary' : 'secondary'], "-mt-3 rounded-tl-none rounded-md p-3 space-y-3"].join(' ')}>
+      <DailyWordCountStats timeframe={timeframe} />
 
       <div className="flex flex-row flex-wrap gap-3">
         <FandomPie timeframe={timeframe} />

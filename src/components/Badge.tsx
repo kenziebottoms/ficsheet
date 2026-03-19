@@ -1,6 +1,6 @@
 import type { PropsWithChildren } from "react";
 
-import { ButtonClassNames, type ButtonStyle } from "./constants";
+import { ButtonTextClassNames, ButtonBackgroundClassNames, type ButtonStyle } from "./constants";
 
 const BadgeContainerClassNames: Record<ButtonStyle, string> = {
   primary: "border-indigo-500",
@@ -33,7 +33,8 @@ const Badge = ({
     'flex flex-col rounded-lg border-2 border-dashed bg-background',
   ].join(" ")}>
     <h5 className={[
-      ButtonClassNames[style],
+      ButtonTextClassNames[style],
+      ButtonBackgroundClassNames[style],
       'p-3 rounded-t-lg shadow-md/50'
     ].join(" ")}>
       {title}
