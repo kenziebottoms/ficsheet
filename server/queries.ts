@@ -13,6 +13,7 @@ export const insertWordCount = (entry: WordCountEntry) => {
 };
 
 export function select<TRow>(query: string) {
+  console.log(`selecting "${query}"`);
   const q = db.prepare(`SELECT ${query}`);
   return q.all() as TRow[];
 }

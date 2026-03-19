@@ -1,6 +1,5 @@
-/** Year or month index */
-export type MonthYearTimeframe = number;
+import type { BoundedTimeframe } from "../../../classes/BoundedTimeframe";
 
 export type MonthYearChartProps = {
-  timeframe: MonthYearTimeframe;
+  timeframe: BoundedTimeframe;
 };

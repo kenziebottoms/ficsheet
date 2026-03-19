@@ -1,10 +1,8 @@
-import { use, useState } from 'react'
-import _ from 'lodash'
-import { parse } from 'date-fns';
+import { useState } from 'react'
+import { lastDayOfMonth } from 'date-fns';
 
-import { DataCacheContext } from '../../../contexts/DataCache/DataCacheContext';
-import { MonthNames, type MonthName, type WordCountEntry } from '../../../types';
-import { getMonthName } from '../../../utils';
+import { BoundedTimeframe, PeriodButtonStyles } from '../../../classes/BoundedTimeframe';
+import { MonthNames } from '../../../types';
 
 import Button from '../../Button';
 import { ButtonBackgroundClassNames } from '../../constants'
@@ -13,30 +11,51 @@ import DayOfWeekRadar from "./DayOfWeekRadar";
 import FandomPie from './FandomPie';
 import DailyWordCountStats from "./DailyWordCountStats";
 import RunningTotalLine from "./RunningTotalLine";
-import type { MonthYearTimeframe } from './types';
 
 const MonthYearTabs = () => {
-  const { dailyEntries } = use(DataCacheContext)
-  const [timeframe, setTimeframe] = useState<MonthYearTimeframe>(new Date().getFullYear())
+  const today = new Date();
+  const thisYear = today.getFullYear();
 
-  const monthlyEntries: Partial<Record<MonthName, WordCountEntry[]>> = _.groupBy(dailyEntries, ({ date }) => getMonthName(parse(date, 'yyyy-MM-dd', new Date())))
-  const availableMonths = MonthNames.filter((monthName) => !!monthlyEntries[monthName])
+  const timeframes: {
+    timeframe: BoundedTimeframe,
+    label: string
+  }[] = [
+      // YTD
+      {
+        label: `${thisYear}`,
+        timeframe: new BoundedTimeframe({
+          startDate: new Date(new Date().getFullYear(), 0, 1),
+          endDate: new Date(),
+          period: "yearly"
+        })
+      },
+      // Monthly to current month
+      ...MonthNames
+        .slice(0, today.getMonth() + 1)
+        .map((_month, monthIndex) => ({
+          label: MonthNames[monthIndex].slice(0, 3),
+          timeframe: new BoundedTimeframe({
+            startDate: new Date(thisYear, monthIndex, 1),
+            endDate: lastDayOfMonth(new Date(thisYear, monthIndex, 1)),
+            period: "monthly"
+          })
+        })),
+    ]
+
+  const [timeframe, setTimeframe] = useState<BoundedTimeframe>(timeframes[0].timeframe)
 
   return <>
     <div className="flex flex-row gap-2">
-      {[
-        new Date().getFullYear(),
-        ...availableMonths.map((_month, i) => i),
-      ].map(t => <Button
-        key={t}
-        style={t === timeframe ? (t > 100 ? "primary" : "secondary") : "subtle"}
-        className={["transition-all duration-100 capitalize", t === timeframe ? 'rounded-b-none mt-2' : 'mb-2'].join(" ")}
+      {timeframes.map(({ timeframe: t, label }, i) => <Button
+        key={i}
+        style={PeriodButtonStyles[t.period]}
+        className={["transition-all duration-100 capitalize", t.equals(timeframe) ? 'rounded-b-none mt-2' : 'mb-2'].join(" ")}
         onClick={() => setTimeframe(t)}
       >
-        {t > 100 ? t : MonthNames[t].substring(0, 3)}
+        {label}
       </Button>)}
     </div>
-    <div className={[ButtonBackgroundClassNames[timeframe > 100 ? 'primary' : 'secondary'], "-mt-3 rounded-tl-none rounded-lg p-3 space-y-3"].join(' ')}>
+    <div className={[ButtonBackgroundClassNames[PeriodButtonStyles[timeframe.period]], "-mt-3 rounded-tl-none rounded-lg p-3 space-y-3"].join(' ')}>
       <div className="flex flex-row flex-wrap gap-3">
         <DailyWordCountStats timeframe={timeframe} />
       </div>

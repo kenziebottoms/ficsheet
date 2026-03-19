@@ -12,10 +12,12 @@ export const DataCacheProvider = ({ children }: PropsWithChildren) => {
   const [dailyTotals, setDailyTotals] = useState<DailyTotal[]>([])
   const [runningTotal, setRunningTotal] = useState<RunningTotal[]>([])
 
+  const thisYear = new Date().getFullYear();
+
   useEffect(() => {
     selectAllWordCounts().then(setDailyEntries)
     selectDailyTotals().then(nonEmptyDailyTotals => {
-      const totals = getDatesBetween(new Date(new Date().getFullYear(), 0, 1), new Date())
+      const totals = getDatesBetween(new Date(thisYear, 0, 1), new Date())
         .map(date => ({
           date,
           daily_total: _.find(nonEmptyDailyTotals, { date })?.daily_total || 0
@@ -23,7 +25,7 @@ export const DataCacheProvider = ({ children }: PropsWithChildren) => {
       setDailyTotals(totals);
     })
     selectRunningTotal().then(setRunningTotal)
-  }, [])
+  }, [thisYear])
 
   return (
     <DataCacheContext.Provider value={{

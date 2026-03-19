@@ -9,14 +9,11 @@ import { DaysOfWeek } from '../../../types'
 import Widget from '../../Widget'
 
 import { filterByTimeframe } from './utils'
-import type { MonthYearTimeframe } from './types'
+import type { MonthYearChartProps } from './types'
 
-type Props = {
-  timeframe: MonthYearTimeframe;
-}
 const DayOfWeekRadar = ({
   timeframe
-}: Props) => {
+}: MonthYearChartProps) => {
   const { dailyTotals } = use(DataCacheContext);
   const dailyTotalsByWeekday = _.groupBy(filterByTimeframe(dailyTotals, timeframe), dt => parse(dt.date, 'yyyy-MM-dd', new Date()).getDay());
   const data = DaysOfWeek.map((_day, i) => _.meanBy(dailyTotalsByWeekday[i], 'daily_total') || 0)

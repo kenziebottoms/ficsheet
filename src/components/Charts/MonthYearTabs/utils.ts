@@ -1,21 +1,16 @@
-import { parse } from "date-fns";
+import { isAfter, isBefore, parse } from "date-fns";
 
-import type { MonthYearTimeframe } from "./types";
+import type { BoundedTimeframe } from "../../../classes/BoundedTimeframe";
 
 export const filterByTimeframe = <T extends { date: string }>(
   items: T[],
-  timeframe: MonthYearTimeframe,
+  timeframe: BoundedTimeframe,
 ) => {
   return items.filter((item) => {
     const fnDate = parse(item.date, "yyyy-MM-dd", new Date());
-    // if year
-    if (timeframe > 100) {
-      return fnDate.getFullYear() === timeframe;
-    }
-    // if month
-    else {
-      return fnDate.getMonth() === timeframe;
-    }
+    const notBeforeTimeframe = !isBefore(fnDate, timeframe.startDate);
+    const notAfterTimeframe = !isAfter(fnDate, timeframe.endDate);
+    return notBeforeTimeframe && notAfterTimeframe;
   });
 };
 
