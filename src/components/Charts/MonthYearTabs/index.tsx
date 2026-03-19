@@ -36,8 +36,10 @@ const MonthYearTabs = () => {
         {t > 100 ? t : MonthNames[t].substring(0, 3)}
       </Button>)}
     </div>
-    <div className={[ButtonBackgroundClassNames[timeframe > 100 ? 'primary' : 'secondary'], "-mt-3 rounded-tl-none rounded-md p-3 space-y-3"].join(' ')}>
-      <DailyWordCountStats timeframe={timeframe} />
+    <div className={[ButtonBackgroundClassNames[timeframe > 100 ? 'primary' : 'secondary'], "-mt-3 rounded-tl-none rounded-lg p-3 space-y-3"].join(' ')}>
+      <div className="flex flex-row flex-wrap gap-3">
+        <DailyWordCountStats timeframe={timeframe} />
+      </div>
 
       <div className="flex flex-row flex-wrap gap-3">
         <FandomPie timeframe={timeframe} />

@@ -15,9 +15,9 @@ const DailyWordCountStats = ({
   const filteredEntries = filterByTimeframe(dailyEntries, timeframe)
 
   return (
-    <>
-      <div className='flex flex-row flex-wrap gap-3 bg-zinc-800 p-3 rounded-md'>
-        <h4 className='w-full'>Daily Word Count</h4>
+    <div className='bg-zinc-800 p-3 rounded-md space-y-3 w-auto'>
+      <h4>Daily Word Count</h4>
+      <div className='flex flex-row flex-wrap gap-3'>
         <Badge title="Maximum" style="primary">
           <span className='font-semibold text-white'>{_.maxBy(filteredEntries, 'count')?.count || 0}</span>
         </Badge>
@@ -28,7 +28,7 @@ const DailyWordCountStats = ({
           <span className='font-semibold text-white'>{_.minBy(filteredEntries, 'count')?.count || 0}</span>
         </Badge>
       </div>
-    </>
+    </div>
   )
 }
 
