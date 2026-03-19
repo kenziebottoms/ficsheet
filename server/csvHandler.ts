@@ -5,6 +5,8 @@ import { format, isValid, parse as parseDate } from "date-fns";
 
 import type { WordCountEntry } from "../src/types.ts";
 
+import { insertWordCount } from "./queries.ts";
+
 export const readWordCountSpreadsheetRow = (
   cells: string[],
   fandoms: string[],
@@ -42,7 +44,11 @@ export const readWordCountSpreadsheetRow = (
 };
 
 // Use stream.pipeline for proper backpressure handling and error propagation
-export async function readCSV(inputFile: string, year: number) {
+export async function readCSV(
+  inputFile: string,
+  year: number,
+  updateDb = false,
+) {
   console.log(`reading CSV '${inputFile}' for ${year}`);
   const parser = fs.createReadStream(inputFile).pipe(parse());
 
@@ -55,10 +61,12 @@ export async function readCSV(inputFile: string, year: number) {
     for await (const row of parser) {
       if (i === 0) {
         fandoms = row.slice(3, row.length - 3);
-        console.log("fandoms", fandoms);
       } else {
         const newEntries = readWordCountSpreadsheetRow(row, fandoms, year);
         if (newEntries.length > 0) {
+          if (updateDb) {
+            newEntries.forEach(insertWordCount);
+          }
           entries.push(...newEntries);
           if (newEntries[0].date.includes("12-31")) {
             break;
@@ -67,7 +75,6 @@ export async function readCSV(inputFile: string, year: number) {
       }
       i++;
     }
-    console.log(entries.slice(0, 5), ` and ${entries.length - 5} more...`);
     console.log("Finished reading CSV file");
     return entries;
   } catch (error) {

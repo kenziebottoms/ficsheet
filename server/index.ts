@@ -24,15 +24,17 @@ app.get("/entries", (_req, res) => {
   res.json(data).status(200);
 });
 app.post("/ingest", (req, res) => {
-  const { filename, year } = req.query as Record<string, string>;
-  console.log(`ingesting ${filename} (${year})`);
+  const { filename, year, updateDb } = req.query as Record<string, string>;
+  console.log(
+    `ingesting ${filename} for ${year} (${updateDb === "true" ? "updating the database" : "dry run"})`,
+  );
   if (!filename) {
     res.status(400).send("please supply a filename");
   }
   if (!year || isNaN(parseInt(year, 10))) {
     res.status(400).send("please supply a valid year");
   }
-  readCSV(filename, parseInt(year, 10))
+  readCSV(filename, parseInt(year, 10), updateDb === "true")
     .then((rows) => res.json(rows).status(201))
     .catch((error) => res.json(error).status(500));
 });
