@@ -36,7 +36,8 @@ const MonthYearTabs = () => {
           label: MonthNames[monthIndex].slice(0, 3),
           timeframe: new BoundedTimeframe({
             startDate: new Date(thisYear, monthIndex, 1),
-            endDate: lastDayOfMonth(new Date(thisYear, monthIndex, 1)),
+            // if current month, cap at today
+            endDate: monthIndex === new Date().getMonth() ? new Date() : lastDayOfMonth(new Date(thisYear, monthIndex, 1)),
             period: "monthly"
           })
         })),
