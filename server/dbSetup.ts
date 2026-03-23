@@ -229,6 +229,36 @@ const seedTables = () => {
     fic: "muzzled max 3",
     fandom: "Mad Max",
   });
+  insertWordCount({
+    date: "2026-03-10",
+    count: 206,
+    fic: "muzzled max 3",
+    fandom: "Mad Max",
+  });
+  insertWordCount({
+    date: "2026-03-11",
+    count: 25,
+    fic: "muzzled max 3",
+    fandom: "Mad Max",
+  });
+  insertWordCount({
+    date: "2026-03-13",
+    count: 56,
+    fic: "muzzled max 3",
+    fandom: "Mad Max",
+  });
+  insertWordCount({
+    date: "2026-03-17",
+    count: 60,
+    fic: "muzzled max 3",
+    fandom: "Mad Max",
+  });
+  insertWordCount({
+    date: "2026-03-18",
+    count: 27,
+    fic: "muzzled max 3",
+    fandom: "Mad Max",
+  });
 };
 
 export const setup = () => {
