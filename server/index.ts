@@ -42,12 +42,16 @@ app.post("/ingest", (req, res) => {
     .then((rows) => res.json(rows).status(201))
     .catch((error) => res.json(error).status(500));
 });
-app.get("/runningTotal", (_req, res) => {
-  console.log("fetching running totals");
+app.get("/runningTotal", (req, res) => {
+  const { year } = req.query as Record<string, string>;
+  if (!year || isNaN(parseInt(year, 10))) {
+    return res.status(400).send("please supply a valid year");
+  }
+  console.log("fetching running totals" + (year ? ` (${year})` : ""));
   const data = select(
-    "date, SUM(count) OVER (ORDER BY date) AS running_total FROM word_count",
+    `date, SUM(count) OVER (ORDER BY date) AS running_total FROM word_count ${getYearlyWhereClause(year)}`,
   );
-  res.json(data).status(200);
+  return res.json(data).status(200);
 });
 
 app.listen(PORT, (error) => {

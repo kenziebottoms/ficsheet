@@ -39,4 +39,5 @@ export const selectDailyTotals = (year: number) =>
       }),
     ),
   );
-export const selectRunningTotal = () => get<RunningTotal[]>("runningTotal");
+export const selectRunningTotal = (year: number) =>
+  get<RunningTotal[]>(`runningTotal?year=${year}`);
