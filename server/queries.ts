@@ -17,3 +17,12 @@ export function select<TRow>(query: string) {
   const q = db.prepare(`SELECT ${query}`);
   return q.all() as TRow[];
 }
+
+export const getYearlyWhereClause = (year: string) => {
+  const validatedYear = parseInt(year, 10);
+  if (isNaN(validatedYear)) {
+    return "";
+  } else {
+    return ` WHERE date BETWEEN '${validatedYear}-01-01' AND '${validatedYear}-12-31' `;
+  }
+};

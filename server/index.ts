@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 
 import { setup } from "./dbSetup.ts";
-import { select } from "./queries.ts";
+import { getYearlyWhereClause, select } from "./queries.ts";
 import { readCSV } from "./csvHandler.ts";
 
 const app = express();
@@ -16,9 +16,9 @@ app.get("/dailyTotals", (req, res) => {
   if (!year || isNaN(parseInt(year, 10))) {
     res.status(400).send("please supply a valid year");
   }
-  console.log("fetching daily totals");
+  console.log("fetching daily totals" + (year ? ` (${year})` : ""));
   const data = select(
-    `date, SUM(count) as daily_total FROM word_count WHERE date BETWEEN '${year}-01-01' AND '${year}-12-31' GROUP BY date`,
+    `date, SUM(count) as daily_total FROM word_count ${getYearlyWhereClause(year)} GROUP BY date`,
   );
   res.json(data).status(200);
 });
