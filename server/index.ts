@@ -14,18 +14,18 @@ app.use(express.json());
 app.get("/dailyTotals", (req, res) => {
   const { year } = req.query as Record<string, string>;
   if (!year || isNaN(parseInt(year, 10))) {
-    res.status(400).send("please supply a valid year");
+    return res.status(400).send("please supply a valid year");
   }
   console.log("fetching daily totals" + (year ? ` (${year})` : ""));
   const data = select(
     `date, SUM(count) as daily_total FROM word_count ${getYearlyWhereClause(year)} GROUP BY date`,
   );
-  res.json(data).status(200);
+  return res.json(data).status(200);
 });
 app.get("/entries", (_req, res) => {
   console.log("fetching word counts");
   const data = select("* FROM word_count ORDER BY date DESC");
-  res.json(data).status(200);
+  return res.json(data).status(200);
 });
 app.post("/ingest", (req, res) => {
   const { filename, year, updateDb } = req.query as Record<string, string>;
@@ -33,12 +33,12 @@ app.post("/ingest", (req, res) => {
     `ingesting ${filename} for ${year} (${updateDb === "true" ? "updating the database" : "dry run"})`,
   );
   if (!filename) {
-    res.status(400).send("please supply a filename");
+    return res.status(400).send("please supply a filename");
   }
   if (!year || isNaN(parseInt(year, 10))) {
-    res.status(400).send("please supply a valid year");
+    return res.status(400).send("please supply a valid year");
   }
-  readCSV(filename, parseInt(year, 10), updateDb === "true")
+  return readCSV(filename, parseInt(year, 10), updateDb === "true")
     .then((rows) => res.json(rows).status(201))
     .catch((error) => res.json(error).status(500));
 });
