@@ -1,5 +1,4 @@
 import MonthlyFandomBar from "./MonthlyFandomBar";
-import MonthlySparkline from "./MonthlySparkline";
 import MonthYearTabs from "./MonthYearTabs";
 
 type Props = {
@@ -11,10 +10,6 @@ const Charts = ({
   return (
     <div className={["p-3 flex flex-col gap-3", className].join(" ")}>
       <h2>Charts</h2>
-
-      <div className="flex flex-row gap-2">
-        <MonthlySparkline />
-      </div>
 
       <MonthYearTabs />
 
