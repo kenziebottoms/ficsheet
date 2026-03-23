@@ -13,7 +13,7 @@ export const DataCacheProvider = ({ children }: PropsWithChildren) => {
   const thisYear = new Date().getFullYear();
 
   useEffect(() => {
-    selectAllWordCounts().then(setDailyEntries)
+    selectAllWordCounts(thisYear).then(setDailyEntries)
     selectDailyTotals(thisYear).then(setDailyTotals)
     selectRunningTotal(thisYear).then(setRunningTotal)
   }, [thisYear])

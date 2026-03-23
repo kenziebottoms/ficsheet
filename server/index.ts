@@ -22,9 +22,15 @@ app.get("/dailyTotals", (req, res) => {
   );
   return res.json(data).status(200);
 });
-app.get("/entries", (_req, res) => {
-  console.log("fetching word counts");
-  const data = select("* FROM word_count ORDER BY date DESC");
+app.get("/entries", (req, res) => {
+  const { year } = req.query as Record<string, string>;
+  if (!year || isNaN(parseInt(year, 10))) {
+    return res.status(400).send("please supply a valid year");
+  }
+  console.log("fetching word counts" + (year ? ` (${year})` : ""));
+  const data = select(
+    `* FROM word_count ${getYearlyWhereClause(year)} ORDER BY date ASC`,
+  );
   return res.json(data).status(200);
 });
 app.post("/ingest", (req, res) => {
