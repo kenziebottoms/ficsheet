@@ -11,10 +11,14 @@ const PORT = 2000;
 app.use(cors());
 app.use(express.json());
 
-app.get("/dailyTotals", (_req, res) => {
+app.get("/dailyTotals", (req, res) => {
+  const { year } = req.query as Record<string, string>;
+  if (!year || isNaN(parseInt(year, 10))) {
+    res.status(400).send("please supply a valid year");
+  }
   console.log("fetching daily totals");
   const data = select(
-    "date, SUM(count) as daily_total FROM word_count GROUP BY date",
+    `date, SUM(count) as daily_total FROM word_count WHERE date BETWEEN '${year}-01-01' AND '${year}-12-31' GROUP BY date`,
   );
   res.json(data).status(200);
 });
