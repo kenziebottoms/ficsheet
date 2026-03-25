@@ -59,6 +59,16 @@ app.get("/runningTotal", (req, res) => {
   );
   return res.json(data).status(200);
 });
+/**
+ * GET /years
+ * returns a numerically sorted array of years represented by the entries in `word_count`
+ */
+app.get("/years", (_req, res) => {
+  const data = select<{ year: string }>(
+    `DISTINCT strftime('%Y', date) as year FROM word_count`,
+  ).map(({ year }) => parseInt(year, 10));
+  return res.json(data.sort()).status(200);
+});
 
 app.listen(PORT, (error) => {
   console.log("seeding database");
