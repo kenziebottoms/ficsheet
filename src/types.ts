@@ -46,6 +46,12 @@ export type WordCountEntry = {
   count: number;
 };
 
+export type YearContextValue = {
+  year: number;
+  setYear: (newYear: number) => void;
+  availableYears: number[];
+};
+
 /**
  * Referential types
  */

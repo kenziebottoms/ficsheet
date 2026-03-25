@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { use, useState } from 'react'
 import { lastDayOfMonth } from 'date-fns';
 
 import { BoundedTimeframe, PeriodButtonStyles } from '../../../classes/BoundedTimeframe';
+import { YearContext } from '../../../contexts/Year/YearContext';
 import { MonthNames } from '../../../types';
 
 import Button from '../../Button';
@@ -13,31 +14,32 @@ import DailyWordCountStats from "./DailyWordCountStats";
 import RunningTotalLine from "./RunningTotalLine";
 
 const MonthYearTabs = () => {
-  const today = new Date();
-  const thisYear = today.getFullYear();
+  const { year } = use(YearContext)
+  const thisYear = new Date().getFullYear()
 
   const timeframes: {
     timeframe: BoundedTimeframe,
     label: string
   }[] = [
-      // YTD
+      // Whole Year (or YTD if current year)
       {
-        label: `${thisYear}`,
+        label: year === thisYear ? 'YTD' : `${year}`,
         timeframe: new BoundedTimeframe({
-          startDate: new Date(new Date().getFullYear(), 0, 1),
+          startDate: new Date(year, 0, 1),
           endDate: new Date(),
           period: "yearly"
         })
       },
-      // Monthly to current month
+      // Monthly
       ...MonthNames
-        .slice(0, today.getMonth() + 1)
+        // (to date if current year)
+        .slice(0, year === thisYear ? (new Date().getMonth() + 1) : 12)
         .map((_month, monthIndex) => ({
           label: MonthNames[monthIndex].slice(0, 3),
           timeframe: new BoundedTimeframe({
-            startDate: new Date(thisYear, monthIndex, 1),
+            startDate: new Date(year, monthIndex, 1),
             // if current month, cap at today
-            endDate: monthIndex === new Date().getMonth() ? new Date() : lastDayOfMonth(new Date(thisYear, monthIndex, 1)),
+            endDate: monthIndex === new Date().getMonth() ? new Date() : lastDayOfMonth(new Date(year, monthIndex, 1)),
             period: "monthly"
           })
         })),
