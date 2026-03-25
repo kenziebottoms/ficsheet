@@ -1,3 +1,4 @@
+import { MonthProvider } from "../../contexts/Month/MonthProvider";
 import { YearProvider } from "../../contexts/Year/YearProvider";
 
 import MonthlyFandomBar from "./MonthlyFandomBar";
@@ -13,13 +14,15 @@ const Charts = ({
     <div className={["p-3 flex flex-col gap-3", className].join(" ")}>
       <h2>Charts</h2>
 
-      <MonthYearTabs />
+      <YearProvider>
+        <MonthProvider>
+          <MonthYearTabs />
+        </MonthProvider>
+      </YearProvider>
 
       <h3 className="w-full my-2">This Year</h3>
       <div className="flex flex-row flex-wrap gap-3">
-        <YearProvider>
-          <MonthlyFandomBar />
-        </YearProvider>
+        <MonthlyFandomBar />
       </div>
     </div >
   )

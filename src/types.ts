@@ -18,6 +18,11 @@ export const DaysOfWeek = [
 ] as const;
 export type DayOfWeek = (typeof DaysOfWeek)[number];
 
+export type MonthContextValue = {
+  month: number | null;
+  setMonth: (newMonth: number | null) => void;
+};
+
 export const MonthNames = [
   "January",
   "February",

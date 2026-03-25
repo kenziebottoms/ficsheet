@@ -2,6 +2,7 @@ import { use, useState } from 'react'
 import { lastDayOfMonth } from 'date-fns';
 
 import { BoundedTimeframe, PeriodButtonStyles } from '../../../classes/BoundedTimeframe';
+import { MonthContext } from '../../../contexts/Month/MonthContext';
 import { YearContext } from '../../../contexts/Year/YearContext';
 import { MonthNames } from '../../../types';
 
@@ -14,7 +15,8 @@ import DailyWordCountStats from "./DailyWordCountStats";
 import RunningTotalLine from "./RunningTotalLine";
 
 const MonthYearTabs = () => {
-  const { year } = use(YearContext)
+  const { year, setYear, availableYears } = use(YearContext)
+  const { month, setMonth } = use(MonthContext)
   const thisYear = new Date().getFullYear()
 
   const timeframes: {
@@ -49,16 +51,38 @@ const MonthYearTabs = () => {
 
   return <>
     <div className="flex flex-row gap-2">
-      {timeframes.map(({ timeframe: t, label }, i) => <Button
-        key={i}
-        style={PeriodButtonStyles[t.period]}
-        className={["transition-all duration-100 capitalize", t.equals(timeframe) ? 'rounded-b-none mt-2' : 'mb-2'].join(" ")}
-        onClick={() => setTimeframe(t)}
+      {availableYears.map(y => <Button
+        key={y}
+        style={year === y ? 'primary' : 'subtle'}
+        className={["transition-all duration-100 capitalize", y === year ? 'rounded-b-none mt-2' : 'mb-2'].join(" ")}
+        onClick={() => setYear(y)}
       >
-        {label}
+        {y}
       </Button>)}
     </div>
-    <div className={[ButtonBackgroundClassNames[PeriodButtonStyles[timeframe.period]], "-mt-3 rounded-tl-none rounded-lg p-3 space-y-3"].join(' ')}>
+    <div className={[ButtonBackgroundClassNames[PeriodButtonStyles[month === null ? 'yearly' : 'monthly']], "-mt-3 rounded-tl-none rounded-lg p-3 space-y-3"].join(' ')}>
+      <div className="flex flex-row gap-2 bg-zinc-900 p-2 rounded-xl">
+        <Button
+          style={month == null ? 'primary' : 'subtle'}
+          onClick={() => setMonth(null)}
+          className='whitespace-nowrap'
+        >
+          {year === thisYear ? 'YTD' : "Overall"}
+        </Button>
+        {MonthNames
+          // (to date if current year)
+          .slice(0, year === thisYear ? (new Date().getMonth() + 1) : 12)
+          .map((monthName, m) => <Button
+            key={m}
+            style={month === m ? 'secondary' : 'subtle'}
+            className={["transition-all duration-100 capitalize"].join(" ")}
+            onClick={() => setMonth(m)}
+            small
+          >
+            {monthName.slice(0, 3)}
+          </Button>)}
+      </div>
+
       <div className="flex flex-row flex-wrap gap-3">
         <DailyWordCountStats timeframe={timeframe} />
       </div>
