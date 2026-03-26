@@ -7,20 +7,6 @@ import {
   parse,
 } from "date-fns";
 
-import type { BoundedTimeframe } from "../../../classes/BoundedTimeframe";
-
-export const filterByTimeframe = <T extends { date: string }>(
-  items: T[],
-  timeframe: BoundedTimeframe,
-) => {
-  return items.filter((item) => {
-    const fnDate = parse(item.date, "yyyy-MM-dd", new Date());
-    const notBeforeTimeframe = !isBefore(fnDate, timeframe.startDate);
-    const notAfterTimeframe = !isAfter(fnDate, timeframe.endDate);
-    return notBeforeTimeframe && notAfterTimeframe;
-  });
-};
-
 export const filterByYearAndMonth = <T extends { date: string }>(
   items: T[],
   year: number,
