@@ -3,8 +3,6 @@ import { describe, it } from "node:test";
 
 import { readWordCountSpreadsheetRow } from "./csvHandler.ts";
 
-describe("processHeaders", () => {});
-
 const fandoms = [
   "Mad Max",
   "Inception",
