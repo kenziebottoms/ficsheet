@@ -2,6 +2,8 @@ import { useEffect, useState, type PropsWithChildren } from "react";
 
 import { selectAvailableYears } from "../../api";
 
+import { DataCacheProvider } from "../DataCache/DataCacheProvider";
+
 import { YearContext } from "./YearContext";
 
 type Props = PropsWithChildren & {
@@ -21,7 +23,9 @@ export const YearProvider = ({ initialValue, children }: Props) => {
       setYear,
       availableYears,
     }}>
-      {children}
+      <DataCacheProvider year={year}>
+        {children}
+      </DataCacheProvider>
     </YearContext>
   );
 }

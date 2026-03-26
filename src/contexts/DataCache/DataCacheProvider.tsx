@@ -5,18 +5,19 @@ import type { WordCountEntry, RunningTotal, DailyTotal } from "../../types";
 
 import { DataCacheContext } from "./DataCacheContext";
 
-export const DataCacheProvider = ({ children }: PropsWithChildren) => {
+type Props = PropsWithChildren & {
+  year: number;
+}
+export const DataCacheProvider = ({ year, children }: Props) => {
   const [dailyEntries, setDailyEntries] = useState<WordCountEntry[]>([])
   const [dailyTotals, setDailyTotals] = useState<DailyTotal[]>([])
   const [runningTotal, setRunningTotal] = useState<RunningTotal[]>([])
 
-  const thisYear = new Date().getFullYear();
-
   useEffect(() => {
-    selectAllWordCounts(thisYear).then(setDailyEntries)
-    selectDailyTotals(thisYear).then(setDailyTotals)
-    selectRunningTotal(thisYear).then(setRunningTotal)
-  }, [thisYear])
+    selectAllWordCounts(year).then(setDailyEntries)
+    selectDailyTotals(year).then(setDailyTotals)
+    selectRunningTotal(year).then(setRunningTotal)
+  }, [year])
 
   return (
     <DataCacheContext.Provider value={{
