@@ -2,22 +2,23 @@ import { use } from 'react'
 import _ from 'lodash'
 
 import { DataCacheContext } from '../../../contexts/DataCache/DataCacheContext'
+import { MonthContext } from '../../../contexts/Month/MonthContext'
+import { YearContext } from '../../../contexts/Year/YearContext'
 
 import Badge from '../../Badge'
 
 import DailyTotalSparkline from './DailyTotalSparkline'
-import type { MonthYearChartProps } from './types'
-import { filterByTimeframe } from './utils'
+import { filterByYearAndMonth } from './utils'
 
-const DailyWordCountStats = ({
-  timeframe
-}: MonthYearChartProps) => {
+const DailyWordCountStats = () => {
   const { dailyEntries } = use(DataCacheContext)
-  const filteredEntries = filterByTimeframe(dailyEntries, timeframe)
+  const { year } = use(YearContext)
+  const { month } = use(MonthContext)
+  const filteredEntries = filterByYearAndMonth(dailyEntries, year, month, true)
 
   return (
     <div className='bg-zinc-800 p-3 rounded-md space-y-3 w-auto flex flex-col items-start'>
-      <DailyTotalSparkline timeframe={timeframe} />
+      <DailyTotalSparkline />
       <div className='flex flex-row flex-wrap gap-3'>
         <Badge title="Maximum" style="primary">
           <span className='font-semibold text-white'>{_.maxBy(filteredEntries, 'count')?.count || 0}</span> words

@@ -1,7 +1,5 @@
-import { use, useState } from 'react'
-import { lastDayOfMonth } from 'date-fns';
+import { use } from 'react'
 
-import { BoundedTimeframe, PeriodButtonStyles } from '../../../classes/BoundedTimeframe';
 import { MonthContext } from '../../../contexts/Month/MonthContext';
 import { YearContext } from '../../../contexts/Year/YearContext';
 import { MonthNames } from '../../../types';
@@ -19,36 +17,6 @@ const MonthYearTabs = () => {
   const { month, setMonth } = use(MonthContext)
   const thisYear = new Date().getFullYear()
 
-  const timeframes: {
-    timeframe: BoundedTimeframe,
-    label: string
-  }[] = [
-      // Whole Year (or YTD if current year)
-      {
-        label: year === thisYear ? 'YTD' : `${year}`,
-        timeframe: new BoundedTimeframe({
-          startDate: new Date(year, 0, 1),
-          endDate: new Date(),
-          period: "yearly"
-        })
-      },
-      // Monthly
-      ...MonthNames
-        // (to date if current year)
-        .slice(0, year === thisYear ? (new Date().getMonth() + 1) : 12)
-        .map((_month, monthIndex) => ({
-          label: MonthNames[monthIndex].slice(0, 3),
-          timeframe: new BoundedTimeframe({
-            startDate: new Date(year, monthIndex, 1),
-            // if current month, cap at today
-            endDate: monthIndex === new Date().getMonth() ? new Date() : lastDayOfMonth(new Date(year, monthIndex, 1)),
-            period: "monthly"
-          })
-        })),
-    ]
-
-  const [timeframe, setTimeframe] = useState<BoundedTimeframe>(timeframes[0].timeframe)
-
   return <>
     <div className="flex flex-row gap-2">
       {availableYears.map(y => <Button
@@ -60,7 +28,7 @@ const MonthYearTabs = () => {
         {y}
       </Button>)}
     </div>
-    <div className={[ButtonBackgroundClassNames[PeriodButtonStyles[month === null ? 'yearly' : 'monthly']], "-mt-3 rounded-tl-none rounded-lg p-3 space-y-3"].join(' ')}>
+    <div className={[ButtonBackgroundClassNames[month === null ? 'primary' : 'secondary'], "-mt-3 rounded-tl-none rounded-lg p-3 space-y-3"].join(' ')}>
       <div className="flex flex-row gap-2 bg-zinc-900 p-2 rounded-xl">
         <Button
           style={month == null ? 'primary' : 'subtle'}
@@ -84,13 +52,13 @@ const MonthYearTabs = () => {
       </div>
 
       <div className="flex flex-row flex-wrap gap-3">
-        <DailyWordCountStats timeframe={timeframe} />
+        <DailyWordCountStats />
       </div>
 
       <div className="flex flex-row flex-wrap gap-3">
-        <FandomPie timeframe={timeframe} />
-        <RunningTotalLine timeframe={timeframe} />
-        <DayOfWeekRadar timeframe={timeframe} />
+        <FandomPie />
+        <RunningTotalLine />
+        <DayOfWeekRadar />
       </div>
     </div>
   </>

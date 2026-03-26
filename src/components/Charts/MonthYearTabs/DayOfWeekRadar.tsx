@@ -4,18 +4,19 @@ import _ from 'lodash'
 import { parse } from 'date-fns'
 
 import { DataCacheContext } from '../../../contexts/DataCache/DataCacheContext'
+import { MonthContext } from '../../../contexts/Month/MonthContext'
+import { YearContext } from '../../../contexts/Year/YearContext'
 import { DaysOfWeek } from '../../../types'
 
 import Widget from '../../Widget'
 
-import { filterByTimeframe } from './utils'
-import type { MonthYearChartProps } from './types'
+import { filterByYearAndMonth } from './utils'
 
-const DayOfWeekRadar = ({
-  timeframe
-}: MonthYearChartProps) => {
+const DayOfWeekRadar = () => {
   const { dailyTotals } = use(DataCacheContext);
-  const dailyTotalsByWeekday = _.groupBy(filterByTimeframe(dailyTotals, timeframe), dt => parse(dt.date, 'yyyy-MM-dd', new Date()).getDay());
+  const { year } = use(YearContext)
+  const { month } = use(MonthContext)
+  const dailyTotalsByWeekday = _.groupBy(filterByYearAndMonth(dailyTotals, year, month, true), dt => parse(dt.date, 'yyyy-MM-dd', new Date()).getDay());
   const data = DaysOfWeek.map((_day, i) => _.meanBy(dailyTotalsByWeekday[i], 'daily_total') || 0)
 
   return <Widget title="Day Of Week Average">

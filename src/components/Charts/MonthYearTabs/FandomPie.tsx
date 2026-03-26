@@ -3,23 +3,25 @@ import { PieChart } from '@mui/x-charts'
 import _ from 'lodash'
 
 import { DataCacheContext } from '../../../contexts/DataCache/DataCacheContext';
+import { MonthContext } from '../../../contexts/Month/MonthContext';
+import { YearContext } from '../../../contexts/Year/YearContext';
 
 import Widget from '../../Widget';
 
 import { colors } from '../constants';
 
-import { filterByTimeframe } from './utils';
-import type { MonthYearChartProps } from './types';
+import { filterByYearAndMonth } from './utils';
 
-const FandomPie = ({
-  timeframe
-}: MonthYearChartProps) => {
+const FandomPie = () => {
   const { dailyEntries } = use(DataCacheContext)
-  const fandoms = Object.keys(_.countBy(dailyEntries, 'fandom')).sort()
+  const { year } = use(YearContext)
+  const { month } = use(MonthContext)
+  const entries = filterByYearAndMonth(dailyEntries, year, month, true)
+  const fandoms = Object.keys(_.countBy(entries, 'fandom')).sort()
   const data = fandoms.map((fandom, i) => ({
     id: i,
     label: fandom,
-    value: _.sumBy(_.filter(filterByTimeframe(dailyEntries, timeframe), { fandom }), 'count'),
+    value: _.sumBy(_.filter(entries, { fandom }), 'count'),
   }))
 
   return <Widget title="Word Count By Fandom">

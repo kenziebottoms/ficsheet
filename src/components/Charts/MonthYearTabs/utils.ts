@@ -28,7 +28,6 @@ export const filterByYearAndMonth = <T extends { date: string }>(
   filterFuture = false,
 ) => {
   const startDate = new Date(year, month || 0, 1);
-  console.log("year, month || 0, 1", year, month || 0, 1);
   const endDate = month == null ? endOfYear(startDate) : endOfMonth(startDate);
   return items.filter((item) => {
     const fnDate = parse(item.date, "yyyy-MM-dd", new Date());

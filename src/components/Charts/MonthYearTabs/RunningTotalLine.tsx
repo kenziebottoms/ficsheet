@@ -4,19 +4,20 @@ import _ from 'lodash'
 import { format, isValid } from 'date-fns';
 
 import { DataCacheContext } from '../../../contexts/DataCache/DataCacheContext';
+import { MonthContext } from '../../../contexts/Month/MonthContext';
+import { YearContext } from '../../../contexts/Year/YearContext';
 
 import Widget from '../../Widget';
 
 import { colors } from '../constants';
 
-import { addTimestamp, filterByTimeframe, } from './utils';
-import type { MonthYearChartProps } from './types';
+import { addTimestamp, filterByYearAndMonth, } from './utils';
 
-const RunningTotalLine = ({
-  timeframe
-}: MonthYearChartProps) => {
+const RunningTotalLine = () => {
   const { runningTotal } = use(DataCacheContext)
-  const dataset = filterByTimeframe(runningTotal, timeframe).map(addTimestamp)
+  const { year } = use(YearContext)
+  const { month } = use(MonthContext)
+  const dataset = filterByYearAndMonth(runningTotal, year, month, true).map(addTimestamp)
 
   return <Widget title="Running Total">
     <LineChart
