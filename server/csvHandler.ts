@@ -21,10 +21,10 @@ export const readWordCountSpreadsheetRow = (
     const projects = cells[cells.length - 3];
 
     let entries: WordCountEntry[] = [];
-    fandomTotals
-      .filter((x) => x !== "")
-      .forEach((fandomTotal, fandomTotalIndex) => {
-        if (projects.split(",")[fandomTotalIndex] === undefined) {
+    let nonEmptyFandomTotalIndex = 0;
+    fandomTotals.forEach((fandomTotal, fandomTotalIndex) => {
+      if (fandomTotal !== "") {
+        if (projects.split(",")[nonEmptyFandomTotalIndex] === undefined) {
           throw new Error(
             `Entry for ${date} contains more word counts than fandoms.`,
           );
@@ -32,10 +32,12 @@ export const readWordCountSpreadsheetRow = (
         entries.push({
           fandom: fandoms[fandomTotalIndex].trim(),
           count: parseInt(fandomTotal, 10),
-          fic: projects.split(",")[fandomTotalIndex].trim(),
+          fic: projects.split(",")[nonEmptyFandomTotalIndex].trim(),
           date,
         });
-      });
+        nonEmptyFandomTotalIndex++;
+      }
+    });
     return entries;
   } else {
     console.log(`invalid date '${dateString}'`);
@@ -63,6 +65,9 @@ export async function readCSV(
         fandoms = row.slice(3, row.length - 3);
       } else {
         const newEntries = readWordCountSpreadsheetRow(row, fandoms, year);
+        if (newEntries.find((entry) => entry.fic === "nancy tops")) {
+          console.log(row, fandoms);
+        }
         if (newEntries.length > 0) {
           if (updateDb) {
             newEntries.forEach(insertWordCount);

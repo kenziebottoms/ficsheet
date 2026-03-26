@@ -121,4 +121,37 @@ describe("readWordCountSpreadsheetRow", () => {
       ],
     );
   });
+  it("3rd fandom", () => {
+    assert.deepEqual(
+      readWordCountSpreadsheetRow(
+        [
+          "Dec",
+          "31",
+          "5",
+          "",
+          "",
+          "5",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "nancy tops",
+          "27227",
+          "",
+        ],
+        fandoms,
+        2025,
+      ),
+      [
+        {
+          count: 5,
+          date: "2025-12-31",
+          fandom: "Stranger Things",
+          fic: "nancy tops",
+        },
+      ],
+    );
+  });
 });
