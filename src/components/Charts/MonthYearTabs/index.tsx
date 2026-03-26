@@ -10,6 +10,7 @@ import { ButtonBackgroundClassNames } from '../../constants'
 import DayOfWeekRadar from "./DayOfWeekRadar";
 import FandomPie from './FandomPie';
 import DailyWordCountStats from "./DailyWordCountStats";
+import MonthlyFandomBar from './MonthlyFandomBar';
 import RunningTotalLine from "./RunningTotalLine";
 
 const MonthYearTabs = () => {
@@ -28,37 +29,54 @@ const MonthYearTabs = () => {
         {y}
       </Button>)}
     </div>
-    <div className={[ButtonBackgroundClassNames[month === null ? 'primary' : 'secondary'], "-mt-3 rounded-tl-none rounded-lg p-3 space-y-3"].join(' ')}>
-      <div className="flex flex-row gap-2 bg-zinc-900 p-2 rounded-xl">
-        <Button
-          style={month == null ? 'primary' : 'subtle'}
-          onClick={() => setMonth(null)}
-          className='whitespace-nowrap'
-        >
-          {year === thisYear ? 'YTD' : "Overall"}
-        </Button>
-        {MonthNames
-          // (to date if current year)
-          .slice(0, year === thisYear ? (new Date().getMonth() + 1) : 12)
-          .map((monthName, m) => <Button
-            key={m}
-            style={month === m ? 'secondary' : 'subtle'}
-            className={["transition-all duration-100 capitalize"].join(" ")}
-            onClick={() => setMonth(m)}
-            small
+    <div className={[
+      ButtonBackgroundClassNames.primary,
+      year === availableYears[0] ? 'rounded-tl-none' : '',
+      "-mt-3 rounded-xl p-3 space-y-3"
+    ].join(' ')}>
+      <div className="bg-zinc-900 p-3 rounded-xl">
+        <div className='flex flex-row gap-2'>
+          <MonthlyFandomBar />
+        </div>
+
+        <div className='flex flex-row gap-2 mt-3'>
+          <Button
+            style={month == null ? 'primary' : 'subtle'}
+            onClick={() => setMonth(null)}
+            className={['whitespace-nowrap transition-all', month == null ? 'rounded-b-none mt-2' : 'mb-2'].join(' ')}
           >
-            {monthName.slice(0, 3)}
-          </Button>)}
-      </div>
-
-      <div className="flex flex-row flex-wrap gap-3">
-        <DailyWordCountStats />
-      </div>
-
-      <div className="flex flex-row flex-wrap gap-3">
-        <FandomPie />
-        <RunningTotalLine />
-        <DayOfWeekRadar />
+            {year === thisYear ? 'YTD' : "Overall"}
+          </Button>
+          {MonthNames
+            // (to date if current year)
+            .slice(0, year === thisYear ? (new Date().getMonth() + 1) : 12)
+            .map((monthName, m) => <Button
+              key={m}
+              style={month === m ? 'secondary' : 'subtle'}
+              className={[
+                "transition-all duration-100 capitalize",
+                m === month ? 'rounded-b-none mt-2' : 'mb-2'
+              ].join(" ")}
+              onClick={() => setMonth(m)}
+              small
+            >
+              {monthName.slice(0, 3)}
+            </Button>)}
+        </div>
+        <div className={[
+          'rounded-md p-3 space-y-3',
+          month == null ? 'rounded-tl-none' : '',
+          ButtonBackgroundClassNames[month === null ? 'primary' : 'secondary']
+        ].join(' ')}>
+          <div className="flex flex-row flex-wrap gap-3">
+            <DailyWordCountStats />
+          </div>
+          <div className="flex flex-row flex-wrap gap-3">
+            <FandomPie />
+            <RunningTotalLine />
+            <DayOfWeekRadar />
+          </div>
+        </div>
       </div>
     </div>
   </>

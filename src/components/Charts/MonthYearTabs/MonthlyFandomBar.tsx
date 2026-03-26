@@ -3,17 +3,22 @@ import { BarChart } from '@mui/x-charts'
 import _ from 'lodash'
 import { format } from 'date-fns';
 
-import { DataCacheContext } from '../../contexts/DataCache/DataCacheContext';
+import { DataCacheContext } from '../../../contexts/DataCache/DataCacheContext';
+import { YearContext } from '../../../contexts/Year/YearContext';
 
-import Widget from '../Widget';
+import Widget from '../../Widget';
 
-import { colors } from './constants';
+import { colors } from '../constants';
+
+import { filterByYearAndMonth } from './utils';
 
 const MonthlyFandomBar = () => {
   const { dailyEntries } = use(DataCacheContext)
-  const fandoms = Object.keys(_.countBy(dailyEntries, 'fandom')).sort()
+  const { year } = use(YearContext)
+  const entries = filterByYearAndMonth(dailyEntries, year, null, true)
+  const fandoms = Object.keys(_.countBy(entries, 'fandom')).sort()
 
-  const entriesGroupedByMonth = _.groupBy(dailyEntries, ({ date }) => format(date, 'MMM'))
+  const entriesGroupedByMonth = _.groupBy(entries, ({ date }) => format(date, 'MMM'))
 
   const monthlyTotalByFandom = _.map(entriesGroupedByMonth, (monthlyEntries, month) => {
     const monthlyFandomEntries = _.groupBy(monthlyEntries, 'fandom')

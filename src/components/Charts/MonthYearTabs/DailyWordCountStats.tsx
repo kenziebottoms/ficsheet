@@ -17,7 +17,7 @@ const DailyWordCountStats = () => {
   const filteredEntries = filterByYearAndMonth(dailyEntries, year, month, true)
 
   return (
-    <div className='bg-zinc-800 p-3 rounded-md space-y-3 w-auto flex flex-col items-start'>
+    <div className='bg-zinc-900 p-3 rounded-md space-y-3 w-auto flex flex-col items-start'>
       <DailyTotalSparkline />
       <div className='flex flex-row flex-wrap gap-3'>
         <Badge title="Maximum" style="primary">

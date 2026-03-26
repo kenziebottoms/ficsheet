@@ -9,7 +9,7 @@ const Widget = ({
   subtitle,
   children,
 }: Props) => {
-  return <div className='rounded-lg bg-background border-2 border-dashed border-zinc-700 p-3'>
+  return <div className='rounded-lg bg-zinc-800 border-2 border-dashed border-zinc-500 p-3'>
     <h4 className='mb-2'>{title}</h4>
     {subtitle && <h5>{subtitle}</h5>}
     {children}

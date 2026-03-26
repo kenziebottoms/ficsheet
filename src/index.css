@@ -74,7 +74,7 @@ h3 {
 }
 h4 {
   font-size: 1.2rem;
-  @apply font-medium text-zinc-400;
+  @apply font-medium text-zinc-300/80;
 }
 h5 {
   font-size: 1rem;
