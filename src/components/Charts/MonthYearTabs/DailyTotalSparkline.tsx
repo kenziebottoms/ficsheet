@@ -19,7 +19,7 @@ const DailyTotalSparkline = () => {
     <Widget title="Daily Word Count">
       <SparkLineChart
         data={data}
-        width={data.length * 8}
+        width={month == null ? Math.max(800, data.length) : (data.length * 12)}
         height={60}
         area
         sx={{
