@@ -26,7 +26,7 @@ const MonthlyFandomBar = () => {
       month,
       ..._.mapValues(monthlyFandomEntries, entries => _.sumBy(entries, 'count'))
     }
-  }).reverse();
+  });
 
   return <Widget title="Monthly Word Count By Fandom">
     <BarChart
