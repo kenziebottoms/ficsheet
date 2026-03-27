@@ -1,4 +1,4 @@
-import { use } from 'react'
+import { use, useState } from 'react'
 
 import { MonthContext } from '../../../contexts/Month/MonthContext';
 import { YearContext } from '../../../contexts/Year/YearContext';
@@ -6,6 +6,7 @@ import { MonthNames } from '../../../types';
 
 import Button from '../../Button';
 import { ButtonBackgroundClassNames } from '../../constants'
+import History from '../../History';
 
 import DayOfWeekRadar from "./DayOfWeekRadar";
 import FandomPie from './FandomPie';
@@ -17,6 +18,8 @@ const MonthYearTabs = () => {
   const { year, setYear, availableYears } = use(YearContext)
   const { month, setMonth } = use(MonthContext)
   const thisYear = new Date().getFullYear()
+
+  const [showHistory, setShowHistory] = useState<boolean>(false)
 
   return <>
     <div className="flex flex-row gap-2">
@@ -35,8 +38,17 @@ const MonthYearTabs = () => {
       "-mt-3 rounded-xl p-3 space-y-3"
     ].join(' ')}>
       <div className="bg-zinc-900 p-3 rounded-xl">
-        <div className='flex flex-row gap-2'>
-          <MonthlyFandomBar />
+        <div className='flex flex-row gap-2 justify-between'>
+          {!showHistory && <MonthlyFandomBar />}
+
+          {!showHistory && <Button
+            style={showHistory ? "primary" : 'secondary'}
+            onClick={() => setShowHistory(!showHistory)}
+            className='self-start'
+          >
+            Edit
+          </Button>}
+          {showHistory && <History className='grow' />}
         </div>
 
         <div className='flex flex-row gap-2 mt-3'>

@@ -1,12 +1,12 @@
 import type { SubmitEventHandler } from 'react';
 
-import type { WordCountEntry } from '../../types';
+import type { WordCountEntry } from '../types';
 
-import Button from '../Button';
-import DateInput from '../DateInput';
-import Dropdown from '../Dropdown';
-import Input from '../Input';
-import TextArea from '../TextArea';
+import Button from './Button';
+import DateInput from './DateInput';
+import Dropdown from './Dropdown';
+import Input from './Input';
+import TextArea from './TextArea';
 import { addDays, isBefore } from 'date-fns';
 
 export type DailyProjectWordCountFormValues = {

@@ -1,10 +1,12 @@
 import { use, useState } from "react";
 
-import { DataCacheContext } from "../../contexts/DataCache/DataCacheContext";
-import type { WordCountEntry } from "../../types"
+import { DataCacheContext } from "../contexts/DataCache/DataCacheContext";
+import { MonthContext } from "../contexts/Month/MonthContext";
+import { YearContext } from "../contexts/Year/YearContext";
+import type { WordCountEntry } from "../types"
 
-import Button from "../Button";
-
+import Button from "./Button";
+import { filterByYearAndMonth } from "./Charts/MonthYearTabs/utils";
 import DailyProjectWordCountForm from "./DailyProjectWordCountForm";
 
 type Props = {
@@ -14,9 +16,14 @@ const History = ({
   className = ''
 }: Props) => {
   const { dailyEntries } = use(DataCacheContext)
+  const { year } = use(YearContext)
+  const { month } = use(MonthContext)
+
   const [showEntryForm, setShowEntryForm] = useState<boolean>(false)
 
-  return <div className={["p-3 space-y-3", className].join(" ")}>
+  const entries = filterByYearAndMonth(dailyEntries, year, month, false)
+
+  return <div className={["space-y-3", className].join(" ")}>
     <div className="flex flex-row gap-2">
       <h2 className="grow">History</h2>
       <Button style="primary" onClick={() => setShowEntryForm(!showEntryForm)}>Log</Button>
@@ -47,7 +54,7 @@ const History = ({
         </tr>
       </thead>
       <tbody className="font-normal">
-        {dailyEntries.map((row, rowIndex) =>
+        {entries.map((row, rowIndex) =>
           <tr
             key={rowIndex}
             className={[
