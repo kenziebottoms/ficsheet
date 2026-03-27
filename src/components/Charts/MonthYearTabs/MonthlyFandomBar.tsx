@@ -38,7 +38,7 @@ const MonthlyFandomBar = () => {
         stack: 'total'
       }))}
       colors={colors}
-      width={500}
+      width={100 + monthlyTotalByFandom.length * 60}
       height={200}
     />
   </Widget>
