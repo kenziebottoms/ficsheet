@@ -39,16 +39,7 @@ const MonthYearTabs = () => {
     ].join(' ')}>
       <div className="bg-zinc-900 p-3 rounded-xl">
         <div className='flex flex-row gap-2 justify-between'>
-          {!showHistory && <MonthlyFandomBar />}
-
-          {!showHistory && <Button
-            style={showHistory ? "primary" : 'secondary'}
-            onClick={() => setShowHistory(!showHistory)}
-            className='self-start'
-          >
-            Edit
-          </Button>}
-          {showHistory && <History className='grow' />}
+          <MonthlyFandomBar />
         </div>
 
         <div className='flex flex-row gap-2 mt-3'>
@@ -74,20 +65,30 @@ const MonthYearTabs = () => {
             >
               {monthName.slice(0, 3)}
             </Button>)}
+          <div className='grow' />
+          <Button
+            style={showHistory ? "primary" : 'secondary'}
+            onClick={() => setShowHistory(!showHistory)}
+            className='mb-2'
+          >
+            Edit
+          </Button>
         </div>
         <div className={[
           'rounded-md p-3 space-y-3',
           month == null ? 'rounded-tl-none' : '',
           ButtonBackgroundClassNames[month === null ? 'primary' : 'secondary']
         ].join(' ')}>
-          <div className="flex flex-row flex-wrap gap-3">
-            <DailyWordCountStats />
-          </div>
-          <div className="flex flex-row flex-wrap gap-3">
-            <FandomPie />
-            <RunningTotalLine />
-            <DayOfWeekRadar />
-          </div>
+          {showHistory ? <History /> : <>
+            <div className="flex flex-row flex-wrap gap-3">
+              <DailyWordCountStats />
+            </div>
+            <div className="flex flex-row flex-wrap gap-3">
+              <FandomPie />
+              <RunningTotalLine />
+              <DayOfWeekRadar />
+            </div>
+          </>}
         </div>
       </div>
     </div>
