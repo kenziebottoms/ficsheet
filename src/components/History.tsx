@@ -1,13 +1,11 @@
-import { use, useState } from "react";
+import { use } from "react";
 
 import { DataCacheContext } from "../contexts/DataCache/DataCacheContext";
 import { MonthContext } from "../contexts/Month/MonthContext";
 import { YearContext } from "../contexts/Year/YearContext";
 import type { WordCountEntry } from "../types"
 
-import Button from "./Button";
 import { filterByYearAndMonth } from "./Charts/MonthYearTabs/utils";
-import DailyProjectWordCountForm from "./DailyProjectWordCountForm";
 
 type Props = {
   className?: string;
@@ -19,17 +17,13 @@ const History = ({
   const { year } = use(YearContext)
   const { month } = use(MonthContext)
 
-  const [showEntryForm, setShowEntryForm] = useState<boolean>(false)
 
   const entries = filterByYearAndMonth(dailyEntries, year, month, false)
 
   return <div className={["space-y-3", className].join(" ")}>
     <div className="flex flex-row gap-2">
       <h2 className="grow">History</h2>
-      <Button style="primary" onClick={() => setShowEntryForm(!showEntryForm)}>Log</Button>
     </div>
-
-    {showEntryForm && <DailyProjectWordCountForm className="bg-zinc-800 my-4" />}
 
     <table className="font-mono w-full rounded-t-xl bg-zinc-950">
       <thead className="font-medium">
