@@ -1,9 +1,11 @@
 import express from "express";
 import cors from "cors";
 
-import { setup } from "./dbSetup.ts";
-import { getYearlyWhereClause, select } from "./queries.ts";
+import type { WordCountEntry } from "../src/types.ts";
+
 import { readCSV } from "./csvHandler.ts";
+import { setup } from "./dbSetup.ts";
+import { getYearlyWhereClause, insertWordCount, select } from "./queries.ts";
 
 const app = express();
 const PORT = 2000;
@@ -32,6 +34,12 @@ app.get("/entries", (req, res) => {
     `* FROM word_count ${getYearlyWhereClause(year)} ORDER BY date ASC`,
   );
   return res.json(data).status(200);
+});
+app.post("/entries", (req, res) => {
+  console.log("posting word counts entry: ");
+  const entries = req.body as WordCountEntry[];
+  entries.map(insertWordCount);
+  return res.json(req.body).status(200);
 });
 app.post("/ingest", (req, res) => {
   const { filename, year, updateDb } = req.query as Record<string, string>;

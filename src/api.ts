@@ -29,6 +29,27 @@ const get = <TReturnType>(path: string): Promise<TReturnType> =>
       .catch((err) => reject(err)),
   );
 
+const post = <TReturnType>(path: string, body: object): Promise<TReturnType> =>
+  new Promise((resolve, reject) =>
+    fetch(`${API_URL}/${path}`, {
+      method: "POST",
+      headers: new Headers({
+        "Content-Type": "multipart/form-data",
+      }),
+      body: JSON.stringify(body),
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          return reject(new Error(response.statusText));
+        }
+      })
+      .then((json) => resolve(json as TReturnType))
+      .catch((err) => reject(err)),
+  );
+export const insertWordCounts = (entries: WordCountEntry[]) =>
+  post(`entries`, { entries });
 export const selectAllWordCounts = (year: number) =>
   get<WordCountEntry[]>(`entries?year=${year}`);
 export const selectDailyTotals = (year: number) =>
