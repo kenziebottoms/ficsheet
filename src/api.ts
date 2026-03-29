@@ -51,13 +51,14 @@ export const insertWordCounts = (entries: WordCountEntry[]) =>
 export const selectAllWordCounts = (year: number) =>
   get<WordCountEntry[]>(`entries?year=${year}`);
 export const selectDailyTotals = (year: number) =>
-  get<DailyTotal[]>(`dailyTotals?year=${year}`).then((nonEmptyDailyTotals) =>
-    getDatesBetween(new Date(year, 0, 1), new Date(year, 11, 31)).map(
-      (date) => ({
-        date,
-        daily_total: _.find(nonEmptyDailyTotals, { date })?.daily_total || 0,
-      }),
-    ),
+  get<DailyTotal[]>(`api/year/${year}/dailyTotals`).then(
+    (nonEmptyDailyTotals) =>
+      getDatesBetween(new Date(year, 0, 1), new Date(year, 11, 31)).map(
+        (date) => ({
+          date,
+          daily_total: _.find(nonEmptyDailyTotals, { date })?.daily_total || 0,
+        }),
+      ),
   );
 export const selectRunningTotal = (year: number) =>
   get<RunningTotal[]>(`api/year/${year}/runningTotal`);

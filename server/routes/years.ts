@@ -26,6 +26,17 @@ yearRouter.use("/:year", (req: YearRequest, res, next) => {
 });
 
 /**
+ * GET /api/year/:year/dailyTotals
+ */
+singleYearRouter.get("/dailyTotals", (req: YearRequest, res) => {
+  console.log(`fetching daily totals (${req.params.year})`);
+  const data = select(
+    `date, SUM(count) as daily_total FROM word_count ${getYearlyWhereClause(req.params.year)} GROUP BY date`,
+  );
+  return res.json(data).status(200);
+});
+
+/**
  * GET /api/year/:year/runningTotal
  */
 singleYearRouter.get("/runningTotal", (req: YearRequest, res) => {

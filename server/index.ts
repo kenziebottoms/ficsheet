@@ -16,17 +16,6 @@ app.use(express.json());
 
 app.use("/api", apiRouter);
 
-app.get("/dailyTotals", (req, res) => {
-  const { year } = req.query as Record<string, string>;
-  if (!year || isNaN(parseInt(year, 10))) {
-    return res.status(400).send("please supply a valid year");
-  }
-  console.log("fetching daily totals" + (year ? ` (${year})` : ""));
-  const data = select(
-    `date, SUM(count) as daily_total FROM word_count ${getYearlyWhereClause(year)} GROUP BY date`,
-  );
-  return res.json(data).status(200);
-});
 app.get("/entries", (req, res) => {
   const { year } = req.query as Record<string, string>;
   if (!year || isNaN(parseInt(year, 10))) {
