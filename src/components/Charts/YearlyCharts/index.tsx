@@ -1,5 +1,7 @@
 import { useState } from 'react'
 
+import { MonthProvider } from '../../../contexts/Month/MonthProvider';
+
 import Button from '../../Button';
 import History from '../../History';
 
@@ -8,9 +10,8 @@ import FandomPie from './FandomPie';
 import DailyWordCountStats from "./DailyWordCountStats";
 import MonthlyFandomBar from './MonthlyFandomBar';
 import RunningTotalLine from "./RunningTotalLine";
-import { MonthProvider } from '../../../contexts/Month/MonthProvider';
 
-const MonthYearTabs = () => {
+const YearlyCharts = () => {
   const [showHistory, setShowHistory] = useState<boolean>(false)
 
   return <>
@@ -49,4 +50,4 @@ const MonthYearTabs = () => {
   </>
 }
 
-export default MonthYearTabs
+export default YearlyCharts

@@ -5,7 +5,7 @@ import { MonthContext } from "../contexts/Month/MonthContext";
 import { YearContext } from "../contexts/Year/YearContext";
 import type { WordCountEntry } from "../types"
 
-import { filterByYearAndMonth } from "./Charts/MonthYearTabs/utils";
+import { filterByYearAndMonth } from "./Charts/YearlyCharts/utils";
 
 const History = () => {
   const { dailyEntries } = use(DataCacheContext)

@@ -1,6 +1,6 @@
 import { YearProvider } from "../../contexts/Year/YearProvider";
 
-import MonthYearTabs from "./MonthYearTabs";
+import YearlyCharts from "./YearlyCharts";
 
 type Props = {
   className?: string;
@@ -11,7 +11,7 @@ const Charts = ({
   return (
     <div className={["p-3 flex flex-col gap-3", className].join(" ")}>
       <YearProvider>
-        <MonthYearTabs />
+        <YearlyCharts />
       </YearProvider>
     </div >
   )
