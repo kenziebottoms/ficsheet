@@ -1,4 +1,5 @@
-import { use, useState } from 'react'
+import { use, useEffect, useState } from 'react'
+import { isFuture } from 'date-fns';
 
 import { MonthContext } from '../../../contexts/Month/MonthContext';
 import { YearContext } from '../../../contexts/Year/YearContext';
@@ -20,6 +21,14 @@ const MonthYearTabs = () => {
   const thisYear = new Date().getFullYear()
 
   const [showHistory, setShowHistory] = useState<boolean>(false)
+
+  // if changing years to a future month
+  useEffect(() => {
+    if (year === thisYear && month != null && isFuture(new Date(thisYear, month, 1))) {
+      // view YTD
+      setMonth(null)
+    }
+  }, [month, year])
 
   return <>
     <div className="flex flex-row gap-2">
