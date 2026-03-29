@@ -59,6 +59,8 @@ export const selectDailyTotals = (year: number) =>
       }),
     ),
   );
+export const selectFandoms = (year: number) =>
+  get<string[]>(`year/${year}/fandoms`);
 export const selectRunningTotal = (year: number) =>
   get<RunningTotal[]>(`year/${year}/runningTotal`);
 export const selectAvailableYears = () => get<number[]>("years");

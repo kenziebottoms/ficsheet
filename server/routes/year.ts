@@ -52,6 +52,17 @@ yearRouter.get("/entries", (req: YearRequest, res) => {
 });
 
 /**
+ * GET /api/year/:year/fandoms
+ */
+yearRouter.get("/fandoms", (req: YearRequest, res) => {
+  console.log(`fetching fandoms (${req.params.year}`);
+  const data = select<{ fandom: string }>(
+    `DISTINCT fandom FROM word_count ${getYearlyWhereClause(req.params.year)} ORDER BY fandom ASC`,
+  );
+  return res.json(data.map(({ fandom }) => fandom)).status(200);
+});
+
+/**
  * POST /api/year/:year/ingest?filename=file.txt&updateDb=true
  */
 yearRouter.post("/ingest", (req: YearRequest, res) => {

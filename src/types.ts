@@ -64,6 +64,7 @@ export type YearContextValue = {
 export type DataCache = {
   dailyEntries: WordCountEntry[];
   dailyTotals: DailyTotal[];
+  fandoms: string[];
   runningTotal: RunningTotal[];
   refreshData: (year?: number) => void;
 };
