@@ -13,7 +13,7 @@ const Toggle = ({
   className = '',
   ...props
 }: Props) => {
-  return <label className={['flex flex-row items-center gap-1', className].join(" ")}>
+  return <label className={['flex flex-row items-center gap-1 cursor-pointer disabled:cursor-not-allowed', className].join(" ")}>
     {label}
     <Switch
       aria-label={label}
