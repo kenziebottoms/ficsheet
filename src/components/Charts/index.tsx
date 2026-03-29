@@ -1,4 +1,3 @@
-import { MonthProvider } from "../../contexts/Month/MonthProvider";
 import { YearProvider } from "../../contexts/Year/YearProvider";
 
 import MonthYearTabs from "./MonthYearTabs";
@@ -12,9 +11,7 @@ const Charts = ({
   return (
     <div className={["p-3 flex flex-col gap-3", className].join(" ")}>
       <YearProvider>
-        <MonthProvider>
-          <MonthYearTabs />
-        </MonthProvider>
+        <MonthYearTabs />
       </YearProvider>
     </div >
   )
