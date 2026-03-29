@@ -31,10 +31,9 @@ const History = () => {
           key={label}
           className={[
             "whitespace-nowrap font-mono text-lg",
-            i === 0 ? "rounded-tl-xl" : "",
-            i === fandoms.length + 1 ? "rounded-tr-xl" : "",
-            i % 4 === 0 ? "bg-pink-400/25" : "",
-            (i + 2) % 4 === 0 ? "bg-orange-400/25" : "",
+            label === 'Date' ? "rounded-tl-xl" : "",
+            label === 'Total' ? "rounded-tr-xl bg-orange-400/25" : "",
+            (label !== "Total" && i % 2 !== 0) ? "bg-pink-400/25" : "",
           ].join(" ")}
         >
           {label}
@@ -56,8 +55,8 @@ const History = () => {
             'total'
           ].map((col, colIndex) => <td key={colIndex} className={[
             "p-2",
-            colIndex % 4 === 0 ? "bg-pink-500/10" : "",
-            (colIndex + 2) % 4 === 0 ? "bg-orange-500/10" : "",
+            (col !== 'total' && colIndex % 2 !== 0) ? "bg-pink-500/10" : "",
+            col === "total" ? "bg-orange-500/10" : "",
             rowIndex === dates.length - 1 ? 'border-b border-primary/50' : ''
           ].join(' ')}>
             {col === 'date' ? date : null}
