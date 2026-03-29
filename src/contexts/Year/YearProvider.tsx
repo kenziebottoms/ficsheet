@@ -1,10 +1,11 @@
 import { useEffect, useState, type PropsWithChildren } from "react";
 
-import { selectAvailableYears } from "../../api";
-import Button from "../../components/Button";
-import { ButtonBackgroundClassNames } from "../../components/constants";
+import { selectAvailableYears } from "@/api";
 
-import { DataCacheProvider } from "../DataCache/DataCacheProvider";
+import Button from "@/components/Button";
+import { ButtonBackgroundClassNames } from "@/components/constants";
+
+import { DataCacheProvider } from "@/contexts/DataCache/DataCacheProvider";
 
 import { YearContext } from "./YearContext";
 

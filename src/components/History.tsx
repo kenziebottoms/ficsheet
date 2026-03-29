@@ -1,11 +1,12 @@
 import { use } from "react";
 
-import { DataCacheContext } from "../contexts/DataCache/DataCacheContext";
-import { MonthContext } from "../contexts/Month/MonthContext";
-import { YearContext } from "../contexts/Year/YearContext";
-import type { WordCountEntry } from "../types"
+import { DataCacheContext } from "@/contexts/DataCache/DataCacheContext";
+import { MonthContext } from "@/contexts/Month/MonthContext";
+import { YearContext } from "@/contexts/Year/YearContext";
 
-import { filterByYearAndMonth } from "./Charts/YearlyCharts/utils";
+import type { WordCountEntry } from "@/types"
+
+import { filterByYearAndMonth } from "@/components/Charts/YearlyCharts/utils";
 
 const History = () => {
   const { dailyEntries } = use(DataCacheContext)

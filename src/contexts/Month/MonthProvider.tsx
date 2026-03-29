@@ -1,11 +1,12 @@
 import { use, useEffect, useState, type PropsWithChildren } from "react";
 import { isFuture } from "date-fns";
 
-import Button from "../../components/Button";
-import { ButtonBackgroundClassNames } from "../../components/constants";
-import { MonthNames } from "../../types";
+import Button from "@/components/Button";
+import { ButtonBackgroundClassNames } from "@/components/constants";
 
-import { YearContext } from "../Year/YearContext";
+import { MonthNames } from "@/types";
+
+import { YearContext } from "@/contexts/Year/YearContext";
 
 import { MonthContext } from "./MonthContext";
 

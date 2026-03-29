@@ -1,4 +1,4 @@
-import { YearProvider } from "../../contexts/Year/YearProvider";
+import { YearProvider } from "@/contexts/Year/YearProvider";
 
 import YearlyCharts from "./YearlyCharts";
 

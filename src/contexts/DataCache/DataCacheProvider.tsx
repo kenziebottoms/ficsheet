@@ -1,7 +1,7 @@
 import { useEffect, useState, type PropsWithChildren } from "react";
 
-import { selectAllWordCounts, selectDailyTotals, selectRunningTotal } from "../../api";
-import type { WordCountEntry, RunningTotal, DailyTotal } from "../../types";
+import { selectAllWordCounts, selectDailyTotals, selectRunningTotal } from "@/api";
+import type { WordCountEntry, RunningTotal, DailyTotal } from "@/types";
 
 import { DataCacheContext } from "./DataCacheContext";
 

@@ -4,7 +4,7 @@ import {
   type WordCountEntry,
   type RunningTotal,
   type DailyTotal,
-} from "../src/types";
+} from "@/types";
 
 import { getDatesBetween } from "./utils";
 

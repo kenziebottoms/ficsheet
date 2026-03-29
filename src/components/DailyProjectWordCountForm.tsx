@@ -2,8 +2,8 @@ import { useState, type SubmitEventHandler } from 'react';
 import Switch from '@mui/material/Switch';
 import { addDays, isBefore } from 'date-fns';
 
-import { insertWordCounts } from '../api';
-import type { WordCountEntry } from '../types';
+import { insertWordCounts } from '@/api';
+import type { WordCountEntry } from '@/types';
 
 import Button from './Button';
 import DateInput from './DateInput';
