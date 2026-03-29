@@ -65,9 +65,6 @@ export async function readCSV(
         fandoms = row.slice(3, row.length - 3);
       } else {
         const newEntries = readWordCountSpreadsheetRow(row, fandoms, year);
-        if (newEntries.find((entry) => entry.fic === "nancy tops")) {
-          console.log(row, fandoms);
-        }
         if (newEntries.length > 0) {
           if (updateDb) {
             newEntries.forEach(insertWordCount);
