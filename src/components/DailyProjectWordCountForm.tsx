@@ -1,8 +1,8 @@
-import { useState, type SubmitEventHandler } from 'react';
-import Switch from '@mui/material/Switch';
+import { use, useState, type SubmitEventHandler } from 'react';
 import { addDays, isBefore } from 'date-fns';
 
 import { insertWordCounts } from '@/api';
+import { DataCacheContext } from '@/contexts/DataCache/DataCacheContext';
 import type { WordCountEntry } from '@/types';
 
 import Button from './Button';
@@ -10,6 +10,7 @@ import DateInput from './DateInput';
 import Dropdown from './Dropdown';
 import Input from './Input';
 import TextArea from './TextArea';
+import Toggle from './Toggle';
 
 export type DailyProjectWordCountFormValues = {
   date: string;
@@ -26,6 +27,8 @@ const DailyProjectWordCountForm = ({
   className = '',
   onCompleted = () => { },
 }: Props) => {
+  const { fandoms } = use(DataCacheContext)
+
   const [showTextarea, setShowTextarea] = useState<boolean>(true)
 
   const handleSubmit: SubmitEventHandler<HTMLFormElement> = e => {
@@ -67,21 +70,16 @@ const DailyProjectWordCountForm = ({
       label="Fandom"
       placeholder='Select a fandom'
       name="fandom"
-      options={[
-        "Inception",
-        "Mad Max"
-      ]}
+      options={fandoms}
     />
 
-    <label className='flex flex-row gap-2'>
-      Count my words
-      <Switch
-        color="secondary"
-        value={showTextarea}
-        onChange={e => setShowTextarea(e.target.checked)}
-        defaultChecked
-      />
-    </label>
+    <Toggle
+      className='flex flex-row gap-2'
+      label="Count my words"
+      color="secondary"
+      value={showTextarea}
+      onChange={setShowTextarea}
+    />
 
     {showTextarea ?
       <TextArea

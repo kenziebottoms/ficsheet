@@ -31,12 +31,14 @@ const YearlyCharts = () => {
           }}
         />
       </Modal>}
-      <Button
-        onClick={() => setShowEntryForm(!showEntryForm)}
-        style='primary'
-      >
-        Log
-      </Button>
+      {year === new Date().getFullYear() && (
+        <Button
+          onClick={() => setShowEntryForm(!showEntryForm)}
+          style='primary'
+        >
+          Log
+        </Button>
+      )}
     </div>
 
     <MonthProvider>
