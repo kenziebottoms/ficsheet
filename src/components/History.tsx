@@ -12,7 +12,6 @@ const History = () => {
   const { year } = use(YearContext)
   const { month } = use(MonthContext)
 
-
   const entries = filterByYearAndMonth(dailyEntries, year, month, false)
 
   return <table className="font-mono w-full rounded-t-xl bg-zinc-950">
