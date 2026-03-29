@@ -21,7 +21,7 @@ const MonthYearTabs = () => {
 
       <MonthProvider>
         {showHistory && <Button
-          style={showHistory ? "primary" : 'secondary'}
+          style="primary"
           onClick={() => setShowHistory(!showHistory)}
           className='self-end'
         >
@@ -31,7 +31,7 @@ const MonthYearTabs = () => {
           <div className="flex flex-row flex-wrap justify-between gap-3">
             <DailyWordCountStats />
             <Button
-              style={showHistory ? "primary" : 'secondary'}
+              style='secondary'
               onClick={() => setShowHistory(!showHistory)}
               className='self-start'
             >
