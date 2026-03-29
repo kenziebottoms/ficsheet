@@ -6,12 +6,15 @@ import type { WordCountEntry } from "../src/types.ts";
 import { readCSV } from "./csvHandler.ts";
 import { setup } from "./dbSetup.ts";
 import { getYearlyWhereClause, insertWordCount, select } from "./queries.ts";
+import apiRouter from "./routes/index.ts";
 
 const app = express();
 const PORT = 2000;
 
 app.use(cors());
 app.use(express.json());
+
+app.use("/api", apiRouter);
 
 app.get("/dailyTotals", (req, res) => {
   const { year } = req.query as Record<string, string>;
@@ -66,16 +69,6 @@ app.get("/runningTotal", (req, res) => {
     `date, SUM(count) OVER (ORDER BY date) AS running_total FROM word_count ${getYearlyWhereClause(year)}`,
   );
   return res.json(data).status(200);
-});
-/**
- * GET /years
- * returns a numerically sorted array of years represented by the entries in `word_count`
- */
-app.get("/years", (_req, res) => {
-  const data = select<{ year: string }>(
-    `DISTINCT strftime('%Y', date) as year FROM word_count`,
-  ).map(({ year }) => parseInt(year, 10));
-  return res.json(data.sort()).status(200);
 });
 
 app.listen(PORT, (error) => {

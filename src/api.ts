@@ -61,4 +61,4 @@ export const selectDailyTotals = (year: number) =>
   );
 export const selectRunningTotal = (year: number) =>
   get<RunningTotal[]>(`runningTotal?year=${year}`);
-export const selectAvailableYears = () => get<number[]>("years");
+export const selectAvailableYears = () => get<number[]>("api/years");
