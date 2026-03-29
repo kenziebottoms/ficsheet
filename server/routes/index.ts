@@ -1,8 +1,9 @@
 import express from "express";
 
 import { select } from "../queries.ts";
+import { type YearRequest } from "../types.ts";
 
-import yearRouter from "./years.ts";
+import yearRouter from "./year.ts";
 
 const apiRouter = express.Router();
 
@@ -19,6 +20,22 @@ apiRouter.get("/years", (_req, res) => {
   return res.json(data.sort()).status(200);
 });
 
-apiRouter.use("/year", yearRouter);
+/**
+ * Validate `year` param
+ */
+apiRouter.use("/year/:year", (req: YearRequest, res, next) => {
+  const year = req.params.year;
+  const validatedYear = parseInt(year, 10);
+  if (
+    !validatedYear ||
+    isNaN(validatedYear) ||
+    validatedYear > 2100 ||
+    validatedYear < 2000
+  ) {
+    return res.status(400).send("please supply a valid year");
+  }
+  next();
+});
+apiRouter.use("/year/:year", yearRouter);
 
 export default apiRouter;

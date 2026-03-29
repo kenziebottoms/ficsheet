@@ -4,31 +4,13 @@ import { getYearlyWhereClause, select } from "../queries.ts";
 import { type YearRequest } from "../types.ts";
 
 const yearRouter = express.Router();
-const singleYearRouter = express.Router();
 
-/** Root URL: /api/year */
-
-/**
- * Validate `year` param
- */
-yearRouter.use("/:year", (req: YearRequest, res, next) => {
-  const year = req.params.year;
-  const validatedYear = parseInt(year, 10);
-  if (
-    !validatedYear ||
-    isNaN(validatedYear) ||
-    validatedYear > 2100 ||
-    validatedYear < 2000
-  ) {
-    return res.status(400).send("please supply a valid year");
-  }
-  next();
-});
+/** Root URL: /api/year/:year */
 
 /**
  * GET /api/year/:year/dailyTotals
  */
-singleYearRouter.get("/dailyTotals", (req: YearRequest, res) => {
+yearRouter.get("/dailyTotals", (req: YearRequest, res) => {
   console.log(`fetching daily totals (${req.params.year})`);
   const data = select(
     `date, SUM(count) as daily_total FROM word_count ${getYearlyWhereClause(req.params.year)} GROUP BY date`,
@@ -39,7 +21,7 @@ singleYearRouter.get("/dailyTotals", (req: YearRequest, res) => {
 /**
  * GET /api/year/:year/entries
  */
-singleYearRouter.get("/entries", (req: YearRequest, res) => {
+yearRouter.get("/entries", (req: YearRequest, res) => {
   console.log(`fetching word counts (${req.params.year}`);
   const data = select(
     `* FROM word_count ${getYearlyWhereClause(req.params.year)} ORDER BY date ASC`,
@@ -50,14 +32,12 @@ singleYearRouter.get("/entries", (req: YearRequest, res) => {
 /**
  * GET /api/year/:year/runningTotal
  */
-singleYearRouter.get("/runningTotal", (req: YearRequest, res) => {
+yearRouter.get("/runningTotal", (req: YearRequest, res) => {
   console.log(`fetching running totals (${req.params.year})`);
   const data = select(
     `date, SUM(count) OVER (ORDER BY date) AS running_total FROM word_count ${getYearlyWhereClause(req.params.year)}`,
   );
   return res.json(data).status(200);
 });
-
-yearRouter.use("/:year", singleYearRouter);
 
 export default yearRouter;
