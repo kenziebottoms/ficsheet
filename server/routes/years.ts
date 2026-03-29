@@ -1,5 +1,8 @@
 import express from "express";
-import { select } from "../queries.ts";
+
+import { getYearlyWhereClause, select } from "../queries.ts";
+import { type YearRequest } from "../types.ts";
+
 const yearRouter = express.Router();
 
 /** Root URL: /api/years */
@@ -18,7 +21,7 @@ yearRouter.get("/", (_req, res) => {
 /**
  * Validate `year` param
  */
-yearRouter.use(":year", (req, res, next) => {
+yearRouter.use("/:year", (req, res, next) => {
   const year = req.params.year as string;
   const validatedYear = parseInt(year, 10);
   if (
@@ -30,6 +33,14 @@ yearRouter.use(":year", (req, res, next) => {
     return res.status(400).send("please supply a valid year");
   }
   next();
+});
+
+yearRouter.get("/:year/runningTotal", (req: YearRequest, res) => {
+  console.log(`fetching running totals (${req.params.year})`);
+  const data = select(
+    `date, SUM(count) OVER (ORDER BY date) AS running_total FROM word_count ${getYearlyWhereClause(req.params.year)}`,
+  );
+  return res.json(data).status(200);
 });
 
 export default yearRouter;
