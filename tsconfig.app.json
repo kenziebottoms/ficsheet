@@ -27,14 +27,11 @@
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
-    "baseUrl": "./src",
+    "baseUrl": ".",
     "paths": {
-      "components/*": [
-        "components/*"
+      "@/*": [
+        "src/*"
       ],
-      "contexts/*": [
-        "contexts/*"
-      ]
     }
   },
   "include": [

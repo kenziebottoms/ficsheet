@@ -1,11 +1,11 @@
 import { use } from 'react'
 import _ from 'lodash'
 
-import { DataCacheContext } from 'contexts/DataCache/DataCacheContext'
-import { MonthContext } from 'contexts/Month/MonthContext'
-import { YearContext } from 'contexts/Year/YearContext'
+import { DataCacheContext } from '@/contexts/DataCache/DataCacheContext'
+import { MonthContext } from '@/contexts/Month/MonthContext'
+import { YearContext } from '@/contexts/Year/YearContext'
 
-import Badge from 'components/Badge'
+import Badge from '@/components/Badge'
 
 import { filterByYearAndMonth } from '../utils'
 

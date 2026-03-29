@@ -3,10 +3,10 @@ import { BarChart } from '@mui/x-charts'
 import _ from 'lodash'
 import { format } from 'date-fns';
 
-import { DataCacheContext } from '../../../contexts/DataCache/DataCacheContext';
-import { YearContext } from '../../../contexts/Year/YearContext';
+import { DataCacheContext } from '@/contexts/DataCache/DataCacheContext';
+import { YearContext } from '@/contexts/Year/YearContext';
 
-import Widget from '../../Widget';
+import Widget from '@/components/Widget';
 
 import { colors } from '../constants';
 

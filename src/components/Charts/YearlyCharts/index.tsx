@@ -1,4 +1,4 @@
-import { MonthProvider } from 'contexts/Month/MonthProvider';
+import { MonthProvider } from '@/contexts/Month/MonthProvider';
 
 import MonthlyFandomBar from './MonthlyFandomBar';
 import MonthlyCharts from './MonthlyCharts';

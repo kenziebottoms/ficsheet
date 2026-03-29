@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-import Button from "components/Button";
-import History from "components/History";
+import Button from "@/components/Button";
+import History from "@/components/History";
 
 import DailyWordCountStats from "./DailyWordCountStats";
 import DayOfWeekRadar from "./DayOfWeekRadar";
