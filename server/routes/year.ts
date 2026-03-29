@@ -12,6 +12,24 @@ const yearRouter = express.Router({
 /** Root URL: /api/year/:year */
 
 /**
+ * Validate `year` param
+ */
+yearRouter.use("/", (req: YearRequest, res, next) => {
+  console.log(`validating year ${req.params.year}`);
+  const year = req.params.year;
+  const validatedYear = parseInt(year, 10);
+  if (
+    !validatedYear ||
+    isNaN(validatedYear) ||
+    validatedYear > 2100 ||
+    validatedYear < 2000
+  ) {
+    return res.status(400).send("please supply a valid year");
+  }
+  next();
+});
+
+/**
  * GET /api/year/:year/dailyTotals
  */
 yearRouter.get("/dailyTotals", (req: YearRequest, res) => {
