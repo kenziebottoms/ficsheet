@@ -9,33 +9,26 @@ import FandomPie from './FandomPie';
 import RunningTotalLine from "./RunningTotalLine";
 
 const MonthlyCharts = () => {
-  const [showHistory, setShowHistory] = useState<boolean>(false)
+  const [editMode, setEditMode] = useState<boolean>(false)
 
   return <>
-    {showHistory && <Button
-      style="primary"
-      onClick={() => setShowHistory(!showHistory)}
+    <Button
+      style={editMode ? "primary" : "secondary"}
+      onClick={() => setEditMode(!editMode)}
       className='self-end'
     >
       Edit
-    </Button>}
-    {showHistory ? <History /> : <MonthlyCharts />}
-    <div className="flex flex-row flex-wrap justify-between gap-3">
-      <DailyWordCountStats />
-      <Button
-        style='secondary'
-        onClick={() => setShowHistory(!showHistory)}
-        className='self-start'
-      >
-        Edit
-      </Button>
-      <MonthlyCharts />
-    </div>
-    <div className="flex flex-row flex-wrap gap-3">
-      <FandomPie />
-      <RunningTotalLine />
-      <DayOfWeekRadar />
-    </div>
+    </Button>
+    {editMode ? <History /> : <>
+      <div className="flex flex-row flex-wrap justify-between gap-3">
+        <DailyWordCountStats />
+      </div>
+      <div className="flex flex-row flex-wrap gap-3">
+        <FandomPie />
+        <RunningTotalLine />
+        <DayOfWeekRadar />
+      </div>
+    </>}
   </>
 }
 
