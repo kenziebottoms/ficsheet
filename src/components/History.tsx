@@ -84,7 +84,7 @@ const History = () => {
                 rowIndex === dates.length - 1 ? 'border-b border-primary/50' : ''
               ].join(' ')}>
                 {col === 'date' ? date : null}
-                {col === 'total' ? (totals[rowIndex]?.daily_total || 0) : null}
+                {col === 'total' ? (_.find(totals, { date })?.daily_total || 0) : null}
                 {col !== 'date' && col !== 'total' && _.sumBy(_.filter(entries, { fandom: col, date }), 'count')}
               </td>)}
             </tr>
