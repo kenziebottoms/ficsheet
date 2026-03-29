@@ -8,7 +8,7 @@ import {
 
 import { getDatesBetween } from "./utils";
 
-const API_URL = "http://localhost:2000";
+const API_URL = "http://localhost:2000/api";
 
 const GlobalHeaders = new Headers();
 GlobalHeaders.set("Content-Type", "application/json");
@@ -49,17 +49,16 @@ const post = <TReturnType>(path: string, body: string): Promise<TReturnType> =>
 export const insertWordCounts = (entries: WordCountEntry[]) =>
   post(`entries`, JSON.stringify({ entries }));
 export const selectAllWordCounts = (year: number) =>
-  get<WordCountEntry[]>(`api/year/${year}/entries`);
+  get<WordCountEntry[]>(`year/${year}/entries`);
 export const selectDailyTotals = (year: number) =>
-  get<DailyTotal[]>(`api/year/${year}/dailyTotals`).then(
-    (nonEmptyDailyTotals) =>
-      getDatesBetween(new Date(year, 0, 1), new Date(year, 11, 31)).map(
-        (date) => ({
-          date,
-          daily_total: _.find(nonEmptyDailyTotals, { date })?.daily_total || 0,
-        }),
-      ),
+  get<DailyTotal[]>(`year/${year}/dailyTotals`).then((nonEmptyDailyTotals) =>
+    getDatesBetween(new Date(year, 0, 1), new Date(year, 11, 31)).map(
+      (date) => ({
+        date,
+        daily_total: _.find(nonEmptyDailyTotals, { date })?.daily_total || 0,
+      }),
+    ),
   );
 export const selectRunningTotal = (year: number) =>
-  get<RunningTotal[]>(`api/year/${year}/runningTotal`);
-export const selectAvailableYears = () => get<number[]>("api/years");
+  get<RunningTotal[]>(`year/${year}/runningTotal`);
+export const selectAvailableYears = () => get<number[]>("years");

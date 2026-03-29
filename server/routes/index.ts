@@ -1,6 +1,8 @@
 import express from "express";
 
-import { select } from "../queries.ts";
+import { type WordCountEntry } from "../../src/types.ts";
+
+import { insertWordCount, select } from "../queries.ts";
 import { type YearRequest } from "../types.ts";
 
 import yearRouter from "./year.ts";
@@ -8,6 +10,16 @@ import yearRouter from "./year.ts";
 const apiRouter = express.Router();
 
 /** Root URL: /api */
+
+/**
+ * POST /api/entries
+ */
+apiRouter.post("/entries", (req, res) => {
+  console.log("posting word counts entry: ");
+  const entries = req.body.entries as WordCountEntry[];
+  entries.map(insertWordCount);
+  return res.json(entries).status(200);
+});
 
 /**
  * GET /api/years

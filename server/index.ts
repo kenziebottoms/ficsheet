@@ -1,11 +1,9 @@
 import express from "express";
 import cors from "cors";
 
-import type { WordCountEntry } from "../src/types.ts";
-
 import { readCSV } from "./csvHandler.ts";
 import { setup } from "./dbSetup.ts";
-import { getYearlyWhereClause, insertWordCount, select } from "./queries.ts";
+
 import apiRouter from "./routes/index.ts";
 
 const app = express();
@@ -16,12 +14,6 @@ app.use(express.json());
 
 app.use("/api", apiRouter);
 
-app.post("/entries", (req, res) => {
-  console.log("posting word counts entry: ");
-  const entries = req.body.entries as WordCountEntry[];
-  entries.map(insertWordCount);
-  return res.json(entries).status(200);
-});
 app.post("/ingest", (req, res) => {
   const { filename, year, updateDb } = req.query as Record<string, string>;
   console.log(
