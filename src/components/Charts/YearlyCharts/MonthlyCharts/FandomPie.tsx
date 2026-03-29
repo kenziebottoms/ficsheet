@@ -2,15 +2,14 @@ import { use } from 'react';
 import { PieChart } from '@mui/x-charts'
 import _ from 'lodash'
 
-import { DataCacheContext } from '../../../contexts/DataCache/DataCacheContext';
-import { MonthContext } from '../../../contexts/Month/MonthContext';
-import { YearContext } from '../../../contexts/Year/YearContext';
+import { DataCacheContext } from 'contexts/DataCache/DataCacheContext';
+import { MonthContext } from 'contexts/Month/MonthContext';
+import { YearContext } from 'contexts/Year/YearContext';
 
-import Widget from '../../Widget';
+import Widget from 'components/Widget';
+import { colors } from 'components/Charts/constants';
 
-import { colors } from '../constants';
-
-import { filterByYearAndMonth } from './utils';
+import { filterByYearAndMonth } from '../utils';
 
 const FandomPie = () => {
   const { dailyEntries } = use(DataCacheContext)

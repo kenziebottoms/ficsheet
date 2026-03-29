@@ -3,14 +3,15 @@ import { RadarChart } from '@mui/x-charts'
 import _ from 'lodash'
 import { parse } from 'date-fns'
 
-import { DataCacheContext } from '../../../contexts/DataCache/DataCacheContext'
-import { MonthContext } from '../../../contexts/Month/MonthContext'
-import { YearContext } from '../../../contexts/Year/YearContext'
-import { DaysOfWeek } from '../../../types'
+import { DataCacheContext } from 'contexts/DataCache/DataCacheContext'
+import { MonthContext } from 'contexts/Month/MonthContext'
+import { YearContext } from 'contexts/Year/YearContext'
 
-import Widget from '../../Widget'
+import { DaysOfWeek } from '../../../../types'
 
-import { filterByYearAndMonth } from './utils'
+import Widget from 'components/Widget'
+
+import { filterByYearAndMonth } from '../utils'
 
 const DayOfWeekRadar = () => {
   const { dailyTotals } = use(DataCacheContext);
