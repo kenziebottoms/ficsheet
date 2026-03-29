@@ -7,7 +7,10 @@ import { type YearRequest } from "../types.ts";
 
 import yearRouter from "./year.ts";
 
-const apiRouter = express.Router();
+const apiRouter = express.Router({
+  // pass nested route params to children
+  mergeParams: true,
+});
 
 /** Root URL: /api */
 
@@ -36,6 +39,7 @@ apiRouter.get("/years", (_req, res) => {
  * Validate `year` param
  */
 apiRouter.use("/year/:year", (req: YearRequest, res, next) => {
+  console.log(`validating year ${req.params.year}`);
   const year = req.params.year;
   const validatedYear = parseInt(year, 10);
   if (

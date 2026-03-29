@@ -14,22 +14,6 @@ app.use(express.json());
 
 app.use("/api", apiRouter);
 
-app.post("/ingest", (req, res) => {
-  const { filename, year, updateDb } = req.query as Record<string, string>;
-  console.log(
-    `ingesting ${filename} for ${year} (${updateDb === "true" ? "updating the database" : "dry run"})`,
-  );
-  if (!filename) {
-    return res.status(400).send("please supply a filename");
-  }
-  if (!year || isNaN(parseInt(year, 10))) {
-    return res.status(400).send("please supply a valid year");
-  }
-  return readCSV(filename, parseInt(year, 10), updateDb === "true")
-    .then((rows) => res.json(rows).status(201))
-    .catch((error) => res.json(error).status(500));
-});
-
 app.listen(PORT, (error) => {
   console.log("seeding database");
   setup();
