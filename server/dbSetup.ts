@@ -1,6 +1,7 @@
 import { db, insertWordCount } from "./queries.ts";
 
 const createTables = () => {
+  console.log("creating tables");
   db.exec(`
     CREATE TABLE IF NOT EXISTS word_count (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -13,6 +14,7 @@ const createTables = () => {
 };
 
 const seedTables = () => {
+  console.log("seeding database");
   insertWordCount({
     date: "2026-01-04",
     count: 119,
@@ -261,7 +263,9 @@ const seedTables = () => {
   });
 };
 
-export const setup = () => {
+export const setup = (seed = false) => {
   createTables();
-  seedTables();
+  if (seed) {
+    seedTables();
+  }
 };

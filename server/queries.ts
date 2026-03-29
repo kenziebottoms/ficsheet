@@ -2,7 +2,7 @@ import { DatabaseSync } from "node:sqlite";
 
 import type { WordCountEntry } from "../src/types.ts";
 
-export const db = new DatabaseSync(":memory:");
+export const db = new DatabaseSync("ficsheet.sqlite");
 
 export const insertWordCount = (entry: WordCountEntry) => {
   const { date, count, fic, fandom } = entry;
