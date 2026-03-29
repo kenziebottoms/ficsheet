@@ -37,6 +37,17 @@ singleYearRouter.get("/dailyTotals", (req: YearRequest, res) => {
 });
 
 /**
+ * GET /api/year/:year/entries
+ */
+singleYearRouter.get("/entries", (req: YearRequest, res) => {
+  console.log(`fetching word counts (${req.params.year}`);
+  const data = select(
+    `* FROM word_count ${getYearlyWhereClause(req.params.year)} ORDER BY date ASC`,
+  );
+  return res.json(data).status(200);
+});
+
+/**
  * GET /api/year/:year/runningTotal
  */
 singleYearRouter.get("/runningTotal", (req: YearRequest, res) => {

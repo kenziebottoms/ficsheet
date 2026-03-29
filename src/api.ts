@@ -49,7 +49,7 @@ const post = <TReturnType>(path: string, body: string): Promise<TReturnType> =>
 export const insertWordCounts = (entries: WordCountEntry[]) =>
   post(`entries`, JSON.stringify({ entries }));
 export const selectAllWordCounts = (year: number) =>
-  get<WordCountEntry[]>(`entries?year=${year}`);
+  get<WordCountEntry[]>(`api/year/${year}/entries`);
 export const selectDailyTotals = (year: number) =>
   get<DailyTotal[]>(`api/year/${year}/dailyTotals`).then(
     (nonEmptyDailyTotals) =>

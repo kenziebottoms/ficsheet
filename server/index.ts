@@ -16,17 +16,6 @@ app.use(express.json());
 
 app.use("/api", apiRouter);
 
-app.get("/entries", (req, res) => {
-  const { year } = req.query as Record<string, string>;
-  if (!year || isNaN(parseInt(year, 10))) {
-    return res.status(400).send("please supply a valid year");
-  }
-  console.log("fetching word counts" + (year ? ` (${year})` : ""));
-  const data = select(
-    `* FROM word_count ${getYearlyWhereClause(year)} ORDER BY date ASC`,
-  );
-  return res.json(data).status(200);
-});
 app.post("/entries", (req, res) => {
   console.log("posting word counts entry: ");
   const entries = req.body.entries as WordCountEntry[];
