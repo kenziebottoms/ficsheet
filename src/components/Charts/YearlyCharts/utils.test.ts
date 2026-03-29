@@ -1,6 +1,6 @@
 import { suite, expect, test } from "vitest";
 
-import { filterByYearAndMonth } from "./utils";
+import { filterByYearAndMonth, getLongestStreak } from "./utils";
 
 const testItems = [
   { date: "2025-09-15" },
@@ -29,4 +29,19 @@ suite("filterByYearAndMonth", () => {
       testItems.slice(4),
     );
   });
+});
+
+suite("getLongestStreak", () => {
+  test.for([
+    [[true, false, true, false, true], 1],
+    [[true, true, true, false, true], 3],
+    [[true, true, true, true, true], 5],
+    [[true, true, true, true, true, false], 5],
+    [[false, false, false, false, false], 0],
+  ] as [boolean[], number][])(
+    "getLongestStreak(%i, %i)",
+    ([input, expectedOutput]) => {
+      expect(getLongestStreak(input, (x) => x)).toEqual(expectedOutput);
+    },
+  );
 });

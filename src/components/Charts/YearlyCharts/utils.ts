@@ -36,3 +36,25 @@ export const addTimestamp = <T extends { date: string }>(datedObject: T) => {
     timestamp: parse(datedObject.date, "yyyy-MM-dd", new Date()).getTime(),
   };
 };
+
+/**
+ * @returns the largest number of `items` in a row that satisfy the condition `evaluator(item)`
+ */
+export const getLongestStreak = <T>(
+  items: T[],
+  evaluator: (item: T) => boolean,
+): number => {
+  let highestStreak = 0;
+  let streak = 0;
+  items.forEach((item) => {
+    if (evaluator(item)) {
+      streak++;
+    } else {
+      if (streak > highestStreak) {
+        highestStreak = streak;
+      }
+      streak = 0;
+    }
+  });
+  return highestStreak || streak;
+};
