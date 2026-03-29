@@ -29,7 +29,8 @@ const MonthlyCharts = () => {
     <Button
       style={editMode ? "primary" : "secondary"}
       onClick={() => setEditMode(!editMode)}
-      className='self-end -mb-12'
+      className='self-end -mt-[3.15rem] mb-2 -mr-3'
+      small
     >
       Edit
     </Button>

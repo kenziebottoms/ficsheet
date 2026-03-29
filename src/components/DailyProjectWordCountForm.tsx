@@ -20,9 +20,11 @@ export type DailyProjectWordCountFormValues = {
 }
 type Props = {
   className?: string;
+  onCompleted?: () => void;
 }
 const DailyProjectWordCountForm = ({
-  className = ''
+  className = '',
+  onCompleted = () => { },
 }: Props) => {
   const [showTextarea, setShowTextarea] = useState<boolean>(true)
 
@@ -43,7 +45,7 @@ const DailyProjectWordCountForm = ({
       entry.count = pastedWords === '' ? 0 : pastedWords.split(' ').length
     }
 
-    insertWordCounts([entry])
+    insertWordCounts([entry]).then(() => onCompleted())
   }
 
   return <form

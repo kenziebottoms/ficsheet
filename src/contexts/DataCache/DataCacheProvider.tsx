@@ -13,10 +13,14 @@ export const DataCacheProvider = ({ year, children }: Props) => {
   const [dailyTotals, setDailyTotals] = useState<DailyTotal[]>([])
   const [runningTotal, setRunningTotal] = useState<RunningTotal[]>([])
 
-  useEffect(() => {
+  const refreshData = (year: number = new Date().getFullYear()) => {
     selectAllWordCounts(year).then(setDailyEntries)
     selectDailyTotals(year).then(setDailyTotals)
     selectRunningTotal(year).then(setRunningTotal)
+  }
+
+  useEffect(() => {
+    refreshData(year)
   }, [year])
 
   return (
@@ -24,6 +28,7 @@ export const DataCacheProvider = ({ year, children }: Props) => {
       dailyEntries,
       dailyTotals,
       runningTotal,
+      refreshData,
     }}>
       {children}
     </DataCacheContext.Provider>

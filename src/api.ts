@@ -29,14 +29,12 @@ const get = <TReturnType>(path: string): Promise<TReturnType> =>
       .catch((err) => reject(err)),
   );
 
-const post = <TReturnType>(path: string, body: object): Promise<TReturnType> =>
+const post = <TReturnType>(path: string, body: string): Promise<TReturnType> =>
   new Promise((resolve, reject) =>
     fetch(`${API_URL}/${path}`, {
       method: "POST",
-      headers: new Headers({
-        "Content-Type": "multipart/form-data",
-      }),
-      body: JSON.stringify(body),
+      headers: GlobalHeaders,
+      body,
     })
       .then((response) => {
         if (response.ok) {
@@ -49,7 +47,7 @@ const post = <TReturnType>(path: string, body: object): Promise<TReturnType> =>
       .catch((err) => reject(err)),
   );
 export const insertWordCounts = (entries: WordCountEntry[]) =>
-  post(`entries`, { entries });
+  post(`entries`, JSON.stringify({ entries }));
 export const selectAllWordCounts = (year: number) =>
   get<WordCountEntry[]>(`entries?year=${year}`);
 export const selectDailyTotals = (year: number) =>

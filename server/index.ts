@@ -37,9 +37,9 @@ app.get("/entries", (req, res) => {
 });
 app.post("/entries", (req, res) => {
   console.log("posting word counts entry: ");
-  const entries = req.body as WordCountEntry[];
+  const entries = req.body.entries as WordCountEntry[];
   entries.map(insertWordCount);
-  return res.json(req.body).status(200);
+  return res.json(entries).status(200);
 });
 app.post("/ingest", (req, res) => {
   const { filename, year, updateDb } = req.query as Record<string, string>;

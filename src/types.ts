@@ -65,4 +65,5 @@ export type DataCache = {
   dailyEntries: WordCountEntry[];
   dailyTotals: DailyTotal[];
   runningTotal: RunningTotal[];
+  refreshData: (year?: number) => void;
 };
