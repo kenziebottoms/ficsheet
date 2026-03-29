@@ -13,10 +13,9 @@ import { colors } from '../constants';
 import { filterByYearAndMonth } from './utils';
 
 const MonthlyFandomBar = () => {
-  const { dailyEntries } = use(DataCacheContext)
+  const { dailyEntries, fandoms } = use(DataCacheContext)
   const { year } = use(YearContext)
   const entries = filterByYearAndMonth(dailyEntries, year, null, true)
-  const fandoms = Object.keys(_.countBy(entries, 'fandom')).sort()
 
   const entriesGroupedByMonth = _.groupBy(entries, ({ date }) => format(date, 'MMM'))
 

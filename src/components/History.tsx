@@ -11,13 +11,12 @@ import { filterByYearAndMonth } from "@/components/Charts/YearlyCharts/utils";
 import { getDatesBetween } from "@/utils";
 
 const History = () => {
-  const { dailyEntries, dailyTotals } = use(DataCacheContext)
+  const { dailyEntries, dailyTotals, fandoms } = use(DataCacheContext)
   const { year } = use(YearContext)
   const { month } = use(MonthContext)
 
   const entries = filterByYearAndMonth(dailyEntries, year, month, true)
   const totals = filterByYearAndMonth(dailyTotals, year, month, true)
-  const fandoms = Object.keys(_.countBy(entries, 'fandom')).sort()
   const dates = getDatesBetween(new Date(year, month ?? 0, 1), new Date(year, month ?? 11, 31));
 
   return <table className="font-mono w-full rounded-t-xl bg-zinc-950">
@@ -61,7 +60,7 @@ const History = () => {
           ].join(' ')}>
             {col === 'date' ? date : null}
             {col === 'total' ? (totals[rowIndex]?.daily_total || 0) : null}
-            {col !== 'date' && col !== 'total' && _.sumBy(_.filter(dailyEntries, { fandom: col, date }), 'count')}
+            {col !== 'date' && col !== 'total' && _.sumBy(_.filter(entries, { fandom: col, date }), 'count')}
           </td>)}
         </tr>
       )}
