@@ -5,6 +5,7 @@ import { DataCacheContext } from "@/contexts/DataCache/DataCacheContext";
 import { MonthContext } from "@/contexts/Month/MonthContext";
 import { YearContext } from "@/contexts/Year/YearContext";
 
+import Button from "@/components/Button";
 import { filterByYearAndMonth } from "@/components/Charts/YearlyCharts/utils";
 import Toggle from "@/components/Toggle";
 
@@ -35,12 +36,6 @@ const History = () => {
         onChange={setHideEmpty}
         className="text-sm"
       />
-      <Toggle
-        label="Recent first"
-        value={sort === 'newest'}
-        onChange={(newSortNewest) => setSort(newSortNewest ? 'newest' : 'chronological')}
-        className="text-sm"
-      />
     </div>
     <table className="font-mono w-full rounded-t-xl bg-zinc-950">
       <thead className="font-medium">
@@ -53,12 +48,23 @@ const History = () => {
             key={label}
             className={[
               "whitespace-nowrap font-mono text-lg",
-              label === 'Date' ? "rounded-tl-xl" : "",
+              label === 'Date' ? "rounded-tl-xl cursor-pointer flex flex-row gap-2 items-center justify-between" : "",
               label === 'Total' ? "rounded-tr-xl bg-orange-400/25" : "",
               (label !== "Total" && i % 2 !== 0) ? "bg-pink-400/25" : "",
             ].join(" ")}
+            onClick={() => {
+              if (label === "Date") {
+                setSort(sort === 'chronological' ? "newest" : "chronological")
+              }
+            }}
           >
             {label}
+            {label === "Date" && <Button
+              small
+              style="secondary"
+            >
+              {sort === 'chronological' ? '↓' : '↑'}
+            </Button>}
           </th>)}
         </tr>
       </thead>
