@@ -37,7 +37,6 @@ export const MonthNames = [
   "November",
   "December",
 ] as const;
-export type MonthName = (typeof MonthNames)[number];
 
 export type RunningTotal = {
   date: string;

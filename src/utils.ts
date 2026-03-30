@@ -1,10 +1,5 @@
 import { addDays, format, isBefore, isSameDay } from "date-fns";
 
-import type { MonthName } from "./types";
-
-export const getMonthName = (date: Date) =>
-  date.toLocaleString("default", { month: "long" }) as MonthName;
-
 /**
  * @param min The first date
  * @param max The last date
