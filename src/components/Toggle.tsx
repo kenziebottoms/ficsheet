@@ -18,9 +18,8 @@ const Toggle = ({
     <Switch
       aria-label={label}
       color="warning"
-      value={value}
+      checked={value}
       onChange={e => onChange(e.target.checked)}
-      defaultChecked
       {...props}
     />
   </label>
