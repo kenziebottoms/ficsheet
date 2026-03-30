@@ -24,8 +24,9 @@ const History = () => {
   const totals = filterByYearAndMonth(dailyTotals, year, month, true)
   const dates = getDatesBetween(new Date(year, month ?? 0, 1), new Date(year, month ?? 11, 31));
 
+  const filteredDates = dates.filter(date => !hideEmpty || _.filter(entries, { date }).length > 0)
   if (sort === 'newest') {
-    dates.reverse()
+    filteredDates.reverse()
   }
 
   return <div className="space-y-3">
@@ -37,66 +38,74 @@ const History = () => {
         className="text-sm"
       />
     </div>
-    <table className="font-mono w-full rounded-t-xl bg-zinc-950">
-      <thead className="font-medium">
-        <tr className='rounded-t-xl bg-linear-45 from-pink-700/50 via-pink-400/50 to-pink-700/50 from-30% via-80% to-90%'>
-          {[
-            'Date',
-            ...fandoms,
-            'Total',
-          ].map((label, i) => <th
-            key={label}
-            className={[
-              "whitespace-nowrap font-mono text-lg",
-              label === 'Date' ? "rounded-tl-xl cursor-pointer flex flex-row gap-2 items-center justify-between" : "",
-              label === 'Total' ? "rounded-tr-xl bg-orange-400/25" : "",
-              (label !== "Total" && i % 2 !== 0) ? "bg-pink-400/25" : "",
-            ].join(" ")}
-            onClick={() => {
-              if (label === "Date") {
-                setSort(sort === 'chronological' ? "newest" : "chronological")
-              }
-            }}
-          >
-            {label}
-            {label === "Date" && <Button
-              small
-              style="secondary"
-            >
-              {sort === 'chronological' ? '↓' : '↑'}
-            </Button>}
-          </th>)}
-        </tr>
-      </thead>
-      <tbody className="font-normal">
-        {dates
-          .filter(date => !hideEmpty || _.sumBy(_.filter(entries, { date }), 'count') > 0)
-          .map((date, rowIndex) =>
-            <tr
-              key={rowIndex}
+    <div className="overflow-x-auto">
+      <table className="font-mono w-full rounded-t-xl bg-zinc-950">
+        <thead className="font-medium">
+          <tr className='rounded-t-xl bg-linear-45 from-pink-700/50 via-pink-400/50 to-pink-700/50 from-30% via-80% to-90%'>
+            {[
+              'Date',
+              ...fandoms,
+              'Total',
+            ].map((label, i) => <th
+              key={label}
               className={[
-                "border-x border-primary/50",
-                (rowIndex + 1) % 4 === 0 ? 'bg-pink-700/20' : '',
-                (rowIndex + 3) % 4 === 0 ? 'bg-orange-700/20' : '',
-              ].join(' ')}>
-              {[
-                'date',
-                ...fandoms,
-                'total'
-              ].map((col, colIndex) => <td key={colIndex} className={[
-                "p-2",
-                (col !== 'total' && colIndex % 2 !== 0) ? "bg-pink-500/10" : "",
-                col === "total" ? "bg-orange-500/10" : "",
-                rowIndex === dates.length - 1 ? 'border-b border-primary/50' : ''
-              ].join(' ')}>
-                {col === 'date' ? date : null}
-                {col === 'total' ? (_.find(totals, { date })?.daily_total || 0) : null}
-                {col !== 'date' && col !== 'total' && _.sumBy(_.filter(entries, { fandom: col, date }), 'count')}
-              </td>)}
-            </tr>
-          )}
-      </tbody>
-    </table>
+                "whitespace-nowrap font-mono text-lg",
+                label === 'Date' ? "rounded-tl-xl cursor-pointer flex flex-row gap-2 items-center justify-between" : "",
+                label === 'Total' ? "rounded-tr-xl bg-orange-400/25" : "",
+                (label !== "Total" && i % 2 !== 0) ? "bg-pink-400/25" : "",
+              ].join(" ")}
+              onClick={() => {
+                if (label === "Date") {
+                  setSort(sort === 'chronological' ? "newest" : "chronological")
+                }
+              }}
+            >
+              {label}
+              {label === "Date" && <Button
+                small
+                style="secondary"
+              >
+                {sort === 'chronological' ? '↓' : '↑'}
+              </Button>}
+            </th>)}
+          </tr>
+        </thead>
+        <tbody className="font-normal">
+          {filteredDates
+            .map((date, rowIndex) =>
+              <tr
+                key={rowIndex}
+                className={[
+                  "border-x border-primary/50",
+                  (rowIndex + 1) % 4 === 0 ? 'bg-pink-700/20' : '',
+                  (rowIndex + 3) % 4 === 0 ? 'bg-orange-700/20' : '',
+                ].join(' ')}
+              >
+                <td className="whitespace-nowrap">
+                  {parseInt(date.substring(5, 7), 10)}/{parseInt(date.substring(8, 10), 10)}/{date.substring(2, 4)}
+                </td>
+                {fandoms
+                  // map fandoms to daily fandom total so we can style based on value
+                  .map(fandom => _.sumBy(_.filter(entries, { fandom, date }), 'count'))
+                  .map((fandomTotal, fandomIndex) => <td
+                    key={fandomIndex}
+                    className={[
+                      "p-2",
+                      (fandomIndex % 2 === 0) ? "bg-pink-500/10" : "",
+                      rowIndex === filteredDates.length - 1 ? 'border-b border-primary/50' : '',
+                      fandomTotal === 0 ? 'opacity-50' : ''
+                    ].join(' ')}
+                  >
+                    {fandomTotal}
+                  </td>)}
+                <td className="bg-orange-500/10">
+                  {_.find(totals, { date })?.daily_total || 0}
+                </td>
+              </tr>
+            )}
+        </tbody>
+      </table>
+    </div>
   </div>
 }
 
