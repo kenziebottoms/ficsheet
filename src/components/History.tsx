@@ -1,5 +1,6 @@
 import { use, useState } from "react";
 import _ from 'lodash'
+import { lastDayOfMonth, lastDayOfYear } from "date-fns";
 
 import { DataCacheContext } from "@/contexts/DataCache/DataCacheContext";
 import { MonthContext } from "@/contexts/Month/MonthContext";
@@ -22,8 +23,7 @@ const History = () => {
 
   const entries = filterByYearAndMonth(dailyEntries, year, month, true)
   const totals = filterByYearAndMonth(dailyTotals, year, month, true)
-  const dates = getDatesBetween(new Date(year, month ?? 0, 1), new Date(year, month ?? 11, 31));
-
+  const dates = getDatesBetween(new Date(year, month ?? 0, 1), (month ? lastDayOfMonth : lastDayOfYear)(new Date(year, month ?? 0, 1)));
   const filteredDates = dates.filter(date => !hideEmpty || _.filter(entries, { date }).length > 0)
   if (sort === 'newest') {
     filteredDates.reverse()
