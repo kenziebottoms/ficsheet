@@ -23,7 +23,7 @@ const History = () => {
 
   const entries = filterByYearAndMonth(dailyEntries, year, month, true)
   const totals = filterByYearAndMonth(dailyTotals, year, month, true)
-  const dates = getDatesBetween(new Date(year, month ?? 0, 1), (month ? lastDayOfMonth : lastDayOfYear)(new Date(year, month ?? 0, 1)));
+  const dates = getDatesBetween(new Date(year, month ?? 0, 1), (month == null ? lastDayOfYear : lastDayOfMonth)(new Date(year, month ?? 0, 1)));
   const filteredDates = dates.filter(date => !hideEmpty || _.filter(entries, { date }).length > 0)
   if (sort === 'newest') {
     filteredDates.reverse()
