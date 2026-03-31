@@ -20,9 +20,7 @@ const YearlyCharts = () => {
   return <div className="bg-zinc-900 p-3 rounded-xl">
     <div className='flex flex-row gap-2 items-start justify-between'>
       <MonthlyFandomBar />
-      {showEntryForm && <Modal open setOpen={setShowEntryForm}
-        className="top-1/8 left-1/4 w-1/2 p-3 rounded-lg"
-      >
+      {showEntryForm && <Modal open setOpen={setShowEntryForm}>
         <DailyProjectWordCountForm
           className='bg-zinc-800'
           onCompleted={() => {
