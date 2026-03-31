@@ -21,15 +21,17 @@ export type DailyProjectWordCountFormValues = {
 }
 type Props = {
   className?: string;
+  values?: WordCountEntry | null;
   onCompleted?: () => void;
 }
 const DailyProjectWordCountForm = ({
   className = '',
+  values,
   onCompleted = () => { },
 }: Props) => {
   const { fandoms } = use(DataCacheContext)
 
-  const [showTextarea, setShowTextarea] = useState<boolean>(true)
+  const [showTextarea, setShowTextarea] = useState<boolean>(!values)
 
   const handleSubmit: SubmitEventHandler<HTMLFormElement> = e => {
     // Prevent the browser from reloading the page
@@ -59,18 +61,20 @@ const DailyProjectWordCountForm = ({
       name="date"
       label="Date"
       // If after midnight but before 4am, log as day before
-      defaultValue={isBefore(new Date(), new Date().setHours(4)) ? addDays(new Date(), -1) : new Date()}
+      defaultValue={values?.date || isBefore(new Date(), new Date().setHours(4)) ? addDays(new Date(), -1) : new Date()}
     />
-    <Input
+    <Input<string>
       label="Fic"
       name="fic"
       type="text"
+      defaultValue={values?.fic || ''}
     />
     <Dropdown
       label="Fandom"
       placeholder='Select a fandom'
       name="fandom"
       options={fandoms}
+      defaultValue={values?.fandom || ''}
     />
 
     <Toggle
@@ -86,7 +90,12 @@ const DailyProjectWordCountForm = ({
         label="Words"
         name="pastedWords"
       /> :
-      <Input label="Word count" type="number" name="count" />}
+      <Input
+        label="Word count"
+        type="number"
+        name="count"
+        defaultValue={values?.count || ''}
+      />}
 
     <Button
       type="submit"
