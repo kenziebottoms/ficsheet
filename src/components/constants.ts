@@ -1,9 +1,10 @@
-export type ButtonStyle = "primary" | "secondary" | "subtle";
+export type ButtonStyle = "primary" | "secondary" | "subtle" | "transparent";
 
 export const ButtonTextClassNames: Record<ButtonStyle, string> = {
-  primary: "text-shadow-lg/50 text-shadow-violet-800",
-  secondary: "text-shadow-lg/50 text-shadow-pink-950",
-  subtle: "text-shadow-lg/30",
+  primary: "text-white text-shadow-lg/50 text-shadow-violet-800",
+  secondary: "text-white text-shadow-lg/50 text-shadow-pink-950",
+  subtle: "text-white text-shadow-lg/30",
+  transparent: "text-pink-300",
 };
 export const ButtonBackgroundClassNames: Record<ButtonStyle, string> = {
   primary:
@@ -12,4 +13,5 @@ export const ButtonBackgroundClassNames: Record<ButtonStyle, string> = {
     "bg-linear-45/oklab from-pink-700 via-pink-400 to-pink-700 from-30% via-80% to-90%",
   subtle:
     "bg-linear-45/shorter from-zinc-600 via-zinc-400 to-zinc-600 from-20% via-80% to-90%",
+  transparent: "border-2 border-pink-300",
 };
