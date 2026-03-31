@@ -18,13 +18,13 @@ const History = () => {
   const { year } = use(YearContext)
   const { month } = use(MonthContext)
 
-  const [hideEmpty, setHideEmpty] = useState<boolean>(true)
+  const [showEmpty, setShowEmpty] = useState<boolean>(false)
   const [sort, setSort] = useState<Sort>((month == null && year === new Date().getFullYear()) ? 'newest' : 'chronological')
 
   const entries = filterByYearAndMonth(dailyEntries, year, month, true)
   const totals = filterByYearAndMonth(dailyTotals, year, month, true)
   const dates = getDatesBetween(new Date(year, month ?? 0, 1), (month == null ? lastDayOfYear : lastDayOfMonth)(new Date(year, month ?? 0, 1)));
-  const filteredDates = dates.filter(date => !hideEmpty || _.filter(entries, { date }).length > 0)
+  const filteredDates = dates.filter(date => showEmpty || _.filter(entries, { date }).length > 0)
   if (sort === 'newest') {
     filteredDates.reverse()
   }
@@ -32,9 +32,9 @@ const History = () => {
   return <div className="space-y-3">
     <div className="bg-zinc-800 px-4 py-1 rounded-full text-zinc-400 flex flex-row gap-4">
       <Toggle
-        label="Hide empty"
-        value={hideEmpty}
-        onChange={setHideEmpty}
+        label="Show empty"
+        value={showEmpty}
+        onChange={setShowEmpty}
         className="text-sm"
       />
     </div>
