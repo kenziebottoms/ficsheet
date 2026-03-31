@@ -1,18 +1,20 @@
-import { useState, type HTMLInputTypeAttribute } from 'react'
+import { useState } from 'react'
 
-type Props = {
+type Props<T extends string | number> = {
   name: string;
-  type: HTMLInputTypeAttribute;
+  type: 'text' | 'number';
   label: string;
+  defaultValue?: T;
   placeholder?: string;
 }
-const Input = ({
+const Input = <T extends string | number>({
   name,
   type,
   label,
+  defaultValue,
   placeholder,
-}: Props) => {
-  const [value, setValue] = useState('');
+}: Props<T>) => {
+  const [value, setValue] = useState<T | null>(defaultValue || null);
 
   return <div className='flex flex-col'>
     <label>
@@ -21,8 +23,8 @@ const Input = ({
         name={name}
         type={type}
         placeholder={placeholder}
-        value={value}
-        onChange={e => setValue(e.target.value)}
+        value={value ?? ''}
+        onChange={e => setValue(e.target.value as T)}
         className='w-full rounded-md p-2 border-2 border-primary/50 focus-within:border-primary outline-0'
       />
     </label>
