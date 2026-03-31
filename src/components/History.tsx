@@ -41,7 +41,7 @@ const History = () => {
     <div className="overflow-x-auto">
       <table className="font-mono w-full rounded-t-xl bg-zinc-950">
         <thead className="font-medium">
-          <tr className='rounded-t-xl bg-linear-45 from-pink-700/50 via-pink-400/50 to-pink-700/50 from-30% via-80% to-90%'>
+          <tr className='rounded-t-xl bg-pink-700/50 from-30% via-80% to-90%'>
             {[
               'Date',
               ...fandoms,
@@ -93,7 +93,7 @@ const History = () => {
                       "p-2",
                       (fandomIndex % 2 === 0) ? "bg-pink-500/10" : "",
                       rowIndex === filteredDates.length - 1 ? 'border-b border-primary/50' : '',
-                      fandomTotal === 0 ? 'opacity-50' : ''
+                      fandomTotal === 0 ? 'text-foreground/50' : ''
                     ].join(' ')}
                   >
                     {fandomTotal}
