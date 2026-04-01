@@ -13,21 +13,17 @@ const API_URL = "http://localhost:2000/api";
 const GlobalHeaders = new Headers();
 GlobalHeaders.set("Content-Type", "application/json");
 
-const get = <TReturnType>(path: string): Promise<TReturnType> =>
-  new Promise((resolve, reject) =>
-    fetch(`${API_URL}/${path}`, {
-      headers: GlobalHeaders,
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          return reject(new Error(response.statusText));
-        }
-      })
-      .then((json) => resolve(json as TReturnType))
-      .catch((err) => reject(err)),
-  );
+async function get<TReturnType>(path: string): Promise<TReturnType> {
+  const response: Response = await fetch(`${API_URL}/${path}`, {
+    headers: GlobalHeaders,
+  });
+  if (!response.ok) {
+    throw new Error(`Response status: ${response.status}`);
+  }
+
+  const result = await response.json();
+  return result as TReturnType;
+}
 
 const post = <TReturnType>(path: string, body: string): Promise<TReturnType> =>
   new Promise((resolve, reject) =>
