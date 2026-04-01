@@ -1,5 +1,6 @@
 import { use, useState, type SubmitEventHandler } from 'react';
 import { addDays, isBefore } from 'date-fns';
+import { EditCalendar } from '@mui/icons-material';
 
 import { insertWordCounts } from '@/api';
 import { DataCacheContext } from '@/contexts/DataCache/DataCacheContext';
@@ -21,7 +22,7 @@ export type DailyProjectWordCountFormValues = {
 }
 type Props = {
   className?: string;
-  values?: WordCountEntry | null;
+  values?: Partial<WordCountEntry> | null;
   onCompleted?: () => void;
 }
 const DailyProjectWordCountForm = ({
@@ -39,6 +40,7 @@ const DailyProjectWordCountForm = ({
 
     const formData = Object.fromEntries(new FormData(e.target).entries()) as DailyProjectWordCountFormValues;
     const entry: WordCountEntry = {
+      id: values?.id,
       date: formData.date,
       fandom: formData.fandom,
       fic: formData.fic,
@@ -50,7 +52,13 @@ const DailyProjectWordCountForm = ({
       entry.count = pastedWords === '' ? 0 : pastedWords.split(' ').length
     }
 
-    insertWordCounts([entry]).then(() => onCompleted())
+    if (entry.count !== 0) {
+      if (values?.id) {
+        // updateWordCount(entry).then(onCompleted)
+      } else {
+        insertWordCounts([entry]).then(onCompleted)
+      }
+    }
   }
 
   return <form
@@ -100,8 +108,10 @@ const DailyProjectWordCountForm = ({
     <Button
       type="submit"
       style="primary"
+      icon={EditCalendar}
     >
-      Log word count</Button>
+      Log word count
+    </Button>
   </form>
 }
 

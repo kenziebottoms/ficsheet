@@ -1,6 +1,7 @@
 import { use, useState } from "react";
 import _ from 'lodash'
 import { lastDayOfMonth, lastDayOfYear } from "date-fns";
+import { Edit } from '@mui/icons-material'
 
 import { DataCacheContext } from "@/contexts/DataCache/DataCacheContext";
 import { MonthContext } from "@/contexts/Month/MonthContext";
@@ -25,7 +26,7 @@ const History = () => {
 
   const [showEmpty, setShowEmpty] = useState<boolean>(false)
   const [sort, setSort] = useState<Sort>((month == null && year === new Date().getFullYear()) ? 'newest' : 'chronological')
-  const [editedEntry, setEditedEntry] = useState<WordCountEntry | null>(null)
+  const [editedEntry, setEditedEntry] = useState<Partial<WordCountEntry> | null>(null)
 
   const entries = filterByYearAndMonth(dailyEntries, year, month, true)
   const totals = filterByYearAndMonth(dailyTotals, year, month, true)
@@ -115,15 +116,11 @@ const History = () => {
                       <div className="flex flex-row justify-between items-center">
                         {fandomTotal}
                         <Button
-                          style="secondary"
+                          style="transparent"
                           small
-                          onClick={() => {
-                            console.log(_.find(entries, { fandom: fandoms[fandomIndex], date }));
-                            setEditedEntry(_.find(entries, { fandom: fandoms[fandomIndex], date }) || null)
-                          }}
-                        >
-                          Edit
-                        </Button>
+                          onClick={() => setEditedEntry(_.find(entries, { fandom: fandoms[fandomIndex], date }) || { fandom: fandoms[fandomIndex], date })}
+                          icon={Edit}
+                        />
                       </div>
                     </td>)}
                   <td className="bg-orange-500/10">

@@ -33,7 +33,7 @@ const Button = ({
     ].join(" ")}
   >
     {children}
-    {Icon && <Icon color="secondary" />}
+    {Icon && <Icon color={style === "transparent" ? "secondary" : "foreground"} />}
   </button>
 }
 

@@ -44,6 +44,7 @@ export type RunningTotal = {
 };
 
 export type WordCountEntry = {
+  id?: number;
   date: string;
   fic: string;
   fandom: string;
