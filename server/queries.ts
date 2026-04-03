@@ -12,6 +12,11 @@ export const insertWordCount = (entry: WordCountEntry) => {
   insert.run(date, count, fic, fandom);
 };
 
+export const deleteEntry = (id: string) => {
+  const deleteQuery = db.prepare(`DELETE FROM word_count WHERE id = ?`);
+  deleteQuery.run(id);
+};
+
 export function select<TRow>(query: string) {
   console.log(`selecting "${query}"`);
   const q = db.prepare(`SELECT ${query}`);

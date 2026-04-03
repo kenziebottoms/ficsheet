@@ -2,7 +2,7 @@ import express, { type Request } from "express";
 
 import { type WordCountEntry } from "../../src/types.ts";
 
-import { insertWordCount } from "../queries.ts";
+import { deleteEntry, insertWordCount } from "../queries.ts";
 import { type RequestWithId } from "../types.ts";
 
 const entriesRouter = express.Router({
@@ -44,7 +44,8 @@ entriesRouter.use("/:id", (req: Request<{ id?: string }>, res, next) => {
  */
 entriesRouter.delete("/:id", (req: RequestWithId, res) => {
   console.log("deleting word counts entry: ", req.params.id);
-  return res.json(req.params.id).status(304);
+  deleteEntry(req.params.id);
+  return res.json(req.params.id).status(204);
 });
 
 export default entriesRouter;

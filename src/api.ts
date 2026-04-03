@@ -38,9 +38,15 @@ async function post<TRequestBody, TReturnType>(
     body: JSON.stringify(body),
   });
 }
+async function restDelete(path: string): Promise<null> {
+  return get(path, {
+    method: "DELETE",
+  });
+}
 
 export const insertWordCounts = (entries: WordCountEntry[]) =>
   post<WordCountEntry[], WordCountEntry[]>(`entries`, entries);
+export const deleteEntry = (id: number) => restDelete(`entries/${id}`);
 export const selectAllWordCounts = (year: number) =>
   get<WordCountEntry[]>(`year/${year}/entries`);
 export const selectDailyTotals = (year: number) =>

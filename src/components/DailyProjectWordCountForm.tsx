@@ -1,8 +1,8 @@
 import { use, useState, type SubmitEventHandler } from 'react';
 import { addDays, isBefore } from 'date-fns';
-import { EditCalendar } from '@mui/icons-material';
+import { DeleteForever, EditCalendar } from '@mui/icons-material';
 
-import { insertWordCounts } from '@/api';
+import { deleteEntry, insertWordCounts } from '@/api';
 import { DataCacheContext } from '@/contexts/DataCache/DataCacheContext';
 import type { WordCountEntry } from '@/types';
 
@@ -114,6 +114,15 @@ const DailyProjectWordCountForm = ({
     >
       Log word count
     </Button>
+    {!!values && values.id != null && (
+      <Button
+        style="cautionary"
+        icon={DeleteForever}
+        onClick={() => deleteEntry(values.id as number).then(onCompleted)}
+      >
+        Delete word count
+      </Button>
+    )}
   </form>
 }
 
