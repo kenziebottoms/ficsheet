@@ -13,9 +13,13 @@ const API_URL = "http://localhost:2000/api";
 const GlobalHeaders = new Headers();
 GlobalHeaders.set("Content-Type", "application/json");
 
-async function get<TReturnType>(path: string): Promise<TReturnType> {
+async function get<TReturnType>(
+  path: string,
+  options?: Partial<RequestInit>,
+): Promise<TReturnType> {
   const response: Response = await fetch(`${API_URL}/${path}`, {
     headers: GlobalHeaders,
+    ...options,
   });
   if (!response.ok) {
     throw new Error(`Response status: ${response.status}`);
@@ -25,25 +29,18 @@ async function get<TReturnType>(path: string): Promise<TReturnType> {
   return result as TReturnType;
 }
 
-const post = <TReturnType>(path: string, body: string): Promise<TReturnType> =>
-  new Promise((resolve, reject) =>
-    fetch(`${API_URL}/${path}`, {
-      method: "POST",
-      headers: GlobalHeaders,
-      body,
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          return reject(new Error(response.statusText));
-        }
-      })
-      .then((json) => resolve(json as TReturnType))
-      .catch((err) => reject(err)),
-  );
+async function post<TRequestBody, TReturnType>(
+  path: string,
+  body: TRequestBody,
+): Promise<TReturnType> {
+  return get<TReturnType>(path, {
+    method: "POST",
+    body: JSON.stringify(body),
+  });
+}
+
 export const insertWordCounts = (entries: WordCountEntry[]) =>
-  post(`entries`, JSON.stringify({ entries }));
+  post<{ entries: WordCountEntry[] }, WordCountEntry[]>(`entries`, { entries });
 export const selectAllWordCounts = (year: number) =>
   get<WordCountEntry[]>(`year/${year}/entries`);
 export const selectDailyTotals = (year: number) =>
