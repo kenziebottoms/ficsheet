@@ -1,4 +1,4 @@
-import type { PropsWithChildren } from "react";
+import type { PropsWithChildren, ReactNode } from "react";
 
 import { ButtonTextClassNames, ButtonBackgroundClassNames, type ButtonStyle } from "./constants";
 
@@ -17,7 +17,7 @@ const BadgeBodyClassNames: Record<ButtonStyle, string> = {
 };
 
 type Props = PropsWithChildren & {
-  title: string;
+  title: string | ReactNode;
   style?: ButtonStyle;
   className?: string;
 }
