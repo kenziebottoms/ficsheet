@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type Props<T extends string | number> = {
   name: string;
   label: string;
   placeholder?: string;
   options: T[];
-  defaultValue?: T | '';
+  defaultValue?: T;
 }
 const Dropdown = <T extends string | number,>({
   name,
@@ -14,7 +14,13 @@ const Dropdown = <T extends string | number,>({
   options,
   defaultValue,
 }: Props<T>) => {
-  const [value, setValue] = useState<T | null>(defaultValue || null);
+  const [value, setValue] = useState<T | null>(defaultValue ?? null);
+
+  useEffect(() => {
+    if (defaultValue != null) {
+      setValue(defaultValue)
+    }
+  }, [defaultValue])
 
   return <div className='flex flex-col'>
     <label>

@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { format, isValid, parse } from 'date-fns';
 
 type Props = {
   name: string;
@@ -10,7 +11,13 @@ const DateInput = ({
   label,
   defaultValue,
 }: Props) => {
-  const [value, setValue] = useState<string>((defaultValue || new Date()).toLocaleDateString('en-CA'));
+  const [value, setValue] = useState<Date | null>(defaultValue || new Date());
+
+  useEffect(() => {
+    if (defaultValue != null && isValid(defaultValue)) {
+      setValue(defaultValue)
+    }
+  }, [defaultValue])
 
   return <div className='flex flex-col'>
     <label>
@@ -18,8 +25,8 @@ const DateInput = ({
       <input
         type="date"
         name={name}
-        value={value}
-        onChange={e => setValue(e.target.value)}
+        value={value == null ? '' : format(value, "yyyy-MM-dd")}
+        onChange={e => e.target.value === '' ? null : setValue(parse(e.target.value, 'yyyy-MM-dd', new Date()))}
         className='w-full rounded-md p-2 border-2 border-primary/50 focus-within:border-primary outline-0'
       />
     </label>

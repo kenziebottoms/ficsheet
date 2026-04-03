@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 type Props<T extends string | number> = {
   name: string;
@@ -14,7 +14,13 @@ const Input = <T extends string | number>({
   defaultValue,
   placeholder,
 }: Props<T>) => {
-  const [value, setValue] = useState<T | null>(defaultValue || null);
+  const [value, setValue] = useState<T | null>(defaultValue ?? null);
+
+  useEffect(() => {
+    if (defaultValue != null) {
+      setValue(defaultValue)
+    }
+  }, [defaultValue])
 
   return <div className='flex flex-col'>
     <label>
