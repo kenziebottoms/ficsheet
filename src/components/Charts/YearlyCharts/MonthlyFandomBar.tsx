@@ -1,12 +1,13 @@
 import { use } from 'react';
 import { BarChart } from '@mui/x-charts'
 import _ from 'lodash'
-import { format } from 'date-fns';
 
 import { DataCacheContext } from '@/contexts/DataCache/DataCacheContext';
 import { YearContext } from '@/contexts/Year/YearContext';
 
 import Widget from '@/components/Widget';
+
+import { MonthNames } from '@/types';
 
 import { colors } from '../constants';
 
@@ -17,12 +18,12 @@ const MonthlyFandomBar = () => {
   const { year } = use(YearContext)
   const entries = filterByYearAndMonth(dailyEntries, year, null, true)
 
-  const entriesGroupedByMonth = _.groupBy(entries, ({ date }) => format(date, 'MMM'))
+  const entriesGroupedByMonth = _.groupBy(entries, ({ date }) => date.substring(5, 7))
 
   const monthlyTotalByFandom = _.map(entriesGroupedByMonth, (monthlyEntries, month) => {
     const monthlyFandomEntries = _.groupBy(monthlyEntries, 'fandom')
     return {
-      month,
+      month: MonthNames[parseInt(month, 10)],
       ..._.mapValues(monthlyFandomEntries, entries => _.sumBy(entries, 'count'))
     }
   });
