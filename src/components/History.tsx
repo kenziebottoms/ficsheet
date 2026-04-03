@@ -1,6 +1,6 @@
 import { use, useState } from "react";
 import _ from 'lodash'
-import { lastDayOfMonth, lastDayOfYear } from "date-fns";
+import { isFuture, lastDayOfMonth, lastDayOfYear } from "date-fns";
 import { Edit } from '@mui/icons-material'
 
 import { DataCacheContext } from "@/contexts/DataCache/DataCacheContext";
@@ -20,7 +20,7 @@ import Modal from "./Modal";
 
 type Sort = 'chronological' | 'newest';
 const History = () => {
-  const { dailyEntries, dailyTotals, fandoms } = use(DataCacheContext)
+  const { dailyEntries, dailyTotals, fandoms, refreshData } = use(DataCacheContext)
   const { year } = use(YearContext)
   const { month } = use(MonthContext)
 
@@ -30,7 +30,8 @@ const History = () => {
 
   const entries = filterByYearAndMonth(dailyEntries, year, month, true)
   const totals = filterByYearAndMonth(dailyTotals, year, month, true)
-  const dates = getDatesBetween(new Date(year, month ?? 0, 1), (month == null ? lastDayOfYear : lastDayOfMonth)(new Date(year, month ?? 0, 1)));
+  const dates = getDatesBetween(new Date(year, month ?? 0, 1), (month == null ? lastDayOfYear : lastDayOfMonth)(new Date(year, month ?? 0, 1)))
+    .filter(date => !isFuture(date))
   const filteredDates = dates.filter(date => showEmpty || _.filter(entries, { date }).length > 0)
   if (sort === 'newest') {
     filteredDates.reverse()
@@ -44,6 +45,10 @@ const History = () => {
       <DailyProjectWordCountForm
         className='bg-zinc-800'
         values={editedEntry}
+        onCompleted={() => {
+          setEditedEntry(null)
+          refreshData()
+        }}
       />
     </Modal>
     <div className="space-y-3">
