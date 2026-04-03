@@ -26,7 +26,7 @@ entriesRouter.post("/", (req, res) => {
 /**
  * Validate `id` param
  */
-entriesRouter.use("/:id", (req: Request<{ id: string }>, res, next) => {
+entriesRouter.use("/:id", (req: Request<{ id?: string }>, res, next) => {
   const { id } = req.params;
   console.log(`validating entry ID ${id}`);
   if (id == null || id == "") {
