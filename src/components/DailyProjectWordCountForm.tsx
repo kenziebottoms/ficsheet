@@ -54,10 +54,12 @@ const DailyProjectWordCountForm = ({
 
     if (entry.count !== 0) {
       if (values?.id) {
-        // updateWordCount(entry).then(onCompleted)
+        // TODO updateWordCount(entry).then(onCompleted)
       } else {
         insertWordCounts([entry]).then(onCompleted)
       }
+    } else {
+      // TODO deleteWordCount(entry.id).then(onCompleted)
     }
   }
 
