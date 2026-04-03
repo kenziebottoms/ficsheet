@@ -1,7 +1,12 @@
 import { type PropsWithChildren } from 'react'
 import type { SvgIconComponent } from '@mui/icons-material';
 
-import { ButtonTextClassNames, ButtonBackgroundClassNames, type ButtonStyle } from './constants';
+import {
+  ButtonTextClassNames,
+  ButtonBackgroundClassNames,
+  type ButtonStyle,
+  IconColors
+} from './constants';
 
 type Props = PropsWithChildren & {
   type?: "submit" | "reset" | "button";
@@ -33,7 +38,7 @@ const Button = ({
     ].join(" ")}
   >
     {children}
-    {Icon && <Icon color={style === "transparent" ? "secondary" : "foreground"} />}
+    {Icon && <Icon color={IconColors[style]} />}
   </button>
 }
 
