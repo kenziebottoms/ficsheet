@@ -2,7 +2,7 @@ import { use, useState, type SubmitEventHandler } from 'react';
 import { addDays, isBefore, parse } from 'date-fns';
 import { DeleteForever, EditCalendar } from '@mui/icons-material';
 
-import { deleteEntry, insertEntries } from '@/api';
+import { deleteEntry, insertEntries, putEntry } from '@/api';
 import { DataCacheContext } from '@/contexts/DataCache/DataCacheContext';
 import type { WordCountEntry } from '@/types';
 
@@ -53,8 +53,8 @@ const DailyProjectWordCountForm = ({
     }
 
     if (entry.count !== 0) {
-      if (values?.id) {
-        // TODO updateWordCount(entry).then(onCompleted)
+      if (values?.id != null) {
+        putEntry(entry).then(onCompleted)
       } else {
         insertEntries([entry]).then(onCompleted)
       }

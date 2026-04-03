@@ -5,7 +5,7 @@ import { format, isValid, parse as parseDate } from "date-fns";
 
 import type { WordCountEntry } from "../src/types.ts";
 
-import { insertEntry } from "./queries.ts";
+import { upsertEntry } from "./queries.ts";
 
 export const readWordCountSpreadsheetRow = (
   cells: string[],
@@ -67,7 +67,7 @@ export async function readCSV(
         const newEntries = readWordCountSpreadsheetRow(row, fandoms, year);
         if (newEntries.length > 0) {
           if (updateDb) {
-            newEntries.forEach(insertEntry);
+            newEntries.forEach(upsertEntry);
           }
           entries.push(...newEntries);
           if (newEntries[0].date.includes("12-31")) {

@@ -2,7 +2,7 @@ import express, { type Request } from "express";
 
 import { type WordCountEntry } from "../../src/types.ts";
 
-import { deleteEntry, insertEntry } from "../queries.ts";
+import { deleteEntry, upsertEntry } from "../queries.ts";
 import { type RequestWithId } from "../types.ts";
 
 const entriesRouter = express.Router({
@@ -19,7 +19,7 @@ const entriesRouter = express.Router({
 entriesRouter.post("/", (req, res) => {
   const entries = req.body as WordCountEntry[];
   console.log("posting word counts entry: ", entries);
-  entries.map(insertEntry);
+  entries.map(upsertEntry);
   return res.json(entries).status(200);
 });
 
@@ -46,6 +46,23 @@ entriesRouter.delete("/:id", (req: RequestWithId, res) => {
   console.log("deleting word counts entry: ", req.params.id);
   deleteEntry(req.params.id);
   return res.json(req.params.id).status(204);
+});
+/**
+ * PUT /api/entries/:id
+ */
+entriesRouter.put("/:id", (req: RequestWithId, res) => {
+  const entry = req.body as WordCountEntry;
+  console.log("putting word counts entry: ", entry);
+
+  if (entry == null || entry.id == null) {
+    return res
+      .status(400)
+      .send(
+        "This entry has no ID. To create a new entry, POST /api/entries/:id",
+      );
+  }
+  upsertEntry(entry);
+  return res.json(entry).status(204);
 });
 
 export default entriesRouter;

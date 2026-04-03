@@ -38,6 +38,15 @@ async function post<TRequestBody, TReturnType>(
     body: JSON.stringify(body),
   });
 }
+async function put<TRequestBody, TReturnType>(
+  path: string,
+  body: TRequestBody,
+): Promise<TReturnType> {
+  return get<TReturnType>(path, {
+    method: "PUT",
+    body: JSON.stringify(body),
+  });
+}
 async function restDelete(path: string): Promise<null> {
   return get(path, {
     method: "DELETE",
@@ -46,6 +55,8 @@ async function restDelete(path: string): Promise<null> {
 
 export const insertEntries = (entries: WordCountEntry[]) =>
   post<WordCountEntry[], WordCountEntry[]>(`entries`, entries);
+export const putEntry = (entry: WordCountEntry) =>
+  put<WordCountEntry, WordCountEntry>(`entries/${entry.id}`, entry);
 export const deleteEntry = (id: number) => restDelete(`entries/${id}`);
 export const selectAllWordCounts = (year: number) =>
   get<WordCountEntry[]>(`year/${year}/entries`);
