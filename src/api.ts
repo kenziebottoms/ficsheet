@@ -40,7 +40,7 @@ async function post<TRequestBody, TReturnType>(
 }
 
 export const insertWordCounts = (entries: WordCountEntry[]) =>
-  post<{ entries: WordCountEntry[] }, WordCountEntry[]>(`entries`, { entries });
+  post<WordCountEntry[], WordCountEntry[]>(`entries`, entries);
 export const selectAllWordCounts = (year: number) =>
   get<WordCountEntry[]>(`year/${year}/entries`);
 export const selectDailyTotals = (year: number) =>

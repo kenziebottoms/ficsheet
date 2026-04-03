@@ -16,10 +16,11 @@ const apiRouter = express.Router({
 
 /**
  * POST /api/entries
+ * BODY: [ ... ]
  */
 apiRouter.post("/entries", (req, res) => {
-  console.log("posting word counts entry: ");
-  const entries = req.body.entries as WordCountEntry[];
+  const entries = req.body as WordCountEntry[];
+  console.log("posting word counts entry: ", entries);
   entries.map(insertWordCount);
   return res.json(entries).status(200);
 });
