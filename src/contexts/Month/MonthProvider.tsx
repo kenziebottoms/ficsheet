@@ -29,42 +29,44 @@ export const MonthProvider = ({ initialValue, children }: Props) => {
   }, [year])
 
   return (
-    <MonthContext value={{
-      month,
-      setMonth,
-    }}>
-      <div className='flex flex-row gap-2 mt-3'>
-        <Button
-          style={month == null ? 'primary' : 'subtle'}
-          onClick={() => setMonth(null)}
-          className={['whitespace-nowrap transition-all', month == null ? 'rounded-b-none mt-2' : 'mb-2'].join(' ')}
-        >
-          {year === thisYear ? 'YTD' : "Overall"}
-        </Button>
-        {MonthNames
-          // (to date if current year)
-          .slice(0, year === thisYear ? (new Date().getMonth() + 1) : 12)
-          .map((monthName, m) => <Button
-            key={m}
-            style={month === m ? 'secondary' : 'subtle'}
-            className={[
-              "transition-all duration-100 capitalize",
-              m === month ? 'rounded-b-none mt-2' : 'mb-2'
-            ].join(" ")}
-            onClick={() => setMonth(m)}
-            small
+    <div>
+      <MonthContext value={{
+        month,
+        setMonth,
+      }}>
+        <div className='flex flex-row gap-2 mt-3'>
+          <Button
+            style={month == null ? 'primary' : 'subtle'}
+            onClick={() => setMonth(null)}
+            className={['whitespace-nowrap transition-all', month == null ? 'rounded-b-none mt-2' : 'mb-2'].join(' ')}
           >
-            {monthName.slice(0, 3)}
-          </Button>)}
-        <div className='grow' />
-      </div>
-      <div className={[
-        'rounded-md p-3 flex flex-col gap-3',
-        month == null ? 'rounded-tl-none' : '',
-        ButtonBackgroundClassNames[month === null ? 'primary' : 'secondary']
-      ].join(' ')}>
-        {children}
-      </div>
-    </MonthContext>
+            {year === thisYear ? 'YTD' : "Overall"}
+          </Button>
+          {MonthNames
+            // (to date if current year)
+            .slice(0, year === thisYear ? (new Date().getMonth() + 1) : 12)
+            .map((monthName, m) => <Button
+              key={m}
+              style={month === m ? 'secondary' : 'subtle'}
+              className={[
+                "transition-all duration-100 capitalize",
+                m === month ? 'rounded-b-none mt-2' : 'mb-2'
+              ].join(" ")}
+              onClick={() => setMonth(m)}
+              small
+            >
+              {monthName.slice(0, 3)}
+            </Button>)}
+          <div className='grow' />
+        </div>
+        <div className={[
+          'rounded-md p-3 flex flex-col gap-3',
+          month == null ? 'rounded-tl-none' : '',
+          ButtonBackgroundClassNames[month === null ? 'primary' : 'secondary']
+        ].join(' ')}>
+          {children}
+        </div>
+      </MonthContext>
+    </div>
   );
 }
