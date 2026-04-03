@@ -1,4 +1,4 @@
-import express from "express";
+import express, { type Request } from "express";
 
 import { readCSV } from "../csvHandler.ts";
 import { getYearlyWhereClause, select } from "../queries.ts";
@@ -14,9 +14,12 @@ const yearRouter = express.Router({
 /**
  * Validate `year` param
  */
-yearRouter.use("/", (req: YearRequest, res, next) => {
-  console.log(`validating year ${req.params.year}`);
-  const year = req.params.year;
+yearRouter.use("/", (req: Request<{ year?: string }>, res, next) => {
+  const { year } = req.params;
+  console.log(`validating year ${year}`);
+  if (year == null || Array.isArray(year)) {
+    return res.status(400).send("please supply a valid year");
+  }
   const validatedYear = parseInt(year, 10);
   if (
     !validatedYear ||
