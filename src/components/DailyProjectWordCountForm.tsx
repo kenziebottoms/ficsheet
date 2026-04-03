@@ -1,5 +1,5 @@
 import { use, useState, type SubmitEventHandler } from 'react';
-import { addDays, isBefore } from 'date-fns';
+import { addDays, isBefore, parse } from 'date-fns';
 import { DeleteForever, EditCalendar } from '@mui/icons-material';
 
 import { deleteEntry, insertEntries } from '@/api';
@@ -58,10 +58,13 @@ const DailyProjectWordCountForm = ({
       } else {
         insertEntries([entry]).then(onCompleted)
       }
-    } else {
-      // TODO deleteWordCount(entry.id).then(onCompleted)
+    } else if (entry.id != null) {
+      deleteEntry(entry.id).then(onCompleted)
     }
   }
+
+  // default to today (unless it's after midnight but before 4AM, then default to "yesterday")
+  const defaultDate = isBefore(new Date(), new Date().setHours(4)) ? addDays(new Date(), -1) : new Date()
 
   return <form
     onSubmit={handleSubmit}
@@ -70,8 +73,7 @@ const DailyProjectWordCountForm = ({
     <DateInput
       name="date"
       label="Date"
-      // If after midnight but before 4am, log as day before
-      defaultValue={values?.date || isBefore(new Date(), new Date().setHours(4)) ? addDays(new Date(), -1) : new Date()}
+      defaultValue={values?.date ? parse(values?.date, 'yyyy-MM-dd', new Date()) : defaultDate}
     />
     <Input<string>
       label="Fic"
