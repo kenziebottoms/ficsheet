@@ -137,7 +137,7 @@ describe("readWordCountSpreadsheetRow", () => {
           "",
           "",
           "",
-          "nancy tops",
+          "vampire eddie",
           "27227",
           "",
         ],
@@ -149,7 +149,7 @@ describe("readWordCountSpreadsheetRow", () => {
           count: 5,
           date: "2025-12-31",
           fandom: "Stranger Things",
-          fic: "nancy tops",
+          fic: "vampire eddie",
         },
       ],
     );

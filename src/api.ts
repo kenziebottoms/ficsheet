@@ -44,7 +44,7 @@ async function restDelete(path: string): Promise<null> {
   });
 }
 
-export const insertWordCounts = (entries: WordCountEntry[]) =>
+export const insertEntries = (entries: WordCountEntry[]) =>
   post<WordCountEntry[], WordCountEntry[]>(`entries`, entries);
 export const deleteEntry = (id: number) => restDelete(`entries/${id}`);
 export const selectAllWordCounts = (year: number) =>
