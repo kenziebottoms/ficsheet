@@ -1,4 +1,5 @@
 import { use, useState } from "react";
+import { EditCalendar } from "@mui/icons-material";
 
 import Button from "@/components/Button";
 import DailyProjectWordCountForm from "@/components/DailyProjectWordCountForm";
@@ -23,6 +24,7 @@ const ThisYear = ({
       onClick={() => setShowEntryForm(!showEntryForm)}
       style='primary'
       className="self-start"
+      icon={EditCalendar}
     >
       Log
     </Button>

@@ -1,5 +1,6 @@
 import { use, useState } from "react";
 import _ from 'lodash'
+import { Equalizer, TableChart } from "@mui/icons-material";
 
 import Badge from "@/components/Badge";
 import Button from "@/components/Button";
@@ -26,14 +27,22 @@ const MonthlyCharts = () => {
   const totals = filterByYearAndMonth(dailyTotals, year, month)
 
   return <>
-    <Button
-      style={showHistory ? "primary" : "secondary"}
-      onClick={() => setShowHistory(!showHistory)}
-      className='self-end -mt-[3.15rem] mb-2 -mr-3'
-      small
-    >
-      History
-    </Button>
+    <div className="flex flex-row gap-3 self-end -mt-15 mb-3 -mr-3">
+      <Button
+        style={showHistory ? "subtle" : "secondary"}
+        onClick={() => setShowHistory(false)}
+        icon={Equalizer}
+      >
+        Charts
+      </Button>
+      <Button
+        style={showHistory ? "secondary" : "subtle"}
+        onClick={() => setShowHistory(true)}
+        icon={TableChart}
+      >
+        History
+      </Button>
+    </div>
     {showHistory ? <History /> : <>
       <div className="flex flex-row flex-wrap gap-3 items-start">
         <Badge title="Total" style="primary">
