@@ -34,8 +34,9 @@ export const IconColors: Record<
   | "info"
   | "success"
   | "warning"
+  | undefined
 > = {
-  primary: "secondary",
+  primary: undefined,
   secondary: "secondary",
   subtle: "secondary",
   transparent: "secondary",
