@@ -2,6 +2,10 @@
  * Non-referential types, alphabetical
  */
 
+export type ContainerProps = {
+  className?: string;
+};
+
 export type DailyTotal = {
   date: string;
   daily_total: number;

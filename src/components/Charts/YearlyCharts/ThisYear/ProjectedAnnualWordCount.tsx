@@ -7,12 +7,11 @@ import Widget from '@/components/Widget'
 
 import { DataCacheContext } from '@/contexts/DataCache/DataCacheContext'
 
-type Props = {
-  className?: string;
-}
+import type { ContainerProps } from '@/types'
+
 const ProjectedAnnualWordCount = ({
   className = ''
-}: Props) => {
+}: ContainerProps) => {
   const { runningTotal } = use(DataCacheContext)
 
   if (runningTotal.length === 0) {
@@ -24,11 +23,10 @@ const ProjectedAnnualWordCount = ({
   const daysInYear = isLeapYear(year) ? 366 : 365
   const daysPast = getDayOfYear(new Date())
 
-  return <div className={['p-2 bg-zinc-700 rounded-full flex flex-row justify-center items-center gap-4', className].join(" ")}>
+  return <div className={['py-2 px-16 w-auto bg-zinc-700 rounded-full flex flex-row items-center gap-4', className].join(" ")}>
     <Badge style="secondary" title="Total Words Written">
       {running_total}
     </Badge>
-    <span className='text-6xl font-light text-zinc-300 font-mono'>x</span>
     <Widget title="Days past" className='items-center'>
       <Gauge
         width={100}
@@ -39,7 +37,6 @@ const ProjectedAnnualWordCount = ({
         className='mx-auto'
       />
     </Widget>
-    <span className='text-6xl font-light text-zinc-300 font-mono'>=</span>
     <Badge style="primary" title={(<>Projected Annual<br />Word Count</>)}>
       {(running_total * (daysInYear / daysPast)).toFixed(0)}
     </Badge>

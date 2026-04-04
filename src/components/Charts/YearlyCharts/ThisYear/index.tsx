@@ -6,19 +6,18 @@ import Modal from "@/components/Modal";
 
 import { DataCacheContext } from "@/contexts/DataCache/DataCacheContext";
 
+import type { ContainerProps } from "@/types";
+
 import ProjectedAnnualWordCount from "./ProjectedAnnualWordCount";
 
-type Props = {
-  className?: string;
-}
 const ThisYear = ({
   className = ''
-}: Props) => {
+}: ContainerProps) => {
   const [showEntryForm, setShowEntryForm] = useState<boolean>(false)
   const { refreshData, runningTotal } = use(DataCacheContext)
 
-  return <div className={["flex flex-row items-center justify-start gap-2", className].join(" ")}>
-    {runningTotal.length > 0 && <ProjectedAnnualWordCount className="grow" />}
+  return <div className={["flex flex-row items-center justify-between gap-2", className].join(" ")}>
+    {runningTotal.length > 0 && <ProjectedAnnualWordCount />}
 
     <Button
       onClick={() => setShowEntryForm(!showEntryForm)}
