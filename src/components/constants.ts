@@ -37,8 +37,8 @@ export const IconColors: Record<
   | undefined
 > = {
   primary: undefined,
-  secondary: "secondary",
-  subtle: "secondary",
+  secondary: undefined,
+  subtle: undefined,
   transparent: "secondary",
   cautionary: "warning",
 };
