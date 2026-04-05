@@ -7,7 +7,7 @@ export const fullRainbow = [
   "#facc15",
   "#84cc16",
   "#059669",
-  "#38bdf8",
+  "#0ea5e9",
   "#4f46e5",
   "#c026d3",
   "#fff",
