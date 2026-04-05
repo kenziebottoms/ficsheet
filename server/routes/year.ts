@@ -1,7 +1,11 @@
 import express, { type Request } from "express";
 
 import { readCSV } from "../csvHandler.ts";
-import { getYearlyWhereClause, select } from "../queries.ts";
+import {
+  deleteEntriesByYear,
+  getYearlyWhereClause,
+  select,
+} from "../queries.ts";
 import { type YearRequest } from "../types.ts";
 
 const yearRouter = express.Router({
@@ -52,6 +56,15 @@ yearRouter.get("/entries", (req: YearRequest, res) => {
     `* FROM word_count ${getYearlyWhereClause(req.params.year)} ORDER BY date ASC`,
   );
   return res.json(data).status(200);
+});
+
+/**
+ * DELETE /api/year/:year/entries
+ */
+yearRouter.delete("/entries", (req: YearRequest, res) => {
+  console.log(`forgetting ${req.params.year}`);
+  deleteEntriesByYear(req.params.year);
+  res.json(req.params.year).status(204);
 });
 
 /**

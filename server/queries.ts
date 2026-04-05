@@ -18,6 +18,13 @@ export const deleteEntry = (id: string) => {
   deleteQuery.run(id);
 };
 
+export const deleteEntriesByYear = (year: string) => {
+  const deleteQuery = db.prepare(
+    `DELETE FROM word_count ${getYearlyWhereClause(year)}`,
+  );
+  deleteQuery.run();
+};
+
 export function select<TRow>(query: string) {
   console.log(`selecting "${query}"`);
   const q = db.prepare(`SELECT ${query}`);
