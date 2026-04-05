@@ -9,6 +9,7 @@ import { YearContext } from '@/contexts/Year/YearContext';
 import Widget from '@/components/Widget';
 
 import { MonthNames, type WordCountEntry } from '@/types';
+import { largeNumberFormatter } from '@/utils';
 
 import { getDynamicColorPalette } from '../constants';
 
@@ -51,6 +52,7 @@ const MonthlyFandomBar = () => {
       colors={getDynamicColorPalette(fandoms.length)}
       width={100 + monthlyTotalByFandom.length * 60}
       height={200}
+      yAxis={[{ valueFormatter: largeNumberFormatter }]}
     />
   </Widget>
 }

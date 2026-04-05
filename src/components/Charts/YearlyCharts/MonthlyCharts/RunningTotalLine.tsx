@@ -9,6 +9,8 @@ import { YearContext } from '@/contexts/Year/YearContext';
 
 import Widget from '@/components/Widget';
 
+import { largeNumberFormatter } from '@/utils';
+
 import { colors } from '../../constants';
 
 import { addTimestamp, filterByYearAndMonth, } from '../utils';
@@ -41,6 +43,7 @@ const RunningTotalLine = () => {
       width={400}
       height={200}
       colors={colors}
+      yAxis={[{ valueFormatter: largeNumberFormatter }]}
     />
   </Widget>
 }

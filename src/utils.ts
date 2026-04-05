@@ -15,3 +15,10 @@ export const getDatesBetween = (min: Date, max: Date): string[] => {
   }
   return dates;
 };
+
+export const largeNumberFormatter = (x: string) => {
+  const number = parseInt(x, 10) ?? 0;
+  return number >= 1000
+    ? `${(number / 1000).toFixed(1).replace(".0", "")}k`
+    : `${number}`;
+};
