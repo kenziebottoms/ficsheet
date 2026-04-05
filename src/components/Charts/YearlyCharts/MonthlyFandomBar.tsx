@@ -10,7 +10,7 @@ import Widget from '@/components/Widget';
 
 import { MonthNames, type WordCountEntry } from '@/types';
 
-import { colors } from '../constants';
+import { getDynamicColorPalette } from '../constants';
 
 import { filterByYearAndMonth } from './utils';
 
@@ -48,7 +48,7 @@ const MonthlyFandomBar = () => {
         label: fandom,
         stack: 'total'
       }))}
-      colors={colors}
+      colors={getDynamicColorPalette(fandoms.length)}
       width={100 + monthlyTotalByFandom.length * 60}
       height={200}
     />
