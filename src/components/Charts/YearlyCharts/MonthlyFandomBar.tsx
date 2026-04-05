@@ -1,32 +1,43 @@
 import { use } from 'react';
 import { BarChart } from '@mui/x-charts'
 import _ from 'lodash'
+import { parse } from 'date-fns';
 
 import { DataCacheContext } from '@/contexts/DataCache/DataCacheContext';
 import { YearContext } from '@/contexts/Year/YearContext';
 
 import Widget from '@/components/Widget';
 
-import { MonthNames } from '@/types';
+import { MonthNames, type WordCountEntry } from '@/types';
 
 import { colors } from '../constants';
 
 import { filterByYearAndMonth } from './utils';
 
+interface FandomTotal {
+  [key: string]: number;
+};
 const MonthlyFandomBar = () => {
   const { dailyEntries, fandoms } = use(DataCacheContext)
   const { year } = use(YearContext)
   const entries = filterByYearAndMonth(dailyEntries, year, null, true)
 
-  const entriesGroupedByMonth = _.groupBy(entries, ({ date }) => date.substring(5, 7))
+  const entriesByMonth: WordCountEntry[][] = MonthNames
+    .map((_monthName, monthIndex) => entries.filter(({ date }) => parse(date, 'yyyy-MM-dd', new Date()).getMonth() === monthIndex))
+    // filter out empty months for current year
+    .filter(entries => year !== new Date().getFullYear() || entries.length > 0)
 
-  const monthlyTotalByFandom = _.map(entriesGroupedByMonth, (monthlyEntries, month) => {
-    const monthlyFandomEntries = _.groupBy(monthlyEntries, 'fandom')
-    return {
-      month: MonthNames[parseInt(month, 10)],
-      ..._.mapValues(monthlyFandomEntries, entries => _.sumBy(entries, 'count'))
-    }
-  });
+  const monthlyTotalByFandom: Record<string, number | string>[] = entriesByMonth
+    .map((monthlyEntries) => {
+      const fandomTotals: FandomTotal = _.mapValues(
+        _.groupBy(monthlyEntries, 'fandom'),
+        (entries) => _.sumBy(entries, 'count')
+      )
+      return fandomTotals;
+    }).map((fandomTotals, monthIndex) => ({
+      ...fandomTotals,
+      month: MonthNames[monthIndex].slice(0, 3)
+    }));
 
   return <Widget title="Monthly Word Count By Fandom">
     <BarChart
