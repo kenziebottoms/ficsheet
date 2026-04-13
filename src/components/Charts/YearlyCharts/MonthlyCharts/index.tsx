@@ -4,7 +4,6 @@ import { Equalizer, TableChart } from "@mui/icons-material";
 
 import Badge from "@/components/Badge";
 import Button from "@/components/Button";
-import History from "@/components/History";
 
 import { DataCacheContext } from "@/contexts/DataCache/DataCacheContext";
 import { MonthContext } from "@/contexts/Month/MonthContext";
@@ -15,6 +14,7 @@ import { filterByYearAndMonth, getLongestStreak } from "../utils";
 import DailyWordCountStats from "./DailyWordCountStats";
 import DayOfWeekRadar from "./DayOfWeekRadar";
 import FandomPie from './FandomPie';
+import History from "./History";
 import RunningTotalLine from "./RunningTotalLine";
 
 const MonthlyCharts = () => {

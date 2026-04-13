@@ -8,15 +8,15 @@ import { MonthContext } from "@/contexts/Month/MonthContext";
 import { YearContext } from "@/contexts/Year/YearContext";
 
 import Button from "@/components/Button";
-import { filterByYearAndMonth } from "@/components/Charts/YearlyCharts/utils";
+import DailyProjectWordCountForm from "@/components/DailyProjectWordCountForm";
+import Modal from "@/components/Modal";
 import Toggle from "@/components/Toggle";
+import { filterByYearAndMonth } from "@/components/Charts/YearlyCharts/utils";
 
 import type { WordCountEntry } from "@/types";
 
 import { getDatesBetween } from "@/utils";
 
-import DailyProjectWordCountForm from "./DailyProjectWordCountForm";
-import Modal from "./Modal";
 
 type Sort = 'chronological' | 'newest';
 const History = () => {
