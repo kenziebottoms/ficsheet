@@ -10,6 +10,7 @@ import { YearContext } from "@/contexts/Year/YearContext";
 import Button from "@/components/Button";
 import DailyProjectWordCountForm from "@/components/DailyProjectWordCountForm";
 import Modal from "@/components/Modal";
+import Pill from "@/components/Pill";
 import Toggle from "@/components/Toggle";
 import { filterByYearAndMonth } from "@/components/Charts/YearlyCharts/utils";
 
@@ -20,7 +21,7 @@ import { getDatesBetween } from "@/utils";
 
 type Sort = 'chronological' | 'newest';
 const History = () => {
-  const { dailyEntries, dailyTotals, fandoms, refreshData } = use(DataCacheContext)
+  const { dailyEntries, dailyTotals, refreshData } = use(DataCacheContext)
   const { year } = use(YearContext)
   const { month } = use(MonthContext)
 
@@ -36,6 +37,7 @@ const History = () => {
   if (sort === 'newest') {
     filteredDates.reverse()
   }
+  const fandoms = _.uniq(_.map(entries, 'fandom'))
 
   return <>
     <Modal
@@ -107,26 +109,30 @@ const History = () => {
                     {parseInt(date.substring(5, 7), 10)}/{parseInt(date.substring(8, 10), 10)}/{date.substring(2, 4)}
                   </td>
                   {fandoms
-                    // map fandoms to daily fandom total so we can style based on value
-                    .map(fandom => _.sumBy(_.filter(entries, { fandom, date }), 'count'))
-                    .map((fandomTotal, fandomIndex) => <td
+                    // map fandoms to list of fandom entries
+                    .map(fandom => _.filter(entries, { fandom, date }))
+                    .map((entries, fandomIndex) => <td
                       key={fandomIndex}
                       className={[
-                        "p-2",
+                        "p-2 space-y-1",
                         (fandomIndex % 2 === 0) ? "bg-pink-500/10" : "",
                         rowIndex === filteredDates.length - 1 ? 'border-b border-primary/50' : '',
-                        fandomTotal === 0 ? 'text-foreground/50' : ''
+                        _.sumBy(entries, 'count') === 0 ? 'text-foreground/50' : ''
                       ].join(' ')}
                     >
-                      <div className="flex flex-row justify-between items-center">
-                        {fandomTotal}
-                        <Button
-                          style="transparent"
-                          small
-                          onClick={() => setEditedEntry(_.find(entries, { fandom: fandoms[fandomIndex], date }) || { fandom: fandoms[fandomIndex], date })}
-                          icon={Edit}
-                        />
-                      </div>
+                      {entries.map((entry, entryIndex) => (
+                        <div key={entryIndex} className="flex flex-row gap-2 items-center">
+                          {entry.count}
+                          <Pill style="primary">{entry.fic}</Pill>
+                          <div className="grow" />
+                          <Button
+                            style="transparent"
+                            small
+                            onClick={() => setEditedEntry(entry || { fandom: fandoms[fandomIndex], date })}
+                            icon={Edit}
+                          />
+                        </div>
+                      ))}
                     </td>)}
                   <td className="bg-orange-500/10">
                     {_.find(totals, { date })?.daily_total || 0}
