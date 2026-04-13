@@ -1,7 +1,7 @@
 import { use, useState } from "react";
 import _ from 'lodash'
 import { isFuture, lastDayOfMonth, lastDayOfYear } from "date-fns";
-import { Edit } from '@mui/icons-material'
+import { Add, Edit } from '@mui/icons-material'
 
 import { DataCacheContext } from "@/contexts/DataCache/DataCacheContext";
 import { MonthContext } from "@/contexts/Month/MonthContext";
@@ -114,7 +114,7 @@ const History = () => {
                     .map((entries, fandomIndex) => <td
                       key={fandomIndex}
                       className={[
-                        "p-2 space-y-1",
+                        "p-2 gap-y-1 flex flex-col",
                         (fandomIndex % 2 === 0) ? "bg-pink-500/10" : "",
                         rowIndex === filteredDates.length - 1 ? 'border-b border-primary/50' : '',
                         _.sumBy(entries, 'count') === 0 ? 'text-foreground/50' : ''
@@ -128,11 +128,18 @@ const History = () => {
                           <Button
                             style="transparent"
                             small
-                            onClick={() => setEditedEntry(entry || { fandom: fandoms[fandomIndex], date })}
+                            onClick={() => setEditedEntry(entry)}
                             icon={Edit}
                           />
                         </div>
                       ))}
+                      {(showEmpty || entries.length === 0) && <Button
+                        style="transparent"
+                        small
+                        onClick={() => setEditedEntry({ fandom: fandoms[fandomIndex], date })}
+                        icon={Add}
+                        className="self-end"
+                      />}
                     </td>)}
                   <td className="bg-orange-500/10">
                     {_.find(totals, { date })?.daily_total || 0}
