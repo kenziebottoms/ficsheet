@@ -50,7 +50,7 @@ const History = () => {
         values={editedEntry}
         onCompleted={() => {
           setEditedEntry(null)
-          refreshData()
+          refreshData(year)
         }}
       />
     </Modal>
@@ -135,7 +135,7 @@ const History = () => {
                             {entry.id != null && <Button
                               style="cautionary"
                               small
-                              onClick={() => deleteEntry(entry.id as number).then(() => refreshData())}
+                              onClick={() => deleteEntry(entry.id as number).then(() => refreshData(year))}
                               icon={DeleteOutline}
                             />}
                           </div>

@@ -19,7 +19,7 @@ export const DataCacheProvider = ({ year, children }: Props) => {
   const [dailyTotals, setDailyTotals] = useState<DailyTotal[]>([])
   const [runningTotal, setRunningTotal] = useState<RunningTotal[]>([])
 
-  const refreshData = (year: number = new Date().getFullYear()) => {
+  const refreshData = (year: number) => {
     selectFandoms(year).then(setFandoms)
     selectAllWordCounts(year).then(setDailyEntries)
     selectDailyTotals(year).then(setDailyTotals)

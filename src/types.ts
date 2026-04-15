@@ -70,5 +70,5 @@ export type DataCache = {
   dailyTotals: DailyTotal[];
   fandoms: string[];
   runningTotal: RunningTotal[];
-  refreshData: (year?: number) => void;
+  refreshData: (year: number) => void;
 };
