@@ -4,13 +4,22 @@ import type { WordCountEntry } from "../src/types.ts";
 
 export const db = new DatabaseSync("ficsheet.sqlite");
 
-export const upsertEntry = (entry: WordCountEntry) => {
+export const updateEntry = (entry: WordCountEntry & { id: number }) => {
+  const { id, date, count, fic, fandom } = entry;
+  const insert = db.prepare(
+    `UPDATE word_count \
+    SET date = ?, count = ?, fic = ?, fandom = ?
+    WHERE id = ?;`,
+  );
+  insert.run(date, count, fic, fandom, id);
+};
+
+export const insertEntry = (entry: WordCountEntry) => {
   const { date, count, fic, fandom } = entry;
   const insert = db.prepare(
-    `INSERT INTO word_count (date, count, fic, fandom) VALUES (?, ?, ?, ?) \
-    ON CONFLICT DO UPDATE SET date = ?, count = ?, fic = ?, fandom = ?;`,
+    `INSERT INTO word_count (date, count, fic, fandom) VALUES (?, ?, ?, ?)`,
   );
-  insert.run(date, count, fic, fandom, date, count, fic, fandom);
+  insert.run(date, count, fic, fandom);
 };
 
 export const deleteEntry = (id: string) => {
