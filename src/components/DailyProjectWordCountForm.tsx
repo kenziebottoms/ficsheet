@@ -114,7 +114,7 @@ const DailyProjectWordCountForm = ({
       style="primary"
       icon={EditCalendar}
     >
-      Log word count
+      {values?.id == null ? 'Log' : 'Update'} word count
     </Button>
     {!!values && values.id != null && (
       <Button
