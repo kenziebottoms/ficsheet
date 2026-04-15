@@ -114,32 +114,33 @@ const History = () => {
                     .map((entries, fandomIndex) => <td
                       key={fandomIndex}
                       className={[
-                        "p-2 gap-y-1 flex flex-col",
                         (fandomIndex % 2 === 0) ? "bg-pink-500/10" : "",
                         rowIndex === filteredDates.length - 1 ? 'border-b border-primary/50' : '',
                         _.sumBy(entries, 'count') === 0 ? 'text-foreground/50' : ''
                       ].join(' ')}
                     >
-                      {entries.map((entry, entryIndex) => (
-                        <div key={entryIndex} className="flex flex-row gap-2 items-center">
-                          {entry.count}
-                          <Pill style="primary">{entry.fic}</Pill>
-                          <div className="grow" />
-                          <Button
-                            style="transparent"
-                            small
-                            onClick={() => setEditedEntry(entry)}
-                            icon={Edit}
-                          />
-                        </div>
-                      ))}
-                      {(showEmpty || entries.length === 0) && <Button
-                        style="transparent"
-                        small
-                        onClick={() => setEditedEntry({ fandom: fandoms[fandomIndex], date })}
-                        icon={Add}
-                        className="self-end"
-                      />}
+                      <div className="p-2 gap-y-1 flex flex-col">
+                        {entries.map((entry, entryIndex) => (
+                          <div key={entryIndex} className="flex flex-row gap-2 items-center">
+                            {entry.count}
+                            <Pill style="primary">{entry.fic}</Pill>
+                            <div className="grow" />
+                            <Button
+                              style="transparent"
+                              small
+                              onClick={() => setEditedEntry(entry)}
+                              icon={Edit}
+                            />
+                          </div>
+                        ))}
+                        {(showEmpty || entries.length === 0) && <Button
+                          style="transparent"
+                          small
+                          onClick={() => setEditedEntry({ fandom: fandoms[fandomIndex], date })}
+                          icon={Add}
+                          className="self-end"
+                        />}
+                      </div>
                     </td>)}
                   <td className="bg-orange-500/10">
                     {_.find(totals, { date })?.daily_total || 0}
