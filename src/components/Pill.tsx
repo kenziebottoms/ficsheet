@@ -13,7 +13,7 @@ const Pill = ({
   style,
   children
 }: Props) => {
-  return <div className={["font-sans rounded-xl text-sm px-2 py-1", PillClassNames[style]].join(" ")}>
+  return <div className={["font-sans rounded-xl text-sm px-2 py-1 whitespace-nowrap", PillClassNames[style]].join(" ")}>
     {children}
   </div>
 }
