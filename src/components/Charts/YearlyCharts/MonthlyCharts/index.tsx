@@ -18,13 +18,20 @@ import History from "./History";
 import RunningTotalLine from "./RunningTotalLine";
 
 const MonthlyCharts = () => {
-  const { dailyTotals } = use(DataCacheContext)
+  const { dailyTotals, dailyEntries } = use(DataCacheContext)
   const { year } = use(YearContext)
   const { month } = use(MonthContext)
 
   const [showHistory, setShowHistory] = useState<boolean>(false)
 
   const totals = filterByYearAndMonth(dailyTotals, year, month)
+  const entries = filterByYearAndMonth(dailyEntries, year, month)
+
+  const entriesByFic = _.groupBy(entries, 'fic')
+  const ficTotals = _.map(entriesByFic, (entries, fic) => ({
+    fic,
+    count: _.sumBy(entries, 'count')
+  }))
 
   return <>
     <div className="flex flex-row gap-3 self-end -mt-15 mb-3 -mr-3">
@@ -52,7 +59,16 @@ const MonthlyCharts = () => {
           <span className='font-semibold text-white'>{getLongestStreak(totals, x => x.daily_total !== 0)}</span> days
         </Badge>
       </div>
+
+      <div className="flex flex-row flex-wrap gap-3 items-start">
+        <Badge title="Most Worked On" style="secondary">
+          <div className="text-sm">+{_.maxBy(ficTotals, 'count')?.count} words</div>
+          {_.maxBy(ficTotals, 'count')?.fic}
+        </Badge>
+      </div>
+
       <DailyWordCountStats />
+
       <div className="flex flex-row flex-wrap gap-3">
         <FandomPie />
         <RunningTotalLine />
