@@ -22,7 +22,7 @@ const Input = <T extends string | number>({
     }
   }, [defaultValue])
 
-  return <div className='flex flex-col'>
+  return <div className='flex flex-col w-full'>
     <label>
       <div>{label}</div>
       <input

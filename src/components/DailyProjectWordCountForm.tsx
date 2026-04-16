@@ -1,6 +1,6 @@
 import { use, useState, type SubmitEventHandler } from 'react';
 import { addDays, isBefore, parse } from 'date-fns';
-import { DeleteForever, EditCalendar } from '@mui/icons-material';
+import { Add, DeleteForever, EditCalendar } from '@mui/icons-material';
 
 import { deleteEntry, insertEntries, putEntry } from '@/api';
 import { DataCacheContext } from '@/contexts/DataCache/DataCacheContext';
@@ -32,6 +32,7 @@ const DailyProjectWordCountForm = ({
 }: Props) => {
   const { fandoms } = use(DataCacheContext)
 
+  const [typeNewFandom, setTypeNewFandom] = useState<boolean>(false)
   const [showTextarea, setShowTextarea] = useState<boolean>(!values)
 
   const handleSubmit: SubmitEventHandler<HTMLFormElement> = e => {
@@ -81,13 +82,29 @@ const DailyProjectWordCountForm = ({
       type="text"
       defaultValue={values?.fic || ''}
     />
-    <Dropdown
-      label="Fandom"
-      placeholder='Select a fandom'
-      name="fandom"
-      options={fandoms}
-      defaultValue={values?.fandom || ''}
-    />
+
+    <div className='flex flex-row gap-2'>
+      {typeNewFandom ? <Input<string>
+        label="Fandom"
+        name="fandom"
+        type="text"
+        defaultValue={values?.fandom || ''}
+      /> : <>
+        <Dropdown
+          label="Fandom"
+          placeholder='Select a fandom'
+          name="fandom"
+          options={fandoms}
+          defaultValue={values?.fandom || ''}
+        />
+        <Button
+          style="transparent"
+          icon={Add}
+          className='self-end'
+          onClick={() => setTypeNewFandom(true)}
+        />
+      </>}
+    </div>
 
     <Toggle
       className='flex flex-row gap-2'
