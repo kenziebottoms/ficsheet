@@ -38,7 +38,7 @@ const History = () => {
   if (sort === 'newest') {
     filteredDates.reverse()
   }
-  const fandoms = _.uniq(_.map(entries, 'fandom'))
+  const fandoms = _.uniq(_.map(entries, 'fandom')).sort()
 
   return <>
     <Modal
