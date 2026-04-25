@@ -22,7 +22,7 @@ const MonthlyFandomBar = () => {
   const { dailyEntries } = use(DataCacheContext)
   const { year } = use(YearContext)
   const entries = filterByYearAndMonth(dailyEntries, year, null, true)
-  const fandoms = _.uniq(_.map(entries, 'fandom')).sort()
+  const fandoms = _.uniq(_.map(entries, 'fandom'))
 
   const entriesByMonth: WordCountEntry[][] = MonthNames
     .map((_monthName, monthIndex) => entries.filter(({ date }) => parse(date, 'yyyy-MM-dd', new Date()).getMonth() === monthIndex))
