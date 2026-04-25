@@ -12,10 +12,11 @@ import { getDynamicColorPalette } from '@/components/Charts/constants';
 import { filterByYearAndMonth } from '../utils';
 
 const FandomPie = () => {
-  const { dailyEntries, fandoms } = use(DataCacheContext)
+  const { dailyEntries } = use(DataCacheContext)
   const { year } = use(YearContext)
   const { month } = use(MonthContext)
   const entries = filterByYearAndMonth(dailyEntries, year, month, true)
+  const fandoms = _.uniq(_.map(entries, 'fandom')).sort()
   const data = fandoms.map((fandom, i) => ({
     id: i,
     label: fandom,
