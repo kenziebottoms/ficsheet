@@ -153,4 +153,88 @@ describe("readWordCountSpreadsheetRow", () => {
       ],
     );
   });
+  it("2 fics, 1 fandom", () => {
+    assert.deepEqual(
+      readWordCountSpreadsheetRow(
+        [
+          "Dec",
+          "25",
+          "143",
+          "143",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "coffee shop au 2 & coffee shop au 3",
+          "27026",
+          "",
+        ],
+        fandoms,
+        2025,
+      ),
+      [
+        {
+          date: "2025-12-25",
+          fic: "coffee shop au 2",
+          fandom: "Superman",
+          count: 142,
+        },
+        {
+          date: "2025-12-25",
+          fic: "coffee shop au 3",
+          fandom: "Superman",
+          count: 1,
+        },
+      ],
+    );
+  });
+  it("3 fics, 1 fandom", () => {
+    assert.deepEqual(
+      readWordCountSpreadsheetRow(
+        [
+          "Dec",
+          "25",
+          "143",
+          "143",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "coffee shop au 1 & coffee shop au 2 & coffee shop au 3",
+          "27026",
+          "",
+        ],
+        fandoms,
+        2025,
+      ),
+      [
+        {
+          date: "2025-12-25",
+          fic: "coffee shop au 1",
+          fandom: "Superman",
+          count: 141,
+        },
+        {
+          date: "2025-12-25",
+          fic: "coffee shop au 2",
+          fandom: "Superman",
+          count: 1,
+        },
+        {
+          date: "2025-12-25",
+          fic: "coffee shop au 3",
+          fandom: "Superman",
+          count: 1,
+        },
+      ],
+    );
+  });
 });

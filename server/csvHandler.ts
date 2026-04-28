@@ -7,6 +7,20 @@ import type { WordCountEntry } from "../src/types.ts";
 
 import { insertEntry } from "./queries.ts";
 
+/**
+ * Splits a one-fandom multi-fic word count entry into multiple
+ * entries for ease of manual correction.
+ */
+export const splitSingleFandomMultiFicDay = (
+  entry: WordCountEntry,
+): WordCountEntry[] =>
+  entry.fic.split("&").map((fic, i, fics) => ({
+    fic: fic.trim(),
+    date: entry.date,
+    fandom: entry.fandom,
+    count: i === 0 ? entry.count - fics.length + 1 : 1,
+  }));
+
 export const readWordCountSpreadsheetRow = (
   cells: string[],
   fandoms: string[],
@@ -29,12 +43,17 @@ export const readWordCountSpreadsheetRow = (
             `Entry for ${date} contains more word counts than fandoms.`,
           );
         }
-        entries.push({
+        const newEntry = {
           fandom: fandoms[fandomTotalIndex].trim(),
           count: parseInt(fandomTotal, 10),
           fic: projects.split(",")[nonEmptyFandomTotalIndex].trim(),
           date,
-        });
+        };
+        if (newEntry.fic.includes("&")) {
+          entries.push(...splitSingleFandomMultiFicDay(newEntry));
+        } else {
+          entries.push(newEntry);
+        }
         nonEmptyFandomTotalIndex++;
       }
     });
