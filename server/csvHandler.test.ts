@@ -3,19 +3,18 @@ import { describe, it } from "node:test";
 
 import { readWordCountSpreadsheetRow } from "./csvHandler.ts";
 
-const fandoms = [
-  "Mad Max",
-  "Inception",
-  "Stranger Things",
-  "Fandom #4",
-  "Fandom #5",
-  "Fandom #6",
-  "Fandom #7",
-  "Other",
-  "Non-fiction",
-];
-
 describe("readWordCountSpreadsheetRow", () => {
+  const fandoms = [
+    "Superman",
+    "Game of Thrones",
+    "Stranger Things",
+    "Fandom #4",
+    "Fandom #5",
+    "Fandom #6",
+    "Fandom #7",
+    "Other",
+    "Non-fiction",
+  ];
   it("1 fic", () => {
     assert.deepEqual(
       readWordCountSpreadsheetRow(
@@ -32,7 +31,7 @@ describe("readWordCountSpreadsheetRow", () => {
           "",
           "",
           "",
-          "muzzled max 3",
+          "coffee shop au 3",
           "27026",
           "",
         ],
@@ -42,8 +41,8 @@ describe("readWordCountSpreadsheetRow", () => {
       [
         {
           date: "2025-12-25",
-          fic: "muzzled max 3",
-          fandom: "Mad Max",
+          fic: "coffee shop au 3",
+          fandom: "Superman",
           count: 143,
         },
       ],
@@ -65,7 +64,7 @@ describe("readWordCountSpreadsheetRow", () => {
           "",
           "",
           "",
-          "muzzled max 3",
+          "coffee shop au 3",
           "27026",
           "",
         ],
@@ -75,8 +74,8 @@ describe("readWordCountSpreadsheetRow", () => {
       [
         {
           date: "2025-06-26",
-          fic: "muzzled max 3",
-          fandom: "Mad Max",
+          fic: "coffee shop au 3",
+          fandom: "Superman",
           count: 30,
         },
       ],
@@ -98,7 +97,7 @@ describe("readWordCountSpreadsheetRow", () => {
           "",
           "",
           "",
-          "muzzled max 3, transception",
+          "coffee shop au 3, pacific rim au",
           "25049",
           "",
         ],
@@ -108,14 +107,14 @@ describe("readWordCountSpreadsheetRow", () => {
       [
         {
           date: "2025-10-29",
-          fic: "muzzled max 3",
-          fandom: "Mad Max",
+          fic: "coffee shop au 3",
+          fandom: "Superman",
           count: 31,
         },
         {
           date: "2025-10-29",
-          fic: "transception",
-          fandom: "Inception",
+          fic: "pacific rim au",
+          fandom: "Game of Thrones",
           count: 24,
         },
       ],
