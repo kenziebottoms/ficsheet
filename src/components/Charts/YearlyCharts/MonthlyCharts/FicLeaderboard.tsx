@@ -18,12 +18,15 @@ const FicLeaderboard = () => {
     fic,
     _.find(entries, { fic })?.fandom,
     _.sumBy(entries, 'count')
-  ])), '[2]').reverse()
+  ])), '[2]').reverse().slice(0, 5)
 
-  return <Table
-    headers={['Fic', 'Fandom', 'Words Added']}
-    data={ficTotals}
-  />
+  return <>
+    <h3>Top {ficTotals.length} Fics</h3>
+    <Table
+      headers={['Fic', 'Fandom', 'Words Added']}
+      data={ficTotals}
+    />
+  </>
 }
 
 export default FicLeaderboard
