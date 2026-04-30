@@ -22,3 +22,16 @@ export const largeNumberFormatter = (x: string) => {
     ? `${(number / 1000).toFixed(1).replace(".0", "")}k`
     : `${number}`;
 };
+
+export const getMedian = (data: number[]) => {
+  const sortedData = data.slice().sort((a, b) => a - b);
+  if (sortedData.length % 2 === 0) {
+    return (
+      (sortedData[sortedData.length / 2] +
+        sortedData[sortedData.length / 2 - 1]) /
+      2
+    );
+  } else {
+    return sortedData[(sortedData.length - 1) / 2];
+  }
+};
