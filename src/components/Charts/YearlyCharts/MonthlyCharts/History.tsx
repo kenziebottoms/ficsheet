@@ -86,12 +86,11 @@ const History = () => {
                 }}
               >
                 {label}
-                {label === "Date" && <Button
-                  small
-                  style="secondary"
-                >
-                  {sort === 'chronological' ? '↓' : '↑'}
-                </Button>}
+                {label === "Date" && <>
+                  <div className="self-end">
+                    {sort === 'chronological' ? '↓' : '↑'}
+                  </div>
+                </>}
               </th>)}
             </tr>
           </thead>
