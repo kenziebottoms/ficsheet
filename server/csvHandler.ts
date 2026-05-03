@@ -26,13 +26,13 @@ export const readWordCountSpreadsheetRow = (
   fandoms: string[],
   year: number,
 ): WordCountEntry[] => {
-  const [month, day] = cells;
+  const [_dayOfYear, month, _monthTotal, day] = cells;
   const dateString = `${year} ${month} ${day}`;
   const dateDate = parseDate(dateString, "yyyy MMMM dd", new Date());
   if (isValid(dateDate)) {
     const date = format(dateDate, "yyyy-MM-dd");
-    const fandomTotals = cells.slice(3, cells.length - 3);
-    const projects = cells[cells.length - 3];
+    const fandomTotals = cells.slice(5, cells.length - 5);
+    const projects = cells[cells.length - 5];
 
     let entries: WordCountEntry[] = [];
     let nonEmptyFandomTotalIndex = 0;
@@ -81,7 +81,7 @@ export async function readCSV(
     let entries: WordCountEntry[] = [];
     for await (const row of parser) {
       if (i === 0) {
-        fandoms = row.slice(3, row.length - 3);
+        fandoms = row.slice(5, row.length - 5);
       } else {
         const newEntries = readWordCountSpreadsheetRow(row, fandoms, year);
         if (newEntries.length > 0) {
