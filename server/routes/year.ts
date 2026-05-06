@@ -51,7 +51,7 @@ yearRouter.get("/dailyTotals", (req: YearRequest, res) => {
  * GET /api/year/:year/entries
  */
 yearRouter.get("/entries", (req: YearRequest, res) => {
-  console.log(`fetching word counts (${req.params.year}`);
+  console.log(`fetching word counts (${req.params.year})`);
   const data = select(
     `* FROM word_count ${getYearlyWhereClause(req.params.year)} ORDER BY date ASC`,
   );
@@ -62,7 +62,7 @@ yearRouter.get("/entries", (req: YearRequest, res) => {
  * DELETE /api/year/:year/entries
  */
 yearRouter.delete("/entries", (req: YearRequest, res) => {
-  console.log(`forgetting ${req.params.year}`);
+  console.log(`forgetting ${req.params.year})`);
   deleteEntriesByYear(req.params.year);
   res.json(req.params.year).status(204);
 });

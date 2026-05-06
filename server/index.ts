@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 
-import { setup } from "./db/setup.ts";
+import { createTables } from "./db/setup.ts";
 
 import apiRouter from "./routes/index.ts";
 
@@ -14,6 +14,6 @@ app.use(express.json());
 app.use("/api", apiRouter);
 
 app.listen(PORT, (error) => {
-  setup();
+  createTables();
   console.log(error ?? `Server is running at http://localhost:${PORT}`);
 });

@@ -9,6 +9,7 @@ import {
   select,
   updateEntry,
 } from "../db/queries.ts";
+import { seedTables } from "../db/setup.ts";
 import { type RequestWithId } from "../types.ts";
 
 const entriesRouter = express.Router({
@@ -53,6 +54,15 @@ entriesRouter.post("/import", (req, res) => {
   return readJson(filename, updateDb === "true")
     .then((rows) => res.json(rows).status(updateDb === "true" ? 201 : 200))
     .catch((error) => res.send(error).status(500));
+});
+
+/**
+ * POST /api/entries/seed
+ */
+entriesRouter.post("/seed", (_req, res) => {
+  console.log("seeding entries");
+  seedTables();
+  return res.status(201);
 });
 
 /**
