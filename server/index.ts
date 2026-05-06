@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 
-import { setup } from "./dbSetup.ts";
+import { setup } from "./db/setup.ts";
 
 import apiRouter from "./routes/index.ts";
 

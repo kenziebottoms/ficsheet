@@ -1,6 +1,6 @@
 import { DatabaseSync } from "node:sqlite";
 
-import type { WordCountEntry } from "../src/types.ts";
+import type { WordCountEntry } from "../../src/types.ts";
 
 export const db = new DatabaseSync("ficsheet.sqlite");
 

@@ -2,7 +2,12 @@ import express, { type Request } from "express";
 
 import { type WordCountEntry } from "../../src/types.ts";
 
-import { deleteEntry, insertEntry, select, updateEntry } from "../queries.ts";
+import {
+  deleteEntry,
+  insertEntry,
+  select,
+  updateEntry,
+} from "../db/queries.ts";
 import { type RequestWithId } from "../types.ts";
 
 const entriesRouter = express.Router({

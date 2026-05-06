@@ -1,6 +1,6 @@
 import express from "express";
 
-import { select } from "../queries.ts";
+import { select } from "../db/queries.ts";
 
 import entriesRouter from "./entries.ts";
 import yearRouter from "./year.ts";

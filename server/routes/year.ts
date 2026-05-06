@@ -5,7 +5,7 @@ import {
   deleteEntriesByYear,
   getYearlyWhereClause,
   select,
-} from "../queries.ts";
+} from "../db/queries.ts";
 import { type YearRequest } from "../types.ts";
 
 const yearRouter = express.Router({

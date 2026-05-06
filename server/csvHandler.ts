@@ -5,7 +5,7 @@ import { format, isValid, parse as parseDate } from "date-fns";
 
 import type { WordCountEntry } from "../src/types.ts";
 
-import { insertEntry } from "./queries.ts";
+import { insertEntry } from "./db/queries.ts";
 
 /**
  * Splits a one-fandom multi-fic word count entry into multiple
