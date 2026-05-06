@@ -2,7 +2,7 @@ import express, { type Request } from "express";
 
 import { type WordCountEntry } from "../../src/types.ts";
 
-import { deleteEntry, insertEntry, updateEntry } from "../queries.ts";
+import { deleteEntry, insertEntry, select, updateEntry } from "../queries.ts";
 import { type RequestWithId } from "../types.ts";
 
 const entriesRouter = express.Router({
@@ -21,6 +21,15 @@ entriesRouter.post("/", (req, res) => {
   console.log("posting word counts entry: ", entries);
   entries.map(insertEntry);
   return res.json(entries).status(200);
+});
+
+/**
+ * GET /api/entries/export
+ */
+entriesRouter.get("/export", (_req, res) => {
+  console.log("exporting entries");
+  const data = select("* from word_count");
+  return res.json(data).status(200);
 });
 
 /**
