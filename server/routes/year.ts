@@ -1,6 +1,6 @@
 import express, { type Request } from "express";
 
-import { readCSV } from "../csvHandler.ts";
+import { readCSV, readJson } from "../csvHandler.ts";
 import {
   deleteEntriesByYear,
   getYearlyWhereClause,
@@ -79,7 +79,8 @@ yearRouter.get("/fandoms", (req: YearRequest, res) => {
 });
 
 /**
- * POST /api/year/:year/ingest?filename=file.txt&updateDb=true
+ * POST /api/year/:year/ingest?filename=file.csv&updateDb=true
+ * For ingesting lossy Word Count CSVs
  */
 yearRouter.post("/ingest", (req: YearRequest, res) => {
   const { filename, updateDb } = req.query as Record<string, string>;
@@ -90,7 +91,7 @@ yearRouter.post("/ingest", (req: YearRequest, res) => {
     return res.status(400).send("please supply a filename");
   }
   return readCSV(filename, parseInt(req.params.year, 10), updateDb === "true")
-    .then((rows) => res.json(rows).status(201))
+    .then((rows) => res.json(rows).status(updateDb === "true" ? 201 : 200))
     .catch((error) => res.json(error).status(500));
 });
 

@@ -2,6 +2,7 @@ import express, { type Request } from "express";
 
 import { type WordCountEntry } from "../../src/types.ts";
 
+import { readJson } from "../csvHandler.ts";
 import {
   deleteEntry,
   insertEntry,
@@ -19,7 +20,7 @@ const entriesRouter = express.Router({
 
 /**
  * POST /api/entries
- * BODY: [ ... ]
+ * BODY: WordCountEntry[]
  */
 entriesRouter.post("/", (req, res) => {
   const entries = req.body as WordCountEntry[];
@@ -35,6 +36,23 @@ entriesRouter.get("/export", (_req, res) => {
   console.log("exporting entries");
   const data = select("* from word_count");
   return res.json(data).status(200);
+});
+
+/**
+ * POST /api/entries/import?filename=file.json&updateDb=true
+ * For importing a JSON file containing: WordCountEntry[]
+ */
+entriesRouter.post("/import", (req, res) => {
+  const { filename, updateDb } = req.query as Record<string, string>;
+  console.log(
+    `importing ${filename} (${updateDb === "true" ? "updating the database" : "dry run"})`,
+  );
+  if (!filename) {
+    return res.status(400).send("please supply a filename");
+  }
+  return readJson(filename, updateDb === "true")
+    .then((rows) => res.json(rows).status(updateDb === "true" ? 201 : 200))
+    .catch((error) => res.send(error).status(500));
 });
 
 /**

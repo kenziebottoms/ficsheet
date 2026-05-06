@@ -1,4 +1,4 @@
-import fs from "fs";
+import fs, { promises as fsPromises } from "fs";
 import _ from "lodash";
 import { parse } from "csv-parse";
 import { format, isValid, parse as parseDate } from "date-fns";
@@ -102,4 +102,16 @@ export async function readCSV(
     console.error("Error:", error);
     throw error;
   }
+}
+
+export async function readJson(inputFile: string, updateDb = false) {
+  console.log(`reading JSON '${inputFile}'`);
+  const data = await fsPromises.readFile(inputFile);
+
+  const entries = JSON.parse(`${data}`);
+  if (updateDb) {
+    entries.forEach(insertEntry);
+  }
+  console.log("Finished reading JSON file");
+  return entries;
 }
