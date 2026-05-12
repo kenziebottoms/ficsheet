@@ -1,5 +1,16 @@
 import { addDays, format, isBefore, isSameDay } from "date-fns";
 
+export const countWords = (input?: string | null) => {
+  if (!input || input === " ") {
+    return 0;
+  }
+  const pastedWords = input
+    // remove #(#)/#(#) date stamps
+    .replace(/\b\d{1,2}\/\d{1,2}\b/, "")
+    .trim();
+  return pastedWords.split(/\s+/g).length;
+};
+
 /**
  * @param min The first date
  * @param max The last date
