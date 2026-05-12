@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { countWords } from '@/utils';
 
 type Props = {
   name: string;
@@ -12,7 +13,7 @@ const TextArea = ({
 }: Props) => {
   const [value, setValue] = useState('');
 
-  const wordCount = value.split(/[\s/]/).filter(Boolean).length
+  const wordCount = countWords(value)
 
   return <div className='flex flex-col'>
     <label>
