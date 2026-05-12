@@ -4,6 +4,7 @@ import { Add, DeleteForever, EditCalendar } from '@mui/icons-material';
 
 import { deleteEntry, insertEntries, putEntry } from '@/api';
 import { DataCacheContext } from '@/contexts/DataCache/DataCacheContext';
+import { countWords } from '@/utils';
 import type { WordCountEntry } from '@/types';
 
 import Button from './Button';
@@ -49,8 +50,7 @@ const DailyProjectWordCountForm = ({
     }
 
     if (entry.count === 0) {
-      const pastedWords = (formData.pastedWords || '').trim();
-      entry.count = pastedWords === '' ? 0 : pastedWords.split(' ').length
+      entry.count = countWords(formData.pastedWords)
     }
 
     if (entry.count !== 0) {
