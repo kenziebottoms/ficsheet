@@ -16,13 +16,6 @@ export const getDatesBetween = (min: Date, max: Date): string[] => {
   return dates;
 };
 
-export const largeNumberFormatter = (x: string) => {
-  const number = parseInt(x, 10) ?? 0;
-  return number >= 1000
-    ? `${(number / 1000).toFixed(1).replace(".0", "")}k`
-    : `${number}`;
-};
-
 export const getMedian = (data: number[]) => {
   const sortedData = data.slice().sort((a, b) => a - b);
   if (sortedData.length % 2 === 0) {
@@ -34,4 +27,11 @@ export const getMedian = (data: number[]) => {
   } else {
     return sortedData[(sortedData.length - 1) / 2];
   }
+};
+
+export const largeNumberFormatter = (x: string) => {
+  const number = parseInt(x, 10) ?? 0;
+  return number >= 1000
+    ? `${(number / 1000).toFixed(1).replace(".0", "")}k`
+    : `${number}`;
 };
