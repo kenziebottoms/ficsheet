@@ -9,6 +9,7 @@ import Toggle from '@/components/Toggle'
 import Widget from "@/components/Widget"
 
 import { filterByYearAndMonth } from "../utils"
+import { colors } from "../../constants"
 
 const DailyTotalScatterPlot = () => {
   const { dailyTotals } = use(DataCacheContext)
@@ -38,6 +39,7 @@ const DailyTotalScatterPlot = () => {
       />
       <ScatterChart
         series={[{ data, markerSize: 2 }]}
+        colors={[colors[2]]}
         // 375px is the min required to show the widget title and toggle on the same line
         width={month == null ? 800 : 375}
         height={200}
