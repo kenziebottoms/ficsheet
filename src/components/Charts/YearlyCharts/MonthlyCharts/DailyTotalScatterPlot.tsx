@@ -37,7 +37,7 @@ const DailyTotalScatterPlot = () => {
         className="self-end -mt-8"
       />
       <ScatterChart
-        series={[{ data }]}
+        series={[{ data, markerSize: 2 }]}
         // 375px is the min required to show the widget title and toggle on the same line
         width={month == null ? 800 : 375}
         height={200}
