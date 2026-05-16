@@ -9,7 +9,7 @@ import Badge from '@/components/Badge'
 
 import { filterByYearAndMonth } from '../utils'
 
-import DailyTotalSparkline from './DailyTotalSparkline'
+import DailyTotalScatterPlot from './DailyTotalScatterPlot'
 
 const DailyWordCountStats = () => {
   const { dailyTotals } = use(DataCacheContext)
@@ -19,7 +19,7 @@ const DailyWordCountStats = () => {
 
   return (
     <div className='bg-zinc-900 p-3 rounded-md space-y-3 w-auto flex flex-col items-start'>
-      <DailyTotalSparkline />
+      <DailyTotalScatterPlot />
       <div className='flex flex-row flex-wrap gap-3'>
         <Badge title="Maximum" style="primary">
           <span className='font-semibold text-white'>{_.maxBy(filteredTotals, 'daily_total')?.daily_total || 0}</span> words

@@ -9,11 +9,13 @@ import Widget from "@/components/Widget"
 
 import { filterByYearAndMonth } from "../utils"
 
-const DailyTotalSparkline = () => {
+const DailyTotalScatterPlot = () => {
   const { dailyTotals } = use(DataCacheContext)
   const { year } = use(YearContext)
   const { month } = use(MonthContext)
   const data = filterByYearAndMonth(dailyTotals, year, month, true).map(({ daily_total }, i) => ({ x: i, y: daily_total }))
+
+  if (data.length === 0) return null;
 
   return (
     <Widget title="Daily Word Count">
@@ -26,4 +28,4 @@ const DailyTotalSparkline = () => {
   )
 }
 
-export default DailyTotalSparkline
+export default DailyTotalScatterPlot
