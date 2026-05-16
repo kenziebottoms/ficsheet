@@ -1,5 +1,5 @@
 import { use } from "react"
-import { areaElementClasses, SparkLineChart } from "@mui/x-charts"
+import { ScatterChart } from "@mui/x-charts"
 
 import { DataCacheContext } from "@/contexts/DataCache/DataCacheContext"
 import { MonthContext } from "@/contexts/Month/MonthContext"
@@ -13,18 +13,14 @@ const DailyTotalSparkline = () => {
   const { dailyTotals } = use(DataCacheContext)
   const { year } = use(YearContext)
   const { month } = use(MonthContext)
-  const data = filterByYearAndMonth(dailyTotals, year, month, true).map(dt => dt.daily_total)
+  const data = filterByYearAndMonth(dailyTotals, year, month, true).map(({ daily_total }, i) => ({ x: i, y: daily_total }))
 
   return (
     <Widget title="Daily Word Count">
-      <SparkLineChart
-        data={data}
+      <ScatterChart
+        series={[{ data }]}
         width={month == null ? Math.max(800, data.length) : (data.length * 12)}
-        height={60}
-        area
-        sx={{
-          [`& .${areaElementClasses.root}`]: { opacity: 0.2 },
-        }}
+        height={200}
       />
     </Widget>
   )
