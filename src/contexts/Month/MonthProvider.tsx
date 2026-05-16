@@ -1,5 +1,4 @@
 import { use, useEffect, useState, type PropsWithChildren } from "react";
-import { isFuture } from "date-fns";
 
 import Button from "@/components/Button";
 import { ButtonBackgroundClassNames } from "@/components/constants";
@@ -20,12 +19,8 @@ export const MonthProvider = ({ initialValue, children }: Props) => {
   // month=null means select the entire year
   const [month, setMonth] = useState<number | null>(initialValue ?? null)
 
-  // if changing years to a future month
   useEffect(() => {
-    if (year === thisYear && month != null && isFuture(new Date(thisYear, month, 1))) {
-      // view YTD
-      setMonth(null)
-    }
+    setMonth(null)
   }, [year])
 
   return (
