@@ -52,7 +52,7 @@ const MonthlyFandomBar = () => {
       }))}
       colors={getDynamicColorPalette(fandoms.length)}
       width={100 + monthlyTotalByFandom.length * 60}
-      height={200}
+      height={350}
       yAxis={[{ valueFormatter: largeNumberFormatter }]}
     />
   </Widget>
