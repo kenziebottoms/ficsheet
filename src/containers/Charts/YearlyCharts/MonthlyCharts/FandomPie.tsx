@@ -7,8 +7,8 @@ import { MonthContext } from '@/contexts/Month/MonthContext';
 import { YearContext } from '@/contexts/Year/YearContext';
 
 import Widget from '@/components/Widget';
-import { getDynamicColorPalette } from '@/components/Charts/constants';
 
+import { getDynamicColorPalette } from '../../constants';
 import { filterByYearAndMonth } from '../utils';
 
 const FandomPie = () => {

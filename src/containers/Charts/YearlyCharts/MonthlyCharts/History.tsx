@@ -12,13 +12,13 @@ import DailyProjectWordCountForm from "@/components/DailyProjectWordCountForm";
 import Modal from "@/components/Modal";
 import Pill from "@/components/Pill";
 import Toggle from "@/components/Toggle";
-import { filterByYearAndMonth } from "@/components/Charts/YearlyCharts/utils";
 
 import type { WordCountEntry } from "@/types";
 
 import { getDatesBetween } from "@/utils";
 import { deleteEntry } from "@/api";
 
+import { filterByYearAndMonth } from "../utils";
 
 type Sort = 'chronological' | 'newest';
 const History = () => {

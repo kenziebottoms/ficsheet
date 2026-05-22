@@ -1,6 +1,6 @@
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-import Charts from '@/components/Charts';
+import Charts from '@/containers/Charts';
 
 function App() {
 
