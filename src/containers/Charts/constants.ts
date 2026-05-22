@@ -20,3 +20,6 @@ export const getDynamicColorPalette = (numberOfItems: number) => {
   }
   return colors;
 };
+
+export const MonthlyChartTabNames = ["charts", "history"] as const;
+export type MonthlyChartTabName = (typeof MonthlyChartTabNames)[number];
