@@ -11,7 +11,7 @@ import Widget from "@/components/Widget"
 import { filterByYearAndMonth } from "../utils"
 import { colors } from "../../constants"
 
-const DailyTotalScatterPlot = () => {
+const DailyWordCountScatterPlot = () => {
   const { dailyTotals } = use(DataCacheContext)
   const { year } = use(YearContext)
   const { month } = use(MonthContext)
@@ -42,10 +42,10 @@ const DailyTotalScatterPlot = () => {
         colors={[colors[2]]}
         // 375px is the min required to show the widget title and toggle on the same line
         width={month == null ? 800 : 375}
-        height={200}
+        height={300}
       />
     </Widget>
   )
 }
 
-export default DailyTotalScatterPlot
+export default DailyWordCountScatterPlot
