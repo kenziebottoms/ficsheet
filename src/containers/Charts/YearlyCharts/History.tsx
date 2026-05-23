@@ -11,6 +11,7 @@ import Button from "@/components/Button";
 import DailyProjectWordCountForm from "@/components/DailyProjectWordCountForm";
 import Modal from "@/components/Modal";
 import Pill from "@/components/Pill";
+import Table from "@/components/Table";
 
 import type { WordCountEntry } from "@/types";
 
@@ -19,7 +20,6 @@ import { deleteEntry } from "@/api";
 
 import { filterByYearAndMonth } from "./utils";
 
-type Sort = 'chronological' | 'newest';
 type Props = {
   showEmpty: boolean;
 }
@@ -28,7 +28,6 @@ const History = ({ showEmpty }: Props) => {
   const { year } = use(YearContext)
   const { month } = use(MonthContext)
 
-  const [sort, setSort] = useState<Sort>((month == null && year === new Date().getFullYear()) ? 'newest' : 'chronological')
   const [editedEntry, setEditedEntry] = useState<Partial<WordCountEntry> | null>(null)
 
   const entries = filterByYearAndMonth(dailyEntries, year, month, true)
@@ -36,9 +35,6 @@ const History = ({ showEmpty }: Props) => {
   const dates = getDatesBetween(new Date(year, month ?? 0, 1), (month == null ? lastDayOfYear : lastDayOfMonth)(new Date(year, month ?? 0, 1)))
     .filter(date => !isFuture(date))
   const filteredDates = dates.filter(date => showEmpty || _.filter(entries, { date }).length > 0)
-  if (sort === 'newest') {
-    filteredDates.reverse()
-  }
   const fandoms = _.uniq(_.map(entries, 'fandom')).sort()
 
   return <>
@@ -55,98 +51,49 @@ const History = ({ showEmpty }: Props) => {
         }}
       />
     </Modal>
-    <div className="overflow-auto">
-      <table className="font-mono rounded-t-xl bg-zinc-950">
-        <thead className="font-medium">
-          <tr className='rounded-t-xl bg-pink-700/50 from-30% via-80% to-90%'>
-            {[
-              'Date',
-              ...fandoms,
-              'Total',
-            ].map((label, i) => <th
-              key={label}
-              className={[
-                "whitespace-nowrap font-mono text-lg",
-                label === 'Date' ? "rounded-tl-xl cursor-pointer flex flex-row gap-2 items-center justify-between" : "",
-                label === 'Total' ? "rounded-tr-xl bg-orange-400/25" : "",
-                (label !== "Total" && i % 2 !== 0) ? "bg-pink-400/25" : "",
-              ].join(" ")}
-              onClick={() => {
-                if (label === "Date") {
-                  setSort(sort === 'chronological' ? "newest" : "chronological")
-                }
-              }}
-            >
-              {label}
-              {label === "Date" && <>
-                <div className="self-end">
-                  {sort === 'chronological' ? '↓' : '↑'}
+    <div className="overflow-auto w-full">
+      <Table
+        headers={[
+          'Date',
+          ...fandoms,
+          'Total',
+        ]}
+        data={filteredDates.map((date) => ([
+          `${parseInt(date.substring(5, 7), 10)}/${parseInt(date.substring(8, 10), 10)}/${date.substring(2, 4)}`,
+          ...fandoms
+            // map fandoms to list of fandom entries
+            .map(fandom => _.filter(entries, { fandom, date }))
+            .map((entries, fandomIndex) => <div className="p-2 gap-y-1 flex flex-col">
+              {entries.map((entry, entryIndex) => (
+                <div key={entryIndex} className="flex flex-row gap-2 items-center">
+                  {entry.count}
+                  <Pill style="primary">{entry.fic}</Pill>
+                  <div className="grow" />
+                  <Button
+                    style="transparent"
+                    small
+                    onClick={() => setEditedEntry(entry)}
+                    icon={Edit}
+                  />
+                  {entry.id != null && <Button
+                    style="cautionary"
+                    small
+                    onClick={() => deleteEntry(entry.id as number).then(() => refreshData(year))}
+                    icon={DeleteOutline}
+                  />}
                 </div>
-              </>}
-            </th>)}
-          </tr>
-        </thead>
-        <tbody className="font-normal">
-          {filteredDates
-            .map((date, rowIndex) =>
-              <tr
-                key={rowIndex}
-                className={[
-                  "border-x border-primary/50",
-                  (rowIndex + 1) % 4 === 0 ? 'bg-pink-700/20' : '',
-                  (rowIndex + 3) % 4 === 0 ? 'bg-orange-700/20' : '',
-                ].join(' ')}
-              >
-                <td className="whitespace-nowrap">
-                  {parseInt(date.substring(5, 7), 10)}/{parseInt(date.substring(8, 10), 10)}/{date.substring(2, 4)}
-                </td>
-                {fandoms
-                  // map fandoms to list of fandom entries
-                  .map(fandom => _.filter(entries, { fandom, date }))
-                  .map((entries, fandomIndex) => <td
-                    key={fandomIndex}
-                    className={[
-                      (fandomIndex % 2 === 0) ? "bg-pink-500/10" : "",
-                      rowIndex === filteredDates.length - 1 ? 'border-b border-primary/50' : '',
-                      _.sumBy(entries, 'count') === 0 ? 'text-foreground/50' : ''
-                    ].join(' ')}
-                  >
-                    <div className="p-2 gap-y-1 flex flex-col">
-                      {entries.map((entry, entryIndex) => (
-                        <div key={entryIndex} className="flex flex-row gap-2 items-center">
-                          {entry.count}
-                          <Pill style="primary">{entry.fic}</Pill>
-                          <div className="grow" />
-                          <Button
-                            style="transparent"
-                            small
-                            onClick={() => setEditedEntry(entry)}
-                            icon={Edit}
-                          />
-                          {entry.id != null && <Button
-                            style="cautionary"
-                            small
-                            onClick={() => deleteEntry(entry.id as number).then(() => refreshData(year))}
-                            icon={DeleteOutline}
-                          />}
-                        </div>
-                      ))}
-                      {(showEmpty || entries.length === 0) && <Button
-                        style="transparent"
-                        small
-                        onClick={() => setEditedEntry({ fandom: fandoms[fandomIndex], date })}
-                        icon={Add}
-                        className="self-end"
-                      />}
-                    </div>
-                  </td>)}
-                <td className="bg-orange-500/10">
-                  {_.find(totals, { date })?.daily_total || 0}
-                </td>
-              </tr>
-            )}
-        </tbody>
-      </table>
+              ))}
+              {(showEmpty || entries.length === 0) && <Button
+                style="transparent"
+                small
+                onClick={() => setEditedEntry({ fandom: fandoms[fandomIndex], date })}
+                icon={Add}
+                className="self-end"
+              />}
+            </div>),
+          _.find(totals, { date })?.daily_total || 0
+        ]))}
+      />
     </div>
   </>
 }
