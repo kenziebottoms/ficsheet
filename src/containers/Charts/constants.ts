@@ -1,7 +1,7 @@
 export const colors = ["#4f46e5", "#fb923c", "#f6339a", "#0ea5e9"];
 
 export const getDynamicColorPalette = (numberOfItems: number) => {
-  if (numberOfItems > 7) {
+  if (numberOfItems > 6) {
     return [
       "#f472b6",
       "#e11d48",
@@ -9,7 +9,7 @@ export const getDynamicColorPalette = (numberOfItems: number) => {
       "#facc15",
       "#84cc16",
       "#059669",
-      "#0ea5e9",
+      "#23b9ff",
       "#4f46e5",
       "#c026d3",
       "#fff",
