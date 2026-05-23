@@ -9,7 +9,7 @@ const Charts = ({
   className = ''
 }: Props) => {
   return (
-    <div className={["p-3 flex flex-col gap-3 w-full", className].join(" ")}>
+    <div className={["flex flex-col gap-3 w-full", className].join(" ")}>
       <YearProvider>
         <YearlyCharts />
       </YearProvider>

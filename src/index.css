@@ -14,6 +14,7 @@
   --color-background: var(--color-zinc-900);
   --color-foreground: var(--color-zinc-100);
   --color-primary: var(--color-pink-500);
+  --color-primary-medium: var(--color-pink-400);
   --color-primary-highlight: var(--color-pink-300);
   --color-secondary: var(--color-orange-400);
   --default-ring-width: 2px;
