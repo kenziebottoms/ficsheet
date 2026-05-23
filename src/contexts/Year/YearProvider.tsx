@@ -28,9 +28,9 @@ export const YearProvider = ({ initialValue, children }: Props) => {
       availableYears,
     }}>
       <DataCacheProvider year={year}>
-        <div className="flex flex-row items-end gap-2 pl-2 mt-2">
+        <div className="flex flex-row items-start gap-2 pl-2 mt-2">
           <h3 className='px-3 text-xs m-1 flex flex-row items-center gap-2'>
-            <Insights />
+            <Insights htmlColor="#9f9fa9" />
             <div>
               <span className='text-primary-medium'>fic</span>sheet
             </div>
