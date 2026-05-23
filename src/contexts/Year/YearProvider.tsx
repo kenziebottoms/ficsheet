@@ -35,11 +35,14 @@ export const YearProvider = ({ initialValue, children }: Props) => {
               <span className='text-primary-medium'>fic</span>sheet
             </div>
           </h3>
-          <div className="flex flex-row items-center gap-2 overflow-x-auto">
+          <div className="flex flex-row items-center gap-2 overflow-x-auto pr-3">
             {availableYears.map(y => <Button
               key={y}
               style={year === y ? 'primary' : 'subtle'}
-              className={["transition-all duration-100 capitalize", y === year ? 'rounded-b-none mt-2' : 'mb-2'].join(" ")}
+              className={[
+                "transition-all duration-100 capitalize",
+                y === year ? 'rounded-b-none py-2' : 'mb-2',
+              ].join(" ")}
               onClick={() => setYear(y)}
             >
               {y}
@@ -48,7 +51,6 @@ export const YearProvider = ({ initialValue, children }: Props) => {
         </div>
         <div className={[
           ButtonBackgroundClassNames.primary,
-          year === availableYears[0] ? 'rounded-tl-none' : '',
           "-mt-3 rounded-xl p-3 space-y-3"
         ].join(' ')}>
           {children}
