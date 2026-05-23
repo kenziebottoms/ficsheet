@@ -138,6 +138,7 @@ const DailyProjectWordCountForm = ({
         style="cautionary"
         icon={DeleteForever}
         onClick={() => deleteEntry(values.id as number).then(onCompleted)}
+        className='mt-4'
       >
         Delete word count
       </Button>
