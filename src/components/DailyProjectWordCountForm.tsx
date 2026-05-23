@@ -74,7 +74,7 @@ const DailyProjectWordCountForm = ({
     <DateInput
       name="date"
       label="Date"
-      defaultValue={values?.date ? parse(values?.date, 'yyyy-MM-dd', new Date()) : defaultDate}
+      defaultValue={values?.date ? parse(values?.date, 'yyyy-MM-dd', new Date()) : addDays(defaultDate, -1)}
     />
     <Input<string>
       label="Fic"
