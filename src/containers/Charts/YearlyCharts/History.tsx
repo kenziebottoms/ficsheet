@@ -1,7 +1,7 @@
 import { use, useState } from "react";
 import _ from 'lodash'
 import { isFuture, lastDayOfMonth, lastDayOfYear } from "date-fns";
-import { Add, DeleteOutline, Edit } from '@mui/icons-material'
+import { Add, Edit } from '@mui/icons-material'
 
 import { DataCacheContext } from "@/contexts/DataCache/DataCacheContext";
 import { MonthContext } from "@/contexts/Month/MonthContext";
@@ -16,7 +16,6 @@ import Table from "@/components/Table";
 import type { WordCountEntry } from "@/types";
 
 import { getDatesBetween } from "@/utils";
-import { deleteEntry } from "@/api";
 
 import { filterByYearAndMonth } from "./utils";
 
@@ -75,12 +74,6 @@ const History = ({ showEmpty }: Props) => {
                     onClick={() => setEditedEntry(entry)}
                     icon={Edit}
                   />
-                  {entry.id != null && <Button
-                    style="cautionary"
-                    small
-                    onClick={() => deleteEntry(entry.id as number).then(() => refreshData(year))}
-                    icon={DeleteOutline}
-                  />}
                 </div>
               ))}
               {(showEmpty || entries.length === 0) && <Button
