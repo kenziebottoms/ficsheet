@@ -12,7 +12,7 @@ import { MonthlyChartTabNames, type MonthlyChartTabName } from '../constants';
 import History from './History';
 import MonthlyFandomBar from './MonthlyFandomBar';
 import MonthlyCharts from './MonthlyCharts';
-import ThisYear from './ThisYear';
+import ProjectedAnnualWordCount from './ProjectedAnnualWordCount';
 
 const TabIcons: Record<MonthlyChartTabName, SvgIconComponent> = {
   charts: Equalizer,
@@ -27,7 +27,7 @@ const YearlyCharts = () => {
   const [showEmpty, setShowEmpty] = useState<boolean>(false)
 
   return <div className="bg-zinc-900 p-3 rounded-xl space-y-3">
-    {year === thisYear && <ThisYear />}
+    {year === thisYear && <ProjectedAnnualWordCount />}
 
     <div className='flex flex-row gap-2 items-start justify-between'>
       <MonthlyFandomBar />
