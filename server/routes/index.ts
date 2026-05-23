@@ -20,9 +20,9 @@ apiRouter.use("/entries", entriesRouter);
  */
 apiRouter.get("/years", (_req, res) => {
   const data = select<{ year: string }>(
-    `DISTINCT strftime('%Y', date) as year FROM word_count`,
+    `DISTINCT strftime('%Y', date) as year FROM word_count ORDER BY year DESC`,
   ).map(({ year }) => parseInt(year, 10));
-  return res.json(data.sort()).status(200);
+  return res.json(data).status(200);
 });
 
 apiRouter.use("/year/:year", yearRouter);
