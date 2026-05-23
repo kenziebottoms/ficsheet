@@ -51,7 +51,7 @@ const MonthlyFandomBar = () => {
         stack: 'total'
       }))}
       colors={getDynamicColorPalette(fandoms.length)}
-      width={100 + monthlyTotalByFandom.length * 60}
+      width={year === new Date().getFullYear() ? Math.min(100 + (new Date().getMonth() + 1) * 60, 800) : 800}
       height={350}
       yAxis={[{ valueFormatter: largeNumberFormatter }]}
     />

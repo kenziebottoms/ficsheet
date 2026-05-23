@@ -12,7 +12,6 @@ import { filterByYearAndMonth, getLongestStreak } from "../utils";
 import DailyWordCountStats from "./DailyWordCountStats";
 import DayOfWeekRadar from "./DayOfWeekRadar";
 import FandomPie from './FandomPie';
-import RunningTotalLine from "./RunningTotalLine";
 import FicLeaderboard from "./FicLeaderboard";
 
 const MonthlyCharts = () => {
@@ -40,7 +39,6 @@ const MonthlyCharts = () => {
 
     <div className="flex flex-row flex-wrap gap-3">
       <FandomPie />
-      <RunningTotalLine />
       <DayOfWeekRadar />
     </div>
   </>
