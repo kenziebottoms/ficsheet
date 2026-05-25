@@ -15,12 +15,12 @@ import { getDynamicColorPalette } from '../constants';
 
 import { filterByYearAndMonth } from './utils';
 
-interface FandomTotal {
-  [key: string]: number;
-};
 const MonthlyFandomBar = () => {
   const { dailyEntries } = use(DataCacheContext)
   const { year } = use(YearContext)
+
+  if (year == null) return null;
+
   const entries = filterByYearAndMonth(dailyEntries, year, null, true)
   const fandoms = _.uniq(_.map(entries, 'fandom'))
 
@@ -31,7 +31,9 @@ const MonthlyFandomBar = () => {
 
   const monthlyTotalByFandom: Record<string, number | string>[] = entriesByMonth
     .map((monthlyEntries) => {
-      const fandomTotals: FandomTotal = _.mapValues(
+      const fandomTotals: {
+        [key: string]: number;
+      } = _.mapValues(
         _.groupBy(monthlyEntries, 'fandom'),
         (entries) => _.sumBy(entries, 'count')
       )

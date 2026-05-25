@@ -15,6 +15,9 @@ const FandomPie = () => {
   const { dailyEntries } = use(DataCacheContext)
   const { year } = use(YearContext)
   const { month } = use(MonthContext)
+
+  if (year == null) return null;
+
   const entries = filterByYearAndMonth(dailyEntries, year, month, true)
   const fandoms = _.uniq(_.map(entries, 'fandom')).sort()
   const data = fandoms.map((fandom, i) => ({

@@ -4,6 +4,7 @@ import {
   type WordCountEntry,
   type RunningTotal,
   type DailyTotal,
+  type FandomTotal,
 } from "@/types";
 
 import { getDatesBetween } from "./utils";
@@ -71,6 +72,7 @@ export const selectDailyTotals = (year: number) =>
   );
 export const selectFandoms = (year: number) =>
   get<string[]>(`year/${year}/fandoms`);
+export const selectFandomTotals = () => get<FandomTotal[]>("fandomTotals");
 export const selectRunningTotal = (year?: number) =>
   get<RunningTotal[]>(`${year ? `year/${year}/` : ""}runningTotal`);
 export const deleteEntriesByYear = (year: number) =>

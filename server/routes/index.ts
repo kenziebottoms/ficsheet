@@ -14,6 +14,14 @@ const apiRouter = express.Router({
 
 apiRouter.use("/entries", entriesRouter);
 
+apiRouter.get("/fandomTotals", (req, res) => {
+  console.log("fetching fandom totals (all time)");
+  const data = select(
+    `fandom, SUM(count) as count from word_count GROUP BY fandom`,
+  );
+  return res.json(data).status(200);
+});
+
 /**
  * GET /api/runningTotal
  */
