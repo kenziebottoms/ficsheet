@@ -1,5 +1,14 @@
 import { addDays, format, isBefore, isSameDay } from "date-fns";
 
+export const copy = (text: string) =>
+  navigator.clipboard.write([
+    new ClipboardItem({
+      "text/plain": text,
+    }),
+  ]);
+export const copyPrettyJson = (json: object) =>
+  copy(JSON.stringify(json, undefined, 2));
+
 export const countWords = (input?: string | null) => {
   if (!input || input === " ") {
     return 0;

@@ -1,11 +1,15 @@
 import { use, useState } from 'react';
-import { Equalizer, TableChart, type SvgIconComponent } from '@mui/icons-material';
+import { ContentPaste, Equalizer, TableChart, type SvgIconComponent } from '@mui/icons-material';
+
+import { selectAllWordCounts } from '@/api';
 
 import Button from '@/components/Button';
 import Toggle from '@/components/Toggle';
 
 import { MonthProvider } from '@/contexts/Month/MonthProvider';
 import { YearContext } from '@/contexts/Year/YearContext';
+
+import { copyPrettyJson } from '@/utils';
 
 import { MonthlyChartTabNames, type MonthlyChartTabName } from '../constants';
 
@@ -27,6 +31,10 @@ const YearlyCharts = () => {
   const [activeTab, setActiveTab] = useState<MonthlyChartTabName>('charts')
   const [showEmpty, setShowEmpty] = useState<boolean>(false)
 
+  const handleExport = () => {
+    selectAllWordCounts(year).then(copyPrettyJson)
+  }
+
   return <div className="bg-zinc-900 p-3 rounded-xl space-y-3">
     {year === thisYear && <ProjectedAnnualWordCount />}
 
@@ -36,7 +44,7 @@ const YearlyCharts = () => {
     </div>
 
     <MonthProvider>
-      <div className="bg-zinc-800 px-4 p-2 rounded-full text-zinc-400 flex flex-row gap-4">
+      <div className="bg-zinc-800 px-4 p-[0.35rem] rounded-full text-zinc-400 flex flex-row gap-3">
         {MonthlyChartTabNames.map(tab =>
           <Button
             key={tab}
@@ -44,12 +52,21 @@ const YearlyCharts = () => {
             icon={TabIcons[tab]}
             onClick={() => setActiveTab(tab)}
             className='capitalize'
+            small
           >
             {tab}
           </Button>
         )}
         {activeTab === 'history' && <>
           <div className='grow' />
+          <Button
+            style="transparent"
+            icon={ContentPaste}
+            onClick={handleExport}
+            small
+          >
+            Export
+          </Button>
           <Toggle
             label="Show empty"
             value={showEmpty}
