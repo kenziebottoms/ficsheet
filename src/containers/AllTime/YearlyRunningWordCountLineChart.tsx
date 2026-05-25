@@ -1,6 +1,6 @@
 import { use, useState } from 'react';
 import { LineChart, } from '@mui/x-charts'
-import { format, isPast, isValid, parse } from 'date-fns';
+import { format, isLeapYear, isPast, isValid, parse } from 'date-fns';
 
 import { YearContext } from '@/contexts/Year/YearContext';
 
@@ -46,7 +46,9 @@ const YearlyRunningWordCountLineChart = ({
       if (dateIndex > 0) {
         yesterdaysTotal = dates[dateIndex - 1][`${year}`] ?? 0;
       }
-      if (`${year}` !== `${thisYear}` || isPast(parse(`${thisYear}-${date.substring(5)}`, 'yyyy-MM-dd', new Date()))) {
+      if (date.substring(5) === '02-29' && !isLeapYear(year) && isPast(parse(`${thisYear}-02-28`, 'yyyy-MM-dd', new Date()))) {
+        dates[dateIndex][`${year}`] = yesterdaysTotal
+      } else if (year !== thisYear || isPast(parse(`${thisYear}-${date.substring(5)}`, 'yyyy-MM-dd', new Date()))) {
         dates[dateIndex][`${year}`] = dailyTotal?.running_total || yesterdaysTotal
       }
     })
