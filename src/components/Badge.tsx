@@ -5,7 +5,7 @@ import { ButtonTextClassNames, ButtonBackgroundClassNames, type ButtonStyle } fr
 const BadgeContainerClassNames: Record<ButtonStyle, string> = {
   primary: "border-indigo-500",
   secondary: "border-pink-500",
-  subtle: "border-zinc-400",
+  subtle: "border-zinc-500",
   transparent: "",
   cautionary: ""
 };
