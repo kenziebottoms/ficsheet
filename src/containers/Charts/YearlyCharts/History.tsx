@@ -29,6 +29,8 @@ const History = ({ showEmpty }: Props) => {
 
   const [editedEntry, setEditedEntry] = useState<Partial<WordCountEntry> | null>(null)
 
+  if (year == null) return null;
+
   const entries = filterByYearAndMonth(dailyEntries, year, month, true)
   const totals = filterByYearAndMonth(dailyTotals, year, month, true)
   const dates = getDatesBetween(new Date(year, month ?? 0, 1), (month == null ? lastDayOfYear : lastDayOfMonth)(new Date(year, month ?? 0, 1)))

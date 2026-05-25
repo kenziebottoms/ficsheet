@@ -34,10 +34,6 @@ const YearlyCharts = () => {
   const [showEmpty, setShowEmpty] = useState<boolean>(false)
   const [confirmDelete, setConfirmDelete] = useState<boolean>(false)
 
-  const handleExport = () => {
-    selectAllWordCounts(year).then(copyPrettyJson)
-  }
-
   // must click delete button twice within 5 seconds to delete
   useEffect(() => {
     if (confirmDelete) {
@@ -46,6 +42,12 @@ const YearlyCharts = () => {
       }, 5000)
     }
   }, [confirmDelete])
+
+  if (year == null) return null;
+
+  const handleExport = () => {
+    selectAllWordCounts(year).then(copyPrettyJson)
+  }
 
   const handleDelete = () => {
     deleteEntriesByYear(year).then(() => refreshData(year))
