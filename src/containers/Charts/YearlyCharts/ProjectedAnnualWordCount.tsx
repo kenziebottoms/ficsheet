@@ -48,12 +48,6 @@ const ProjectedAnnualWordCount = ({
 
       <div className='border border-dotted border-zinc-500 h-0 w-2 grow-[0.35]' />
 
-      <Badge style="secondary" title="Total Words Written">
-        {running_total}
-      </Badge>
-
-      <div className='border border-dotted border-zinc-500 h-0 w-2 grow' />
-
       <Widget title="Days past" className='items-center'>
         <Gauge
           width={100}
@@ -64,6 +58,12 @@ const ProjectedAnnualWordCount = ({
           className='mx-auto'
         />
       </Widget>
+
+      <div className='border border-dotted border-zinc-500 h-0 w-2 grow' />
+
+      <Badge style="secondary" title="Total Words Written">
+        {running_total}
+      </Badge>
 
       <div className='border border-dotted border-zinc-500 h-0 w-2 grow' />
 
