@@ -23,7 +23,7 @@ const AllTime = () => {
     selectRunningTotal().then(setLifetimeRunningTotal)
   }, [])
 
-  return <div className='p-3 bg-zinc-900 rounded-md'>
+  return <div className='p-3 bg-zinc-900 rounded-md flex flex-col gap-2 items-center'>
     <YearlyRunningWordCountLineChart runningTotals={runningTotals} />
     <LifetimeWordCountLineChart lifetimeRunningTotal={lifetimeRunningTotal} />
   </div>

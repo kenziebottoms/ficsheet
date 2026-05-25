@@ -14,7 +14,6 @@ import { getDatesBetween, largeNumberFormatter } from '@/utils';
 import { addTimestamp } from '../Charts/YearlyCharts/utils';
 import { blendColors, getDynamicColorPalette } from '../Charts/constants';
 
-
 type RunningTotalMap = {
   timestamp: number;
   date: string;
@@ -54,8 +53,7 @@ const YearlyRunningWordCountLineChart = ({
     })
   })
 
-
-  return <Widget title="Running Total" className='flex flex-col'>
+  return <Widget title="Yearly Running Totals" className='flex flex-col'>
     <Toggle
       label='YTD'
       value={yearToDate}
