@@ -6,7 +6,7 @@ import { selectAvailableYears } from "@/api";
 import Button from "@/components/Button";
 import { ButtonBackgroundClassNames } from "@/components/constants";
 
-import AllTime from "@/containers/Charts/AllTime";
+import AllTime from "@/containers/AllTime";
 
 import { DataCacheProvider } from "@/contexts/DataCache/DataCacheProvider";
 
