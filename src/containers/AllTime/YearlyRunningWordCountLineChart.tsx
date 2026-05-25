@@ -21,7 +21,7 @@ type RunningTotalMap = {
   [year: number]: number;
 };
 
-const RunningTotalsStackedLine = ({
+const YearlyRunningWordCountLineChart = ({
   runningTotals
 }: {
   runningTotals?: RunningTotal[][];
@@ -87,4 +87,4 @@ const RunningTotalsStackedLine = ({
   </Widget>
 }
 
-export default RunningTotalsStackedLine
+export default YearlyRunningWordCountLineChart

@@ -7,7 +7,7 @@ import { YearContext } from '@/contexts/Year/YearContext'
 import type { RunningTotal } from '@/types'
 
 import LifetimeWordCountLineChart from './LifetimeWordCountLineChart'
-import RunningTotalsStackedLine from './RunningTotalsStackedLine'
+import YearlyRunningWordCountLineChart from './YearlyRunningWordCountLineChart'
 
 const AllTime = () => {
   const { availableYears } = use(YearContext)
@@ -24,7 +24,7 @@ const AllTime = () => {
   }, [])
 
   return <div className='p-3 bg-zinc-900 rounded-md'>
-    <RunningTotalsStackedLine runningTotals={runningTotals} />
+    <YearlyRunningWordCountLineChart runningTotals={runningTotals} />
     <LifetimeWordCountLineChart lifetimeRunningTotal={lifetimeRunningTotal} />
   </div>
 }
