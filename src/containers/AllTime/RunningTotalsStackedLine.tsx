@@ -24,7 +24,7 @@ type RunningTotalMap = {
 const RunningTotalsStackedLine = ({
   runningTotals
 }: {
-  runningTotals: RunningTotal[][];
+  runningTotals?: RunningTotal[][];
 }) => {
   const thisYear = new Date().getFullYear();
   const { availableYears } = use(YearContext)

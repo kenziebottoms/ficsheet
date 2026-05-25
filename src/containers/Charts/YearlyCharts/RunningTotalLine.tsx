@@ -17,6 +17,9 @@ import { addTimestamp, filterByYearAndMonth, } from './utils';
 const RunningTotalLine = () => {
   const { runningTotal } = use(DataCacheContext)
   const { year } = use(YearContext)
+
+  if (year == null) return null;
+
   const dataset = filterByYearAndMonth(runningTotal, year, null, true).map(addTimestamp)
 
   return <Widget title="Running Total">

@@ -15,6 +15,17 @@ const apiRouter = express.Router({
 apiRouter.use("/entries", entriesRouter);
 
 /**
+ * GET /api/runningTotal
+ */
+apiRouter.get("/runningTotal", (_req, res) => {
+  console.log(`fetching running total (all time)`);
+  const data = select(
+    `date, strftime('%m-%d', date) as monthDay, SUM(count) OVER (ORDER BY date) AS running_total FROM word_count`,
+  );
+  return res.json(data).status(200);
+});
+
+/**
  * GET /api/years
  * returns a numerically sorted array of years represented by the entries in `word_count`
  */

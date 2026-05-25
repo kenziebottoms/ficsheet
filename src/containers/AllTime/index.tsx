@@ -6,21 +6,26 @@ import { YearContext } from '@/contexts/Year/YearContext'
 
 import type { RunningTotal } from '@/types'
 
+import LifetimeWordCountLineChart from './LifetimeWordCountLineChart'
 import RunningTotalsStackedLine from './RunningTotalsStackedLine'
 
 const AllTime = () => {
   const { availableYears } = use(YearContext)
 
   const [runningTotals, setRunningTotals] = useState<RunningTotal[][]>()
+  const [lifetimeRunningTotal, setLifetimeRunningTotal] = useState<RunningTotal[]>([])
 
   useEffect(() => {
     Promise.all(availableYears.filter(y => y != null)
       .map(selectRunningTotal))
       .then(setRunningTotals)
+
+    selectRunningTotal().then(setLifetimeRunningTotal)
   }, [])
 
   return <div className='p-3 bg-zinc-900 rounded-md'>
-    {runningTotals != null && <RunningTotalsStackedLine runningTotals={runningTotals} />}
+    <RunningTotalsStackedLine runningTotals={runningTotals} />
+    <LifetimeWordCountLineChart lifetimeRunningTotal={lifetimeRunningTotal} />
   </div>
 }
 
