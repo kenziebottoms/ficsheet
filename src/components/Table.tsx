@@ -36,10 +36,7 @@ const Table = ({
       >
         {row.map((cell, cellIndex) => <td
           key={cellIndex}
-          className={[
-            (cellIndex % 2 === 0) ? "bg-pink-500/10" : "",
-            cellIndex === 0 ? 'rounded-bl-xl' : '',
-          ].join(" ")}
+          className={`${cellIndex % 2 === 0 ? "bg-pink-500/10" : ""} ${(cellIndex === 0 && rowIndex === data.length - 1) ? 'rounded-bl-xl' : ''}`}
         >
           {cell}
         </td>)}
