@@ -1,11 +1,12 @@
-import { use, useState } from 'react';
-import { ContentPaste, Equalizer, TableChart, type SvgIconComponent } from '@mui/icons-material';
+import { use, useEffect, useState } from 'react';
+import { AutoDelete, ContentPaste, Delete, Equalizer, TableChart, type SvgIconComponent } from '@mui/icons-material';
 
-import { selectAllWordCounts } from '@/api';
+import { deleteEntriesByYear, selectAllWordCounts } from '@/api';
 
 import Button from '@/components/Button';
 import Toggle from '@/components/Toggle';
 
+import { DataCacheContext } from '@/contexts/DataCache/DataCacheContext';
 import { MonthProvider } from '@/contexts/Month/MonthProvider';
 import { YearContext } from '@/contexts/Year/YearContext';
 
@@ -26,13 +27,28 @@ const TabIcons: Record<MonthlyChartTabName, SvgIconComponent> = {
 
 const YearlyCharts = () => {
   const { year } = use(YearContext)
+  const { refreshData } = use(DataCacheContext)
   const thisYear = new Date().getFullYear()
 
   const [activeTab, setActiveTab] = useState<MonthlyChartTabName>('charts')
   const [showEmpty, setShowEmpty] = useState<boolean>(false)
+  const [confirmDelete, setConfirmDelete] = useState<boolean>(false)
 
   const handleExport = () => {
     selectAllWordCounts(year).then(copyPrettyJson)
+  }
+
+  // must click delete button twice within 5 seconds to delete
+  useEffect(() => {
+    if (confirmDelete) {
+      setTimeout(() => {
+        setConfirmDelete(false)
+      }, 5000)
+    }
+  }, [confirmDelete])
+
+  const handleDelete = () => {
+    deleteEntriesByYear(year).then(() => refreshData(year))
   }
 
   return <div className="bg-zinc-900 p-3 rounded-xl space-y-3">
@@ -44,7 +60,7 @@ const YearlyCharts = () => {
     </div>
 
     <MonthProvider>
-      <div className="bg-zinc-800 px-4 p-[0.35rem] rounded-full text-zinc-400 flex flex-row gap-3">
+      <div className="bg-zinc-800 px-4 p-[0.35rem] rounded-full text-zinc-400 flex flex-row flex-wrap gap-3">
         {MonthlyChartTabNames.map(tab =>
           <Button
             key={tab}
@@ -59,6 +75,14 @@ const YearlyCharts = () => {
         )}
         {activeTab === 'history' && <>
           <div className='grow' />
+          <Button
+            style="cautionary"
+            icon={confirmDelete ? AutoDelete : Delete}
+            onClick={() => confirmDelete ? handleDelete() : setConfirmDelete(true)}
+            small
+          >
+            {confirmDelete && <em>Please</em>} Delete {year}
+          </Button>
           <Button
             style="transparent"
             icon={ContentPaste}
