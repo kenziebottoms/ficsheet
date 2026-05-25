@@ -67,7 +67,7 @@ const ProjectedAnnualWordCount = ({
 
       <div className='border border-dotted border-zinc-500 h-0 w-2 grow' />
 
-      <Badge style="secondary">
+      <Badge style="subtle">
         <div className='text-sm text-center text-foreground mb-2'>Write {Math.ceil(running_total / daysPast)} words to<br />to stay on track!</div>
         <Button
           onClick={() => setShowEntryForm(!showEntryForm)}
