@@ -18,6 +18,8 @@ const DailyWordCountScatterPlot = () => {
 
   const [showZero, setShowZero] = useState<boolean>(true)
 
+  if (year == null) return null;
+
   const data = filterByYearAndMonth(dailyTotals, year, month, true)
     .map(({ daily_total, date }, i) => ({
       x: i,
