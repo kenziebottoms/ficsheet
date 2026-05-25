@@ -53,11 +53,12 @@ const RunningTotalsStackedLine = ({
   })
 
 
-  return <Widget title="Running Total">
+  return <Widget title="Running Total" className='flex flex-col'>
     <Toggle
-      label='Show YTD'
+      label='YTD'
       value={yearToDate}
       onChange={setYearToDate}
+      className="self-end -mt-8"
     />
     <LineChart
       dataset={dates}
