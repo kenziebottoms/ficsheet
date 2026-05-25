@@ -56,9 +56,9 @@ export type WordCountEntry = {
 };
 
 export type YearContextValue = {
-  year: number;
-  setYear: (newYear: number) => void;
-  availableYears: number[];
+  year: number | null;
+  setYear: (newYear: number | null) => void;
+  availableYears: (number | null)[];
 };
 
 /**

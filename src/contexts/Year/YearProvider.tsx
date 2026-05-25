@@ -6,6 +6,8 @@ import { selectAvailableYears } from "@/api";
 import Button from "@/components/Button";
 import { ButtonBackgroundClassNames } from "@/components/constants";
 
+import AllTime from "@/containers/Charts/AllTime";
+
 import { DataCacheProvider } from "@/contexts/DataCache/DataCacheProvider";
 
 import { YearContext } from "./YearContext";
@@ -14,11 +16,12 @@ type Props = PropsWithChildren & {
   initialValue?: number;
 }
 export const YearProvider = ({ initialValue, children }: Props) => {
-  const [year, setYear] = useState<number>(initialValue || new Date().getFullYear())
-  const [availableYears, setAvailableYears] = useState<number[]>([year])
+  // year = null means "All Time"
+  const [year, setYear] = useState<number | null>(initialValue || new Date().getFullYear())
+  const [availableYears, setAvailableYears] = useState<(number | null)[]>(year == null ? [null] : [null, year])
 
   useEffect(() => {
-    selectAvailableYears().then(setAvailableYears)
+    selectAvailableYears().then(years => setAvailableYears([null, ...years]))
   }, [])
 
   return (
@@ -27,35 +30,31 @@ export const YearProvider = ({ initialValue, children }: Props) => {
       setYear,
       availableYears,
     }}>
-      <DataCacheProvider year={year}>
-        <div className="flex flex-row items-start gap-2 pl-2 mt-2">
-          <h3 className='px-3 text-xs m-1 flex flex-row items-center gap-2'>
-            <Insights htmlColor="#9f9fa9" />
-            <div>
-              <span className='text-primary-medium'>fic</span>sheet
-            </div>
-          </h3>
-          <div className="flex flex-row items-center gap-2 overflow-x-auto pr-3">
-            {availableYears.map(y => <Button
-              key={y}
-              style={year === y ? 'primary' : 'subtle'}
-              className={[
-                "transition-all duration-100 capitalize",
-                y === year ? 'rounded-b-none py-2' : 'mb-2',
-              ].join(" ")}
-              onClick={() => setYear(y)}
-            >
-              {y}
-            </Button>)}
+      <div className="flex flex-row items-start gap-2 pl-2 mt-2">
+        <h3 className='px-3 text-xs m-1 flex flex-row items-center gap-2'>
+          <Insights htmlColor="#9f9fa9" />
+          <div>
+            <span className='text-primary-medium'>fic</span>sheet
           </div>
+        </h3>
+        <div className="flex flex-row items-center gap-2 overflow-x-auto pr-3">
+          {availableYears.map(y => <Button
+            key={y}
+            style={year === y ? (y == null ? 'primary' : 'secondary') : 'subtle'}
+            className={`${y === year ? 'rounded-b-none py-2' : 'mb-2'} whitespace-nowrap transition-all duration-100 capitalize`}
+            onClick={() => setYear(y)}
+          >
+            {y ?? 'All Time'}
+          </Button>)}
         </div>
-        <div className={[
-          ButtonBackgroundClassNames.primary,
-          "-mt-3 rounded-xl p-3 space-y-3"
-        ].join(' ')}>
-          {children}
-        </div>
-      </DataCacheProvider>
+      </div>
+      <div className={`${ButtonBackgroundClassNames[year == null ? 'primary' : 'secondary']} -mt-3 rounded-xl p-3 space-y-3`}>
+        {year == null ?
+          <AllTime /> :
+          <DataCacheProvider year={year}>
+            {children}
+          </DataCacheProvider>}
+      </div>
     </YearContext>
   );
 }
