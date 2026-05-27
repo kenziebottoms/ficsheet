@@ -20,7 +20,11 @@ const RunningTotalLine = () => {
 
   if (year == null) return null;
 
-  const dataset = filterByYearAndMonth(runningTotal, year, null, true).map(addTimestamp)
+  const paddedRunningTotal = runningTotal.slice()
+  if (!runningTotal[0].date.includes("01-01")) {
+    paddedRunningTotal.unshift({ date: `${year}-01-01`, running_total: 0 })
+  }
+  const dataset = filterByYearAndMonth(paddedRunningTotal, year, null, true).map(addTimestamp)
 
   return <Widget title="Running Total">
     <LineChart
