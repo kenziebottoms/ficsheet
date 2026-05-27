@@ -15,6 +15,9 @@ const DailyWordCountStats = () => {
   const { dailyTotals } = use(DataCacheContext)
   const { year } = use(YearContext)
   const { month } = use(MonthContext)
+
+  if (year == null) return null;
+
   const filteredTotals = filterByYearAndMonth(dailyTotals, year, month, true)
 
   return (

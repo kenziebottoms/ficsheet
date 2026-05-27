@@ -19,6 +19,8 @@ const MonthlyCharts = () => {
   const { year } = use(YearContext)
   const { month } = use(MonthContext)
 
+  if (year == null) return null;
+
   const totals = filterByYearAndMonth(dailyTotals, year, month)
 
   return <>
@@ -33,11 +35,7 @@ const MonthlyCharts = () => {
 
     <div className="flex flex-row flex-wrap gap-3 items-start">
       <FicLeaderboard />
-    </div>
-
-    <DailyWordCountStats />
-
-    <div className="flex flex-row flex-wrap gap-3">
+      <DailyWordCountStats />
       <FandomPie />
       <DayOfWeekRadar />
     </div>
