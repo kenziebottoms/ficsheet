@@ -18,7 +18,7 @@ const RunningTotalLine = () => {
   const { runningTotal } = use(DataCacheContext)
   const { year } = use(YearContext)
 
-  if (year == null) return null;
+  if (year == null || runningTotal.length === 0) return null;
 
   const paddedRunningTotal = runningTotal.slice()
   if (!runningTotal[0].date.includes("01-01")) {
