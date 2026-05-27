@@ -5,6 +5,9 @@ import { ButtonBackgroundClassNames } from "@/components/constants";
 
 import { MonthNames } from "@/types";
 
+import { filterByYearAndMonth } from "@/containers/Charts/YearlyCharts/utils";
+
+import { DataCacheContext } from "@/contexts/DataCache/DataCacheContext";
 import { YearContext } from "@/contexts/Year/YearContext";
 
 import { MonthContext } from "./MonthContext";
@@ -14,6 +17,7 @@ type Props = PropsWithChildren & {
 }
 export const MonthProvider = ({ initialValue, children }: Props) => {
   const { year } = use(YearContext)
+  const { dailyEntries } = use(DataCacheContext)
   const thisYear = new Date().getFullYear()
 
   // month=null means select the entire year
@@ -22,6 +26,8 @@ export const MonthProvider = ({ initialValue, children }: Props) => {
   useEffect(() => {
     setMonth(null)
   }, [year])
+
+  if (year == null) return null;
 
   return (
     <div>
@@ -40,6 +46,7 @@ export const MonthProvider = ({ initialValue, children }: Props) => {
           {MonthNames
             // (to date if current year)
             .slice(0, year === thisYear ? (new Date().getMonth() + 1) : 12)
+            .filter((_month, monthIndex) => filterByYearAndMonth(dailyEntries, year, monthIndex).length > 0)
             .map((monthName, m) => <Button
               key={m}
               style={month === m ? 'secondary' : 'subtle'}
