@@ -30,6 +30,7 @@ export type FandomTotal = {
 export type MonthContextValue = {
   month: number | null;
   setMonth: (newMonth: number | null) => void;
+  filteredEntries: WordCountEntry[];
 };
 
 export const MonthNames = [

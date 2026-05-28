@@ -3,7 +3,7 @@ import { use, useEffect, useState, type PropsWithChildren } from "react";
 import Button from "@/components/Button";
 import { ButtonBackgroundClassNames } from "@/components/constants";
 
-import { MonthNames } from "@/types";
+import { MonthNames, type WordCountEntry } from "@/types";
 
 import { filterByYearAndMonth } from "@/containers/Charts/YearlyCharts/utils";
 
@@ -19,13 +19,20 @@ export const MonthProvider = ({ initialValue, children }: Props) => {
   const { year } = use(YearContext)
   const { dailyEntries } = use(DataCacheContext)
   const thisYear = new Date().getFullYear()
-
+  
   // month=null means select the entire year
   const [month, setMonth] = useState<number | null>(initialValue ?? null)
+  const [filteredEntries, setFilteredEntries] = useState<WordCountEntry[]>([])
 
   useEffect(() => {
     setMonth(null)
   }, [year])
+
+  useEffect(() => {
+    if (year != null) {
+      setFilteredEntries(filterByYearAndMonth(dailyEntries, year, month))
+    }
+  }, [dailyEntries, year, month])
 
   if (year == null) return null;
 
@@ -34,6 +41,7 @@ export const MonthProvider = ({ initialValue, children }: Props) => {
       <MonthContext value={{
         month,
         setMonth,
+        filteredEntries,
       }}>
         <div className='flex flex-row gap-2 mt-3'>
           <Button
