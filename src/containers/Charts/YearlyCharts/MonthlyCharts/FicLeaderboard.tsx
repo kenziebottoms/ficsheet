@@ -24,7 +24,7 @@ const FicLeaderboard = () => {
     <h3>Top {ficTotals.length} Fics</h3>
     <Table
       headers={['Fic', 'Fandom', 'Words Added']}
-      data={ficTotals}
+      data={ficTotals.map(row => row.map(cell => <div className='py-1'>{cell}</div>))}
     />
   </>
 }
