@@ -17,26 +17,22 @@ import type { WordCountEntry } from "@/types";
 
 import { getDatesBetween } from "@/utils";
 
-import { filterByYearAndMonth } from "./utils";
-
 type Props = {
   showEmpty: boolean;
 }
 const History = ({ showEmpty }: Props) => {
-  const { dailyEntries, dailyTotals, refreshData } = use(DataCacheContext)
+  const { refreshData } = use(DataCacheContext)
   const { year } = use(YearContext)
-  const { month } = use(MonthContext)
+  const { month, filteredEntries, filteredDailyTotals } = use(MonthContext)
 
   const [editedEntry, setEditedEntry] = useState<Partial<WordCountEntry> | null>(null)
 
   if (year == null) return null;
 
-  const entries = filterByYearAndMonth(dailyEntries, year, month, true)
-  const totals = filterByYearAndMonth(dailyTotals, year, month, true)
   const dates = getDatesBetween(new Date(year, month ?? 0, 1), (month == null ? lastDayOfYear : lastDayOfMonth)(new Date(year, month ?? 0, 1)))
     .filter(date => !isFuture(date))
-  const filteredDates = dates.filter(date => showEmpty || _.filter(entries, { date }).length > 0)
-  const fandoms = _.uniq(_.map(entries, 'fandom')).sort()
+  const filteredDates = dates.filter(date => showEmpty || _.filter(filteredEntries, { date }).length > 0)
+  const fandoms = _.uniq(_.map(filteredEntries, 'fandom')).sort()
 
   return <>
     <Modal
@@ -63,7 +59,7 @@ const History = ({ showEmpty }: Props) => {
           `${parseInt(date.substring(5, 7), 10)}/${parseInt(date.substring(8, 10), 10)}/${date.substring(2, 4)}`,
           ...fandoms
             // map fandoms to list of fandom entries
-            .map(fandom => _.filter(entries, { fandom, date }))
+            .map(fandom => _.filter(filteredEntries, { fandom, date }))
             .map((entries, fandomIndex) => <div className="p-1 gap-y-1 flex flex-col">
               {entries.map((entry, entryIndex) => (
                 <div key={entryIndex} className="flex flex-row gap-2 items-center">
@@ -86,7 +82,7 @@ const History = ({ showEmpty }: Props) => {
                 className="self-end"
               />}
             </div>),
-          _.find(totals, { date })?.daily_total || 0
+          _.find(filteredDailyTotals, { date })?.daily_total || 0
         ]))}
       />
     </div>
