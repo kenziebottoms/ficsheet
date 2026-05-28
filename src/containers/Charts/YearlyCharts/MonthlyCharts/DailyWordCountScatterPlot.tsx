@@ -1,26 +1,19 @@
 import { use, useState } from "react"
 import { ScatterChart } from "@mui/x-charts"
 
-import { DataCacheContext } from "@/contexts/DataCache/DataCacheContext"
-import { MonthContext } from "@/contexts/Month/MonthContext"
-import { YearContext } from "@/contexts/Year/YearContext"
-
 import Toggle from '@/components/Toggle'
 import Widget from "@/components/Widget"
 
-import { filterByYearAndMonth } from "../utils"
+import { MonthContext } from "@/contexts/Month/MonthContext"
+
 import { colors } from "../../constants"
 
 const DailyWordCountScatterPlot = () => {
-  const { dailyTotals } = use(DataCacheContext)
-  const { year } = use(YearContext)
-  const { month } = use(MonthContext)
+  const { month, filteredDailyTotals } = use(MonthContext)
 
   const [showZero, setShowZero] = useState<boolean>(true)
 
-  if (year == null) return null;
-
-  const data = filterByYearAndMonth(dailyTotals, year, month, true)
+  const data = filteredDailyTotals
     .map(({ daily_total, date }, i) => ({
       x: i,
       y: daily_total,

@@ -3,11 +3,9 @@ import _ from 'lodash'
 
 import Badge from "@/components/Badge";
 
-import { DataCacheContext } from "@/contexts/DataCache/DataCacheContext";
 import { MonthContext } from "@/contexts/Month/MonthContext";
-import { YearContext } from "@/contexts/Year/YearContext";
 
-import { filterByYearAndMonth, getLongestStreak } from "../utils";
+import { getLongestStreak } from "../utils";
 
 import DailyWordCountStats from "./DailyWordCountStats";
 import DayOfWeekRadar from "./DayOfWeekRadar";
@@ -15,21 +13,15 @@ import FandomPie from './FandomPie';
 import FicLeaderboard from "./FicLeaderboard";
 
 const MonthlyCharts = () => {
-  const { dailyTotals } = use(DataCacheContext)
-  const { year } = use(YearContext)
-  const { month } = use(MonthContext)
-
-  if (year == null) return null;
-
-  const totals = filterByYearAndMonth(dailyTotals, year, month)
+  const { filteredDailyTotals } = use(MonthContext)
 
   return <>
     <div className="flex flex-row flex-wrap gap-3 items-start">
       <Badge title="Total" style="primary">
-        <span className='font-semibold text-white'>{_.sumBy(totals, 'daily_total').toLocaleString("en-US")}</span> words
+        <span className='font-semibold text-white'>{_.sumBy(filteredDailyTotals, 'daily_total').toLocaleString("en-US")}</span> words
       </Badge>
       <Badge title="Longest Streak" style="secondary">
-        <span className='font-semibold text-white'>{getLongestStreak(totals, x => x.daily_total !== 0).toLocaleString("en-US")}</span> days
+        <span className='font-semibold text-white'>{getLongestStreak(filteredDailyTotals, x => x.daily_total !== 0).toLocaleString("en-US")}</span> days
       </Badge>
     </div>
 

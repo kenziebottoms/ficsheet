@@ -31,6 +31,7 @@ export type MonthContextValue = {
   month: number | null;
   setMonth: (newMonth: number | null) => void;
   filteredEntries: WordCountEntry[];
+  filteredDailyTotals: DailyTotal[];
 };
 
 export const MonthNames = [
