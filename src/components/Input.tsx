@@ -6,6 +6,7 @@ type Props<T extends string | number> = {
   label: string;
   defaultValue?: T;
   placeholder?: string;
+  autoFocus?: boolean;
 }
 const Input = <T extends string | number>({
   name,
@@ -13,6 +14,7 @@ const Input = <T extends string | number>({
   label,
   defaultValue,
   placeholder,
+  autoFocus,
 }: Props<T>) => {
   const [value, setValue] = useState<T | null>(defaultValue ?? null);
 
@@ -32,6 +34,7 @@ const Input = <T extends string | number>({
         value={value ?? ''}
         onChange={e => setValue(e.target.value as T)}
         className='w-full rounded-md p-2 border-2 border-primary/50 focus-within:border-primary outline-0'
+        autoFocus={autoFocus}
       />
     </label>
   </div>

@@ -70,6 +70,7 @@ const DailyProjectWordCountForm = ({
   return <form
     onSubmit={handleSubmit}
     className={[className, 'flex flex-col gap-4 rounded-md p-3'].join(' ')}
+    tabIndex={-1}
   >
     <DateInput
       name="date"
@@ -81,6 +82,7 @@ const DailyProjectWordCountForm = ({
       name="fic"
       type="text"
       defaultValue={values?.fic || ''}
+      autoFocus
     />
 
     <div className='flex flex-row gap-2'>
