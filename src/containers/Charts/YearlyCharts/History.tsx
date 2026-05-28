@@ -60,7 +60,7 @@ const History = ({ showEmpty }: Props) => {
           ...fandoms
             // map fandoms to list of fandom entries
             .map(fandom => _.filter(filteredEntries, { fandom, date }))
-            .map((entries, fandomIndex) => <div className="p-1 gap-y-1 flex flex-col">
+            .map((entries, fandomIndex) => <div className="p-1 gap-y-1 flex flex-row flex-wrap gap-2">
               {entries.map((entry, entryIndex) => (
                 <div key={entryIndex} className="flex flex-row gap-2 items-center">
                   {entry.count}
@@ -74,6 +74,7 @@ const History = ({ showEmpty }: Props) => {
                   />
                 </div>
               ))}
+              <div className="grow" />
               {(showEmpty || entries.length === 0) && <Button
                 style="transparent"
                 small
