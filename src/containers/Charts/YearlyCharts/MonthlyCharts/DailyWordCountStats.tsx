@@ -25,13 +25,13 @@ const DailyWordCountStats = () => {
       <DailyWordCountScatterPlot />
       <div className='flex flex-row flex-wrap gap-3'>
         <Badge title="Maximum" style="primary">
-          <span className='font-semibold text-white'>{_.maxBy(filteredTotals, 'daily_total')?.daily_total || 0}</span> words
+          <span className='font-semibold text-white'>{(_.maxBy(filteredTotals, 'daily_total')?.daily_total || 0).toLocaleString("en-US")}</span> words
         </Badge>
         <Badge title="Average" style="secondary">
-          <span className='font-semibold text-white'>{_.meanBy(filteredTotals, 'daily_total').toFixed(1)}</span> words
+          <span className='font-semibold text-white'>{_.meanBy(filteredTotals, 'daily_total').toLocaleString("en-US", { maximumSignificantDigits: 1 })}</span> words
         </Badge>
         <Badge title="Minimum (excl. 0)" style="subtle">
-          <span className='font-semibold text-white'>{_.min(_.without(_.map(filteredTotals, 'daily_total'), 0)) || 0}</span> words
+          <span className='font-semibold text-white'>{(_.min(_.without(_.map(filteredTotals, 'daily_total'), 0)) || 0).toLocaleString("en-US")}</span> words
         </Badge>
       </div>
     </div>

@@ -26,10 +26,10 @@ const MonthlyCharts = () => {
   return <>
     <div className="flex flex-row flex-wrap gap-3 items-start">
       <Badge title="Total" style="primary">
-        <span className='font-semibold text-white'>{_.sumBy(totals, 'daily_total')}</span> words
+        <span className='font-semibold text-white'>{_.sumBy(totals, 'daily_total').toLocaleString("en-US")}</span> words
       </Badge>
       <Badge title="Longest Streak" style="secondary">
-        <span className='font-semibold text-white'>{getLongestStreak(totals, x => x.daily_total !== 0)}</span> days
+        <span className='font-semibold text-white'>{getLongestStreak(totals, x => x.daily_total !== 0).toLocaleString("en-US")}</span> days
       </Badge>
     </div>
 
