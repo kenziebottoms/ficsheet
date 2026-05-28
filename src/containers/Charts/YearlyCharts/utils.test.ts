@@ -38,6 +38,7 @@ suite("getLongestStreak", () => {
     [[true, true, true, true, true], 5],
     [[true, true, true, true, true, false], 5],
     [[false, false, false, false, false], 0],
+    [[true, true, false, true, true, true], 3],
   ] as [boolean[], number][])(
     "getLongestStreak(%i, %i)",
     ([input, expectedOutput]) => {

@@ -56,5 +56,8 @@ export const getLongestStreak = <T>(
       streak = 0;
     }
   });
-  return highestStreak || streak;
+  if (streak > highestStreak) {
+    highestStreak = streak;
+  }
+  return highestStreak;
 };
