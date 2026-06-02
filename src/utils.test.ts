@@ -5,6 +5,7 @@ import {
   countWords,
   getDatesBetween,
   getMedian,
+  getMonthsBetween,
   largeNumberFormatter,
 } from "./utils";
 
@@ -59,6 +60,33 @@ suite("getDatesBetween", () => {
       "2020-02-02",
       "2020-02-03",
     ]);
+  });
+});
+
+suite("getMonthsBetween", () => {
+  test("within one month", () => {
+    expect(
+      getMonthsBetween(
+        parse("2020-01-03", "yyyy-MM-dd", new Date()),
+        parse("2020-01-07", "yyyy-MM-dd", new Date()),
+      ),
+    ).toEqual(["2020-01"]);
+  });
+  test("across months", () => {
+    expect(
+      getMonthsBetween(
+        parse("2020-01-29", "yyyy-MM-dd", new Date()),
+        parse("2020-02-03", "yyyy-MM-dd", new Date()),
+      ),
+    ).toEqual(["2020-01", "2020-02"]);
+  });
+  test("across years", () => {
+    expect(
+      getMonthsBetween(
+        parse("2019-12-29", "yyyy-MM-dd", new Date()),
+        parse("2020-02-03", "yyyy-MM-dd", new Date()),
+      ),
+    ).toEqual(["2019-12", "2020-01", "2020-02"]);
   });
 });
 
