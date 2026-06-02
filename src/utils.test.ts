@@ -1,6 +1,12 @@
 import { suite, expect, test } from "vitest";
+import { parse } from "date-fns";
 
-import { countWords, getMedian, largeNumberFormatter } from "./utils";
+import {
+  countWords,
+  getDatesBetween,
+  getMedian,
+  largeNumberFormatter,
+} from "./utils";
 
 suite("countWords", () => {
   test.for([
@@ -21,6 +27,38 @@ suite("countWords", () => {
     ["with a 12/27 date stamp in the middle", 7],
   ] as [string, number][])("countWords(%s): %i", ([input, expectedOutput]) => {
     expect(countWords(input)).toEqual(expectedOutput);
+  });
+});
+
+suite("getDatesBetween", () => {
+  test("within one month", () => {
+    expect(
+      getDatesBetween(
+        parse("2020-01-03", "yyyy-MM-dd", new Date()),
+        parse("2020-01-07", "yyyy-MM-dd", new Date()),
+      ),
+    ).toEqual([
+      "2020-01-03",
+      "2020-01-04",
+      "2020-01-05",
+      "2020-01-06",
+      "2020-01-07",
+    ]);
+  });
+  test("across months", () => {
+    expect(
+      getDatesBetween(
+        parse("2020-01-29", "yyyy-MM-dd", new Date()),
+        parse("2020-02-03", "yyyy-MM-dd", new Date()),
+      ),
+    ).toEqual([
+      "2020-01-29",
+      "2020-01-30",
+      "2020-01-31",
+      "2020-02-01",
+      "2020-02-02",
+      "2020-02-03",
+    ]);
   });
 });
 
