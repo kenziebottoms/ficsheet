@@ -27,7 +27,7 @@ const YearlyRunningWordCountLineChart = ({
 }) => {
   const thisYear = new Date().getFullYear();
   const { availableYears } = use(YearContext)
-  const [yearToDate, setYearToDate] = useState<boolean>(false)
+  const [yearToDate, setYearToDate] = useState<boolean>(true)
 
   if (runningTotals == null || runningTotals.length < 1) return null
 
