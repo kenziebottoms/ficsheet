@@ -31,8 +31,9 @@ const DailyProjectWordCountForm = ({
   values,
   onCompleted = () => { },
 }: Props) => {
-  const { fandoms } = use(DataCacheContext)
+  const { fandoms, dailyEntries } = use(DataCacheContext)
 
+  const [guessedFandom, setGuessedFandom] = useState<string | null>(null)
   const [typeNewFandom, setTypeNewFandom] = useState<boolean>(false)
   const [showTextarea, setShowTextarea] = useState<boolean>(!values)
 
@@ -64,6 +65,19 @@ const DailyProjectWordCountForm = ({
     }
   }
 
+  const guessFandom = (fic: string) => {
+    if (fic === '') {
+      setGuessedFandom(null)
+    } else if (['journal', 'dream'].some(match => fic.toLowerCase().includes(match))) {
+      setGuessedFandom('Non-fiction')
+    } else {
+      const lastEntryForFic = dailyEntries.find((entry => entry.fic === fic))
+      if (lastEntryForFic != null) {
+        setGuessedFandom(lastEntryForFic.fandom)
+      }
+    }
+  }
+
   // default to today (unless it's after midnight but before 4AM, then default to "yesterday")
   const defaultDate = isBefore(new Date(), new Date().setHours(4)) ? addDays(new Date(), -1) : new Date()
 
@@ -83,6 +97,7 @@ const DailyProjectWordCountForm = ({
       type="text"
       defaultValue={values?.fic || ''}
       autoFocus
+      onBlur={e => guessFandom(e.target.value)}
     />
 
     <div className='flex flex-row gap-2'>
@@ -90,14 +105,14 @@ const DailyProjectWordCountForm = ({
         label="Fandom"
         name="fandom"
         type="text"
-        defaultValue={values?.fandom || ''}
+        defaultValue={guessedFandom || values?.fandom || ''}
       /> : <>
         <Dropdown
           label="Fandom"
           placeholder='Select a fandom'
           name="fandom"
           options={fandoms}
-          defaultValue={values?.fandom || ''}
+          defaultValue={guessedFandom || values?.fandom || ''}
         />
         <Button
           style="transparent"
