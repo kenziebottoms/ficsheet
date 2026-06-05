@@ -79,8 +79,8 @@ const YearlyRunningWordCountLineChart = ({
         dataKey: `${year}`,
         showMark: false,
       }))}
-      width={800}
-      height={380}
+      width={1200}
+      height={800}
       colors={[...getDynamicColorPalette(availableYears.length - 2).slice(0, availableYears.length - 2).map((color) => blendColors('#27272a', color, .5)), '#fff']}
       yAxis={[{ valueFormatter: largeNumberFormatter }]}
     />

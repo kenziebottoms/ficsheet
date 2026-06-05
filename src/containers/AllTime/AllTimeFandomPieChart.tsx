@@ -21,8 +21,8 @@ const AllTimeFandomPieChart = ({
   return <Widget title="Word Count By Fandom">
     <PieChart
       series={[{ data }]}
-      width={800}
-      height={600}
+      width={1200}
+      height={800}
       colors={getDynamicColorPalette(fandomTotals.length)}
       slotProps={{
         legend: {
