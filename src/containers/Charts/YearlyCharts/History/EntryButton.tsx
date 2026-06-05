@@ -27,7 +27,10 @@ const EntryButton = ({
       <DailyProjectWordCountForm
         className='bg-zinc-800'
         values={entry}
-        onCompleted={() => refreshData(year)}
+        onCompleted={() => {
+          setShowForm(false);
+          refreshData(year);
+        }}
       />
     </Modal>}
     <div className="flex flex-row items-stretch">
