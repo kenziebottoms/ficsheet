@@ -1,7 +1,7 @@
 import { use, useState } from "react";
 import _ from 'lodash'
 import { isFuture, lastDayOfMonth, lastDayOfYear } from "date-fns";
-import { Add, Edit } from '@mui/icons-material'
+import { Add } from '@mui/icons-material'
 
 import { DataCacheContext } from "@/contexts/DataCache/DataCacheContext";
 import { MonthContext } from "@/contexts/Month/MonthContext";
@@ -10,12 +10,12 @@ import { YearContext } from "@/contexts/Year/YearContext";
 import Button from "@/components/Button";
 import DailyProjectWordCountForm from "@/components/DailyProjectWordCountForm";
 import Modal from "@/components/Modal";
-import Pill from "@/components/Pill";
 import Table from "@/components/Table";
 
 import type { WordCountEntry } from "@/types";
 
 import { getDatesBetween } from "@/utils";
+import EntryButton from "./EntryButton";
 
 type Props = {
   showEmpty: boolean;
@@ -25,7 +25,7 @@ const History = ({ showEmpty }: Props) => {
   const { year } = use(YearContext)
   const { month, filteredEntries, filteredDailyTotals } = use(MonthContext)
 
-  const [editedEntry, setEditedEntry] = useState<Partial<WordCountEntry> | null>(null)
+  const [newEntry, setNewEntry] = useState<Omit<WordCountEntry, 'fic' | 'count'> | null>(null)
 
   if (year == null) return null;
 
@@ -35,19 +35,23 @@ const History = ({ showEmpty }: Props) => {
   const fandoms = _.uniq(_.map(filteredEntries, 'fandom')).sort()
 
   return <>
-    <Modal
-      open={editedEntry != null}
-      setOpen={() => setEditedEntry(null)}
+    {newEntry != null && <Modal
+      open
+      setOpen={(newOpen: boolean) => {
+        if (!newOpen) {
+          setNewEntry(null)
+        }
+      }}
     >
       <DailyProjectWordCountForm
         className='bg-zinc-800'
-        values={editedEntry}
+        values={newEntry}
         onCompleted={() => {
-          setEditedEntry(null)
+          setNewEntry(null)
           refreshData(year)
         }}
       />
-    </Modal>
+    </Modal>}
     <div className="overflow-auto w-full">
       <Table
         headers={[
@@ -61,24 +65,12 @@ const History = ({ showEmpty }: Props) => {
             // map fandoms to list of fandom entries
             .map(fandom => _.filter(filteredEntries, { fandom, date }))
             .map((entries, fandomIndex) => <div className="p-1 gap-y-1 flex flex-row flex-wrap gap-2">
-              {entries.map((entry, entryIndex) => (
-                <div key={entryIndex} className="flex flex-row gap-2 items-center">
-                  {entry.count}
-                  <Pill style="primary">{entry.fic}</Pill>
-                  <div className="grow" />
-                  <Button
-                    style="transparent"
-                    small
-                    onClick={() => setEditedEntry(entry)}
-                    icon={Edit}
-                  />
-                </div>
-              ))}
+              {entries.map((entry) => <EntryButton key={entry.id} entry={entry} />)}
               <div className="grow" />
               {(showEmpty || entries.length === 0) && <Button
                 style="transparent"
                 small
-                onClick={() => setEditedEntry({ fandom: fandoms[fandomIndex], date })}
+                onClick={() => setNewEntry({ fandom: fandoms[fandomIndex], date })}
                 icon={Add}
                 className="self-end"
               />}
