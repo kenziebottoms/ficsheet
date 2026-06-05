@@ -8,12 +8,14 @@ const PillClassNames: Partial<Record<ButtonStyle, string>> = {
 
 type Props = PropsWithChildren & {
   style: ButtonStyle;
+  className?: string;
 }
 const Pill = ({
   style,
-  children
+  className = '',
+  children,
 }: Props) => {
-  return <div className={["font-sans rounded-xl text-sm px-2 py-1 whitespace-nowrap", PillClassNames[style]].join(" ")}>
+  return <div className={`${className} font-sans rounded-xl text-sm px-2 py-1 whitespace-nowrap flex flex-row items-center gap-1 ${PillClassNames[style]}`}>
     {children}
   </div>
 }

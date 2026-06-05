@@ -30,16 +30,19 @@ const EntryButton = ({
         onCompleted={() => refreshData(year)}
       />
     </Modal>}
-    <div className="flex flex-row gap-2 items-center">
-      {entry.count}
-      <Pill style="primary">{entry.fic}</Pill>
-      <div className="grow" />
+    <div className="flex flex-row items-stretch">
+      <Pill style="primary" className="rounded-r-none">
+        {entry.fic}
+      </Pill>
       <Button
         style="transparent"
         small
         onClick={() => setShowForm(true)}
         icon={Edit}
-      />
+        className='rounded-l-none'
+      >
+        {entry.count}
+      </Button>
     </div>
   </>
 }

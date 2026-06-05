@@ -67,15 +67,15 @@ const History = ({ showEmpty }: Props) => {
             .map((entries, fandomIndex) => <div className="p-1 gap-y-1 flex flex-row flex-wrap gap-2">
               {entries.map((entry) => <EntryButton key={entry.id} entry={entry} />)}
               <div className="grow" />
-              {(showEmpty || entries.length === 0) && <Button
+              <Button
                 style="transparent"
                 small
                 onClick={() => setNewEntry({ fandom: fandoms[fandomIndex], date })}
                 icon={Add}
                 className="self-end"
-              />}
+              />
             </div>),
-          _.find(filteredDailyTotals, { date })?.daily_total || 0
+          <span className="font-bold">{_.find(filteredDailyTotals, { date })?.daily_total || 0}</span>
         ]))}
       />
     </div>
