@@ -1,4 +1,4 @@
-import { useEffect, useState, type FocusEventHandler } from 'react'
+import { useEffect, useState, type FocusEventHandler, type KeyboardEventHandler } from 'react'
 
 type Props<T extends string | number> = {
   name: string;
@@ -8,6 +8,7 @@ type Props<T extends string | number> = {
   placeholder?: string;
   autoFocus?: boolean;
   onBlur?: FocusEventHandler<HTMLInputElement>;
+  onKeyDown?: KeyboardEventHandler<HTMLInputElement>;
 }
 const Input = <T extends string | number>({
   name,
@@ -17,6 +18,7 @@ const Input = <T extends string | number>({
   placeholder,
   autoFocus,
   onBlur,
+  onKeyDown,
 }: Props<T>) => {
   const [value, setValue] = useState<T | null>(defaultValue ?? null);
 
@@ -38,6 +40,8 @@ const Input = <T extends string | number>({
         className='w-full rounded-md p-2 border-2 border-primary/50 focus-within:border-primary outline-0'
         autoFocus={autoFocus}
         onBlur={onBlur}
+        onKeyDown={onKeyDown}
+        autoComplete='off'
       />
     </label>
   </div>

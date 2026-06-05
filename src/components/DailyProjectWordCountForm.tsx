@@ -1,4 +1,5 @@
 import { use, useState, type SubmitEventHandler } from 'react';
+import _ from 'lodash'
 import { addDays, isBefore, parse } from 'date-fns';
 import { Add, DeleteForever, EditCalendar } from '@mui/icons-material';
 
@@ -33,9 +34,12 @@ const DailyProjectWordCountForm = ({
 }: Props) => {
   const { fandoms, dailyEntries } = use(DataCacheContext)
 
+  const [guessedFicIndex, setGuessedFicIndex] = useState<number | null>(null)
   const [guessedFandom, setGuessedFandom] = useState<string | null>(null)
   const [typeNewFandom, setTypeNewFandom] = useState<boolean>(false)
   const [showTextarea, setShowTextarea] = useState<boolean>(!values)
+
+  const recentEntries = dailyEntries.slice().reverse();
 
   const handleSubmit: SubmitEventHandler<HTMLFormElement> = e => {
     // Prevent the browser from reloading the page
@@ -81,6 +85,9 @@ const DailyProjectWordCountForm = ({
   // default to today (unless it's after midnight but before 4AM, then default to "yesterday")
   const defaultDate = isBefore(new Date(), new Date().setHours(4)) ? addDays(new Date(), -1) : new Date()
 
+  const fandomEntries = recentEntries.filter((entry => entry.fandom === values?.fandom))
+  const recentFandomFics = _.uniq(_.map(fandomEntries, 'fic'))
+
   return <form
     onSubmit={handleSubmit}
     className={[className, 'flex flex-col gap-4 rounded-md p-3'].join(' ')}
@@ -95,9 +102,18 @@ const DailyProjectWordCountForm = ({
       label="Fic"
       name="fic"
       type="text"
-      defaultValue={values?.fic || ''}
+      defaultValue={guessedFicIndex != null ? recentFandomFics[guessedFicIndex] : values?.fic || ''}
       autoFocus
       onBlur={e => guessFandom(e.target.value)}
+      onKeyDown={e => {
+        if (fandomEntries.length > 0) {
+          if (e.key === 'ArrowUp') {
+            setGuessedFicIndex(guessedFicIndex => guessedFicIndex == null ? 0 : guessedFicIndex + 1)
+          } else if (e.key === 'ArrowDown') {
+            setGuessedFicIndex(oldFicIndex => (oldFicIndex != null && oldFicIndex > 0) ? (oldFicIndex - 1) : null)
+          }
+        }
+      }}
     />
 
     <div className='flex flex-row gap-2'>
