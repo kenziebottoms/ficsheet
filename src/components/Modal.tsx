@@ -1,4 +1,4 @@
-import { type PropsWithChildren } from 'react'
+import { useEffect, type PropsWithChildren } from 'react'
 
 import Button from './Button';
 import { ButtonBackgroundClassNames } from './constants';
@@ -14,7 +14,27 @@ const Modal = ({
   className,
   children
 }: Props) => {
-  return open && <div className='fixed z-10 inset-0 overflow-y-auto'>
+
+  const handleEscape = (e: KeyboardEvent) => {
+    // don't do anything else with the escape key
+    e.stopPropagation()
+    if (e.key === 'Escape') {
+      setOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    if (open) {
+      document.addEventListener('keydown', handleEscape);
+    }
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [open]);
+
+  if (!open) return null;
+
+  return <div className='fixed z-10 inset-0 overflow-y-auto'>
     <div className="fixed inset-0 transition-opacity" aria-hidden="true">
       <div className="absolute inset-0 bg-zinc-900/75 flex flex-row justify-end" onClick={() => setOpen(false)}>
       </div>
