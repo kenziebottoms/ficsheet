@@ -30,9 +30,17 @@ const AllTime = () => {
     selectFandomTotals().then(setFandomTotals)
   }, [])
 
+  if (runningTotals == null || lifetimeRunningTotal.length === 0) return null;
+
   return <div className='p-3 bg-zinc-900 rounded-md flex flex-col gap-3 items-center'>
-    <div className='flex flex-row gap-2'>
-      <Badge title="Total Fandoms">
+    <div className='flex flex-row gap-3'>
+      <Badge title='Total Words Written'>
+        {lifetimeRunningTotal[lifetimeRunningTotal.length - 1].running_total.toLocaleString('en-US')}
+      </Badge>
+      <Badge
+        title="Total Fandoms"
+        style="secondary"
+      >
         {fandomTotals.length}
       </Badge>
     </div>
