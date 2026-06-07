@@ -8,7 +8,7 @@ const Table = ({
   headers,
   data,
 }: Props) => {
-  return <table className="font-mono w-full rounded-xl bg-zinc-950">
+  return <table className="font-mono w-full rounded-xl bg-zinc-950 border-b border-primary/50">
     <thead className="font-medium rounded-t-xl">
       <tr className='rounded-t-xl bg-pink-700/50 from-30% via-80% to-90%'>
         {headers.map((header, headerIndex) => <th
