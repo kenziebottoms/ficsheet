@@ -13,21 +13,22 @@ import { largeNumberFormatter } from '@/utils';
 import { colors } from '../constants';
 
 import { addTimestamp, filterByYearAndMonth, } from './utils';
+import Spinner from '@/components/Spinner';
 
 const RunningTotalLine = () => {
   const { runningTotal } = use(DataCacheContext)
   const { year } = use(YearContext)
 
-  if (year == null || runningTotal.length === 0) return null;
+  if (year == null) return null;
 
   const paddedRunningTotal = runningTotal.slice()
-  if (!runningTotal[0].date.includes("01-01")) {
+  if (!runningTotal[0]?.date.includes("01-01")) {
     paddedRunningTotal.unshift({ date: `${year}-01-01`, running_total: 0 })
   }
   const dataset = filterByYearAndMonth(paddedRunningTotal, year, null, true).map(addTimestamp)
 
   return <Widget title="Running Total">
-    <LineChart
+    {dataset.length > 0 ? <LineChart
       dataset={dataset}
       xAxis={[
         {
@@ -49,7 +50,9 @@ const RunningTotalLine = () => {
       height={380}
       colors={colors}
       yAxis={[{ valueFormatter: largeNumberFormatter }]}
-    />
+    /> : <div className='w-200 h-95 flex flex-col items-center justify-center'>
+      <Spinner style="subtle" />
+    </div>}
   </Widget>
 }
 

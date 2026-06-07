@@ -14,6 +14,7 @@ import { largeNumberFormatter } from '@/utils';
 import { getDynamicColorPalette } from '../constants';
 
 import { filterByYearAndMonth } from './utils';
+import Spinner from '@/components/Spinner';
 
 const MonthlyFandomBar = () => {
   const { dailyEntries } = use(DataCacheContext)
@@ -44,7 +45,7 @@ const MonthlyFandomBar = () => {
     }));
 
   return <Widget title="Monthly Word Count By Fandom">
-    <BarChart
+    {entries.length > 0 ? <BarChart
       dataset={monthlyTotalByFandom}
       xAxis={[{ dataKey: 'month' }]}
       series={fandoms.map((fandom) => ({
@@ -56,7 +57,9 @@ const MonthlyFandomBar = () => {
       width={year === new Date().getFullYear() ? Math.min(100 + (new Date().getMonth() + 1) * 60, 800) : 800}
       height={350}
       yAxis={[{ valueFormatter: largeNumberFormatter }]}
-    />
+    /> : <div className='w-200 h-75 flex flex-col items-center justify-center'>
+      <Spinner style="subtle" />
+    </div>}
   </Widget>
 }
 
