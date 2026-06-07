@@ -13,7 +13,7 @@ const DailyWordCountScatterPlot = () => {
 
   const [showZero, setShowZero] = useState<boolean>(true)
 
-  const data = filteredDailyTotals
+  const data = filteredDailyTotals.slice(0, -1)
     .map(({ daily_total, date }, i) => ({
       x: i,
       y: daily_total,
