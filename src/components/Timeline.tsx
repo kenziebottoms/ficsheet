@@ -17,21 +17,19 @@ const Timeline = ({
     style={{ 'gridAutoColumns': `${100 / range}%` }}
   >
     {data.map((row, rowIndex) => row.range
-      .map((subRange, rangeIndex) => <>
-        <div
-          key={`${row.label}_${rangeIndex}_bg`}
-          style={{
-            gridRow: rowIndex * 2 + 1,
-            gridColumn: `${subRange[0]} / span ${subRange[1] - subRange[0] + 1}`,
-            background: colors[rowIndex % colors.length]
-          }}
-          className='flex items-center justify-center py-1 px-4 rounded-sm'
-        >
-          <div className='bg-zinc-700 rounded-xl px-2 py-[0.1rem] w-auto text-xs text-center'>
-            {row.label}
-          </div>
+      .map((subRange, rangeIndex) => <div
+        key={`${rowIndex}_${rangeIndex}_bg`}
+        style={{
+          gridRow: rowIndex * 2 + 1,
+          gridColumn: `${subRange[0]} / span ${subRange[1] - subRange[0] + 1}`,
+          background: colors[rowIndex % colors.length]
+        }}
+        className='flex items-center justify-center py-1 px-4 rounded-sm'
+      >
+        <div className='bg-zinc-700 rounded-xl px-2 py-[0.1rem] w-auto text-xs text-center'>
+          {row.label}
         </div>
-      </>))}
+      </div>))}
     {xAxisLabels.map((label, labelIndex) => <div
       key={label}
       style={{
