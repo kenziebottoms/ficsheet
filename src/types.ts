@@ -27,6 +27,12 @@ export type FandomTotal = {
   count: number;
 };
 
+export type FandomTimeline = {
+  label: string;
+  firstWritten: string;
+  lastWritten: string;
+};
+
 export type MonthContextValue = {
   month: number | null;
   setMonth: (newMonth: number | null) => void;
@@ -54,6 +60,11 @@ export type RunningTotal = {
   running_total: number;
 };
 
+export type TimelineData = {
+  label: string;
+  range: [number, number][];
+};
+
 export type WordCountEntry = {
   id?: number;
   date: string;
@@ -76,6 +87,7 @@ export type DataCache = {
   dailyEntries: WordCountEntry[];
   dailyTotals: DailyTotal[];
   fandoms: string[];
+  fandomTimelines: FandomTimeline[];
   runningTotal: RunningTotal[];
   refreshData: (year: number) => void;
 };

@@ -14,6 +14,7 @@ import { copyPrettyJson } from '@/utils';
 
 import { MonthlyChartTabNames, type MonthlyChartTabName } from '../constants';
 
+import FandomTimelineBarChart from './FandomTimelineBarChart';
 import History from './History';
 import MonthlyFandomBar from './MonthlyFandomBar';
 import MonthlyCharts from './MonthlyCharts';
@@ -60,6 +61,8 @@ const YearlyCharts = () => {
       <MonthlyFandomBar />
       <RunningTotalLine />
     </div>
+
+    <FandomTimelineBarChart />
 
     <MonthProvider>
       <div className="bg-zinc-800 px-4 p-[0.35rem] rounded-full text-zinc-400 flex flex-row flex-wrap gap-3">

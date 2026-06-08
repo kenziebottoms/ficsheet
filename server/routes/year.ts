@@ -1,11 +1,12 @@
 import express, { type Request } from "express";
 
-import { readCSV, readJson } from "../csvHandler.ts";
+import { readCSV } from "../csvHandler.ts";
 import {
   deleteEntriesByYear,
   getYearlyWhereClause,
   select,
 } from "../db/queries.ts";
+import { type FandomTimeline } from "../../src/types.ts";
 import { type YearRequest } from "../types.ts";
 
 const yearRouter = express.Router({
@@ -76,6 +77,17 @@ yearRouter.get("/fandoms", (req: YearRequest, res) => {
     `DISTINCT fandom FROM word_count ${getYearlyWhereClause(req.params.year)} ORDER BY fandom ASC`,
   );
   return res.json(data.map(({ fandom }) => fandom)).status(200);
+});
+
+/**
+ * GET /api/year/:year/fandomTimelines
+ */
+yearRouter.get("/fandomTimelines", (req: YearRequest, res) => {
+  console.log(`fetching fandom timelines (${req.params.year}`);
+  const data = select<FandomTimeline[]>(
+    `DISTINCT min(date) as firstWritten, max(date) as lastWritten, fandom as label FROM word_count ${getYearlyWhereClause(req.params.year)} GROUP BY fandom ORDER BY firstWritten ASC`,
+  );
+  return res.json(data).status(200);
 });
 
 /**

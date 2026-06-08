@@ -5,6 +5,7 @@ import {
   type RunningTotal,
   type DailyTotal,
   type FandomTotal,
+  type FandomTimeline,
 } from "@/types";
 
 import { getDatesBetween } from "./utils";
@@ -72,6 +73,8 @@ export const selectDailyTotals = (year: number) =>
   );
 export const selectFandoms = (year: number) =>
   get<string[]>(`year/${year}/fandoms`);
+export const selectFandomTimelines = (year: number) =>
+  get<FandomTimeline[]>(`year/${year}/fandomTimelines`);
 export const selectFandomTotals = () => get<FandomTotal[]>("fandomTotals");
 export const selectRunningTotal = (year?: number) =>
   get<RunningTotal[]>(`${year ? `year/${year}/` : ""}runningTotal`);
