@@ -1,4 +1,4 @@
-import { colors, getDynamicColorPalette } from '@/containers/Charts/constants';
+import { getDynamicColorPalette } from '@/containers/Charts/constants';
 import type { TimelineData } from '@/types'
 
 const Timeline = ({
@@ -8,6 +8,7 @@ const Timeline = ({
   xAxisLabels: string[];
   data: TimelineData[];
 }) => {
+  const colors = getDynamicColorPalette(data.length)
   const xAxisValues = data.map(td => td.range.map(r => r)).flat(2)
   const range = Math.max(...xAxisValues) - Math.min(...xAxisValues) + 1
 
@@ -22,20 +23,11 @@ const Timeline = ({
           style={{
             gridRow: rowIndex * 2 + 1,
             gridColumn: `${subRange[0]} / span ${subRange[1] - subRange[0] + 1}`,
-            background: getDynamicColorPalette(data.length)[rowIndex] || colors[0]
+            background: colors[rowIndex % colors.length]
           }}
+          className='flex items-center justify-center py-1 px-4 rounded-sm'
         >
-          &nbsp;
-        </div>
-        <div
-          key={`${row.label}_${rangeIndex}_label`}
-          style={{
-            gridRow: rowIndex * 2 + 2,
-            gridColumn: `${subRange[0]} / span ${subRange[1] - subRange[0] + 1}`
-          }}
-          className='-mt-7.5 text-center'
-        >
-          <div className='bg-zinc-700 rounded-xl px-2 py-[0.1rem] inline-flex text-xs'>
+          <div className='bg-zinc-700 rounded-xl px-2 py-[0.1rem] w-auto text-xs text-center'>
             {row.label}
           </div>
         </div>

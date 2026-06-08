@@ -27,7 +27,7 @@ export type FandomTotal = {
   count: number;
 };
 
-export type FandomTimeline = {
+export type Timeframe = {
   label: string;
   firstWritten: string;
   lastWritten: string;
@@ -87,7 +87,8 @@ export type DataCache = {
   dailyEntries: WordCountEntry[];
   dailyTotals: DailyTotal[];
   fandoms: string[];
-  fandomTimelines: FandomTimeline[];
+  fandomTimelines: Timeframe[];
+  ficTimelines: Timeframe[];
   runningTotal: RunningTotal[];
   refreshData: (year: number) => void;
 };

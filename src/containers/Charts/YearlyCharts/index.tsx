@@ -20,6 +20,7 @@ import MonthlyFandomBar from './MonthlyFandomBar';
 import MonthlyCharts from './MonthlyCharts';
 import ProjectedAnnualWordCount from './ProjectedAnnualWordCount';
 import RunningTotalLine from './RunningTotalLine';
+import FicTimelineBarChart from './FicTimelineBarChart';
 
 const TabIcons: Record<MonthlyChartTabName, SvgIconComponent> = {
   charts: Equalizer,
@@ -63,6 +64,7 @@ const YearlyCharts = () => {
     </div>
 
     <FandomTimelineBarChart />
+    <FicTimelineBarChart />
 
     <MonthProvider>
       <div className="bg-zinc-800 px-4 p-[0.35rem] rounded-full text-zinc-400 flex flex-row flex-wrap gap-3">

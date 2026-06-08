@@ -6,7 +6,7 @@ import {
   getYearlyWhereClause,
   select,
 } from "../db/queries.ts";
-import { type FandomTimeline } from "../../src/types.ts";
+import { type Timeframe } from "../../src/types.ts";
 import { type YearRequest } from "../types.ts";
 
 const yearRouter = express.Router({
@@ -84,8 +84,19 @@ yearRouter.get("/fandoms", (req: YearRequest, res) => {
  */
 yearRouter.get("/fandomTimelines", (req: YearRequest, res) => {
   console.log(`fetching fandom timelines (${req.params.year}`);
-  const data = select<FandomTimeline[]>(
+  const data = select<Timeframe[]>(
     `DISTINCT min(date) as firstWritten, max(date) as lastWritten, fandom as label FROM word_count ${getYearlyWhereClause(req.params.year)} GROUP BY fandom ORDER BY firstWritten ASC`,
+  );
+  return res.json(data).status(200);
+});
+
+/**
+ * GET /api/year/:year/ficTimelines
+ */
+yearRouter.get("/ficTimelines", (req: YearRequest, res) => {
+  console.log(`fetching fic timelines (${req.params.year}`);
+  const data = select<Timeframe[]>(
+    `DISTINCT min(date) as firstWritten, max(date) as lastWritten, fic as label FROM word_count ${getYearlyWhereClause(req.params.year)} GROUP BY fic ORDER BY firstWritten ASC`,
   );
   return res.json(data).status(200);
 });
