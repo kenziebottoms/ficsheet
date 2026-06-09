@@ -6,4 +6,5 @@ export const YearContext = createContext<YearContextValue>({
   year: new Date().getFullYear(),
   setYear: () => { },
   availableYears: [null, new Date().getFullYear()],
+  refreshYears: () => { },
 })

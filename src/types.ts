@@ -77,6 +77,7 @@ export type YearContextValue = {
   year: number | null;
   setYear: (newYear: number | null) => void;
   availableYears: (number | null)[];
+  refreshYears: () => void;
 };
 
 /**

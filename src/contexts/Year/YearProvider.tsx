@@ -20,8 +20,10 @@ export const YearProvider = ({ initialValue, children }: Props) => {
   const [year, setYear] = useState<number | null>(initialValue || new Date().getFullYear())
   const [availableYears, setAvailableYears] = useState<(number | null)[]>(year == null ? [null] : [null, year])
 
+  const refreshYears = () => selectAvailableYears().then(years => setAvailableYears([null, ...years]))
+
   useEffect(() => {
-    selectAvailableYears().then(years => setAvailableYears([null, ...years]))
+    refreshYears()
   }, [])
 
   return (
@@ -29,6 +31,7 @@ export const YearProvider = ({ initialValue, children }: Props) => {
       year,
       setYear,
       availableYears,
+      refreshYears,
     }}>
       <div className="flex flex-row items-start gap-2 pl-2 mt-2">
         <h3 className='px-3 text-xs m-1 flex flex-row items-center gap-2'>
