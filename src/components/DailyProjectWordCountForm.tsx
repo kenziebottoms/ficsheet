@@ -4,7 +4,10 @@ import { addDays, isBefore, parse } from 'date-fns';
 import { Add, DeleteForever, EditCalendar } from '@mui/icons-material';
 
 import { deleteEntry, insertEntries, putEntry } from '@/api';
+
 import { DataCacheContext } from '@/contexts/DataCache/DataCacheContext';
+import { YearContext } from '@/contexts/Year/YearContext';
+
 import { countWords } from '@/utils';
 import type { WordCountEntry } from '@/types';
 
@@ -25,14 +28,15 @@ export type DailyProjectWordCountFormValues = {
 type Props = {
   className?: string;
   values?: Partial<WordCountEntry> | null;
-  onCompleted?: () => void;
+  onCompleted?: (response: WordCountEntry[] | null) => void;
 }
 const DailyProjectWordCountForm = ({
   className = '',
   values,
-  onCompleted = () => { },
+  onCompleted: _onCompleted = () => { },
 }: Props) => {
-  const { fandoms, dailyEntries } = use(DataCacheContext)
+  const { year, refreshYears } = use(YearContext)
+  const { fandoms, dailyEntries, refreshData } = use(DataCacheContext)
 
   const [guessedFicIndex, setGuessedFicIndex] = useState<number | null>(null)
   const [guessedFandom, setGuessedFandom] = useState<string | null>(null)
@@ -40,6 +44,17 @@ const DailyProjectWordCountForm = ({
   const [showTextarea, setShowTextarea] = useState<boolean>(!values)
 
   const recentEntries = dailyEntries.slice().reverse();
+
+  const onCompleted = (response: WordCountEntry[]) => {
+    if (response.length > 0) {
+      const yearOfLastEntry = parseInt(response[0]?.date.slice(0, 4), 10)
+      if (yearOfLastEntry !== year) {
+        refreshData(yearOfLastEntry)
+        refreshYears()
+      }
+    }
+    _onCompleted(response)
+  }
 
   const handleSubmit: SubmitEventHandler<HTMLFormElement> = e => {
     // Prevent the browser from reloading the page
@@ -60,12 +75,12 @@ const DailyProjectWordCountForm = ({
 
     if (entry.count !== 0) {
       if (values?.id != null) {
-        putEntry(entry).then(onCompleted)
+        putEntry(entry).then(response => onCompleted([response]))
       } else {
         insertEntries([entry]).then(onCompleted)
       }
     } else if (entry.id != null) {
-      deleteEntry(entry.id).then(onCompleted)
+      deleteEntry(entry.id).then(() => onCompleted([]))
     }
   }
 
@@ -170,7 +185,7 @@ const DailyProjectWordCountForm = ({
       <Button
         style="cautionary"
         icon={DeleteForever}
-        onClick={() => deleteEntry(values.id as number).then(onCompleted)}
+        onClick={() => deleteEntry(values.id as number).then(() => onCompleted([]))}
         className='mt-4'
       >
         Delete word count
