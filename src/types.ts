@@ -70,6 +70,7 @@ export type WordCountEntry = {
   date: string;
   fic: string;
   fandom: string;
+  ship: string | null;
   count: number;
 };
 
