@@ -67,6 +67,7 @@ entriesRouter.post("/seed", (_req, res) => {
 
 /** Return a valid positive integer or false given a string? id. */
 export const validateId = (id?: string) => {
+  console.log(`validating entry ID ${id}`);
   if (!id) {
     return false;
   }
@@ -79,7 +80,6 @@ export const validateId = (id?: string) => {
  */
 entriesRouter.use("/:id", (req: Request<{ id?: string }>, res, next) => {
   const { id } = req.params;
-  console.log(`validating entry ID ${id}`);
   if (!validateId(id)) {
     return res.status(400).send("please supply a valid id");
   }
