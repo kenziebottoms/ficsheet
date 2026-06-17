@@ -1,5 +1,7 @@
 import express from "express";
 
+import { type FandomTotal, type RunningTotal } from "../../src/types.ts";
+
 import { select } from "../db/queries.ts";
 
 import entriesRouter from "./entries.ts";
@@ -16,7 +18,7 @@ apiRouter.use("/entries", entriesRouter);
 
 apiRouter.get("/fandomTotals", (req, res) => {
   console.log("fetching fandom totals (all time)");
-  const data = select(
+  const data = select<FandomTotal>(
     `fandom, SUM(count) as count from word_count GROUP BY fandom`,
   );
   return res.json(data).status(200);
@@ -27,7 +29,7 @@ apiRouter.get("/fandomTotals", (req, res) => {
  */
 apiRouter.get("/runningTotal", (_req, res) => {
   console.log(`fetching running total (all time)`);
-  const data = select(
+  const data = select<RunningTotal>(
     `date, strftime('%m-%d', date) as monthDay, SUM(count) OVER (ORDER BY date) AS running_total FROM word_count`,
   );
   return res.json(data).status(200);

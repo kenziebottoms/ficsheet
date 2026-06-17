@@ -1,5 +1,7 @@
 import express, { type Request } from "express";
 
+import { type RunningTotal, type Timeframe } from "../../src/types.ts";
+
 import { readCSV } from "../csvHandler.ts";
 import {
   deleteEntriesByYear,
@@ -7,7 +9,6 @@ import {
   select,
   validateYear,
 } from "../db/queries.ts";
-import { type Timeframe } from "../../src/types.ts";
 import { type YearRequest } from "../types.ts";
 
 const yearRouter = express.Router({
@@ -75,7 +76,7 @@ yearRouter.get("/fandoms", (req: YearRequest, res) => {
  */
 yearRouter.get("/fandomTimelines", (req: YearRequest, res) => {
   console.log(`fetching fandom timelines (${req.params.year}`);
-  const data = select<Timeframe[]>(
+  const data = select<Timeframe>(
     `DISTINCT min(date) as firstWritten, max(date) as lastWritten, fandom as label FROM word_count ${getYearlyWhereClause(req.params.year)} GROUP BY fandom ORDER BY firstWritten ASC`,
   );
   return res.json(data).status(200);
@@ -86,7 +87,7 @@ yearRouter.get("/fandomTimelines", (req: YearRequest, res) => {
  */
 yearRouter.get("/ficTimelines", (req: YearRequest, res) => {
   console.log(`fetching fic timelines (${req.params.year}`);
-  const data = select<Timeframe[]>(
+  const data = select<Timeframe>(
     `DISTINCT min(date) as firstWritten, max(date) as lastWritten, fic as label FROM word_count ${getYearlyWhereClause(req.params.year)} GROUP BY fic ORDER BY firstWritten ASC`,
   );
   return res.json(data).status(200);
@@ -114,7 +115,7 @@ yearRouter.post("/ingest", (req: YearRequest, res) => {
  */
 yearRouter.get("/runningTotal", (req: YearRequest, res) => {
   console.log(`fetching running totals (${req.params.year})`);
-  const data = select(
+  const data = select<RunningTotal>(
     `date, SUM(count) OVER (ORDER BY date) AS running_total FROM word_count ${getYearlyWhereClause(req.params.year)}`,
   );
   return res.json(data).status(200);
