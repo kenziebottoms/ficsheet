@@ -1,12 +1,16 @@
 import { use, useEffect, useState } from 'react'
+import { ContentPaste } from '@mui/icons-material'
 
-import { selectFandomTotals, selectRunningTotal } from '@/api'
+import { selectAllWordCounts, selectFandomTotals, selectRunningTotal } from '@/api'
 
 import Badge from '@/components/Badge'
+import Button from '@/components/Button'
 
 import { YearContext } from '@/contexts/Year/YearContext'
 
 import type { FandomTotal, RunningTotal } from '@/types'
+
+import { copyPrettyJson } from '@/utils'
 
 import AllTimeFandomPieChart from './AllTimeFandomPieChart'
 import FandomLeaderboard from './FandomLeaderboard'
@@ -43,6 +47,14 @@ const AllTime = () => {
       >
         {fandomTotals.length}
       </Badge>
+      <Button
+        style="transparent"
+        icon={ContentPaste}
+        onClick={() => selectAllWordCounts().then(copyPrettyJson)}
+        className='self-start'
+      >
+        Export
+      </Button>
     </div>
     <div className='flex flex-row gap-2'>
       <FandomLeaderboard
@@ -53,7 +65,7 @@ const AllTime = () => {
     <YearlyRunningWordCountLineChart runningTotals={runningTotals} />
     <AllTimeFandomPieChart fandomTotals={fandomTotals} />
     <LifetimeWordCountLineChart lifetimeRunningTotal={lifetimeRunningTotal} />
-  </div>
+  </div >
 }
 
 export default AllTime

@@ -60,8 +60,8 @@ export const insertEntries = (entries: WordCountEntry[]) =>
 export const putEntry = (entry: WordCountEntry) =>
   put<WordCountEntry, WordCountEntry>(`entries/${entry.id}`, entry);
 export const deleteEntry = (id: number) => restDelete(`entries/${id}`);
-export const selectAllWordCounts = (year: number) =>
-  get<WordCountEntry[]>(`year/${year}/entries`);
+export const selectAllWordCounts = (year?: number) =>
+  get<WordCountEntry[]>(`${year ? `year/${year}/` : ""}entries`);
 export const selectDailyTotals = (year: number) =>
   get<DailyTotal[]>(`year/${year}/dailyTotals`).then((nonEmptyDailyTotals) =>
     getDatesBetween(new Date(year, 0, 1), new Date(year, 11, 31)).map(

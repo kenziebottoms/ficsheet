@@ -31,11 +31,11 @@ entriesRouter.post("/", (req, res) => {
 });
 
 /**
- * GET /api/entries/export
+ * GET /api/entries
  */
-entriesRouter.get("/export", (_req, res) => {
-  console.log("exporting entries");
-  const data = select("* from word_count");
+entriesRouter.get("/", (_req, res) => {
+  console.log("fetching word count entries");
+  const data = select("* from word_count ORDER BY date ASC");
   return res.json(data).status(200);
 });
 
