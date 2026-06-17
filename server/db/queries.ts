@@ -43,7 +43,7 @@ export function select<TRow>(query: string) {
 /** Return a parsed valid positive integer or false given a string? number. */
 export const validateYear = (year?: string) => {
   console.log(`validating year ${year}`);
-  if (year == null) return false;
+  if (!year) return false;
   const parsedYear = parseInt(year, 10);
   // falsy check covers null, undefined, NaN, 0, negative values
   if (!parsedYear || parsedYear > 2100 || parsedYear < 1900) {
