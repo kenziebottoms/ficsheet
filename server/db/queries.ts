@@ -40,9 +40,22 @@ export function select<TRow>(query: string) {
   return q.all() as TRow[];
 }
 
+/** Return a parsed valid positive integer or false given a string? number. */
+export const validateYear = (year?: string) => {
+  console.log(`validating year ${year}`);
+  if (year == null) return false;
+  const parsedYear = parseInt(year, 10);
+  // falsy check covers null, undefined, NaN, 0, negative values
+  if (!parsedYear || parsedYear > 2100 || parsedYear < 1900) {
+    return false;
+  }
+  return parsedYear;
+};
+
 export const getYearlyWhereClause = (year: string) => {
-  const validatedYear = parseInt(year, 10);
-  if (isNaN(validatedYear)) {
+  const validatedYear = validateYear(year);
+  if (!validatedYear) {
+    console.warn(`!! omitting where clause for invalid year ${year} !!`);
     return "";
   } else {
     return ` WHERE date BETWEEN '${validatedYear}-01-01' AND '${validatedYear}-12-31' `;

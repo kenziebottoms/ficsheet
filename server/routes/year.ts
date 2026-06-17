@@ -5,6 +5,7 @@ import {
   deleteEntriesByYear,
   getYearlyWhereClause,
   select,
+  validateYear,
 } from "../db/queries.ts";
 import { type Timeframe } from "../../src/types.ts";
 import { type YearRequest } from "../types.ts";
@@ -21,17 +22,7 @@ const yearRouter = express.Router({
  */
 yearRouter.use("/", (req: Request<{ year?: string }>, res, next) => {
   const { year } = req.params;
-  console.log(`validating year ${year}`);
-  if (year == null || Array.isArray(year)) {
-    return res.status(400).send("please supply a valid year");
-  }
-  const validatedYear = parseInt(year, 10);
-  if (
-    !validatedYear ||
-    isNaN(validatedYear) ||
-    validatedYear > 2100 ||
-    validatedYear < 2000
-  ) {
+  if (!validateYear(year)) {
     return res.status(400).send("please supply a valid year");
   }
   next();

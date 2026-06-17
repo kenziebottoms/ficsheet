@@ -65,17 +65,22 @@ entriesRouter.post("/seed", (_req, res) => {
   return res.status(201);
 });
 
+/** Return a valid positive integer or false given a string? id. */
+export const validateId = (id?: string) => {
+  if (!id) {
+    return false;
+  }
+  const parsedId = parseInt(id, 10);
+  return parsedId ? parsedId : false;
+};
+
 /**
  * Validate `id` param
  */
 entriesRouter.use("/:id", (req: Request<{ id?: string }>, res, next) => {
   const { id } = req.params;
   console.log(`validating entry ID ${id}`);
-  if (id == null || id == "") {
-    return res.status(400).send("please supply a valid id");
-  }
-  const validatedId = parseInt(id, 10);
-  if (isNaN(validatedId) || validatedId < 0) {
+  if (!validateId(id)) {
     return res.status(400).send("please supply a valid id");
   }
   next();
