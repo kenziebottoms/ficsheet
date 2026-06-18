@@ -1,5 +1,5 @@
 import { use, useEffect, useState } from 'react';
-import { AutoDelete, ContentPaste, Delete, Equalizer, TableChart, type SvgIconComponent } from '@mui/icons-material';
+import { AutoDelete, AutoStories, ContentPaste, Delete, Equalizer, TableChart, type SvgIconComponent } from '@mui/icons-material';
 
 import { deleteEntriesByYear, selectAllWordCounts } from '@/api';
 
@@ -21,10 +21,12 @@ import MonthlyCharts from './MonthlyCharts';
 import ProjectedAnnualWordCount from './ProjectedAnnualWordCount';
 import RunningTotalLine from './RunningTotalLine';
 import FicTimelineBarChart from './FicTimelineBarChart';
+import FicManager from './FicManager';
 
 const TabIcons: Record<MonthlyChartTabName, SvgIconComponent> = {
   charts: Equalizer,
   history: TableChart,
+  fics: AutoStories,
 }
 
 const YearlyCharts = () => {
@@ -75,7 +77,6 @@ const YearlyCharts = () => {
             icon={TabIcons[tab]}
             onClick={() => setActiveTab(tab)}
             className='capitalize'
-            small
           >
             {tab}
           </Button>
@@ -108,6 +109,7 @@ const YearlyCharts = () => {
       </div>
       {activeTab === 'charts' && <MonthlyCharts />}
       {activeTab === 'history' && <History showEmpty={showEmpty} />}
+      {activeTab === 'fics' && <FicManager />}
     </MonthProvider>
   </div>
 }
