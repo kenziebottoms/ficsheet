@@ -11,9 +11,9 @@ const DailyWordCountStats = () => {
   const { filteredDailyTotals } = use(MonthContext)
 
   return (
-    <div className='bg-zinc-900 p-3 rounded-md space-y-3 w-auto flex flex-col items-start'>
+    <div className='bg-zinc-900 p-3 rounded-md w-auto flex flex-row gap-3'>
       <DailyWordCountScatterPlot />
-      <div className='flex flex-row flex-wrap gap-3'>
+      <div className='flex flex-col gap-3'>
         <Badge title="Maximum" style="primary">
           <span className='font-semibold text-white'>{(_.maxBy(filteredDailyTotals, 'daily_total')?.daily_total || 0).toLocaleString("en-US")}</span> words
         </Badge>
