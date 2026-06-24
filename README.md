@@ -24,6 +24,7 @@ For greater error visibility, you can also run the front and back ends separatel
 
 ## Toolbox
 - [ESLint](https://eslint.org/)
+- [Material UI](https://mui.com/)
 - [Tailwind CSS](https://tailwindcss.com/)
 - [Vite](https://vite.dev/)
 
