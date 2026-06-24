@@ -1,6 +1,31 @@
 # Ficsheet
 
-An app to track and visualize daily, monthly, and yearly word count writing goals.
+A TypeScript/React app to track and visualize periodic writing goals and trends.
+
+## Local development
+
+Running this app locally saves your data in a `.sqlite` file on your computer. No data is sent, sold, or tracked (...by me). You can export this data by going to the History tab and clicking "Export", which will copy your data in a JSON format that may be saved and imported into the app.
+
+```bash
+git clone git@github.com:kenziebottoms/ficsheet.git
+cd ficsheet
+nvm use # if using nvm
+npm i
+npm start
+```
+
+For greater error visibility, you can also run the front and back ends separately.
+
+|Command|Description|
+|-------|-----------|
+|`npm run dev`|Serve React SPA with `vite` command|
+|`npm run serve`|Serve Node Express API with `nodemon` command|
+|`npm run start`|Serve both the front- and back-end with `concurrently`|
+
+## Toolbox
+- [ESLint](https://eslint.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Vite](https://vite.dev/)
 
 ---
 
