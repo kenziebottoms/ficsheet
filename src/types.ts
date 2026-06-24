@@ -27,6 +27,13 @@ export type FandomTotal = {
   count: number;
 };
 
+export type Fic = {
+  id?: number;
+  name: string;
+  fandom: string;
+  ship: string | null;
+};
+
 export type Timeframe = {
   label: string;
   firstWritten: string;
@@ -71,6 +78,7 @@ export type WordCountEntry = {
   fic: string;
   fandom: string;
   ship: string | null;
+  ficId?: number | null;
   count: number;
 };
 

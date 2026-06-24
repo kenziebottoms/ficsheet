@@ -10,6 +10,13 @@ export const createTables = () => {
       count INTEGER NOT NULL,
       fic TEXT NOT NULL,
       fandom TEXT NOT NULL,
+      ship TEXT,
+      ficId INTEGER
+    ) STRICT;
+    CREATE TABLE IF NOT EXISTS fic (
+      id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+      name TEXT NOT NULL,
+      fandom TEXT NOT NULL,
       ship TEXT
     ) STRICT;
   `);
@@ -17,7 +24,10 @@ export const createTables = () => {
 
 export const dropTables = () => {
   console.log("dropping tables");
-  db.exec(`DROP TABLE IF EXISTS word_count;`);
+  db.exec(`
+    DROP TABLE IF EXISTS word_count;
+    DROP TABLE IF EXISTS fic;
+  `);
 };
 
 export const seedTables = () => {

@@ -15,11 +15,11 @@ export const updateEntry = (entry: WordCountEntry & { id: number }) => {
 };
 
 export const insertEntry = (entry: WordCountEntry) => {
-  const { date, count, fic, fandom, ship = null } = entry;
+  const { date, count, fic, fandom, ship = null, ficId = null } = entry;
   const insert = db.prepare(
-    `INSERT INTO word_count (date, count, fic, fandom, ship) VALUES (?, ?, ?, ?, ?)`,
+    `INSERT INTO word_count (date, count, fic, fandom, ship, ficId) VALUES (?, ?, ?, ?, ?, ?)`,
   );
-  insert.run(date, count, fic, fandom, ship);
+  insert.run(date, count, fic, fandom, ship, ficId);
 };
 
 export const deleteEntry = (id: string) => {
