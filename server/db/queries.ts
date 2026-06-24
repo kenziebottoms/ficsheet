@@ -5,7 +5,7 @@ import type { WordCountEntry } from "../../src/types.ts";
 export const db = new DatabaseSync("ficsheet.sqlite");
 
 export const updateEntry = (entry: WordCountEntry & { id: number }) => {
-  const { id, date, count, fic, fandom, ship } = entry;
+  const { id, date, count, fic, fandom, ship = null } = entry;
   const insert = db.prepare(
     `UPDATE word_count \
     SET date = ?, count = ?, fic = ?, fandom = ?, ship = ?
@@ -15,7 +15,7 @@ export const updateEntry = (entry: WordCountEntry & { id: number }) => {
 };
 
 export const insertEntry = (entry: WordCountEntry) => {
-  const { date, count, fic, fandom, ship } = entry;
+  const { date, count, fic, fandom, ship = null } = entry;
   const insert = db.prepare(
     `INSERT INTO word_count (date, count, fic, fandom, ship) VALUES (?, ?, ?, ?, ?)`,
   );
