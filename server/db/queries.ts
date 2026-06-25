@@ -14,7 +14,9 @@ export const getEntry = (id: string | number): WordCountEntry | null => {
   return null;
 };
 
-export const updateEntry = (entry: WordCountEntry & { id: number }) => {
+export const updateEntry = (
+  entry: WordCountEntry & { id: number },
+): WordCountEntry & { id: number } => {
   const { id, date, count, fic, fandom, ficId = null } = entry;
   const insert = db.prepare(
     `UPDATE word_count \
@@ -22,14 +24,21 @@ export const updateEntry = (entry: WordCountEntry & { id: number }) => {
     WHERE id = ?;`,
   );
   insert.run(date, count, fic, fandom, ficId, id);
+  return entry;
 };
 
-export const insertEntry = (entry: WordCountEntry) => {
+export const insertEntry = (
+  entry: WordCountEntry,
+): WordCountEntry & { id: number } => {
   const { date, count, fic, fandom, ficId = null } = entry;
   const insert = db.prepare(
     `INSERT INTO word_count (date, count, fic, fandom, fic_id) VALUES (?, ?, ?, ?, ?)`,
   );
-  insert.run(date, count, fic, fandom, ficId);
+  const result = insert.run(date, count, fic, fandom, ficId);
+  return {
+    id: result.lastInsertRowid as number,
+    ...entry,
+  };
 };
 
 export const insertFic = (fic: Fic): Fic & { id: number } => {
@@ -44,7 +53,7 @@ export const insertFic = (fic: Fic): Fic & { id: number } => {
   };
 };
 
-export const updateFic = (fic: Fic & { id: number }) => {
+export const updateFic = (fic: Fic & { id: number }): Fic & { id: number } => {
   const { id, name, fandom, ship = null } = fic;
   const insert = db.prepare(
     `UPDATE fic \
@@ -52,6 +61,7 @@ export const updateFic = (fic: Fic & { id: number }) => {
     WHERE id = ?;`,
   );
   insert.run(name, fandom, ship, id);
+  return fic;
 };
 
 export const deleteEntry = (id: string) => {
