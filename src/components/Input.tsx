@@ -5,6 +5,7 @@ type Props<T extends string | number> = {
   type: 'text' | 'number';
   label: string;
   defaultValue?: T;
+  required?: boolean;
   placeholder?: string;
   autoFocus?: boolean;
   onBlur?: FocusEventHandler<HTMLInputElement>;
@@ -15,6 +16,7 @@ const Input = <T extends string | number>({
   type,
   label,
   defaultValue,
+  required,
   placeholder,
   autoFocus,
   onBlur,
@@ -36,6 +38,7 @@ const Input = <T extends string | number>({
         type={type}
         placeholder={placeholder}
         value={value ?? ''}
+        required={required}
         onChange={e => setValue(e.target.value as T)}
         className='w-full rounded-md p-2 border-2 border-primary/50 focus-within:border-primary outline-0'
         autoFocus={autoFocus}
