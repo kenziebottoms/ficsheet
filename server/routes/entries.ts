@@ -6,6 +6,7 @@ import { readJson } from "../csvHandler.ts";
 import {
   deleteEntry,
   getEntry,
+  getFicByTitle,
   insertEntry,
   insertFic,
   select,
@@ -140,11 +141,9 @@ entriesRouter.post("/:id/processFandom", (req: RequestWithId, res) => {
   const { fic, fandom, ficId } = entry;
   if (ficId == null) {
     let ficId: number;
-    const ficLookup = select<Fic & { id: number }>(
-      `* FROM fic WHERE UPPER(name) LIKE '${fic.toUpperCase()}' ORDER BY name;`,
-    );
-    if (ficLookup && ficLookup.length > 0) {
-      ficId = ficLookup[0].id;
+    const ficLookup = getFicByTitle(fic);
+    if (ficLookup?.id != null) {
+      ficId = ficLookup.id;
     } else {
       ficId = insertFic({
         name: fic,

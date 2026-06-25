@@ -97,3 +97,14 @@ export const getYearlyWhereClause = (year: string) => {
     return ` WHERE date BETWEEN '${validatedYear}-01-01' AND '${validatedYear}-12-31' `;
   }
 };
+
+export const getFicByTitle = (ficTitle: string): Fic | null => {
+  if (!ficTitle) return null;
+  const ficLookup = select<Fic & { id: number }>(
+    `* FROM fic WHERE UPPER(name) = '${ficTitle.toUpperCase()}' LIMIT 1;`,
+  );
+  if (!ficLookup || ficLookup.length === 0) {
+    return null;
+  }
+  return ficLookup[0] ?? null;
+};
