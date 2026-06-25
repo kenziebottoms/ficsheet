@@ -6,7 +6,7 @@ export const db = new DatabaseSync("ficsheet.sqlite");
 
 export const getEntry = (id: string | number): WordCountEntry | null => {
   const entry = select<WordCountEntry>(
-    `id, date, fic, fandom, fic_id as ficId, count from word_count where id = ${id}`,
+    `word_count.id, date, fic.name as fic, fic.fandom, fic_id as ficId, fic.ship, count from word_count JOIN fic ON fic.id = fic_id where word_count.id = ${id}`,
   );
   if (entry) {
     return entry[0];

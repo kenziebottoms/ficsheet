@@ -1,7 +1,6 @@
 import { use, useState, type SubmitEventHandler } from 'react';
-import _ from 'lodash'
 import { addDays, isBefore, parse } from 'date-fns';
-import { Add, DeleteForever, EditCalendar } from '@mui/icons-material';
+import { DeleteForever, EditCalendar } from '@mui/icons-material';
 
 import { deleteEntry, insertEntries, putEntry } from '@/api';
 
@@ -37,14 +36,9 @@ const DailyProjectWordCountForm = ({
   onCompleted: _onCompleted = () => { },
 }: Props) => {
   const { year, refreshYears } = use(YearContext)
-  const { fandoms, dailyEntries, refreshData } = use(DataCacheContext)
+  const { fics, refreshData } = use(DataCacheContext)
 
-  const [guessedFicIndex, setGuessedFicIndex] = useState<number | null>(null)
-  const [guessedFandom, setGuessedFandom] = useState<string | null>(null)
-  const [typeNewFandom, setTypeNewFandom] = useState<boolean>(false)
   const [showTextarea, setShowTextarea] = useState<boolean>(!values)
-
-  const recentEntries = dailyEntries.slice().reverse();
 
   const onCompleted = (response: WordCountEntry[]) => {
     if (response.length > 0) {
@@ -65,8 +59,6 @@ const DailyProjectWordCountForm = ({
     const entry: WordCountEntry = {
       id: values?.id,
       date: formData.date,
-      fandom: formData.fandom,
-      fic: formData.fic,
       ficId: formData.ficId === '' ? null : formData.ficId,
       count: parseInt(formData.count || '0', 10) || 0
     }
@@ -86,24 +78,8 @@ const DailyProjectWordCountForm = ({
     }
   }
 
-  const guessFandom = (fic: string) => {
-    if (fic === '') {
-      setGuessedFandom(null)
-    } else if (['journal', 'dream'].some(match => fic.toLowerCase().includes(match))) {
-      setGuessedFandom('Non-fiction')
-    } else {
-      const lastEntryForFic = dailyEntries.find((entry => entry.fic === fic))
-      if (lastEntryForFic != null) {
-        setGuessedFandom(lastEntryForFic.fandom)
-      }
-    }
-  }
-
   // default to today (unless it's after midnight but before 4AM, then default to "yesterday")
   const defaultDate = isBefore(new Date(), new Date().setHours(4)) ? addDays(new Date(), -1) : new Date()
-
-  const fandomEntries = recentEntries.filter((entry => entry.fandom === values?.fandom))
-  const recentFandomFics = _.uniq(_.map(fandomEntries, 'fic'))
 
   return <form
     onSubmit={handleSubmit}
@@ -115,46 +91,12 @@ const DailyProjectWordCountForm = ({
       label="Date"
       defaultValue={values?.date ? parse(values?.date, 'yyyy-MM-dd', new Date()) : addDays(defaultDate, -1)}
     />
-    <Input<string>
+    <Dropdown
       label="Fic"
       name="fic"
-      type="text"
-      defaultValue={guessedFicIndex != null ? recentFandomFics[guessedFicIndex] : values?.fic || ''}
-      autoFocus
-      onBlur={e => guessFandom(e.target.value)}
-      onKeyDown={e => {
-        if (fandomEntries.length > 0) {
-          if (e.key === 'ArrowUp') {
-            setGuessedFicIndex(guessedFicIndex => guessedFicIndex == null ? 0 : guessedFicIndex + 1)
-          } else if (e.key === 'ArrowDown') {
-            setGuessedFicIndex(oldFicIndex => (oldFicIndex != null && oldFicIndex > 0) ? (oldFicIndex - 1) : null)
-          }
-        }
-      }}
+      defaultValue={values?.ficId || ''}
+      options={fics.map(fic => ({ value: fic.id, label: fic.name }))}
     />
-
-    <div className='flex flex-row gap-2'>
-      {typeNewFandom ? <Input<string>
-        label="Fandom"
-        name="fandom"
-        type="text"
-        defaultValue={guessedFandom || values?.fandom || ''}
-      /> : <>
-        <Dropdown
-          label="Fandom"
-          placeholder='Select a fandom'
-          name="fandom"
-          options={fandoms}
-          defaultValue={guessedFandom || values?.fandom || ''}
-        />
-        <Button
-          style="transparent"
-          icon={Add}
-          className='self-end'
-          onClick={() => setTypeNewFandom(true)}
-        />
-      </>}
-    </div>
 
     <Toggle
       className='flex flex-row gap-2'

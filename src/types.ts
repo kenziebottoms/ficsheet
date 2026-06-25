@@ -22,6 +22,11 @@ export const DaysOfWeek = [
 ] as const;
 export type DayOfWeek = (typeof DaysOfWeek)[number];
 
+export type DropdownOption<T> = {
+  value: T;
+  label: string;
+};
+
 export type FandomTotal = {
   fandom: string;
   count: number;
@@ -75,8 +80,8 @@ export type TimelineData = {
 export type WordCountEntry = {
   id?: number;
   date: string;
-  fic: string;
-  fandom: string;
+  fic?: string;
+  fandom?: string;
   ficId?: number | null;
   count: number;
 };
@@ -97,7 +102,7 @@ export type DataCache = {
   dailyTotals: DailyTotal[];
   fandoms: string[];
   fandomTimelines: Timeframe[];
-  fics: Fic[];
+  fics: (Fic & { id: number })[];
   ficTimelines: Timeframe[];
   runningTotal: RunningTotal[];
   refreshData: (year: number) => void;
