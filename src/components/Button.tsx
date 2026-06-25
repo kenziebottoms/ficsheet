@@ -15,6 +15,7 @@ type Props = PropsWithChildren & {
   className?: string;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   icon?: SvgIconComponent;
+  disabled?: boolean;
 }
 
 const Button = ({
@@ -24,6 +25,7 @@ const Button = ({
   small = false,
   className = '',
   icon: Icon,
+  disabled,
   children,
 }: Props) => {
   return <button
@@ -36,6 +38,7 @@ const Button = ({
       ButtonBackgroundClassNames[style],
       ButtonTextClassNames[style],
     ].join(" ")}
+    disabled={disabled}
   >
     {children}
     {Icon && <Icon color={IconColors[style]} />}
