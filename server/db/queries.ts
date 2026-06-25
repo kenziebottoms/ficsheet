@@ -30,6 +30,16 @@ export const insertFic = (fic: Fic) => {
   insert.run(name, fandom, ship);
 };
 
+export const updateFic = (fic: Fic & { id: number }) => {
+  const { id, name, fandom, ship = null } = fic;
+  const insert = db.prepare(
+    `UPDATE fic \
+    SET name = ?, fandom = ?, ship = ?
+    WHERE id = ?;`,
+  );
+  insert.run(name, fandom, ship, id);
+};
+
 export const deleteEntry = (id: string) => {
   const deleteQuery = db.prepare(`DELETE FROM word_count WHERE id = ?`);
   deleteQuery.run(id);
