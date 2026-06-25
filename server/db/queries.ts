@@ -17,7 +17,7 @@ export const getEntry = (id: string | number): WordCountEntry | null => {
 export const updateEntry = (
   entry: WordCountEntry & { id: number },
 ): WordCountEntry & { id: number } => {
-  const { id, date, count, fic, fandom, ficId = null } = entry;
+  const { id, date, count, fic = "", fandom = "", ficId = null } = entry;
   const insert = db.prepare(
     `UPDATE word_count \
     SET date = ?, count = ?, fic = ?, fandom = ?, fic_id = ? \
@@ -30,7 +30,7 @@ export const updateEntry = (
 export const insertEntry = (
   entry: WordCountEntry,
 ): WordCountEntry & { id: number } => {
-  const { date, count, fic, fandom, ficId = null } = entry;
+  const { date, count, fic = "", fandom = "", ficId = null } = entry;
   const insert = db.prepare(
     `INSERT INTO word_count (date, count, fic, fandom, fic_id) VALUES (?, ?, ?, ?, ?)`,
   );
