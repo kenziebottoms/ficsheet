@@ -140,22 +140,22 @@ entriesRouter.post("/:id/processFandom", (req: RequestWithId, res) => {
 
   const { fic, fandom, ficId } = entry;
   if (ficId == null) {
-    let ficId: number;
+    let newFicId: number;
     const ficLookup = getFicByTitle(fic);
     if (ficLookup?.id != null) {
-      ficId = ficLookup.id;
+      newFicId = ficLookup.id;
     } else {
-      ficId = insertFic({
+      newFicId = insertFic({
         name: fic,
         fandom,
         ship: null,
       })?.id;
     }
-    if (ficId != null) {
+    if (newFicId != null) {
       const newEntry = {
         id,
         ...entry,
-        ficId,
+        ficId: newFicId,
       };
       updateEntry(newEntry);
       return res.json(newEntry).status(204);
