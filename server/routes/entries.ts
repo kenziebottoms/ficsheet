@@ -161,8 +161,12 @@ entriesRouter.post("/:id/processFandom", (req: RequestWithId, res) => {
       updateEntry(newEntry);
       return res.json(newEntry).status(204);
     } else {
-      return res.status(500);
+      return res.json({ status: 500, message: "Failed to create fandom." });
     }
+  } else {
+    return res
+      .json({ status: 304, message: "This entry already has a fic_id." })
+      .status(304);
   }
 });
 
