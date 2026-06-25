@@ -1,12 +1,13 @@
 import express, { type Request } from "express";
 
-import { type WordCountEntry } from "../../src/types.ts";
+import { type Fic, type WordCountEntry } from "../../src/types.ts";
 
 import { readJson } from "../csvHandler.ts";
 import {
   deleteEntry,
   getEntry,
   insertEntry,
+  insertFic,
   select,
   updateEntry,
 } from "../db/queries.ts";
@@ -36,7 +37,9 @@ entriesRouter.post("/", (req, res) => {
  */
 entriesRouter.get("/", (_req, res) => {
   console.log("fetching word count entries");
-  const data = select<WordCountEntry>("* from word_count ORDER BY date ASC");
+  const data = select<WordCountEntry>(
+    "id, date, fic, fandom, fic_id as ficId, count ORDER BY date ASC",
+  );
   return res.json(data).status(200);
 });
 
@@ -120,6 +123,47 @@ entriesRouter.put("/:id", (req: RequestWithId, res) => {
   }
   updateEntry(entry as WordCountEntry & { id: number });
   return res.json(entry).status(204);
+});
+
+/**
+ * POST /api/entries/:id/processFandom
+ */
+entriesRouter.post("/:id/processFandom", (req: RequestWithId, res) => {
+  const id = validateId(req.params.id);
+  if (!id) return res.status(400);
+
+  const entry = getEntry(id);
+  console.log("processing fandom for fic #", id);
+
+  if (entry == null) return res.status(404);
+
+  const { fic, fandom, ficId } = entry;
+  if (ficId == null) {
+    let ficId: number;
+    const ficLookup = select<Fic & { id: number }>(
+      `* FROM fic WHERE UPPER(name) LIKE '${fic.toUpperCase()}' ORDER BY name;`,
+    );
+    if (ficLookup && ficLookup.length > 0) {
+      ficId = ficLookup[0].id;
+    } else {
+      ficId = insertFic({
+        name: fic,
+        fandom,
+        ship: null,
+      })?.id;
+    }
+    if (ficId != null) {
+      const newEntry = {
+        id,
+        ...entry,
+        ficId,
+      };
+      updateEntry(newEntry);
+      return res.json(newEntry).status(204);
+    } else {
+      return res.status(500);
+    }
+  }
 });
 
 export default entriesRouter;

@@ -10,7 +10,7 @@ export const createTables = () => {
       count INTEGER NOT NULL,
       fic TEXT NOT NULL,
       fandom TEXT NOT NULL,
-      ficId INTEGER
+      fic_id INTEGER
     ) STRICT;
     CREATE TABLE IF NOT EXISTS fic (
       id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,

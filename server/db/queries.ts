@@ -4,8 +4,10 @@ import type { Fic, WordCountEntry } from "../../src/types.ts";
 
 export const db = new DatabaseSync("ficsheet.sqlite");
 
-export const getEntry = (id: string): WordCountEntry | null => {
-  const entry = select<WordCountEntry>(`* from word_count where id = ${id}`);
+export const getEntry = (id: string | number): WordCountEntry | null => {
+  const entry = select<WordCountEntry>(
+    `id, date, fic, fandom, fic_id as ficId, count from word_count where id = ${id}`,
+  );
   if (entry) {
     return entry[0];
   }
@@ -13,29 +15,33 @@ export const getEntry = (id: string): WordCountEntry | null => {
 };
 
 export const updateEntry = (entry: WordCountEntry & { id: number }) => {
-  const { id, date, count, fic, fandom } = entry;
+  const { id, date, count, fic, fandom, ficId = null } = entry;
   const insert = db.prepare(
     `UPDATE word_count \
-    SET date = ?, count = ?, fic = ?, fandom = ?
+    SET date = ?, count = ?, fic = ?, fandom = ?, fic_id = ? \
     WHERE id = ?;`,
   );
-  insert.run(date, count, fic, fandom, id);
+  insert.run(date, count, fic, fandom, ficId, id);
 };
 
 export const insertEntry = (entry: WordCountEntry) => {
   const { date, count, fic, fandom, ficId = null } = entry;
   const insert = db.prepare(
-    `INSERT INTO word_count (date, count, fic, fandom, ficId) VALUES (?, ?, ?, ?, ?)`,
+    `INSERT INTO word_count (date, count, fic, fandom, fic_id) VALUES (?, ?, ?, ?, ?)`,
   );
   insert.run(date, count, fic, fandom, ficId);
 };
 
-export const insertFic = (fic: Fic) => {
+export const insertFic = (fic: Fic): Fic & { id: number } => {
   const { name, fandom, ship = null } = fic;
   const insert = db.prepare(
     `INSERT INTO fic (name, fandom, ship) VALUES (?, ?, ?)`,
   );
-  insert.run(name, fandom, ship);
+  const result = insert.run(name, fandom, ship);
+  return {
+    id: result.lastInsertRowid as number,
+    ...fic,
+  };
 };
 
 export const updateFic = (fic: Fic & { id: number }) => {
