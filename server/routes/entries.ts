@@ -39,7 +39,7 @@ entriesRouter.post("/", (req, res) => {
 entriesRouter.get("/", (_req, res) => {
   console.log("fetching word count entries");
   const data = select<WordCountEntry>(
-    "id, date, fic, fandom, fic_id as ficId, count from word_count ORDER BY date ASC",
+    "id, date, fic_id, fic.name as fic, fic.ship, fic.fandom, count from word_count INNER JOIN fic ON fic.id = fic_id ORDER BY date ASC",
   );
   return res.json(data).status(200);
 });

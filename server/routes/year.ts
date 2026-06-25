@@ -50,7 +50,7 @@ yearRouter.get("/dailyTotals", (req: YearRequest, res) => {
 yearRouter.get("/entries", (req: YearRequest, res) => {
   console.log(`fetching word counts (${req.params.year})`);
   const data = select(
-    `id, date, fic, fandom, fic_id as ficId, count FROM word_count ${getYearlyWhereClause(req.params.year)} ORDER BY date ASC`,
+    `word_count.id, date, fic_id, fic.name as fic, fic.ship, fic.fandom, count from word_count JOIN fic ON fic.id = fic_id ${getYearlyWhereClause(req.params.year)} ORDER BY date ASC`,
   );
   return res.json(data).status(200);
 });
