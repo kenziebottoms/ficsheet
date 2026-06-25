@@ -2,7 +2,7 @@ import express, { type Request } from "express";
 
 import { type Fic } from "../../src/types.ts";
 
-import { insertFic, updateFic } from "../db/queries.ts";
+import { deleteFic, insertFic, updateFic } from "../db/queries.ts";
 import { type RequestWithId } from "../types.ts";
 
 import { validateId } from "./entries.ts";
@@ -34,6 +34,15 @@ ficsRouter.use("/:id", (req: Request<{ id?: string }>, res, next) => {
     return res.status(400).send("please supply a valid id");
   }
   next();
+});
+
+/**
+ * DELETE /api/fics/:id
+ */
+ficsRouter.delete("/:id", (req: RequestWithId, res) => {
+  console.log("deleting fic: ", req.params.id);
+  deleteFic(req.params.id);
+  return res.json(req.params.id).status(204);
 });
 
 /**

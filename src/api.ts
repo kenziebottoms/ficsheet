@@ -78,7 +78,9 @@ export const selectFandomTimelines = (year: number) =>
   get<Timeframe[]>(`year/${year}/fandomTimelines`);
 
 export const insertFics = (fics: Fic[]) => post<Fic[], Fic[]>(`fics`, fics);
+export const putFic = (fic: Fic) => put<Fic, Fic>(`fics/${fic.id}`, fic);
 export const selectFics = (year: number) => get<Fic[]>(`year/${year}/fics`);
+export const deleteFic = (id: number) => restDelete(`fics/${id}`);
 
 export const selectFicTimelines = (year: number) =>
   get<Timeframe[]>(`year/${year}/ficTimelines`);

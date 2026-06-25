@@ -1,5 +1,5 @@
 import { use, type SubmitEventHandler } from 'react';
-import { DeleteForever, EditCalendar } from '@mui/icons-material';
+import { DeleteForever, Task } from '@mui/icons-material';
 
 import { DataCacheContext } from '@/contexts/DataCache/DataCacheContext';
 import { YearContext } from '@/contexts/Year/YearContext';
@@ -8,7 +8,7 @@ import type { Fic } from '@/types';
 
 import Button from './Button';
 import Input from './Input';
-import { insertFics } from '@/api';
+import { deleteFic, insertFics, putFic } from '@/api';
 
 export type FicFormValues = {
   id?: number;
@@ -29,8 +29,8 @@ const FicForm = ({
   const { year } = use(YearContext)
   const { refreshData } = use(DataCacheContext)
 
-  const onCompleted = (response: Fic) => {
-    if (response && year != null) {
+  const onCompleted = (response: Fic | null) => {
+    if (year != null) {
       refreshData(year)
     }
     _onCompleted(response)
@@ -48,7 +48,11 @@ const FicForm = ({
       ship: formData.ship || null,
     }
 
-    insertFics([fic]).then(() => onCompleted(fic))
+    if (fic?.id == null) {
+      insertFics([fic]).then(() => onCompleted(fic))
+    } else {
+      putFic(fic).then(() => onCompleted(fic))
+    }
   }
 
   return <form
@@ -83,17 +87,16 @@ const FicForm = ({
     <Button
       type="submit"
       style="primary"
-      icon={EditCalendar}
+      icon={Task}
     >
       {values?.id == null ? 'Save new' : 'Update'} fic
     </Button>
-    {!!values && values.id != null && (
+    {values?.id != null && (
       <Button
         style="cautionary"
         icon={DeleteForever}
-        // onClick={() => deleteFic(values.id as number).then(() => onCompleted())}
+        onClick={() => deleteFic(values.id as number).then(() => onCompleted(null))}
         className='mt-4'
-        disabled
       >
         Delete fic
       </Button>
