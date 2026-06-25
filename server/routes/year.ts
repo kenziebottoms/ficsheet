@@ -1,6 +1,10 @@
 import express, { type Request } from "express";
 
-import { type RunningTotal, type Timeframe } from "../../src/types.ts";
+import {
+  type Fic,
+  type RunningTotal,
+  type Timeframe,
+} from "../../src/types.ts";
 
 import { readCSV } from "../csvHandler.ts";
 import {
@@ -79,6 +83,16 @@ yearRouter.get("/fandomTimelines", (req: YearRequest, res) => {
   const data = select<Timeframe>(
     `DISTINCT min(date) as firstWritten, max(date) as lastWritten, fandom as label FROM word_count ${getYearlyWhereClause(req.params.year)} GROUP BY fandom ORDER BY firstWritten ASC`,
   );
+  return res.json(data).status(200);
+});
+
+/**
+ * GET /api/year/:year/fics
+ */
+yearRouter.get("/fics", (req: YearRequest, res) => {
+  console.log(`fetching fics (${req.params.year})`);
+  const data = select<Fic>(`* FROM fic ORDER BY name ASC`);
+  console.log(data);
   return res.json(data).status(200);
 });
 

@@ -98,6 +98,7 @@ export type DataCache = {
   dailyTotals: DailyTotal[];
   fandoms: string[];
   fandomTimelines: Timeframe[];
+  fics: Fic[];
   ficTimelines: Timeframe[];
   runningTotal: RunningTotal[];
   refreshData: (year: number) => void;
