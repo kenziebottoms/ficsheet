@@ -10,7 +10,6 @@ export const createTables = () => {
       count INTEGER NOT NULL,
       fic TEXT NOT NULL,
       fandom TEXT NOT NULL,
-      ship TEXT,
       ficId INTEGER
     ) STRICT;
     CREATE TABLE IF NOT EXISTS fic (

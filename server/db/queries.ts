@@ -5,21 +5,21 @@ import type { Fic, WordCountEntry } from "../../src/types.ts";
 export const db = new DatabaseSync("ficsheet.sqlite");
 
 export const updateEntry = (entry: WordCountEntry & { id: number }) => {
-  const { id, date, count, fic, fandom, ship = null } = entry;
+  const { id, date, count, fic, fandom } = entry;
   const insert = db.prepare(
     `UPDATE word_count \
-    SET date = ?, count = ?, fic = ?, fandom = ?, ship = ?
+    SET date = ?, count = ?, fic = ?, fandom = ?
     WHERE id = ?;`,
   );
-  insert.run(date, count, fic, fandom, ship, id);
+  insert.run(date, count, fic, fandom, id);
 };
 
 export const insertEntry = (entry: WordCountEntry) => {
-  const { date, count, fic, fandom, ship = null, ficId = null } = entry;
+  const { date, count, fic, fandom, ficId = null } = entry;
   const insert = db.prepare(
-    `INSERT INTO word_count (date, count, fic, fandom, ship, ficId) VALUES (?, ?, ?, ?, ?, ?)`,
+    `INSERT INTO word_count (date, count, fic, fandom, ficId) VALUES (?, ?, ?, ?, ?)`,
   );
-  insert.run(date, count, fic, fandom, ship, ficId);
+  insert.run(date, count, fic, fandom, ficId);
 };
 
 export const insertFic = (fic: Fic) => {

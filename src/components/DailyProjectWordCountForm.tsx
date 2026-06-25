@@ -21,6 +21,7 @@ import Toggle from './Toggle';
 export type DailyProjectWordCountFormValues = {
   date: string;
   fic: string;
+  ficId: number | '';
   fandom: string;
   pastedWords?: string;
   count?: string;
@@ -66,6 +67,7 @@ const DailyProjectWordCountForm = ({
       date: formData.date,
       fandom: formData.fandom,
       fic: formData.fic,
+      ficId: formData.ficId === '' ? null : formData.ficId,
       count: parseInt(formData.count || '0', 10) || 0
     }
 
