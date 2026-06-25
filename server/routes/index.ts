@@ -5,6 +5,7 @@ import { type FandomTotal, type RunningTotal } from "../../src/types.ts";
 import { select } from "../db/queries.ts";
 
 import entriesRouter from "./entries.ts";
+import ficsRouter from "./fics.ts";
 import yearRouter from "./year.ts";
 
 const apiRouter = express.Router({
@@ -15,6 +16,8 @@ const apiRouter = express.Router({
 /** Root URL: /api */
 
 apiRouter.use("/entries", entriesRouter);
+
+apiRouter.use("/fics", ficsRouter);
 
 apiRouter.get("/fandomTotals", (req, res) => {
   console.log("fetching fandom totals (all time)");

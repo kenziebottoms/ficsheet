@@ -1,6 +1,6 @@
 import { DatabaseSync } from "node:sqlite";
 
-import type { WordCountEntry } from "../../src/types.ts";
+import type { Fic, WordCountEntry } from "../../src/types.ts";
 
 export const db = new DatabaseSync("ficsheet.sqlite");
 
@@ -20,6 +20,14 @@ export const insertEntry = (entry: WordCountEntry) => {
     `INSERT INTO word_count (date, count, fic, fandom, ship, ficId) VALUES (?, ?, ?, ?, ?, ?)`,
   );
   insert.run(date, count, fic, fandom, ship, ficId);
+};
+
+export const insertFic = (fic: Fic) => {
+  const { name, fandom, ship = null } = fic;
+  const insert = db.prepare(
+    `INSERT INTO fic (name, fandom, ship) VALUES (?, ?, ?)`,
+  );
+  insert.run(name, fandom, ship);
 };
 
 export const deleteEntry = (id: string) => {
