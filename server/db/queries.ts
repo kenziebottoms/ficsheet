@@ -4,6 +4,14 @@ import type { Fic, WordCountEntry } from "../../src/types.ts";
 
 export const db = new DatabaseSync("ficsheet.sqlite");
 
+export const getEntry = (id: string): WordCountEntry | null => {
+  const entry = select<WordCountEntry>(`* from word_count where id = ${id}`);
+  if (entry) {
+    return entry[0];
+  }
+  return null;
+};
+
 export const updateEntry = (entry: WordCountEntry & { id: number }) => {
   const { id, date, count, fic, fandom } = entry;
   const insert = db.prepare(

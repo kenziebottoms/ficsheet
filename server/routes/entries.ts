@@ -5,6 +5,7 @@ import { type WordCountEntry } from "../../src/types.ts";
 import { readJson } from "../csvHandler.ts";
 import {
   deleteEntry,
+  getEntry,
   insertEntry,
   select,
   updateEntry,
@@ -35,7 +36,7 @@ entriesRouter.post("/", (req, res) => {
  */
 entriesRouter.get("/", (_req, res) => {
   console.log("fetching word count entries");
-  const data = select("* from word_count ORDER BY date ASC");
+  const data = select<WordCountEntry>("* from word_count ORDER BY date ASC");
   return res.json(data).status(200);
 });
 
@@ -84,6 +85,15 @@ entriesRouter.use("/:id", (req: Request<{ id?: string }>, res, next) => {
     return res.status(400).send("please supply a valid id");
   }
   next();
+});
+
+/**
+ * GET /api/entries/:id
+ */
+entriesRouter.get("/:id", (req: RequestWithId, res) => {
+  console.log("getting entry #", req.params.id);
+  const entry = getEntry(req.params.id);
+  return res.json(entry).status(200);
 });
 
 /**
