@@ -93,7 +93,7 @@ const DailyProjectWordCountForm = ({
     />
     <Dropdown
       label="Fic"
-      name="fic"
+      name="ficId"
       defaultValue={values?.ficId || ''}
       options={fics.map(fic => ({ value: fic.id, label: fic.name }))}
     />
