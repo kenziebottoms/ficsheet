@@ -91,7 +91,12 @@ yearRouter.get("/fandomTimelines", (req: YearRequest, res) => {
  */
 yearRouter.get("/fics", (req: YearRequest, res) => {
   console.log(`fetching fics (${req.params.year})`);
-  const data = select<Fic>(`* FROM fic ORDER BY name ASC`);
+  const data = select<Fic>(
+    `fic.*, min(date) as firstWritten, max(date) as lastWritten,
+    SUM(count) as totalWordsWritten \
+    FROM word_count JOIN fic ON word_count.fic_id = fic.id \
+    ${getYearlyWhereClause(req.params.year)} GROUP BY fic.id ORDER BY name ASC`,
+  );
   console.log(data);
   return res.json(data).status(200);
 });

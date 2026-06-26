@@ -12,19 +12,19 @@ import { MonthNames, type TimelineData } from '@/types';
 
 const FicTimelineBarChart = () => {
   const { year } = use(YearContext)
-  const { ficTimelines } = use(DataCacheContext)
+  const { fics } = use(DataCacheContext)
 
-  const earliestDate = _.minBy(ficTimelines, 'firstWritten')?.firstWritten;
-  const latestDate = _.maxBy(ficTimelines, 'lastWritten')?.lastWritten;
+  const earliestDate = _.minBy(fics, 'firstWritten')?.firstWritten;
+  const latestDate = _.maxBy(fics, 'lastWritten')?.lastWritten;
   if (year == null || earliestDate == null || latestDate == null) return null;
 
   const dayBeforeEarliestDate = parse(`${year - 1}-12-01`, 'yyyy-MM-dd', new Date())
-  const fandomTemperatures: TimelineData[] = ficTimelines.map((ficTimeline) => {
+  const fandomTemperatures: TimelineData[] = _.orderBy(fics, 'firstWritten').map((fic) => {
     return {
-      label: ficTimeline.label,
+      label: fic.name,
       range: [[
-        differenceInMonths(parse(ficTimeline.firstWritten, 'yyyy-MM-dd', new Date()), dayBeforeEarliestDate),
-        differenceInMonths(parse(ficTimeline.lastWritten, 'yyyy-MM-dd', new Date()), dayBeforeEarliestDate),
+        differenceInMonths(parse(fic.firstWritten, 'yyyy-MM-dd', new Date()), dayBeforeEarliestDate),
+        differenceInMonths(parse(fic.lastWritten, 'yyyy-MM-dd', new Date()), dayBeforeEarliestDate),
       ]]
     }
   })

@@ -37,6 +37,8 @@ export type Fic = {
   name: string;
   fandom: string;
   ship: string | null;
+  firstWritten: string;
+  lastWritten: string;
 };
 
 export type Timeframe = {
