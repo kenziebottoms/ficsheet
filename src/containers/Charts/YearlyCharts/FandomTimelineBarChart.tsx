@@ -12,19 +12,19 @@ import { MonthNames, type TimelineData } from '@/types';
 
 const FandomTimelineBarChart = () => {
   const { year } = use(YearContext)
-  const { fandomTimelines } = use(DataCacheContext)
+  const { fandoms } = use(DataCacheContext)
 
-  const earliestDate = _.minBy(fandomTimelines, 'firstWritten')?.firstWritten;
-  const latestDate = _.maxBy(fandomTimelines, 'lastWritten')?.lastWritten;
+  const earliestDate = _.minBy(fandoms, 'firstWritten')?.firstWritten;
+  const latestDate = _.maxBy(fandoms, 'lastWritten')?.lastWritten;
   if (year == null || earliestDate == null || latestDate == null) return null;
 
   const dayBeforeEarliestDate = parse(`${year - 1}-12-01`, 'yyyy-MM-dd', new Date())
-  const fandomTemperatures: TimelineData[] = fandomTimelines.map((fandomTimeline) => {
+  const fandomTemperatures: TimelineData[] = _.orderBy(fandoms, 'firstWritten').map((fandom) => {
     return {
-      label: fandomTimeline.label,
+      label: fandom.name,
       range: [[
-        differenceInMonths(parse(fandomTimeline.firstWritten, 'yyyy-MM-dd', new Date()), dayBeforeEarliestDate),
-        differenceInMonths(parse(fandomTimeline.lastWritten, 'yyyy-MM-dd', new Date()), dayBeforeEarliestDate),
+        differenceInMonths(parse(fandom.firstWritten, 'yyyy-MM-dd', new Date()), dayBeforeEarliestDate),
+        differenceInMonths(parse(fandom.lastWritten, 'yyyy-MM-dd', new Date()), dayBeforeEarliestDate),
       ]]
     }
   })

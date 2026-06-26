@@ -27,6 +27,13 @@ export type DropdownOption<T> = {
   label: string;
 };
 
+export type Fandom = {
+  name: string;
+  firstWritten: string;
+  lastWritten: string;
+  totalWordsWritten: number;
+};
+
 export type FandomTotal = {
   fandom: string;
   count: number;
@@ -37,12 +44,6 @@ export type Fic = {
   name: string;
   fandom: string;
   ship: string | null;
-  firstWritten: string;
-  lastWritten: string;
-};
-
-export type Timeframe = {
-  label: string;
   firstWritten: string;
   lastWritten: string;
 };
@@ -102,8 +103,7 @@ export type YearContextValue = {
 export type DataCache = {
   dailyEntries: WordCountEntry[];
   dailyTotals: DailyTotal[];
-  fandoms: string[];
-  fandomTimelines: Timeframe[];
+  fandoms: Fandom[];
   fics: Fic[];
   runningTotal: RunningTotal[];
   refreshData: (year: number) => void;

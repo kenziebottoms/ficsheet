@@ -4,11 +4,10 @@ import {
   selectAllWordCounts,
   selectDailyTotals,
   selectFandoms,
-  selectFandomTimelines,
   selectFics,
   selectRunningTotal,
 } from "@/api";
-import { type WordCountEntry, type RunningTotal, type DailyTotal, type Timeframe, type Fic } from "@/types";
+import { type WordCountEntry, type RunningTotal, type DailyTotal, type Fic, type Fandom } from "@/types";
 
 import { DataCacheContext } from "./DataCacheContext";
 
@@ -16,8 +15,7 @@ type Props = PropsWithChildren & {
   year: number;
 }
 export const DataCacheProvider = ({ year, children }: Props) => {
-  const [fandoms, setFandoms] = useState<string[]>([])
-  const [fandomTimelines, setFandomTimelines] = useState<Timeframe[]>([])
+  const [fandoms, setFandoms] = useState<Fandom[]>([])
   const [fics, setFics] = useState<Fic[]>([])
   const [dailyEntries, setDailyEntries] = useState<WordCountEntry[]>([])
   const [dailyTotals, setDailyTotals] = useState<DailyTotal[]>([])
@@ -29,7 +27,6 @@ export const DataCacheProvider = ({ year, children }: Props) => {
     selectAllWordCounts(year).then(setDailyEntries)
     selectDailyTotals(year).then(setDailyTotals)
     selectRunningTotal(year).then(setRunningTotal)
-    selectFandomTimelines(year).then(setFandomTimelines)
   }
 
   useEffect(() => {
@@ -41,7 +38,6 @@ export const DataCacheProvider = ({ year, children }: Props) => {
       dailyEntries,
       dailyTotals,
       fandoms,
-      fandomTimelines,
       fics,
       runningTotal,
       refreshData,

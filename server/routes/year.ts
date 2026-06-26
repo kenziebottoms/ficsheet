@@ -1,10 +1,6 @@
 import express, { type Request } from "express";
 
-import {
-  type Fic,
-  type RunningTotal,
-  type Timeframe,
-} from "../../src/types.ts";
+import { type Fandom, type Fic, type RunningTotal } from "../../src/types.ts";
 
 import { readCSV } from "../csvHandler.ts";
 import {
@@ -69,19 +65,11 @@ yearRouter.delete("/entries", (req: YearRequest, res) => {
  */
 yearRouter.get("/fandoms", (req: YearRequest, res) => {
   console.log(`fetching fandoms (${req.params.year}`);
-  const data = select<{ fandom: string }>(
-    `DISTINCT fandom FROM word_count ${getYearlyWhereClause(req.params.year)} ORDER BY fandom ASC`,
-  );
-  return res.json(data.map(({ fandom }) => fandom)).status(200);
-});
-
-/**
- * GET /api/year/:year/fandomTimelines
- */
-yearRouter.get("/fandomTimelines", (req: YearRequest, res) => {
-  console.log(`fetching fandom timelines (${req.params.year}`);
-  const data = select<Timeframe>(
-    `DISTINCT min(date) as firstWritten, max(date) as lastWritten, fandom as label FROM word_count ${getYearlyWhereClause(req.params.year)} GROUP BY fandom ORDER BY firstWritten ASC`,
+  const data = select<Fandom>(
+    `fic.fandom as name, min(date) as firstWritten, max(date) as lastWritten,
+    SUM(count) as totalWordsWritten \
+    FROM word_count JOIN fic ON word_count.fic_id = fic.id \
+    ${getYearlyWhereClause(req.params.year)} GROUP BY fic.fandom ORDER BY fic.fandom ASC`,
   );
   return res.json(data).status(200);
 });
