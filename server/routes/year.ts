@@ -102,17 +102,6 @@ yearRouter.get("/fics", (req: YearRequest, res) => {
 });
 
 /**
- * GET /api/year/:year/ficTimelines
- */
-yearRouter.get("/ficTimelines", (req: YearRequest, res) => {
-  console.log(`fetching fic timelines (${req.params.year}`);
-  const data = select<Timeframe>(
-    `DISTINCT min(date) as firstWritten, max(date) as lastWritten, fic as label FROM word_count ${getYearlyWhereClause(req.params.year)} GROUP BY fic ORDER BY firstWritten ASC`,
-  );
-  return res.json(data).status(200);
-});
-
-/**
  * POST /api/year/:year/ingest?filename=file.csv&updateDb=true
  * For ingesting lossy Word Count CSVs
  */

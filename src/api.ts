@@ -84,8 +84,6 @@ export const putFic = (fic: Fic) => put<Fic, Fic>(`fics/${fic.id}`, fic);
 export const selectFics = (year: number) => get<Fic[]>(`year/${year}/fics`);
 export const deleteFic = (id: number) => restDelete(`fics/${id}`);
 
-export const selectFicTimelines = (year: number) =>
-  get<Timeframe[]>(`year/${year}/ficTimelines`);
 export const selectFandomTotals = () => get<FandomTotal[]>("fandomTotals");
 export const selectRunningTotal = (year?: number) =>
   get<RunningTotal[]>(`${year ? `year/${year}/` : ""}runningTotal`);

@@ -104,8 +104,7 @@ export type DataCache = {
   dailyTotals: DailyTotal[];
   fandoms: string[];
   fandomTimelines: Timeframe[];
-  fics: (Fic & { id: number })[];
-  ficTimelines: Timeframe[];
+  fics: Fic[];
   runningTotal: RunningTotal[];
   refreshData: (year: number) => void;
 };
