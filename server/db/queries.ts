@@ -2,6 +2,8 @@ import { DatabaseSync } from "node:sqlite";
 
 import type { Fic, WordCountEntry } from "../../src/types.ts";
 
+import { validateId } from "../routes/entries.ts";
+
 export const db = new DatabaseSync("ficsheet.sqlite");
 
 export const getEntry = (id: string | number): WordCountEntry | null => {
@@ -41,16 +43,15 @@ export const insertEntry = (
   };
 };
 
-export const insertFic = (fic: Fic): Fic & { id: number } => {
+export const insertFic = (
+  fic: Pick<Fic, "name" | "fandom" | "ship">,
+): (Fic & { id: number }) | null => {
   const { name, fandom, ship = null } = fic;
   const insert = db.prepare(
     `INSERT INTO fic (name, fandom, ship) VALUES (?, ?, ?)`,
   );
-  const result = insert.run(name, fandom, ship);
-  return {
-    id: result.lastInsertRowid as number,
-    ...fic,
-  };
+  const ficId = insert.run(name, fandom, ship).lastInsertRowid as number;
+  return getFicById(ficId) || null;
 };
 
 export const updateFic = (fic: Fic & { id: number }): Fic & { id: number } => {
@@ -117,4 +118,22 @@ export const getFicByTitle = (ficTitle: string): Fic | null => {
     return null;
   }
   return ficLookup[0] ?? null;
+};
+
+export const getFicById = (
+  ficId: string | number,
+): (Fic & { id: number }) | null => {
+  if (!validateId(`${ficId}`)) {
+    return null;
+  }
+
+  const ficLookup = select<Fic & { id: number }>(
+    `fic.*, min(date) as firstWritten, max(date) as lastWritten,
+    SUM(count) as totalWordsWritten \
+    FROM word_count JOIN fic ON word_count.fic_id = fic.id`,
+  );
+
+  if (ficLookup && ficLookup.length > 0) return ficLookup[0];
+
+  return null;
 };

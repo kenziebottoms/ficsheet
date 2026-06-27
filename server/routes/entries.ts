@@ -39,7 +39,7 @@ entriesRouter.post("/", (req, res) => {
 entriesRouter.get("/", (_req, res) => {
   console.log("fetching word count entries");
   const data = select<WordCountEntry>(
-    "id, date, fic_id, fic.name as fic, fic.ship, fic.fandom, count from word_count INNER JOIN fic ON fic.id = fic_id ORDER BY date ASC",
+    "word_count.id, date, fic_id, fic.name as fic, fic.ship, fic.fandom, count from word_count INNER JOIN fic ON fic.id = fic_id ORDER BY date ASC",
   );
   return res.json(data).status(200);
 });
@@ -140,16 +140,31 @@ entriesRouter.post("/:id/processFandom", (req: RequestWithId, res) => {
 
   const { fic, fandom, ficId } = entry;
   if (ficId == null) {
-    let newFicId: number;
-    const ficLookup = getFicByTitle(fic);
+    let newFicId: number | undefined;
+    let ficLookup;
+    if (fic) {
+      ficLookup = getFicByTitle(fic);
+    } else {
+      return res.status(400).json({
+        status: 400,
+        message: `Entry #${req.params.id} has no fic title.`,
+      });
+    }
     if (ficLookup?.id != null) {
       newFicId = ficLookup.id;
     } else {
-      newFicId = insertFic({
-        name: fic,
-        fandom,
-        ship: null,
-      })?.id;
+      if (!fandom) {
+        return res.status(400).json({
+          status: 400,
+          message: `Entry #${req.params.id} has no fandom.`,
+        });
+      } else {
+        newFicId = insertFic({
+          name: fic,
+          fandom,
+          ship: null,
+        })?.id;
+      }
     }
     if (newFicId != null) {
       const newEntry = {
@@ -160,7 +175,9 @@ entriesRouter.post("/:id/processFandom", (req: RequestWithId, res) => {
       updateEntry(newEntry);
       return res.json(newEntry).status(204);
     } else {
-      return res.json({ status: 500, message: "Failed to create fandom." });
+      return res
+        .status(500)
+        .json({ status: 500, message: "Failed to create fandom." });
     }
   } else {
     return res

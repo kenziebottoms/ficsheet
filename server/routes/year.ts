@@ -85,7 +85,6 @@ yearRouter.get("/fics", (req: YearRequest, res) => {
     FROM word_count JOIN fic ON word_count.fic_id = fic.id \
     ${getYearlyWhereClause(req.params.year)} GROUP BY fic.id ORDER BY name ASC`,
   );
-  console.log(data);
   return res.json(data).status(200);
 });
 
