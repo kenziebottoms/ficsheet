@@ -1,7 +1,7 @@
 import { use, useEffect, useState } from 'react';
 import { AutoDelete, AutoStories, ContentPaste, Delete, Equalizer, NoteAdd, TableChart, type SvgIconComponent } from '@mui/icons-material';
 
-import { deleteEntriesByYear, selectAllWordCounts } from '@/api';
+import { deleteEntriesByYear, exportData } from '@/api';
 
 import Button from '@/components/Button';
 import FicForm from '@/components/FicForm';
@@ -53,7 +53,7 @@ const YearlyCharts = () => {
   if (year == null) return null;
 
   const handleExport = () => {
-    selectAllWordCounts(year).then(copyPrettyJson)
+    exportData(year).then(copyPrettyJson)
   }
 
   const handleDelete = () => {

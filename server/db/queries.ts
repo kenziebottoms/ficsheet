@@ -43,6 +43,18 @@ export const insertEntry = (
   };
 };
 
+export const getEntriesByYear = (year: number | string) =>
+  select<WordCountEntry>(
+    `word_count.id, date, fic_id as ficId, fic.name as fic, fic.ship, fic.fandom, count from word_count JOIN fic ON fic.id = fic_id ${getYearlyWhereClause(`${year}`)} ORDER BY date ASC`,
+  );
+export const getFicsByYear = (year: number | string) =>
+  select<Fic>(
+    `fic.*, min(date) as firstWritten, max(date) as lastWritten,
+    SUM(count) as totalWordsWritten \
+    FROM word_count JOIN fic ON word_count.fic_id = fic.id \
+    ${getYearlyWhereClause(`${year}`)} GROUP BY fic.id ORDER BY name ASC`,
+  );
+
 export const insertFic = (
   fic: Pick<Fic, "name" | "fandom" | "ship">,
 ): (Fic & { id: number }) | null => {

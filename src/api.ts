@@ -56,6 +56,8 @@ async function restDelete(path: string): Promise<null> {
   });
 }
 
+export const exportData = (year: number) =>
+  get<{ entries: WordCountEntry[]; fics: Fic[] }>(`year/${year}/export`);
 export const insertEntries = (entries: WordCountEntry[]) =>
   post<WordCountEntry[], WordCountEntry[]>(`entries`, entries);
 export const putEntry = (entry: WordCountEntry) =>

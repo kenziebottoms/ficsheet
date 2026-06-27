@@ -1,10 +1,16 @@
 import express, { type Request } from "express";
 
-import { type Fandom, type Fic, type RunningTotal } from "../../src/types.ts";
+import {
+  type Fandom,
+  type RunningTotal,
+  type WordCountEntry,
+} from "../../src/types.ts";
 
 import { readCSV } from "../csvHandler.ts";
 import {
   deleteEntriesByYear,
+  getEntriesByYear,
+  getFicsByYear,
   getYearlyWhereClause,
   select,
   validateYear,
@@ -45,9 +51,7 @@ yearRouter.get("/dailyTotals", (req: YearRequest, res) => {
  */
 yearRouter.get("/entries", (req: YearRequest, res) => {
   console.log(`fetching word counts (${req.params.year})`);
-  const data = select(
-    `word_count.id, date, fic_id as ficId, fic.name as fic, fic.ship, fic.fandom, count from word_count JOIN fic ON fic.id = fic_id ${getYearlyWhereClause(req.params.year)} ORDER BY date ASC`,
-  );
+  const data = getEntriesByYear(req.params.year);
   return res.json(data).status(200);
 });
 
@@ -58,6 +62,16 @@ yearRouter.delete("/entries", (req: YearRequest, res) => {
   console.log(`forgetting ${req.params.year})`);
   deleteEntriesByYear(req.params.year);
   res.json(req.params.year).status(204);
+});
+
+/**
+ * GET /api/year/:year/export
+ */
+yearRouter.get("/export", (req: YearRequest, res) => {
+  console.log(`fetching fics (${req.params.year})`);
+  const entries = getEntriesByYear(req.params.year);
+  const fics = getFicsByYear(req.params.year);
+  return res.json({ entries, fics }).status(200);
 });
 
 /**
@@ -79,12 +93,7 @@ yearRouter.get("/fandoms", (req: YearRequest, res) => {
  */
 yearRouter.get("/fics", (req: YearRequest, res) => {
   console.log(`fetching fics (${req.params.year})`);
-  const data = select<Fic>(
-    `fic.*, min(date) as firstWritten, max(date) as lastWritten,
-    SUM(count) as totalWordsWritten \
-    FROM word_count JOIN fic ON word_count.fic_id = fic.id \
-    ${getYearlyWhereClause(req.params.year)} GROUP BY fic.id ORDER BY name ASC`,
-  );
+  const data = getFicsByYear(req.params.year);
   return res.json(data).status(200);
 });
 
