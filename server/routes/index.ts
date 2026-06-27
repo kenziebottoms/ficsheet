@@ -2,7 +2,7 @@ import express from "express";
 
 import { type FandomTotal, type RunningTotal } from "../../src/types.ts";
 
-import { select } from "../db/queries.ts";
+import { getFandomsByYear, select } from "../db/queries.ts";
 
 import entriesRouter from "./entries.ts";
 import ficsRouter from "./fics.ts";
@@ -18,6 +18,12 @@ const apiRouter = express.Router({
 apiRouter.use("/entries", entriesRouter);
 
 apiRouter.use("/fics", ficsRouter);
+
+apiRouter.get("/fandoms", (_req, res) => {
+  console.log("fetching fandoms (all time)");
+  const data = getFandomsByYear(null);
+  return res.json(data).status(200);
+});
 
 apiRouter.get("/fandomTotals", (req, res) => {
   console.log("fetching fandom totals (all time)");

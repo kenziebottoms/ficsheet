@@ -1,6 +1,6 @@
 import { DatabaseSync } from "node:sqlite";
 
-import type { Fic, WordCountEntry } from "../../src/types.ts";
+import { type Fandom, type Fic, type WordCountEntry } from "../../src/types.ts";
 
 import { validateId } from "../routes/entries.ts";
 
@@ -47,7 +47,12 @@ export const getEntriesByYear = (year: number | string) =>
   select<WordCountEntry>(
     `word_count.id, date, fic_id as ficId, fic.name as fic, fic.ship, fic.fandom, count from word_count JOIN fic ON fic.id = fic_id ${getYearlyWhereClause(`${year}`)} ORDER BY date ASC`,
   );
-export const getFicsByYear = (year: number | string) =>
+export const getFandomsByYear = (year: number | string | null) =>
+  select<Fandom>(`fic.fandom as name, min(date) as firstWritten, max(date) as lastWritten,
+    SUM(count) as totalWordsWritten \
+    FROM word_count JOIN fic ON word_count.fic_id = fic.id \
+    ${getYearlyWhereClause(`${year}`)} GROUP BY fic.fandom ORDER BY fic.fandom ASC`);
+export const getFicsByYear = (year: number | string | null) =>
   select<Fic>(
     `fic.*, min(date) as firstWritten, max(date) as lastWritten,
     SUM(count) as totalWordsWritten \
