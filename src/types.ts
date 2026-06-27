@@ -34,11 +34,6 @@ export type Fandom = {
   totalWordsWritten: number;
 };
 
-export type FandomTotal = {
-  fandom: string;
-  count: number;
-};
-
 export type Fic = {
   id?: number;
   name: string;

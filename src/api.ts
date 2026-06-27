@@ -4,7 +4,6 @@ import {
   type WordCountEntry,
   type RunningTotal,
   type DailyTotal,
-  type FandomTotal,
   type Fic,
   type Fandom,
 } from "@/types";
@@ -76,14 +75,13 @@ export const selectDailyTotals = (year: number) =>
       }),
     ),
   );
-export const selectFandoms = (year: number) =>
-  get<Fandom[]>(`year/${year}/fandoms`);
+export const selectFandoms = (year?: number) =>
+  get<Fandom[]>(`${year ? `year/${year}/` : ""}fandoms`);
 export const insertFics = (fics: Fic[]) => post<Fic[], Fic[]>(`fics`, fics);
 export const putFic = (fic: Fic) => put<Fic, Fic>(`fics/${fic.id}`, fic);
 export const selectFics = (year: number) => get<Fic[]>(`year/${year}/fics`);
 export const deleteFic = (id: number) => restDelete(`fics/${id}`);
 
-export const selectFandomTotals = () => get<FandomTotal[]>("fandomTotals");
 export const selectRunningTotal = (year?: number) =>
   get<RunningTotal[]>(`${year ? `year/${year}/` : ""}runningTotal`);
 export const deleteEntriesByYear = (year: number) =>

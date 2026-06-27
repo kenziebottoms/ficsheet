@@ -1,6 +1,6 @@
 import express from "express";
 
-import { type FandomTotal, type RunningTotal } from "../../src/types.ts";
+import { type RunningTotal } from "../../src/types.ts";
 
 import { getFandomsByYear, select } from "../db/queries.ts";
 
@@ -22,14 +22,6 @@ apiRouter.use("/fics", ficsRouter);
 apiRouter.get("/fandoms", (_req, res) => {
   console.log("fetching fandoms (all time)");
   const data = getFandomsByYear(null);
-  return res.json(data).status(200);
-});
-
-apiRouter.get("/fandomTotals", (req, res) => {
-  console.log("fetching fandom totals (all time)");
-  const data = select<FandomTotal>(
-    `fandom, SUM(count) as count from word_count GROUP BY fandom`,
-  );
   return res.json(data).status(200);
 });
 

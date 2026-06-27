@@ -1,14 +1,14 @@
 import { use, useEffect, useState } from 'react'
 import { ContentPaste } from '@mui/icons-material'
 
-import { selectAllWordCounts, selectFandomTotals, selectRunningTotal } from '@/api'
+import { selectAllWordCounts, selectFandoms, selectRunningTotal } from '@/api'
 
 import Badge from '@/components/Badge'
 import Button from '@/components/Button'
 
 import { YearContext } from '@/contexts/Year/YearContext'
 
-import type { FandomTotal, RunningTotal } from '@/types'
+import type { Fandom, RunningTotal } from '@/types'
 
 import { copyPrettyJson } from '@/utils'
 
@@ -22,7 +22,7 @@ const AllTime = () => {
 
   const [runningTotals, setRunningTotals] = useState<RunningTotal[][]>()
   const [lifetimeRunningTotal, setLifetimeRunningTotal] = useState<RunningTotal[]>([])
-  const [fandomTotals, setFandomTotals] = useState<FandomTotal[]>([])
+  const [fandoms, setFandoms] = useState<Fandom[]>([])
 
   useEffect(() => {
     Promise.all(availableYears.filter(y => y != null)
@@ -31,7 +31,7 @@ const AllTime = () => {
 
     selectRunningTotal().then(setLifetimeRunningTotal)
 
-    selectFandomTotals().then(setFandomTotals)
+    selectFandoms().then(setFandoms)
   }, [])
 
   if (runningTotals == null || lifetimeRunningTotal.length === 0) return null;
@@ -45,7 +45,7 @@ const AllTime = () => {
         title="Total Fandoms"
         style="secondary"
       >
-        {fandomTotals.length}
+        {fandoms.length}
       </Badge>
       <Button
         style="transparent"
@@ -58,12 +58,12 @@ const AllTime = () => {
     </div>
     <div className='flex flex-row gap-2'>
       <FandomLeaderboard
-        fandomTotals={fandomTotals}
+        fandoms={fandoms}
         years={availableYears.filter(y => y != null)}
       />
     </div>
     <YearlyRunningWordCountLineChart runningTotals={runningTotals} />
-    <AllTimeFandomPieChart fandomTotals={fandomTotals} />
+    <AllTimeFandomPieChart fandoms={fandoms} />
     <LifetimeWordCountLineChart lifetimeRunningTotal={lifetimeRunningTotal} />
   </div >
 }
