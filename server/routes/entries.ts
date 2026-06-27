@@ -1,6 +1,6 @@
 import express, { type Request } from "express";
 
-import { type Fic, type WordCountEntry } from "../../src/types.ts";
+import { type WordCountEntry } from "../../src/types.ts";
 
 import { readJson } from "../csvHandler.ts";
 import {
