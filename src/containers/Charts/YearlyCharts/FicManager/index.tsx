@@ -1,4 +1,4 @@
-import { use, useState } from 'react'
+import { use, useContext, useState } from 'react'
 import _ from 'lodash'
 import { ArrowDropDown, ArrowDropUp, Edit } from '@mui/icons-material'
 
@@ -8,18 +8,24 @@ import Modal from '@/components/Modal'
 import Table from '@/components/Table'
 
 import { DataCacheContext } from '@/contexts/DataCache/DataCacheContext'
+import { MonthContext } from '@/contexts/Month/MonthContext'
+
 import type { Fic } from '@/types'
 
 const headerSortProperties = ["name", "fandom", "ship"];
 
 const FicManager = () => {
   const { fics } = use(DataCacheContext)
+  const { filteredEntries } = useContext(MonthContext)
 
   const [sortPropertyIndex, setSortPropertyIndex] = useState<number>(0)
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('desc')
   const [ficFormValues, setFicFormValues] = useState<Fic | null>(null)
 
-  const data = _.orderBy(fics, headerSortProperties[sortPropertyIndex]).map((fic) => ([
+  const filteredFicIds = _.uniq(_.map(filteredEntries, 'ficId')).filter(x => x != null)
+  const filteredFics = filteredFicIds.map(id => _.find(fics, { id })).filter(x => x != null)
+
+  const data = _.orderBy(filteredFics, headerSortProperties[sortPropertyIndex]).map((fic) => ([
     fic.name,
     fic.fandom,
     fic.ship,
