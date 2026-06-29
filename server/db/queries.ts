@@ -47,6 +47,10 @@ export const getEntriesByYear = (year: number | string) =>
   select<WordCountEntry>(
     `word_count.id, date, fic_id as ficId, fic.name as fic, fic.ship, fic.fandom, count from word_count JOIN fic ON fic.id = fic_id ${getYearlyWhereClause(`${year}`)} ORDER BY date ASC`,
   );
+export const getRawEntriesByYear = (year: number | string) =>
+  select<WordCountEntry>(
+    `* from word_count ${getYearlyWhereClause(`${year}`)} ORDER BY date ASC`,
+  );
 export const getFandomsByYear = (year: number | string | null) =>
   select<Fandom>(`fic.fandom as name, min(date) as firstWritten, max(date) as lastWritten,
     SUM(count) as totalWordsWritten \
