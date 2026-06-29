@@ -97,7 +97,10 @@ entriesRouter.use("/:id", (req: Request<{ id?: string }>, res, next) => {
 entriesRouter.get("/:id", (req: RequestWithId, res) => {
   console.log("getting entry #", req.params.id);
   const entry = getEntry(req.params.id);
-  return res.json(entry).status(200);
+  if (entry) {
+    return res.json(entry).status(200);
+  }
+  return res.sendStatus(404);
 });
 
 /**
