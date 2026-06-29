@@ -125,6 +125,15 @@ entriesRouter.put("/:id", (req: RequestWithId, res) => {
         "This entry has no ID. To create a new entry, POST /api/entries/:id",
       );
   }
+
+  if (entry.id !== validateId(req.params.id)) {
+    return res
+      .status(400)
+      .send(
+        `The ID in the body (${entry.id}) does not match the route-provided ID (${req.params.id}).`,
+      );
+  }
+
   updateEntry(entry as WordCountEntry & { id: number });
   return res.json(entry).status(204);
 });

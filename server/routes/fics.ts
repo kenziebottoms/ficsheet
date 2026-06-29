@@ -63,6 +63,14 @@ ficsRouter.put("/:id", (req: RequestWithId, res) => {
       .status(400)
       .send("This fic has no ID. To create a new fic, POST /api/fics/:id");
   }
+
+  if (fic.id !== validateId(req.params.id)) {
+    return res
+      .status(400)
+      .send(
+        `The ID in the body (${fic.id}) does not match the route-provided ID (${req.params.id}).`,
+      );
+  }
   updateFic(fic as Fic & { id: number });
   return res.json(fic).status(204);
 });
