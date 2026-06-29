@@ -38,8 +38,8 @@ export const insertEntry = (
   );
   const result = insert.run(date, count, fic, fandom, ficId);
   return {
-    id: result.lastInsertRowid as number,
     ...entry,
+    id: result.lastInsertRowid as number,
   };
 };
 
