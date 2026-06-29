@@ -180,7 +180,6 @@ entriesRouter.post("/:id/processFandom", (req: RequestWithId, res) => {
     }
     if (newFicId != null) {
       const newEntry = {
-        id,
         ...entry,
         ficId: newFicId,
       };

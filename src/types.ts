@@ -75,6 +75,10 @@ export type TimelineData = {
   range: [number, number][];
 };
 
+export type WithId<T> = T & {
+  id: number;
+};
+
 export type WordCountEntry = {
   id: number | undefined;
   date: string;
@@ -99,7 +103,7 @@ export type DataCache = {
   dailyEntries: WordCountEntry[];
   dailyTotals: DailyTotal[];
   fandoms: Fandom[];
-  fics: Fic[];
+  fics: WithId<Fic>[];
   runningTotal: RunningTotal[];
   refreshData: (year: number) => void;
 };

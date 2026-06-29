@@ -1,13 +1,20 @@
 import { DatabaseSync } from "node:sqlite";
 
-import { type Fandom, type Fic, type WordCountEntry } from "../../src/types.ts";
+import {
+  type WithId,
+  type Fandom,
+  type Fic,
+  type WordCountEntry,
+} from "../../src/types.ts";
 
 import { validateId } from "../routes/entries.ts";
 
 export const db = new DatabaseSync("ficsheet.sqlite");
 
-export const getEntry = (id: string | number): WordCountEntry | null => {
-  const entry = select<WordCountEntry>(
+export const getEntry = (
+  id: string | number,
+): WithId<WordCountEntry> | null => {
+  const entry = select<WithId<WordCountEntry>>(
     `word_count.id, date, fic.name as fic, fic.fandom, fic_id as ficId, fic.ship, count from word_count JOIN fic ON fic.id = fic_id where word_count.id = ${id}`,
   );
   if (entry) {
@@ -67,7 +74,7 @@ export const getAllFics = () => select<Fic>(`* FROM fic ORDER BY id ASC`);
 
 export const insertFic = (
   fic: Pick<Fic, "name" | "fandom" | "ship">,
-): (Fic & { id: number }) | null => {
+): WithId<Fic> | null => {
   console.log("inserting fic", fic);
   const { name, fandom, ship = null } = fic;
   const insert = db.prepare(

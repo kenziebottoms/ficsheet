@@ -7,7 +7,7 @@ import {
   selectFics,
   selectRunningTotal,
 } from "@/api";
-import { type WordCountEntry, type RunningTotal, type DailyTotal, type Fic, type Fandom } from "@/types";
+import { type WordCountEntry, type RunningTotal, type DailyTotal, type Fic, type Fandom, type WithId } from "@/types";
 
 import { DataCacheContext } from "./DataCacheContext";
 
@@ -16,7 +16,7 @@ type Props = PropsWithChildren & {
 }
 export const DataCacheProvider = ({ year, children }: Props) => {
   const [fandoms, setFandoms] = useState<Fandom[]>([])
-  const [fics, setFics] = useState<Fic[]>([])
+  const [fics, setFics] = useState<WithId<Fic>[]>([])
   const [dailyEntries, setDailyEntries] = useState<WordCountEntry[]>([])
   const [dailyTotals, setDailyTotals] = useState<DailyTotal[]>([])
   const [runningTotal, setRunningTotal] = useState<RunningTotal[]>([])
