@@ -35,7 +35,7 @@ export type Fandom = {
 };
 
 export type Fic = {
-  id?: number;
+  id: number | undefined;
   name: string;
   fandom: string;
   ship: string | null;
@@ -76,7 +76,7 @@ export type TimelineData = {
 };
 
 export type WordCountEntry = {
-  id?: number;
+  id: number | undefined;
   date: string;
   fic?: string;
   fandom?: string;
