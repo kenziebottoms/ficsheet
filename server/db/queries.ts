@@ -63,6 +63,7 @@ export const getFicsByYear = (year: number | string | null) =>
     FROM word_count JOIN fic ON word_count.fic_id = fic.id \
     ${getYearlyWhereClause(`${year}`)} GROUP BY fic.id ORDER BY name ASC`,
   );
+export const getAllFics = () => select<Fic>(`* FROM fic ORDER BY id ASC`);
 
 export const insertFic = (
   fic: Pick<Fic, "name" | "fandom" | "ship">,

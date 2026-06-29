@@ -2,7 +2,7 @@ import express, { type Request } from "express";
 
 import { type Fic } from "../../src/types.ts";
 
-import { deleteFic, insertFic, updateFic } from "../db/queries.ts";
+import { deleteFic, getAllFics, insertFic, updateFic } from "../db/queries.ts";
 import { type RequestWithId } from "../types.ts";
 
 import { validateId } from "./entries.ts";
@@ -13,6 +13,12 @@ const ficsRouter = express.Router({
 });
 
 /** Root URL: /api/fics */
+
+ficsRouter.get("/", (req, res) => {
+  console.log("Getting fics (all time)");
+  const data = getAllFics();
+  return res.json(data).status(200);
+});
 
 /**
  * POST /api/fics

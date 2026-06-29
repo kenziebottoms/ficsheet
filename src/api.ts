@@ -79,7 +79,8 @@ export const selectFandoms = (year?: number) =>
   get<Fandom[]>(`${year ? `year/${year}/` : ""}fandoms`);
 export const insertFics = (fics: Fic[]) => post<Fic[], Fic[]>(`fics`, fics);
 export const putFic = (fic: Fic) => put<Fic, Fic>(`fics/${fic.id}`, fic);
-export const selectFics = (year: number) => get<Fic[]>(`year/${year}/fics`);
+export const selectFics = (year?: number) =>
+  get<(Fic & { id: number })[]>(`${year ? `year/${year}/` : ""}fics`);
 export const deleteFic = (id: number) => restDelete(`fics/${id}`);
 
 export const selectRunningTotal = (year?: number) =>
