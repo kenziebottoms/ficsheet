@@ -68,6 +68,7 @@ export const getAllFics = () => select<Fic>(`* FROM fic ORDER BY id ASC`);
 export const insertFic = (
   fic: Pick<Fic, "name" | "fandom" | "ship">,
 ): (Fic & { id: number }) | null => {
+  console.log("inserting fic", fic);
   const { name, fandom, ship = null } = fic;
   const insert = db.prepare(
     `INSERT INTO fic (name, fandom, ship) VALUES (?, ?, ?)`,
@@ -77,6 +78,7 @@ export const insertFic = (
 };
 
 export const updateFic = (fic: Fic & { id: number }): Fic & { id: number } => {
+  console.log("updating fic", fic);
   const { id, name, fandom, ship = null } = fic;
   const insert = db.prepare(
     `UPDATE fic \
