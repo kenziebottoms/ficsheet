@@ -1,19 +1,20 @@
 import { use, useEffect, useState } from 'react'
 import { ContentPaste } from '@mui/icons-material'
 
-import { selectAllWordCounts, selectFandoms, selectRunningTotal } from '@/api'
+import { selectAllWordCounts, selectFandoms, selectRunningTotal, selectShips } from '@/api'
 
 import Badge from '@/components/Badge'
 import Button from '@/components/Button'
 
 import { YearContext } from '@/contexts/Year/YearContext'
 
-import type { Fandom, RunningTotal } from '@/types'
+import type { Fandom, RunningTotal, Ship } from '@/types'
 
 import { copyPrettyJson } from '@/utils'
 
 import AllTimeFandomPieChart from './AllTimeFandomPieChart'
 import FandomLeaderboard from './FandomLeaderboard'
+import ShipLeaderboard from './ShipLeaderboard'
 import LifetimeWordCountLineChart from './LifetimeWordCountLineChart'
 import YearlyRunningWordCountLineChart from './YearlyRunningWordCountLineChart'
 
@@ -23,6 +24,7 @@ const AllTime = () => {
   const [runningTotals, setRunningTotals] = useState<RunningTotal[][]>()
   const [lifetimeRunningTotal, setLifetimeRunningTotal] = useState<RunningTotal[]>([])
   const [fandoms, setFandoms] = useState<Fandom[]>([])
+  const [ships, setShips] = useState<Ship[]>([])
 
   useEffect(() => {
     Promise.all(availableYears.filter(y => y != null)
@@ -32,6 +34,8 @@ const AllTime = () => {
     selectRunningTotal().then(setLifetimeRunningTotal)
 
     selectFandoms().then(setFandoms)
+
+    selectShips().then(setShips)
   }, [])
 
   if (runningTotals == null || lifetimeRunningTotal.length === 0) return null;
@@ -58,6 +62,7 @@ const AllTime = () => {
     </div>
     <div className='flex flex-row gap-2'>
       <FandomLeaderboard fandoms={fandoms} />
+      <ShipLeaderboard ships={ships} />
     </div>
     <YearlyRunningWordCountLineChart runningTotals={runningTotals} />
     <AllTimeFandomPieChart fandoms={fandoms} />

@@ -70,6 +70,14 @@ export type RunningTotal = {
   running_total: number;
 };
 
+export type Ship = {
+  name: string;
+  fandom: string;
+  firstWritten: string;
+  lastWritten: string;
+  totalWordsWritten: number;
+};
+
 export type TimelineData = {
   label: string;
   range: [number, number][];

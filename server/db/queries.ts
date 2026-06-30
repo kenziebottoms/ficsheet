@@ -4,6 +4,7 @@ import {
   type WithId,
   type Fandom,
   type Fic,
+  type Ship,
   type WordCountEntry,
 } from "../../src/types.ts";
 
@@ -78,7 +79,11 @@ export const getFicsByYear = (year?: number | string) =>
   );
 export const getAllFics = () =>
   select<WithId<Fic>>(`* FROM fic ORDER BY id ASC`);
-
+export const getAllShips = () =>
+  select<Ship>(
+    `ship as name, fic.fandom, SUM(count) as totalWordsWritten, min(date) as firstWritten, max(date) as lastWritten \
+    from fic JOIN word_count on word_count.fic_id = fic.id WHERE ship NOT null GROUP BY ship ORDER BY totalWordsWritten DESC`,
+  );
 export const insertFic = (
   fic: Pick<Fic, "name" | "fandom" | "ship">,
 ): number | null => {

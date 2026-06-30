@@ -2,7 +2,7 @@ import express from "express";
 
 import { type RunningTotal } from "../../src/types.ts";
 
-import { getFandomsByYear, select } from "../db/queries.ts";
+import { getAllShips, getFandomsByYear, select } from "../db/queries.ts";
 
 import entriesRouter from "./entries.ts";
 import ficsRouter from "./fics.ts";
@@ -33,6 +33,12 @@ apiRouter.get("/runningTotal", (_req, res) => {
   const data = select<RunningTotal>(
     `date, strftime('%m-%d', date) as monthDay, SUM(count) OVER (ORDER BY date) AS running_total FROM word_count`,
   );
+  return res.json(data).status(200);
+});
+
+apiRouter.get("/ships", (req, res) => {
+  console.log("Getting ships (all time)");
+  const data = getAllShips();
   return res.json(data).status(200);
 });
 
