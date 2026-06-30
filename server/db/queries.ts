@@ -23,10 +23,8 @@ export const selectEntries = (
 export const getEntry = (
   id: string | number,
 ): WithId<WordCountEntry> | null => {
-  const entry = select<WithId<WordCountEntry>>(
-    `word_count.id, date, fic.name as fic, fic.fandom, fic_id as ficId, fic.ship, count from word_count JOIN fic ON fic.id = fic_id where word_count.id = ${id}`,
-  );
-  if (entry) {
+  const entry = selectEntries(`where word_count.id = ${id}`);
+  if (entry.length > 0) {
     return entry[0];
   }
   return null;
