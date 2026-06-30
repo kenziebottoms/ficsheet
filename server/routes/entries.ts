@@ -150,7 +150,7 @@ entriesRouter.post("/:id/processFandom", (req: RequestWithId, res) => {
 
   const { fic, fandom, ficId } = entry;
   if (ficId == null) {
-    let newFicId: number | undefined;
+    let newFicId: number | null | undefined;
     let ficLookup;
     if (fic) {
       ficLookup = getFicByTitle(fic);
@@ -160,7 +160,7 @@ entriesRouter.post("/:id/processFandom", (req: RequestWithId, res) => {
         message: `Entry #${req.params.id} has no fic title.`,
       });
     }
-    if (ficLookup?.id != null) {
+    if (ficLookup != null) {
       newFicId = ficLookup.id;
     } else {
       if (!fandom) {
@@ -173,7 +173,7 @@ entriesRouter.post("/:id/processFandom", (req: RequestWithId, res) => {
           name: fic,
           fandom,
           ship: null,
-        })?.id;
+        });
       }
     }
     if (newFicId != null) {
@@ -186,7 +186,7 @@ entriesRouter.post("/:id/processFandom", (req: RequestWithId, res) => {
     } else {
       return res
         .status(500)
-        .json({ status: 500, message: "Failed to create fandom." });
+        .json({ status: 500, message: "Failed to create fic." });
     }
   } else {
     return res
