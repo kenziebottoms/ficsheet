@@ -63,18 +63,18 @@ export const insertEntry = (entry: WordCountEntry): WithId<WordCountEntry> => {
 };
 
 export const getEntriesByYear = (year?: number | string) =>
-  selectEntries(`${getYearlyWhereClause(`${year}`)} ORDER BY date ASC`);
+  selectEntries(`${getYearlyWhereClause(year)} ORDER BY date ASC`);
 export const getFandomsByYear = (year?: number | string) =>
   select<Fandom>(`fic.fandom as name, min(date) as firstWritten, max(date) as lastWritten,
     SUM(count) as totalWordsWritten \
     FROM word_count JOIN fic ON word_count.fic_id = fic.id \
-    ${getYearlyWhereClause(`${year}`)} GROUP BY fic.fandom ORDER BY fic.fandom ASC`);
+    ${getYearlyWhereClause(year)} GROUP BY fic.fandom ORDER BY fic.fandom ASC`);
 export const getFicsByYear = (year?: number | string) =>
   select<WithId<Fic>>(
     `fic.*, min(date) as firstWritten, max(date) as lastWritten,
     SUM(count) as totalWordsWritten \
     FROM word_count JOIN fic ON word_count.fic_id = fic.id \
-    ${getYearlyWhereClause(`${year}`)} GROUP BY fic.id ORDER BY name ASC`,
+    ${getYearlyWhereClause(year)} GROUP BY fic.id ORDER BY name ASC`,
   );
 export const getAllFics = () =>
   select<WithId<Fic>>(`* FROM fic ORDER BY id ASC`);
@@ -120,9 +120,9 @@ export const deleteEntriesByYear = (year: string) => {
 };
 
 /** Return a parsed valid positive integer or false given a string? number. */
-export const validateYear = (year?: string): number | false => {
+export const validateYear = (year?: string | number): number | false => {
   if (!year) return false;
-  const parsedYear = parseInt(year, 10);
+  const parsedYear = parseInt(`${year}`, 10);
   // falsy check covers null, undefined, NaN, 0, negative values
   if (!parsedYear || parsedYear > 2100 || parsedYear < 1900) {
     console.log(`invalid year ${year}`);
@@ -131,7 +131,7 @@ export const validateYear = (year?: string): number | false => {
   return parsedYear;
 };
 
-export const getYearlyWhereClause = (year: string): string => {
+export const getYearlyWhereClause = (year?: string | number): string => {
   // null for no filtering
   if (year == null) return "";
   const validatedYear = validateYear(year);
