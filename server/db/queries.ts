@@ -50,9 +50,9 @@ export const insertEntry = (
   };
 };
 
-export const getEntriesByYear = (year: number | string) =>
-  select<WordCountEntry>(
-    `word_count.id, date, fic_id as ficId, fic.name as fic, fic.ship, fic.fandom, count from word_count JOIN fic ON fic.id = fic_id ${getYearlyWhereClause(`${year}`)} ORDER BY date ASC`,
+export const getEntriesByYear = (year?: number | string) =>
+  select<WithId<WordCountEntry>>(
+    `word_count.id, date, fic_id as ficId, IIF(fic_id, fic_table.name, word_count.fic) as fic, IIF(fic_id, fic_table.ship, null) as ship, IIF(fic_id, fic_table.fandom, word_count.fandom) as fandom, count from word_count LEFT JOIN fic as fic_table ON fic_table.id = fic_id ${getYearlyWhereClause(`${year}`)} ORDER BY date ASC`,
   );
 export const getRawEntriesByYear = (year: number | string) =>
   select<WordCountEntry>(

@@ -5,11 +5,11 @@ import { type WordCountEntry } from "../../src/types.ts";
 import { readJson } from "../csvHandler.ts";
 import {
   deleteEntry,
+  getEntriesByYear,
   getEntry,
   getFicByTitle,
   insertEntry,
   insertFic,
-  select,
   updateEntry,
 } from "../db/queries.ts";
 import { seedTables } from "../db/setup.ts";
@@ -38,9 +38,7 @@ entriesRouter.post("/", (req, res) => {
  */
 entriesRouter.get("/", (_req, res) => {
   console.log("fetching word count entries");
-  const data = select<WordCountEntry>(
-    "word_count.id, date, fic_id, fic.name as fic, fic.ship, fic.fandom, count from word_count INNER JOIN fic ON fic.id = fic_id ORDER BY date ASC",
-  );
+  const data = getEntriesByYear();
   return res.json(data).status(200);
 });
 
