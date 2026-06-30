@@ -68,7 +68,9 @@ export const putEntry = (entry: WithId<WordCountEntry>) =>
     entry,
   );
 export const processFandom = (entryId: number) =>
-  post<never, WordCountEntry>(`entries/${entryId}/processFandom`);
+  post<never, WithId<WordCountEntry>>(`entries/${entryId}/processFandom`);
+export const processFandomsForYear = (year: number) =>
+  post<never, WithId<WordCountEntry>[]>(`year/${year}/entries/processFandoms`);
 export const deleteEntry = (id: number) => restDelete(`entries/${id}`);
 export const selectAllWordCounts = (year?: number) =>
   get<WordCountEntry[]>(`${year ? `year/${year}/` : ""}entries`);

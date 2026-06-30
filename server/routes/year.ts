@@ -52,6 +52,15 @@ yearRouter.get("/entries", (req: YearRequest, res) => {
 });
 
 /**
+ * POST /api/year/:year/entries/processFandoms
+ */
+yearRouter.post("/entries/processFandoms", (req: YearRequest, res) => {
+  console.log(`processing fandoms (${req.params.year})`);
+  const entries = getEntriesByYear(req.params.year);
+  return res.json({ TO: "DO" }).status(200);
+});
+
+/**
  * DELETE /api/year/:year/entries
  */
 yearRouter.delete("/entries", (req: YearRequest, res) => {
