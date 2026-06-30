@@ -11,6 +11,15 @@ import { validateId } from "../routes/entries.ts";
 
 export const db = new DatabaseSync("ficsheet.sqlite");
 
+export const selectEntries = (
+  whereClause?: string,
+): WithId<WordCountEntry>[] => {
+  const entries = select<WithId<WordCountEntry>>(
+    `word_count.id, date, fic_id as ficId, IIF(fic_id, fic_table.name, word_count.fic) as fic, IIF(fic_id, fic_table.ship, null) as ship, IIF(fic_id, fic_table.fandom, word_count.fandom) as fandom, count from word_count LEFT JOIN fic as fic_table ON fic_table.id = fic_id ${whereClause ?? ""}`,
+  );
+  return entries;
+};
+
 export const getEntry = (
   id: string | number,
 ): WithId<WordCountEntry> | null => {
@@ -49,9 +58,7 @@ export const insertEntry = (entry: WordCountEntry): WithId<WordCountEntry> => {
 };
 
 export const getEntriesByYear = (year?: number | string) =>
-  select<WithId<WordCountEntry>>(
-    `word_count.id, date, fic_id as ficId, IIF(fic_id, fic_table.name, word_count.fic) as fic, IIF(fic_id, fic_table.ship, null) as ship, IIF(fic_id, fic_table.fandom, word_count.fandom) as fandom, count from word_count LEFT JOIN fic as fic_table ON fic_table.id = fic_id ${getYearlyWhereClause(`${year}`)} ORDER BY date ASC`,
-  );
+  selectEntries(`${getYearlyWhereClause(`${year}`)} ORDER BY date ASC`);
 export const getFandomsByYear = (year?: number | string) =>
   select<Fandom>(`fic.fandom as name, min(date) as firstWritten, max(date) as lastWritten,
     SUM(count) as totalWordsWritten \
