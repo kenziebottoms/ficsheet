@@ -1,7 +1,7 @@
 import { use, useEffect, useState } from 'react'
 import { ContentPaste } from '@mui/icons-material'
 
-import { selectAllWordCounts, selectFandoms, selectRunningTotal, selectShips } from '@/api'
+import { exportData, selectFandoms, selectRunningTotal, selectShips } from '@/api'
 
 import Badge from '@/components/Badge'
 import Button from '@/components/Button'
@@ -54,7 +54,7 @@ const AllTime = () => {
       <Button
         style="transparent"
         icon={ContentPaste}
-        onClick={() => selectAllWordCounts().then(copyPrettyJson)}
+        onClick={() => exportData().then(copyPrettyJson)}
         className='self-start'
       >
         Export

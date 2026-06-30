@@ -2,7 +2,13 @@ import express from "express";
 
 import { type RunningTotal } from "../../src/types.ts";
 
-import { getAllShips, getFandomsByYear, select } from "../db/queries.ts";
+import {
+  getAllShips,
+  getEntriesByYear,
+  getFandomsByYear,
+  getFicsByYear,
+  select,
+} from "../db/queries.ts";
 
 import entriesRouter from "./entries.ts";
 import ficsRouter from "./fics.ts";
@@ -16,6 +22,16 @@ const apiRouter = express.Router({
 /** Root URL: /api */
 
 apiRouter.use("/entries", entriesRouter);
+
+/**
+ * GET /api/export
+ */
+apiRouter.get("/export", (_req, res) => {
+  console.log(`fetching fics (all time)`);
+  const entries = getEntriesByYear();
+  const fics = getFicsByYear();
+  return res.json({ entries, fics }).status(200);
+});
 
 apiRouter.use("/fics", ficsRouter);
 
