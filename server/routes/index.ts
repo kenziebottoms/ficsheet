@@ -21,7 +21,7 @@ apiRouter.use("/fics", ficsRouter);
 
 apiRouter.get("/fandoms", (_req, res) => {
   console.log("fetching fandoms (all time)");
-  const data = getFandomsByYear(null);
+  const data = getFandomsByYear();
   return res.json(data).status(200);
 });
 

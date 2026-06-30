@@ -24,8 +24,8 @@ export const getEntry = (
 };
 
 export const updateEntry = (
-  entry: WordCountEntry & { id: number },
-): WordCountEntry & { id: number } => {
+  entry: WithId<WordCountEntry>,
+): WithId<WordCountEntry> => {
   const { id, date, count, fic = "", fandom = "", ficId = null } = entry;
   const insert = db.prepare(
     `UPDATE word_count \
@@ -36,9 +36,7 @@ export const updateEntry = (
   return entry;
 };
 
-export const insertEntry = (
-  entry: WordCountEntry,
-): WordCountEntry & { id: number } => {
+export const insertEntry = (entry: WordCountEntry): WithId<WordCountEntry> => {
   const { date, count, fic = "", fandom = "", ficId = null } = entry;
   const insert = db.prepare(
     `INSERT INTO word_count (date, count, fic, fandom, fic_id) VALUES (?, ?, ?, ?, ?)`,
@@ -54,23 +52,20 @@ export const getEntriesByYear = (year?: number | string) =>
   select<WithId<WordCountEntry>>(
     `word_count.id, date, fic_id as ficId, IIF(fic_id, fic_table.name, word_count.fic) as fic, IIF(fic_id, fic_table.ship, null) as ship, IIF(fic_id, fic_table.fandom, word_count.fandom) as fandom, count from word_count LEFT JOIN fic as fic_table ON fic_table.id = fic_id ${getYearlyWhereClause(`${year}`)} ORDER BY date ASC`,
   );
-export const getRawEntriesByYear = (year: number | string) =>
-  select<WordCountEntry>(
-    `* from word_count ${getYearlyWhereClause(`${year}`)} ORDER BY date ASC`,
-  );
-export const getFandomsByYear = (year: number | string | null) =>
+export const getFandomsByYear = (year?: number | string) =>
   select<Fandom>(`fic.fandom as name, min(date) as firstWritten, max(date) as lastWritten,
     SUM(count) as totalWordsWritten \
     FROM word_count JOIN fic ON word_count.fic_id = fic.id \
     ${getYearlyWhereClause(`${year}`)} GROUP BY fic.fandom ORDER BY fic.fandom ASC`);
-export const getFicsByYear = (year: number | string | null) =>
-  select<Fic>(
+export const getFicsByYear = (year?: number | string) =>
+  select<WithId<Fic>>(
     `fic.*, min(date) as firstWritten, max(date) as lastWritten,
     SUM(count) as totalWordsWritten \
     FROM word_count JOIN fic ON word_count.fic_id = fic.id \
     ${getYearlyWhereClause(`${year}`)} GROUP BY fic.id ORDER BY name ASC`,
   );
-export const getAllFics = () => select<Fic>(`* FROM fic ORDER BY id ASC`);
+export const getAllFics = () =>
+  select<WithId<Fic>>(`* FROM fic ORDER BY id ASC`);
 
 export const insertFic = (
   fic: Pick<Fic, "name" | "fandom" | "ship">,
@@ -84,7 +79,7 @@ export const insertFic = (
   return getFicById(ficId) || null;
 };
 
-export const updateFic = (fic: Fic & { id: number }): Fic & { id: number } => {
+export const updateFic = (fic: WithId<Fic>): WithId<Fic> => {
   console.log("updating fic", fic);
   const { id, name, fandom, ship = null } = fic;
   const insert = db.prepare(
@@ -112,14 +107,14 @@ export const deleteEntriesByYear = (year: string) => {
   deleteQuery.run();
 };
 
-export function select<TRow>(query: string) {
+export function select<TRow>(query: string): TRow[] {
   console.log(`selecting "${query}"`);
   const q = db.prepare(`SELECT ${query}`);
   return q.all() as TRow[];
 }
 
 /** Return a parsed valid positive integer or false given a string? number. */
-export const validateYear = (year?: string) => {
+export const validateYear = (year?: string): number | false => {
   console.log(`validating year ${year}`);
   if (!year) return false;
   const parsedYear = parseInt(year, 10);
@@ -130,7 +125,9 @@ export const validateYear = (year?: string) => {
   return parsedYear;
 };
 
-export const getYearlyWhereClause = (year: string) => {
+export const getYearlyWhereClause = (year: string): string => {
+  // null for no filtering
+  if (year == null) return "";
   const validatedYear = validateYear(year);
   if (!validatedYear) {
     console.warn(`!! omitting where clause for invalid year ${year} !!`);
@@ -140,9 +137,9 @@ export const getYearlyWhereClause = (year: string) => {
   }
 };
 
-export const getFicByTitle = (ficTitle: string): Fic | null => {
+export const getFicByTitle = (ficTitle: string): WithId<Fic> | null => {
   if (!ficTitle) return null;
-  const ficLookup = select<Fic & { id: number }>(
+  const ficLookup = select<WithId<Fic>>(
     `* FROM fic WHERE UPPER(name) = '${ficTitle.toUpperCase()}' LIMIT 1;`,
   );
   if (!ficLookup || ficLookup.length === 0) {
@@ -151,14 +148,12 @@ export const getFicByTitle = (ficTitle: string): Fic | null => {
   return ficLookup[0] ?? null;
 };
 
-export const getFicById = (
-  ficId: string | number,
-): (Fic & { id: number }) | null => {
+export const getFicById = (ficId: string | number): WithId<Fic> | null => {
   if (!validateId(`${ficId}`)) {
     return null;
   }
 
-  const ficLookup = select<Fic & { id: number }>(
+  const ficLookup = select<WithId<Fic>>(
     `fic.*, min(date) as firstWritten, max(date) as lastWritten,
     SUM(count) as totalWordsWritten \
     FROM word_count JOIN fic ON word_count.fic_id = fic.id`,
