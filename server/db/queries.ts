@@ -8,6 +8,7 @@ import {
 } from "../../src/types.ts";
 
 import { validateId } from "../routes/entries.ts";
+import { type ApiError } from "../types.ts";
 
 export const db = new DatabaseSync("ficsheet.sqlite");
 
@@ -142,7 +143,7 @@ export const getYearlyWhereClause = (year: string): string => {
   }
 };
 
-export const getFicByTitle = (ficTitle: string): WithId<Fic> | null => {
+export const getFicByTitle = (ficTitle?: string): WithId<Fic> | null => {
   if (!ficTitle) return null;
   const ficLookup = select<WithId<Fic>>(
     `* FROM fic WHERE UPPER(name) = '${ficTitle.replace(/\'/g, "''").toUpperCase()}' LIMIT 1;`,
@@ -151,6 +152,25 @@ export const getFicByTitle = (ficTitle: string): WithId<Fic> | null => {
     return null;
   }
   return ficLookup[0] ?? null;
+};
+
+export const findOrCreateFicForEntry = (
+  entry: WordCountEntry,
+): number | null => {
+  const ficLookup = getFicByTitle(entry.fic);
+  if (ficLookup != null) {
+    return ficLookup.id;
+  }
+
+  if (entry.fic != null && entry.fandom != null) {
+    return insertFic({
+      name: entry.fic,
+      fandom: entry.fandom,
+      ship: null,
+    });
+  }
+
+  return null;
 };
 
 export const getFicById = (ficId: string | number): WithId<Fic> | null => {
@@ -168,4 +188,40 @@ export const getFicById = (ficId: string | number): WithId<Fic> | null => {
   if (ficLookup && ficLookup.length > 0) return ficLookup[0];
 
   return null;
+};
+
+export const processFandomForEntry = (
+  entry: WithId<WordCountEntry>,
+): WithId<WordCountEntry> | ApiError => {
+  const { id } = entry;
+
+  if (entry.ficId != null) {
+    return {
+      status: 304,
+      message: "This entry already has a ficId.",
+    };
+  }
+
+  if (!entry.fic) {
+    return {
+      status: 400,
+      message: `Entry #${id} has no fic.`,
+    };
+  }
+
+  const ficId = findOrCreateFicForEntry(entry);
+
+  if (ficId != null) {
+    const newEntry = {
+      ...entry,
+      ficId,
+    };
+    updateEntry(newEntry);
+    return newEntry;
+  } else {
+    return {
+      status: 500,
+      message: "Failed to create fic.",
+    };
+  }
 };

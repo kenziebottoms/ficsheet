@@ -1,19 +1,18 @@
 import express, { type Request } from "express";
 
-import { type WordCountEntry } from "../../src/types.ts";
+import { type WithId, type WordCountEntry } from "../../src/types.ts";
 
 import { readJson } from "../csvHandler.ts";
 import {
   deleteEntry,
   getEntriesByYear,
   getEntry,
-  getFicByTitle,
   insertEntry,
-  insertFic,
+  processFandomForEntry,
   updateEntry,
 } from "../db/queries.ts";
 import { seedTables } from "../db/setup.ts";
-import { type RequestWithId } from "../types.ts";
+import { type ApiError, type RequestWithId } from "../types.ts";
 
 const entriesRouter = express.Router({
   // pass nested route params to children
@@ -148,50 +147,15 @@ entriesRouter.post("/:id/processFandom", (req: RequestWithId, res) => {
 
   if (entry == null) return res.status(404);
 
-  const { fic, fandom, ficId } = entry;
-  if (ficId == null) {
-    let newFicId: number | null | undefined;
-    let ficLookup;
-    if (fic) {
-      ficLookup = getFicByTitle(fic);
-    } else {
-      return res.status(400).json({
-        status: 400,
-        message: `Entry #${req.params.id} has no fic title.`,
-      });
-    }
-    if (ficLookup != null) {
-      newFicId = ficLookup.id;
-    } else {
-      if (!fandom) {
-        return res.status(400).json({
-          status: 400,
-          message: `Entry #${req.params.id} has no fandom.`,
-        });
-      } else {
-        newFicId = insertFic({
-          name: fic,
-          fandom,
-          ship: null,
-        });
-      }
-    }
-    if (newFicId != null) {
-      const newEntry = {
-        ...entry,
-        ficId: newFicId,
-      };
-      updateEntry(newEntry);
-      return res.json(newEntry).status(204);
-    } else {
-      return res
-        .status(500)
-        .json({ status: 500, message: "Failed to create fic." });
-    }
+  const response = processFandomForEntry(entry);
+
+  if ("status" in response) {
+    const error: ApiError = response as ApiError;
+    return error.message
+      ? res.status(error.status).send(error.message)
+      : res.sendStatus(error.status);
   } else {
-    return res
-      .json({ status: 304, message: "This entry already has a fic_id." })
-      .status(304);
+    return res.json(response as WithId<WordCountEntry>).status(204);
   }
 });
 
