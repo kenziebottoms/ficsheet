@@ -1,6 +1,11 @@
 import express, { type Request } from "express";
+import _ from "lodash";
 
-import { type RunningTotal } from "../../src/types.ts";
+import {
+  type WithId,
+  type WordCountEntry,
+  type RunningTotal,
+} from "../../src/types.ts";
 
 import {
   deleteEntriesByYear,
@@ -8,10 +13,11 @@ import {
   getFandomsByYear,
   getFicsByYear,
   getYearlyWhereClause,
+  processFandomForEntry,
   select,
   validateYear,
 } from "../db/queries.ts";
-import { type YearRequest } from "../types.ts";
+import { type ApiError, type YearRequest } from "../types.ts";
 
 const yearRouter = express.Router({
   // pass nested route params to children
@@ -57,7 +63,21 @@ yearRouter.get("/entries", (req: YearRequest, res) => {
 yearRouter.post("/entries/processFandoms", (req: YearRequest, res) => {
   console.log(`processing fandoms (${req.params.year})`);
   const entries = getEntriesByYear(req.params.year);
-  return res.json({ TO: "DO" }).status(200);
+  const results = entries.map(processFandomForEntry);
+  const errors = results.filter(
+    (result) =>
+      _.get(result, "status") != null && _.get(result, "status") !== 304,
+  ) as ApiError[];
+  const newEntries = results.filter(
+    (result) => _.get(result, "id") != null,
+  ) as WithId<WordCountEntry>[];
+
+  return res
+    .json({
+      errors,
+      newEntries,
+    })
+    .sendStatus(errors.length > 0 ? 300 : 201);
 });
 
 /**
