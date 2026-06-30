@@ -57,10 +57,7 @@ const AllTime = () => {
       </Button>
     </div>
     <div className='flex flex-row gap-2'>
-      <FandomLeaderboard
-        fandoms={fandoms}
-        years={availableYears.filter(y => y != null)}
-      />
+      <FandomLeaderboard fandoms={fandoms} />
     </div>
     <YearlyRunningWordCountLineChart runningTotals={runningTotals} />
     <AllTimeFandomPieChart fandoms={fandoms} />
