@@ -59,6 +59,8 @@ const DailyProjectWordCountForm = ({
     const entry: WordCountEntry = {
       id: values?.id,
       date: formData.date,
+      fandom: formData.fandom,
+      fic: formData.fic,
       ficId: formData.ficId === '' ? null : formData.ficId,
       count: parseInt(formData.count || '0', 10) || 0
     }
