@@ -46,7 +46,7 @@ export type Fic = {
 export type MonthContextValue = {
   month: number | null;
   setMonth: (newMonth: number | null) => void;
-  filteredEntries: WordCountEntry[];
+  filteredEntries: WithId<WordCountEntry>[];
   filteredDailyTotals: DailyTotal[];
 };
 

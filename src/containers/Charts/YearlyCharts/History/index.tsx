@@ -25,7 +25,7 @@ const History = ({ showEmpty }: Props) => {
   const { year } = use(YearContext)
   const { month, filteredEntries, filteredDailyTotals } = use(MonthContext)
 
-  const [newEntry, setNewEntry] = useState<Omit<WordCountEntry, 'fic' | 'count'> | null>(null)
+  const [newEntry, setNewEntry] = useState<Partial<WordCountEntry> | null>(null)
 
   if (year == null) return null;
 
@@ -63,7 +63,7 @@ const History = ({ showEmpty }: Props) => {
           .map(({ date, entries }) => [
             `${parseInt(date.substring(5, 7), 10)}/${parseInt(date.substring(8, 10), 10)}/${date.substring(2, 4)}`,
             <div className="p-1 gap-y-1 flex flex-row flex-wrap gap-2">
-              {entries.map((entry) => <EntryButton key={entry.id} entry={entry as WordCountEntry & { id: number }} />)}
+              {entries.map((entry) => <EntryButton key={entry.id} entry={entry} />)}
               <div className="grow" />
               <Button
                 style="transparent"

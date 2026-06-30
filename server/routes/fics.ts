@@ -1,6 +1,6 @@
 import express, { type Request } from "express";
 
-import { type Fic } from "../../src/types.ts";
+import { type WithId, type Fic } from "../../src/types.ts";
 
 import { deleteFic, getAllFics, insertFic, updateFic } from "../db/queries.ts";
 import { type RequestWithId } from "../types.ts";
@@ -71,7 +71,7 @@ ficsRouter.put("/:id", (req: RequestWithId, res) => {
         `The ID in the body (${fic.id}) does not match the route-provided ID (${req.params.id}).`,
       );
   }
-  updateFic(fic as Fic & { id: number });
+  updateFic(fic as WithId<Fic>);
   return res.json(fic).status(204);
 });
 

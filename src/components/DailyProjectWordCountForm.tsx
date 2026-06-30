@@ -8,7 +8,7 @@ import { DataCacheContext } from '@/contexts/DataCache/DataCacheContext';
 import { YearContext } from '@/contexts/Year/YearContext';
 
 import { countWords } from '@/utils';
-import type { WordCountEntry } from '@/types';
+import type { WithId, WordCountEntry } from '@/types';
 
 import Button from './Button';
 import DateInput from './DateInput';
@@ -69,7 +69,7 @@ const DailyProjectWordCountForm = ({
 
     if (entry.count !== 0) {
       if (values?.id != null) {
-        putEntry(entry).then(response => onCompleted([response]))
+        putEntry(entry as WithId<WordCountEntry>).then(response => onCompleted([response]))
       } else {
         insertEntries([entry]).then(onCompleted)
       }

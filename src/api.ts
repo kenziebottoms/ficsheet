@@ -6,6 +6,7 @@ import {
   type DailyTotal,
   type Fic,
   type Fandom,
+  type WithId,
 } from "@/types";
 
 import { getDatesBetween } from "./utils";
@@ -56,11 +57,16 @@ async function restDelete(path: string): Promise<null> {
 }
 
 export const exportData = (year: number) =>
-  get<{ entries: WordCountEntry[]; fics: Fic[] }>(`year/${year}/export`);
+  get<{ entries: WithId<WordCountEntry>[]; fics: WithId<Fic>[] }>(
+    `year/${year}/export`,
+  );
 export const insertEntries = (entries: WordCountEntry[]) =>
-  post<WordCountEntry[], WordCountEntry[]>(`entries`, entries);
-export const putEntry = (entry: WordCountEntry) =>
-  put<WordCountEntry, WordCountEntry>(`entries/${entry.id}`, entry);
+  post<WordCountEntry[], WithId<WordCountEntry>[]>(`entries`, entries);
+export const putEntry = (entry: WithId<WordCountEntry>) =>
+  put<WithId<WordCountEntry>, WithId<WordCountEntry>>(
+    `entries/${entry.id}`,
+    entry,
+  );
 export const processFandom = (entryId: number) =>
   post<never, WordCountEntry>(`entries/${entryId}/processFandom`);
 export const deleteEntry = (id: number) => restDelete(`entries/${id}`);
@@ -80,7 +86,7 @@ export const selectFandoms = (year?: number) =>
 export const insertFics = (fics: Fic[]) => post<Fic[], Fic[]>(`fics`, fics);
 export const putFic = (fic: Fic) => put<Fic, Fic>(`fics/${fic.id}`, fic);
 export const selectFics = (year?: number) =>
-  get<(Fic & { id: number })[]>(`${year ? `year/${year}/` : ""}fics`);
+  get<WithId<Fic>[]>(`${year ? `year/${year}/` : ""}fics`);
 export const deleteFic = (id: number) => restDelete(`fics/${id}`);
 
 export const selectRunningTotal = (year?: number) =>
