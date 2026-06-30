@@ -1,14 +1,15 @@
-import { use, useState, type SubmitEventHandler } from 'react';
+import { use, useEffect, useState, type SubmitEventHandler } from 'react';
 import { addDays, isBefore, parse } from 'date-fns';
-import { DeleteForever, EditCalendar } from '@mui/icons-material';
+import { DeleteForever, EditCalendar, UnfoldMore } from '@mui/icons-material';
+import _ from 'lodash';
 
-import { deleteEntry, insertEntries, putEntry } from '@/api';
+import { deleteEntry, insertEntries, putEntry, selectFics } from '@/api';
 
 import { DataCacheContext } from '@/contexts/DataCache/DataCacheContext';
 import { YearContext } from '@/contexts/Year/YearContext';
 
+import type { Fic, WithId, WordCountEntry } from '@/types';
 import { countWords } from '@/utils';
-import type { WithId, WordCountEntry } from '@/types';
 
 import Button from './Button';
 import DateInput from './DateInput';
@@ -38,6 +39,8 @@ const DailyProjectWordCountForm = ({
   const { year, refreshYears } = use(YearContext)
   const { fics, refreshData } = use(DataCacheContext)
 
+  const [allFics, setAllFics] = useState<WithId<Fic>[]>([])
+  const [showOldFics, setShowOldFics] = useState<boolean>(false)
   const [showTextarea, setShowTextarea] = useState<boolean>(!values)
 
   const onCompleted = (response: WordCountEntry[]) => {
@@ -83,6 +86,10 @@ const DailyProjectWordCountForm = ({
   // default to today (unless it's after midnight but before 4AM, then default to "yesterday")
   const defaultDate = isBefore(new Date(), new Date().setHours(4)) ? addDays(new Date(), -1) : new Date()
 
+  useEffect(() => {
+    selectFics().then(af => setAllFics(_.orderBy(af, ({ name }) => name.toLowerCase())))
+  }, [])
+
   return <form
     onSubmit={handleSubmit}
     className={[className, 'flex flex-col gap-4 rounded-md p-3'].join(' ')}
@@ -93,12 +100,24 @@ const DailyProjectWordCountForm = ({
       label="Date"
       defaultValue={values?.date ? parse(values?.date, 'yyyy-MM-dd', new Date()) : addDays(defaultDate, -1)}
     />
-    <Dropdown
-      label="Fic"
-      name="ficId"
-      defaultValue={values?.ficId || ''}
-      options={fics.map(fic => ({ value: fic.id, label: fic.name }))}
-    />
+
+    <div className='flex flex-row gap-2'>
+      <Dropdown
+        label="Fic"
+        name="ficId"
+        defaultValue={values?.ficId || ''}
+        options={(showOldFics ? allFics : fics).map(fic => ({ value: fic.id, label: fic.name }))}
+      />
+      {!showOldFics && (
+        <Button
+          icon={UnfoldMore}
+          onClick={() => setShowOldFics(true)}
+          style="transparent"
+          small
+          className='self-end'
+        />
+      )}
+    </div>
 
     <Toggle
       className='flex flex-row gap-2'
