@@ -48,12 +48,12 @@ export function select<TRow>(query: string): TRow[] {
 }
 
 /** Return a parsed valid positive integer or false given a string? number. */
-export const validateYear = (year?: string) => {
-  console.log(`validating year ${year}`);
+export const validateYear = (year?: string): number | false => {
   if (!year) return false;
   const parsedYear = parseInt(year, 10);
   // falsy check covers null, undefined, NaN, 0, negative values
   if (!parsedYear || parsedYear > 2100 || parsedYear < 1900) {
+    console.log(`invalid year ${year}`);
     return false;
   }
   return parsedYear;
