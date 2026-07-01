@@ -1,16 +1,23 @@
 import express, { type Request } from "express";
 
-import { type WordCountEntry } from "../../src/types.ts";
+import {
+  type DailyWordCountFormValues,
+  type WithId,
+  type WordCountEntry,
+} from "../../src/types.ts";
 
 import { readJson } from "../csvHandler.ts";
 import {
   deleteEntry,
+  getEntriesByYear,
+  getEntry,
   insertEntry,
-  select,
+  insertFic,
+  processFandomForEntry,
   updateEntry,
 } from "../db/queries.ts";
 import { seedTables } from "../db/setup.ts";
-import { type RequestWithId } from "../types.ts";
+import { type ApiError, type RequestWithId } from "../types.ts";
 
 const entriesRouter = express.Router({
   // pass nested route params to children
@@ -31,11 +38,60 @@ entriesRouter.post("/", (req, res) => {
 });
 
 /**
+ * POST /api/entries/form
+ * BODY: DailyWordCountFormValues
+ */
+entriesRouter.post("/form", (req, res) => {
+  const formData = req.body as DailyWordCountFormValues;
+  console.log("submitting DailyWordCountForm", formData);
+
+  if (formData.id != null) {
+    if (formData.ficId == null) {
+      return res.status(400).send("Please supply a valid ficId.");
+    }
+    const entry: WithId<WordCountEntry> = {
+      id: formData.id,
+      count: formData.count,
+      ficId: formData.ficId,
+      date: formData.date,
+    };
+    updateEntry(entry);
+    return res.json(entry).status(200);
+  }
+
+  let ficId = formData.ficId;
+  if (ficId == null) {
+    if (!formData.fic) {
+      return res.status(400).send("Please supply a valid fic.");
+    }
+    if (!formData.fandom) {
+      return res.status(400).send("Please supply a valid fandom.");
+    }
+    ficId = insertFic({
+      name: formData.fic,
+      fandom: formData.fandom,
+      ship: formData.ship,
+    });
+  }
+
+  if (ficId == null) {
+    return res.status(500).send("Failed to create fic.");
+  }
+
+  const entry = insertEntry({
+    date: formData.date,
+    count: formData.count,
+    ficId,
+  });
+  return res.json(entry).status(201);
+});
+
+/**
  * GET /api/entries
  */
 entriesRouter.get("/", (_req, res) => {
   console.log("fetching word count entries");
-  const data = select("* from word_count ORDER BY date ASC");
+  const data = getEntriesByYear();
   return res.json(data).status(200);
 });
 
@@ -87,6 +143,18 @@ entriesRouter.use("/:id", (req: Request<{ id?: string }>, res, next) => {
 });
 
 /**
+ * GET /api/entries/:id
+ */
+entriesRouter.get("/:id", (req: RequestWithId, res) => {
+  console.log("getting entry #", req.params.id);
+  const entry = getEntry(req.params.id);
+  if (entry) {
+    return res.json(entry).status(200);
+  }
+  return res.sendStatus(404);
+});
+
+/**
  * DELETE /api/entries/:id
  */
 entriesRouter.delete("/:id", (req: RequestWithId, res) => {
@@ -119,6 +187,30 @@ entriesRouter.put("/:id", (req: RequestWithId, res) => {
 
   updateEntry(entry as WordCountEntry & { id: number });
   return res.json(entry).status(204);
+});
+
+/**
+ * POST /api/entries/:id/processFandom
+ */
+entriesRouter.post("/:id/processFandom", (req: RequestWithId, res) => {
+  const id = validateId(req.params.id);
+  if (!id) return res.status(400);
+
+  const entry = getEntry(id);
+  console.log("processing fandom for fic #", id);
+
+  if (entry == null) return res.status(404);
+
+  const response = processFandomForEntry(entry);
+
+  if ("status" in response) {
+    const error: ApiError = response as ApiError;
+    return error.message
+      ? res.status(error.status).send(error.message)
+      : res.sendStatus(error.status);
+  } else {
+    return res.json(response as WithId<WordCountEntry>).status(204);
+  }
 });
 
 export default entriesRouter;

@@ -1,19 +1,20 @@
 import { use, useEffect, useState } from 'react'
 import { ContentPaste } from '@mui/icons-material'
 
-import { selectAllWordCounts, selectFandomTotals, selectRunningTotal } from '@/api'
+import { exportData, selectFandoms, selectRunningTotal, selectShips } from '@/api'
 
 import Badge from '@/components/Badge'
 import Button from '@/components/Button'
 
 import { YearContext } from '@/contexts/Year/YearContext'
 
-import type { FandomTotal, RunningTotal } from '@/types'
+import type { Fandom, RunningTotal, Ship } from '@/types'
 
 import { copyPrettyJson } from '@/utils'
 
 import AllTimeFandomPieChart from './AllTimeFandomPieChart'
 import FandomLeaderboard from './FandomLeaderboard'
+import ShipLeaderboard from './ShipLeaderboard'
 import LifetimeWordCountLineChart from './LifetimeWordCountLineChart'
 import YearlyRunningWordCountLineChart from './YearlyRunningWordCountLineChart'
 
@@ -22,7 +23,8 @@ const AllTime = () => {
 
   const [runningTotals, setRunningTotals] = useState<RunningTotal[][]>()
   const [lifetimeRunningTotal, setLifetimeRunningTotal] = useState<RunningTotal[]>([])
-  const [fandomTotals, setFandomTotals] = useState<FandomTotal[]>([])
+  const [fandoms, setFandoms] = useState<Fandom[]>([])
+  const [ships, setShips] = useState<Ship[]>([])
 
   useEffect(() => {
     Promise.all(availableYears.filter(y => y != null)
@@ -31,7 +33,9 @@ const AllTime = () => {
 
     selectRunningTotal().then(setLifetimeRunningTotal)
 
-    selectFandomTotals().then(setFandomTotals)
+    selectFandoms().then(setFandoms)
+
+    selectShips().then(setShips)
   }, [])
 
   if (runningTotals == null || lifetimeRunningTotal.length === 0) return null;
@@ -45,25 +49,23 @@ const AllTime = () => {
         title="Total Fandoms"
         style="secondary"
       >
-        {fandomTotals.length}
+        {fandoms.length}
       </Badge>
       <Button
         style="transparent"
         icon={ContentPaste}
-        onClick={() => selectAllWordCounts().then(copyPrettyJson)}
+        onClick={() => exportData().then(copyPrettyJson)}
         className='self-start'
       >
         Export
       </Button>
     </div>
     <div className='flex flex-row gap-2'>
-      <FandomLeaderboard
-        fandomTotals={fandomTotals}
-        years={availableYears.filter(y => y != null)}
-      />
+      <FandomLeaderboard fandoms={fandoms} />
+      <ShipLeaderboard ships={ships} />
     </div>
     <YearlyRunningWordCountLineChart runningTotals={runningTotals} />
-    <AllTimeFandomPieChart fandomTotals={fandomTotals} />
+    <AllTimeFandomPieChart fandoms={fandoms} />
     <LifetimeWordCountLineChart lifetimeRunningTotal={lifetimeRunningTotal} />
   </div >
 }

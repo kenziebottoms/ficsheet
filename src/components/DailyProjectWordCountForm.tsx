@@ -1,15 +1,21 @@
-import { use, useState, type SubmitEventHandler } from 'react';
-import _ from 'lodash'
+import { use, useEffect, useState, type SubmitEventHandler } from 'react';
 import { addDays, isBefore, parse } from 'date-fns';
-import { Add, DeleteForever, EditCalendar } from '@mui/icons-material';
+import { Add, DeleteForever, EditCalendar, Restore } from '@mui/icons-material';
+import _ from 'lodash';
 
-import { deleteEntry, insertEntries, putEntry } from '@/api';
+import { deleteEntry, selectFics, submitDailyProjectWordCountForm } from '@/api';
 
 import { DataCacheContext } from '@/contexts/DataCache/DataCacheContext';
 import { YearContext } from '@/contexts/Year/YearContext';
 
+import type {
+  DailyWordCountFormValues,
+  DailyWordCountRawFormValues,
+  Fic,
+  WithId,
+  WordCountEntry
+} from '@/types';
 import { countWords } from '@/utils';
-import type { WordCountEntry } from '@/types';
 
 import Button from './Button';
 import DateInput from './DateInput';
@@ -18,32 +24,23 @@ import Input from './Input';
 import TextArea from './TextArea';
 import Toggle from './Toggle';
 
-export type DailyProjectWordCountFormValues = {
-  date: string;
-  fic: string;
-  fandom: string;
-  pastedWords?: string;
-  count?: string;
-}
 type Props = {
   className?: string;
   values?: Partial<WordCountEntry> | null;
   onCompleted?: (response: WordCountEntry[] | null) => void;
 }
-const DailyProjectWordCountForm = ({
+const DailyWordCountForm = ({
   className = '',
   values,
   onCompleted: _onCompleted = () => { },
 }: Props) => {
   const { year, refreshYears } = use(YearContext)
-  const { fandoms, dailyEntries, refreshData } = use(DataCacheContext)
+  const { fics, refreshData } = use(DataCacheContext)
 
-  const [guessedFicIndex, setGuessedFicIndex] = useState<number | null>(null)
-  const [guessedFandom, setGuessedFandom] = useState<string | null>(null)
-  const [typeNewFandom, setTypeNewFandom] = useState<boolean>(false)
+  const [allFics, setAllFics] = useState<WithId<Fic>[]>([])
+  const [showOldFics, setShowOldFics] = useState<boolean>(false)
   const [showTextarea, setShowTextarea] = useState<boolean>(!values)
-
-  const recentEntries = dailyEntries.slice().reverse();
+  const [typeNewFic, setTypeNewFic] = useState<boolean>(false)
 
   const onCompleted = (response: WordCountEntry[]) => {
     if (response.length > 0) {
@@ -60,99 +57,99 @@ const DailyProjectWordCountForm = ({
     // Prevent the browser from reloading the page
     e.preventDefault();
 
-    const formData = Object.fromEntries(new FormData(e.target).entries()) as DailyProjectWordCountFormValues;
-    const entry: WordCountEntry = {
-      id: values?.id,
+    const formData = Object.fromEntries(new FormData(e.target).entries()) as DailyWordCountRawFormValues;
+    const payload: DailyWordCountFormValues = {
+      id: parseInt(formData.id || '', 10) || null,
       date: formData.date,
-      fandom: formData.fandom,
-      fic: formData.fic,
-      count: parseInt(formData.count || '0', 10) || 0
+      fandom: formData.fandom || null,
+      fic: formData.fic || null,
+      ficId: parseInt(formData.ficId || '', 10) || null,
+      count: parseInt(formData.count || '', 10) || countWords(formData.pastedWords),
+      ship: formData.ship || null,
     }
 
-    if (entry.count === 0) {
-      entry.count = countWords(formData.pastedWords)
-    }
-
-    if (entry.count !== 0) {
-      if (values?.id != null) {
-        putEntry(entry).then(response => onCompleted([response]))
-      } else {
-        insertEntries([entry]).then(onCompleted)
-      }
-    } else if (entry.id != null) {
-      deleteEntry(entry.id).then(() => onCompleted([]))
-    }
-  }
-
-  const guessFandom = (fic: string) => {
-    if (fic === '') {
-      setGuessedFandom(null)
-    } else if (['journal', 'dream'].some(match => fic.toLowerCase().includes(match))) {
-      setGuessedFandom('Non-fiction')
-    } else {
-      const lastEntryForFic = dailyEntries.find((entry => entry.fic === fic))
-      if (lastEntryForFic != null) {
-        setGuessedFandom(lastEntryForFic.fandom)
-      }
+    if (payload.count !== 0) {
+      submitDailyProjectWordCountForm(payload).then(response => onCompleted([response]))
+    } else if (payload.id != null) {
+      deleteEntry(payload.id).then(() => onCompleted([]))
     }
   }
 
   // default to today (unless it's after midnight but before 4AM, then default to "yesterday")
   const defaultDate = isBefore(new Date(), new Date().setHours(4)) ? addDays(new Date(), -1) : new Date()
 
-  const fandomEntries = recentEntries.filter((entry => entry.fandom === values?.fandom))
-  const recentFandomFics = _.uniq(_.map(fandomEntries, 'fic'))
+  useEffect(() => {
+    selectFics().then(af => setAllFics(_.orderBy(af, ({ name }) => name.toLowerCase())))
+  }, [])
 
   return <form
     onSubmit={handleSubmit}
     className={[className, 'flex flex-col gap-4 rounded-md p-3'].join(' ')}
     tabIndex={-1}
   >
+    <Input
+      name="id"
+      type="number"
+      label="id"
+      defaultValue={values?.id}
+      hidden
+    />
+
     <DateInput
       name="date"
       label="Date"
       defaultValue={values?.date ? parse(values?.date, 'yyyy-MM-dd', new Date()) : addDays(defaultDate, -1)}
     />
-    <Input<string>
-      label="Fic"
-      name="fic"
-      type="text"
-      defaultValue={guessedFicIndex != null ? recentFandomFics[guessedFicIndex] : values?.fic || ''}
-      autoFocus
-      onBlur={e => guessFandom(e.target.value)}
-      onKeyDown={e => {
-        if (fandomEntries.length > 0) {
-          if (e.key === 'ArrowUp') {
-            setGuessedFicIndex(guessedFicIndex => guessedFicIndex == null ? 0 : guessedFicIndex + 1)
-          } else if (e.key === 'ArrowDown') {
-            setGuessedFicIndex(oldFicIndex => (oldFicIndex != null && oldFicIndex > 0) ? (oldFicIndex - 1) : null)
-          }
-        }
-      }}
-    />
 
     <div className='flex flex-row gap-2'>
-      {typeNewFandom ? <Input<string>
-        label="Fandom"
-        name="fandom"
-        type="text"
-        defaultValue={guessedFandom || values?.fandom || ''}
-      /> : <>
+      {typeNewFic ?
+        <Input
+          label="Fic"
+          name="fic"
+          type="text"
+          defaultValue={values?.fic}
+        /> :
         <Dropdown
-          label="Fandom"
-          placeholder='Select a fandom'
-          name="fandom"
-          options={fandoms}
-          defaultValue={guessedFandom || values?.fandom || ''}
-        />
+          label="Fic"
+          name="ficId"
+          defaultValue={values?.ficId}
+          options={(showOldFics ? allFics : fics).map(fic => ({ value: fic.id, label: fic.name }))}
+        />}
+      {!showOldFics && !typeNewFic && (
         <Button
+          icon={Restore}
+          onClick={() => setShowOldFics(true)}
           style="transparent"
-          icon={Add}
+          small
           className='self-end'
-          onClick={() => setTypeNewFandom(true)}
+          aria-label="Show Older Fics"
         />
-      </>}
+      )}
+      {!typeNewFic && (
+        <Button
+          icon={Add}
+          onClick={() => setTypeNewFic(true)}
+          style="transparent"
+          small
+          className='self-end'
+          aria-label="Add new fic"
+        />
+      )}
     </div>
+
+    {typeNewFic && <Input
+      label="Fandom"
+      name="fandom"
+      type="text"
+      defaultValue={values?.fandom}
+    />}
+
+    {typeNewFic && <Input
+      label="Ship"
+      name="ship"
+      type="text"
+      defaultValue={values?.ship}
+    />}
 
     <Toggle
       className='flex flex-row gap-2'
@@ -171,7 +168,7 @@ const DailyProjectWordCountForm = ({
         label="Word count"
         type="number"
         name="count"
-        defaultValue={values?.count || ''}
+        defaultValue={values?.count}
       />}
 
     <Button
@@ -181,7 +178,7 @@ const DailyProjectWordCountForm = ({
     >
       {values?.id == null ? 'Log' : 'Update'} word count
     </Button>
-    {!!values && values.id != null && (
+    {values?.id != null && (
       <Button
         style="cautionary"
         icon={DeleteForever}
@@ -194,4 +191,4 @@ const DailyProjectWordCountForm = ({
   </form>
 }
 
-export default DailyProjectWordCountForm
+export default DailyWordCountForm

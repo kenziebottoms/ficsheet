@@ -11,6 +11,26 @@ export type DailyTotal = {
   daily_total: number;
 };
 
+export type DailyWordCountRawFormValues = {
+  id?: string;
+  date: string;
+  fic?: string;
+  ficId?: string;
+  fandom?: string;
+  ship?: string;
+  pastedWords?: string;
+  count?: string;
+};
+export type DailyWordCountFormValues = {
+  id: number | null;
+  date: string;
+  fic: string | null;
+  ficId: number | null;
+  fandom: string | null;
+  ship: string | null;
+  count: number;
+};
+
 export const DaysOfWeek = [
   "Sunday",
   "Monday",
@@ -27,13 +47,18 @@ export type DropdownOption<T> = {
   label: string;
 };
 
-export type FandomTotal = {
-  fandom: string;
-  count: number;
+export type Fandom = {
+  name: string;
+  firstWritten: string;
+  lastWritten: string;
+  totalWordsWritten: number;
 };
 
-export type Timeframe = {
-  label: string;
+export type Fic = {
+  id: number | undefined;
+  name: string;
+  fandom: string;
+  ship: string | null;
   firstWritten: string;
   lastWritten: string;
 };
@@ -41,7 +66,7 @@ export type Timeframe = {
 export type MonthContextValue = {
   month: number | null;
   setMonth: (newMonth: number | null) => void;
-  filteredEntries: WordCountEntry[];
+  filteredEntries: WithId<WordCountEntry>[];
   filteredDailyTotals: DailyTotal[];
 };
 
@@ -65,6 +90,14 @@ export type RunningTotal = {
   running_total: number;
 };
 
+export type Ship = {
+  name: string;
+  fandom: string;
+  firstWritten: string;
+  lastWritten: string;
+  totalWordsWritten: number;
+};
+
 export type TimelineData = {
   label: string;
   range: [number, number][];
@@ -77,9 +110,10 @@ export type WithId<T> = T & {
 export type WordCountEntry = {
   id?: number;
   date: string;
-  fic: string;
-  fandom: string;
-  ship: string | null;
+  fic?: string;
+  fandom?: string;
+  ship?: string | null;
+  ficId?: number | null;
   count: number;
 };
 
@@ -97,9 +131,8 @@ export type YearContextValue = {
 export type DataCache = {
   dailyEntries: WordCountEntry[];
   dailyTotals: DailyTotal[];
-  fandoms: string[];
-  fandomTimelines: Timeframe[];
-  ficTimelines: Timeframe[];
+  fandoms: Fandom[];
+  fics: WithId<Fic>[];
   runningTotal: RunningTotal[];
   refreshData: (year: number) => void;
 };

@@ -10,6 +10,7 @@ import { getLongestStreak } from "../utils";
 import DailyWordCountStats from "./DailyWordCountStats";
 import DayOfWeekRadar from "./DayOfWeekRadar";
 import FandomPie from './FandomPie';
+import ShipPie from "./ShipPie";
 
 const MonthlyCharts = () => {
   const { filteredDailyTotals } = use(MonthContext)
@@ -27,6 +28,7 @@ const MonthlyCharts = () => {
     <div className="flex flex-row flex-wrap gap-3 items-start">
       <DailyWordCountStats />
       <FandomPie />
+      <ShipPie />
       <DayOfWeekRadar />
     </div>
   </>

@@ -4,8 +4,10 @@ import {
   type WordCountEntry,
   type RunningTotal,
   type DailyTotal,
-  type FandomTotal,
-  type Timeframe,
+  type DailyWordCountFormValues,
+  type Fic,
+  type Fandom,
+  type Ship,
   type WithId,
 } from "@/types";
 
@@ -56,6 +58,10 @@ async function restDelete(path: string): Promise<null> {
   });
 }
 
+export const exportData = (year?: number) =>
+  get<{ entries: WithId<WordCountEntry>[]; fics: WithId<Fic>[] }>(
+    `${year ? `year/${year}/` : ""}export`,
+  );
 export const insertEntries = (entries: WordCountEntry[]) =>
   post<WordCountEntry[], WithId<WordCountEntry>[]>(`entries`, entries);
 export const putEntry = (entry: WithId<WordCountEntry>) =>
@@ -63,6 +69,10 @@ export const putEntry = (entry: WithId<WordCountEntry>) =>
     `entries/${entry.id}`,
     entry,
   );
+export const processFandom = (entryId: number) =>
+  post<never, WithId<WordCountEntry>>(`entries/${entryId}/processFandom`);
+export const processFandomsForYear = (year: number) =>
+  post<never, WithId<WordCountEntry>[]>(`year/${year}/entries/processFandoms`);
 export const deleteEntry = (id: number) => restDelete(`entries/${id}`);
 export const selectAllWordCounts = (year?: number) =>
   get<WordCountEntry[]>(`${year ? `year/${year}/` : ""}entries`);
@@ -75,15 +85,25 @@ export const selectDailyTotals = (year: number) =>
       }),
     ),
   );
-export const selectFandoms = (year: number) =>
-  get<string[]>(`year/${year}/fandoms`);
-export const selectFandomTimelines = (year: number) =>
-  get<Timeframe[]>(`year/${year}/fandomTimelines`);
-export const selectFicTimelines = (year: number) =>
-  get<Timeframe[]>(`year/${year}/ficTimelines`);
-export const selectFandomTotals = () => get<FandomTotal[]>("fandomTotals");
+export const selectFandoms = (year?: number) =>
+  get<Fandom[]>(`${year ? `year/${year}/` : ""}fandoms`);
+export const selectShips = () => get<Ship[]>(`ships`);
+export const insertFics = (fics: Fic[]) => post<Fic[], Fic[]>(`fics`, fics);
+export const putFic = (fic: Fic) => put<Fic, Fic>(`fics/${fic.id}`, fic);
+export const selectFics = (year?: number) =>
+  get<WithId<Fic>[]>(`${year ? `year/${year}/` : ""}fics`);
+export const deleteFic = (id: number) => restDelete(`fics/${id}`);
+
 export const selectRunningTotal = (year?: number) =>
   get<RunningTotal[]>(`${year ? `year/${year}/` : ""}runningTotal`);
 export const deleteEntriesByYear = (year: number) =>
   restDelete(`year/${year}/entries`);
 export const selectAvailableYears = () => get<number[]>("years");
+
+export const submitDailyProjectWordCountForm = (
+  formData: DailyWordCountFormValues,
+) =>
+  post<DailyWordCountFormValues, WithId<WordCountEntry>>(
+    `entries/form`,
+    formData,
+  );

@@ -1,5 +1,7 @@
 import { use, useState } from 'react';
-import { Edit } from '@mui/icons-material';
+import { Edit, Refresh } from '@mui/icons-material';
+
+import { processFandom } from '@/api';
 
 import Button from '@/components/Button';
 import DailyProjectWordCountForm from '@/components/DailyProjectWordCountForm';
@@ -14,7 +16,7 @@ import type { WithId, WordCountEntry } from '@/types';
 const EntryButton = ({
   entry
 }: {
-  entry: WithId<WordCountEntry>;
+  entry: WithId<WordCountEntry>
 }) => {
   const { refreshData } = use(DataCacheContext)
   const { year } = use(YearContext)
@@ -40,6 +42,12 @@ const EntryButton = ({
       <Pill style="primary" className="rounded-r-none">
         {entry.fic}
       </Pill>
+      {entry.ficId == null && <Button
+        icon={Refresh}
+        style="cautionary"
+        className='rounded-none'
+        onClick={() => processFandom(entry.id).then(() => refreshData(year))}
+      />}
       <Button
         style="transparent"
         small

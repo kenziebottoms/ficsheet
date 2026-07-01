@@ -2,28 +2,28 @@ import { PieChart } from '@mui/x-charts';
 
 import Widget from '@/components/Widget';
 
-import type { FandomTotal } from '@/types'
+import type { Fandom } from '@/types'
 
 import { getDynamicColorPalette } from '../Charts/constants';
 
 const AllTimeFandomPieChart = ({
-  fandomTotals
+  fandoms
 }: {
-  fandomTotals: FandomTotal[];
+  fandoms: Fandom[];
 }) => {
-  if (fandomTotals == null) return null;
+  if (fandoms == null) return null;
 
-  const data = fandomTotals.map(({ fandom, count }) => ({
-    label: fandom,
-    value: count,
+  const data = fandoms.map(({ name, totalWordsWritten }) => ({
+    label: name,
+    value: totalWordsWritten,
   }))
 
   return <Widget title="Word Count By Fandom">
     <PieChart
       series={[{ data, innerRadius: '50%' }]}
-      width={1200}
+      width={800}
       height={800}
-      colors={getDynamicColorPalette(fandomTotals.length)}
+      colors={getDynamicColorPalette(fandoms.length)}
       slotProps={{ legend: { direction: 'vertical' } }}
     />
   </Widget>

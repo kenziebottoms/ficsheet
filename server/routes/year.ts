@@ -1,14 +1,23 @@
 import express, { type Request } from "express";
+import _ from "lodash";
 
-import { type RunningTotal, type Timeframe } from "../../src/types.ts";
+import {
+  type WithId,
+  type WordCountEntry,
+  type RunningTotal,
+} from "../../src/types.ts";
 
 import {
   deleteEntriesByYear,
+  getEntriesByYear,
+  getFandomsByYear,
+  getFicsByYear,
   getYearlyWhereClause,
+  processFandomForEntry,
   select,
   validateYear,
 } from "../db/queries.ts";
-import { type YearRequest } from "../types.ts";
+import { type ApiError, type YearRequest } from "../types.ts";
 
 const yearRouter = express.Router({
   // pass nested route params to children
@@ -44,10 +53,31 @@ yearRouter.get("/dailyTotals", (req: YearRequest, res) => {
  */
 yearRouter.get("/entries", (req: YearRequest, res) => {
   console.log(`fetching word counts (${req.params.year})`);
-  const data = select(
-    `* FROM word_count ${getYearlyWhereClause(req.params.year)} ORDER BY date ASC`,
-  );
+  const data = getEntriesByYear(req.params.year);
   return res.json(data).status(200);
+});
+
+/**
+ * POST /api/year/:year/entries/processFandoms
+ */
+yearRouter.post("/entries/processFandoms", (req: YearRequest, res) => {
+  console.log(`processing fandoms (${req.params.year})`);
+  const entries = getEntriesByYear(req.params.year);
+  const results = entries.map(processFandomForEntry);
+  const errors = results.filter(
+    (result) =>
+      _.get(result, "status") != null && _.get(result, "status") !== 304,
+  ) as ApiError[];
+  const newEntries = results.filter(
+    (result) => _.get(result, "id") != null,
+  ) as WithId<WordCountEntry>[];
+
+  return res
+    .json({
+      errors,
+      newEntries,
+    })
+    .sendStatus(errors.length > 0 ? 300 : 201);
 });
 
 /**
@@ -60,35 +90,30 @@ yearRouter.delete("/entries", (req: YearRequest, res) => {
 });
 
 /**
+ * GET /api/year/:year/export
+ */
+yearRouter.get("/export", (req: YearRequest, res) => {
+  console.log(`fetching fics (${req.params.year})`);
+  const entries = getEntriesByYear(req.params.year);
+  const fics = getFicsByYear(req.params.year);
+  return res.json({ entries, fics }).status(200);
+});
+
+/**
  * GET /api/year/:year/fandoms
  */
 yearRouter.get("/fandoms", (req: YearRequest, res) => {
   console.log(`fetching fandoms (${req.params.year}`);
-  const data = select<{ fandom: string }>(
-    `DISTINCT fandom FROM word_count ${getYearlyWhereClause(req.params.year)} ORDER BY fandom ASC`,
-  );
-  return res.json(data.map(({ fandom }) => fandom)).status(200);
-});
-
-/**
- * GET /api/year/:year/fandomTimelines
- */
-yearRouter.get("/fandomTimelines", (req: YearRequest, res) => {
-  console.log(`fetching fandom timelines (${req.params.year}`);
-  const data = select<Timeframe>(
-    `DISTINCT min(date) as firstWritten, max(date) as lastWritten, fandom as label FROM word_count ${getYearlyWhereClause(req.params.year)} GROUP BY fandom ORDER BY firstWritten ASC`,
-  );
+  const data = getFandomsByYear(req.params.year);
   return res.json(data).status(200);
 });
 
 /**
- * GET /api/year/:year/ficTimelines
+ * GET /api/year/:year/fics
  */
-yearRouter.get("/ficTimelines", (req: YearRequest, res) => {
-  console.log(`fetching fic timelines (${req.params.year}`);
-  const data = select<Timeframe>(
-    `DISTINCT min(date) as firstWritten, max(date) as lastWritten, fic as label FROM word_count ${getYearlyWhereClause(req.params.year)} GROUP BY fic ORDER BY firstWritten ASC`,
-  );
+yearRouter.get("/fics", (req: YearRequest, res) => {
+  console.log(`fetching fics (${req.params.year})`);
+  const data = getFicsByYear(req.params.year);
   return res.json(data).status(200);
 });
 

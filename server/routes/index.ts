@@ -1,10 +1,17 @@
 import express from "express";
 
-import { type FandomTotal, type RunningTotal } from "../../src/types.ts";
+import { type RunningTotal } from "../../src/types.ts";
 
-import { select } from "../db/queries.ts";
+import {
+  getAllShips,
+  getEntriesByYear,
+  getFandomsByYear,
+  getFicsByYear,
+  select,
+} from "../db/queries.ts";
 
 import entriesRouter from "./entries.ts";
+import ficsRouter from "./fics.ts";
 import yearRouter from "./year.ts";
 
 const apiRouter = express.Router({
@@ -16,11 +23,24 @@ const apiRouter = express.Router({
 
 apiRouter.use("/entries", entriesRouter);
 
-apiRouter.get("/fandomTotals", (req, res) => {
-  console.log("fetching fandom totals (all time)");
-  const data = select<FandomTotal>(
-    `fandom, SUM(count) as count from word_count GROUP BY fandom`,
-  );
+/**
+ * GET /api/export
+ */
+apiRouter.get("/export", (_req, res) => {
+  console.log(`fetching fics (all time)`);
+  const entries = getEntriesByYear();
+  const fics = getFicsByYear();
+  return res.json({ entries, fics }).status(200);
+});
+
+apiRouter.use("/fics", ficsRouter);
+
+/**
+ * GET /api/fandoms
+ */
+apiRouter.get("/fandoms", (_req, res) => {
+  console.log("fetching fandoms (all time)");
+  const data = getFandomsByYear();
   return res.json(data).status(200);
 });
 
@@ -32,6 +52,15 @@ apiRouter.get("/runningTotal", (_req, res) => {
   const data = select<RunningTotal>(
     `date, strftime('%m-%d', date) as monthDay, SUM(count) OVER (ORDER BY date) AS running_total FROM word_count`,
   );
+  return res.json(data).status(200);
+});
+
+/**
+ * GET /api/ships
+ */
+apiRouter.get("/ships", (_req, res) => {
+  console.log("Getting ships (all time)");
+  const data = getAllShips();
   return res.json(data).status(200);
 });
 

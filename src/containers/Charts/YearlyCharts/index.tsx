@@ -1,10 +1,12 @@
 import { use, useEffect, useState } from 'react';
-import { AutoDelete, AutoStories, ContentPaste, Delete, Equalizer, TableChart, type SvgIconComponent } from '@mui/icons-material';
+import { AutoDelete, AutoMode, AutoStories, ContentPaste, Delete, Equalizer, NoteAdd, TableChart, type SvgIconComponent } from '@mui/icons-material';
 
-import { deleteEntriesByYear, selectAllWordCounts } from '@/api';
+import { deleteEntriesByYear, exportData, processFandomsForYear } from '@/api';
 
 import Button from '@/components/Button';
+import FicForm from '@/components/FicForm';
 import Toggle from '@/components/Toggle';
+import Modal from '@/components/Modal';
 
 import { DataCacheContext } from '@/contexts/DataCache/DataCacheContext';
 import { MonthProvider } from '@/contexts/Month/MonthProvider';
@@ -37,6 +39,7 @@ const YearlyCharts = () => {
   const [activeTab, setActiveTab] = useState<MonthlyChartTabName>('charts')
   const [showEmpty, setShowEmpty] = useState<boolean>(false)
   const [confirmDelete, setConfirmDelete] = useState<boolean>(false)
+  const [showFicForm, setShowFicForm] = useState<boolean>(false)
 
   // must click delete button twice within 5 seconds to delete
   useEffect(() => {
@@ -50,7 +53,7 @@ const YearlyCharts = () => {
   if (year == null) return null;
 
   const handleExport = () => {
-    selectAllWordCounts(year).then(copyPrettyJson)
+    exportData(year).then(copyPrettyJson)
   }
 
   const handleDelete = () => {
@@ -92,6 +95,14 @@ const YearlyCharts = () => {
             {confirmDelete && <em>Please</em>} Delete {year}
           </Button>
           <Button
+            style="cautionary"
+            icon={AutoMode}
+            onClick={() => processFandomsForYear(year).then(() => refreshData(year))}
+            small
+          >
+            Migrate Fandoms
+          </Button>
+          <Button
             style="transparent"
             icon={ContentPaste}
             onClick={handleExport}
@@ -106,10 +117,31 @@ const YearlyCharts = () => {
             className="text-sm"
           />
         </>}
+
+        {activeTab === 'fics' && <>
+          <div className='grow' />
+          <Button
+            icon={NoteAdd}
+            onClick={() => setShowFicForm(true)}
+            small
+            style="transparent"
+          >
+            New Fic
+          </Button>
+        </>}
       </div>
       {activeTab === 'charts' && <MonthlyCharts />}
       {activeTab === 'history' && <History showEmpty={showEmpty} />}
       {activeTab === 'fics' && <FicManager />}
+      <Modal
+        open={showFicForm}
+        setOpen={setShowFicForm}
+      >
+        <FicForm
+          className='bg-zinc-800'
+          onCompleted={() => setShowFicForm(false)}
+        />
+      </Modal>
     </MonthProvider>
   </div>
 }

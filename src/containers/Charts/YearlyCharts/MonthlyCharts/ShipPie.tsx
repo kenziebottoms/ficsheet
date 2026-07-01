@@ -8,24 +8,24 @@ import Widget from '@/components/Widget';
 
 import { getDynamicColorPalette } from '../../constants';
 
-const FandomPie = () => {
+const ShipPie = () => {
   const { filteredEntries } = use(MonthContext)
 
-  const fandoms = _.uniq(_.map(filteredEntries, 'fandom')).sort()
-  const data = fandoms.map((fandom, i) => ({
+  const ships = _.uniq(_.map(filteredEntries, 'ship')).sort()
+  const data = ships.map((ship, i) => ({
     id: i,
-    label: fandom,
-    value: _.sumBy(_.filter(filteredEntries, { fandom }), 'count'),
+    label: ship ?? 'N/A',
+    value: _.sumBy(_.filter(filteredEntries, { ship }), 'count'),
   }))
 
-  return <Widget title="Word Count By Fandom" className='grow self-stretch'>
+  return <Widget title="Word Count By Ship" className='grow self-stretch'>
     <PieChart
       series={[{ data }]}
       width={300}
       height={300}
-      colors={getDynamicColorPalette(fandoms.length)}
+      colors={getDynamicColorPalette(ships.length)}
     />
   </Widget>
 }
 
-export default FandomPie
+export default ShipPie

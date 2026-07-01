@@ -5,7 +5,6 @@ export default [
     count: 368,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 43,
@@ -13,7 +12,6 @@ export default [
     count: 11,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 44,
@@ -21,7 +19,6 @@ export default [
     count: 52,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 45,
@@ -29,7 +26,6 @@ export default [
     count: 50,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 46,
@@ -37,7 +33,6 @@ export default [
     count: 19,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 47,
@@ -45,7 +40,6 @@ export default [
     count: 58,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 48,
@@ -53,7 +47,6 @@ export default [
     count: 239,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 49,
@@ -61,7 +54,6 @@ export default [
     count: 171,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 50,
@@ -69,7 +61,6 @@ export default [
     count: 71,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 51,
@@ -77,7 +68,6 @@ export default [
     count: 136,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 52,
@@ -85,7 +75,6 @@ export default [
     count: 46,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 53,
@@ -93,7 +82,6 @@ export default [
     count: 71,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 54,
@@ -101,7 +89,6 @@ export default [
     count: 157,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 55,
@@ -109,7 +96,6 @@ export default [
     count: 66,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 56,
@@ -117,7 +103,6 @@ export default [
     count: 407,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 57,
@@ -125,7 +110,6 @@ export default [
     count: 44,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 58,
@@ -133,7 +117,6 @@ export default [
     count: 23,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 59,
@@ -141,7 +124,6 @@ export default [
     count: 8,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 60,
@@ -149,7 +131,6 @@ export default [
     count: 440,
     fic: "journaling",
     fandom: "Non-fiction",
-    ship: null,
   },
   {
     id: 61,
@@ -157,7 +138,6 @@ export default [
     count: 127,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 62,
@@ -165,7 +145,6 @@ export default [
     count: 2,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 63,
@@ -173,7 +152,6 @@ export default [
     count: 80,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 64,
@@ -181,7 +159,6 @@ export default [
     count: 665,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 65,
@@ -189,7 +166,6 @@ export default [
     count: 217,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 66,
@@ -197,7 +173,6 @@ export default [
     count: 398,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 67,
@@ -205,7 +180,6 @@ export default [
     count: 531,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 68,
@@ -213,7 +187,6 @@ export default [
     count: 59,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 69,
@@ -221,7 +194,6 @@ export default [
     count: 551,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 70,
@@ -229,7 +201,6 @@ export default [
     count: 133,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 71,
@@ -237,7 +208,6 @@ export default [
     count: 123,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 72,
@@ -245,7 +215,6 @@ export default [
     count: 93,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 73,
@@ -253,7 +222,6 @@ export default [
     count: 734,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 74,
@@ -261,7 +229,6 @@ export default [
     count: 59,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 75,
@@ -269,7 +236,6 @@ export default [
     count: 22,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 76,
@@ -277,7 +243,6 @@ export default [
     count: 355,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 77,
@@ -285,7 +250,6 @@ export default [
     count: 102,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 78,
@@ -293,7 +257,6 @@ export default [
     count: 260,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 79,
@@ -301,7 +264,6 @@ export default [
     count: 4,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 80,
@@ -309,7 +271,6 @@ export default [
     count: 52,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 81,
@@ -317,7 +278,6 @@ export default [
     count: 97,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 82,
@@ -325,7 +285,6 @@ export default [
     count: 89,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 83,
@@ -333,7 +292,6 @@ export default [
     count: 209,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 84,
@@ -341,7 +299,6 @@ export default [
     count: 49,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 85,
@@ -349,7 +306,6 @@ export default [
     count: 78,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 86,
@@ -357,7 +313,6 @@ export default [
     count: 55,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 87,
@@ -365,7 +320,6 @@ export default [
     count: 173,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 88,
@@ -373,7 +327,6 @@ export default [
     count: 19,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 89,
@@ -381,7 +334,6 @@ export default [
     count: 66,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 90,
@@ -389,7 +341,6 @@ export default [
     count: 267,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 91,
@@ -397,7 +348,6 @@ export default [
     count: 102,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 92,
@@ -405,7 +355,6 @@ export default [
     count: 55,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 93,
@@ -413,7 +362,6 @@ export default [
     count: 109,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 94,
@@ -421,7 +369,6 @@ export default [
     count: 14,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 95,
@@ -429,7 +376,6 @@ export default [
     count: 78,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 96,
@@ -437,7 +383,6 @@ export default [
     count: 80,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 97,
@@ -445,7 +390,6 @@ export default [
     count: 560,
     fic: "journaling",
     fandom: "Non-fiction",
-    ship: null,
   },
   {
     id: 98,
@@ -453,7 +397,6 @@ export default [
     count: 11,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 99,
@@ -461,7 +404,6 @@ export default [
     count: 22,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 100,
@@ -469,7 +411,6 @@ export default [
     count: 193,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 101,
@@ -477,7 +418,6 @@ export default [
     count: 27,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 102,
@@ -485,7 +425,6 @@ export default [
     count: 157,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 103,
@@ -493,7 +432,6 @@ export default [
     count: 339,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 104,
@@ -501,7 +439,6 @@ export default [
     count: 249,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 105,
@@ -509,7 +446,6 @@ export default [
     count: 9,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 106,
@@ -517,7 +453,6 @@ export default [
     count: 101,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 107,
@@ -525,7 +460,6 @@ export default [
     count: 190,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 108,
@@ -533,7 +467,6 @@ export default [
     count: 120,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 109,
@@ -541,7 +474,6 @@ export default [
     count: 64,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 110,
@@ -549,7 +481,6 @@ export default [
     count: 3,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 111,
@@ -557,7 +488,6 @@ export default [
     count: 3,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 112,
@@ -565,7 +495,6 @@ export default [
     count: 41,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 113,
@@ -573,7 +502,6 @@ export default [
     count: 31,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 114,
@@ -581,7 +509,6 @@ export default [
     count: 326,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 115,
@@ -589,7 +516,6 @@ export default [
     count: 46,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 116,
@@ -597,7 +523,6 @@ export default [
     count: 108,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 117,
@@ -605,7 +530,6 @@ export default [
     count: 293,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 118,
@@ -613,7 +537,6 @@ export default [
     count: 200,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 119,
@@ -621,7 +544,6 @@ export default [
     count: 288,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 120,
@@ -629,7 +551,6 @@ export default [
     count: 126,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 121,
@@ -637,7 +558,6 @@ export default [
     count: 14,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 122,
@@ -645,7 +565,6 @@ export default [
     count: 25,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 123,
@@ -653,7 +572,6 @@ export default [
     count: 15,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 124,
@@ -661,7 +579,6 @@ export default [
     count: 201,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 125,
@@ -669,7 +586,6 @@ export default [
     count: 325,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 126,
@@ -677,7 +593,6 @@ export default [
     count: 10,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 127,
@@ -685,7 +600,6 @@ export default [
     count: 79,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 128,
@@ -693,7 +607,6 @@ export default [
     count: 153,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 129,
@@ -701,7 +614,6 @@ export default [
     count: 2,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 130,
@@ -709,7 +621,6 @@ export default [
     count: 17,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 131,
@@ -717,7 +628,6 @@ export default [
     count: 232,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 132,
@@ -725,7 +635,6 @@ export default [
     count: 533,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 133,
@@ -733,7 +642,6 @@ export default [
     count: 3,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 134,
@@ -741,7 +649,6 @@ export default [
     count: 178,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 135,
@@ -749,7 +656,6 @@ export default [
     count: 13,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 136,
@@ -757,7 +663,6 @@ export default [
     count: 105,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 137,
@@ -765,7 +670,6 @@ export default [
     count: 42,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 138,
@@ -773,7 +677,6 @@ export default [
     count: 280,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 139,
@@ -781,7 +684,6 @@ export default [
     count: 145,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 140,
@@ -789,7 +691,6 @@ export default [
     count: 48,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 141,
@@ -797,7 +698,6 @@ export default [
     count: 434,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 142,
@@ -805,7 +705,6 @@ export default [
     count: 59,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 143,
@@ -813,7 +712,6 @@ export default [
     count: 107,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 144,
@@ -821,7 +719,6 @@ export default [
     count: 44,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 145,
@@ -829,7 +726,6 @@ export default [
     count: 66,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 146,
@@ -837,7 +733,6 @@ export default [
     count: 57,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 147,
@@ -845,7 +740,6 @@ export default [
     count: 28,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 148,
@@ -853,7 +747,6 @@ export default [
     count: 153,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 149,
@@ -861,7 +754,6 @@ export default [
     count: 83,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 150,
@@ -869,7 +761,6 @@ export default [
     count: 11,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 151,
@@ -877,7 +768,6 @@ export default [
     count: 366,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 152,
@@ -885,7 +775,6 @@ export default [
     count: 5,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 153,
@@ -893,7 +782,6 @@ export default [
     count: 27,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 154,
@@ -901,7 +789,6 @@ export default [
     count: 4,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 155,
@@ -909,7 +796,6 @@ export default [
     count: 292,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 156,
@@ -917,7 +803,6 @@ export default [
     count: 5,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 157,
@@ -925,7 +810,6 @@ export default [
     count: 268,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 158,
@@ -933,7 +817,6 @@ export default [
     count: 101,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 159,
@@ -941,7 +824,6 @@ export default [
     count: 65,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 160,
@@ -949,7 +831,6 @@ export default [
     count: 13,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 161,
@@ -957,7 +838,6 @@ export default [
     count: 4,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 162,
@@ -965,7 +845,6 @@ export default [
     count: 23,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 163,
@@ -973,7 +852,6 @@ export default [
     count: 72,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 164,
@@ -981,7 +859,6 @@ export default [
     count: 11,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 165,
@@ -989,7 +866,6 @@ export default [
     count: 283,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 166,
@@ -997,7 +873,6 @@ export default [
     count: 88,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 167,
@@ -1005,7 +880,6 @@ export default [
     count: 43,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 168,
@@ -1013,7 +887,6 @@ export default [
     count: 11,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 169,
@@ -1021,7 +894,6 @@ export default [
     count: 189,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 170,
@@ -1029,7 +901,6 @@ export default [
     count: 26,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 171,
@@ -1037,7 +908,6 @@ export default [
     count: 39,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 172,
@@ -1045,7 +915,6 @@ export default [
     count: 97,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 173,
@@ -1053,7 +922,6 @@ export default [
     count: 443,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 174,
@@ -1061,7 +929,6 @@ export default [
     count: 237,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 175,
@@ -1069,7 +936,6 @@ export default [
     count: 131,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 176,
@@ -1077,7 +943,6 @@ export default [
     count: 107,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 177,
@@ -1085,7 +950,6 @@ export default [
     count: 42,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 178,
@@ -1093,7 +957,6 @@ export default [
     count: 134,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 179,
@@ -1101,7 +964,6 @@ export default [
     count: 19,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 180,
@@ -1109,7 +971,6 @@ export default [
     count: 20,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 181,
@@ -1117,7 +978,6 @@ export default [
     count: 199,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 182,
@@ -1125,7 +985,6 @@ export default [
     count: 63,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 183,
@@ -1133,7 +992,6 @@ export default [
     count: 41,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 184,
@@ -1141,7 +999,6 @@ export default [
     count: 88,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 185,
@@ -1149,7 +1006,6 @@ export default [
     count: 37,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 186,
@@ -1157,7 +1013,6 @@ export default [
     count: 98,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 187,
@@ -1165,7 +1020,6 @@ export default [
     count: 2,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 188,
@@ -1173,7 +1027,6 @@ export default [
     count: 74,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 189,
@@ -1181,7 +1034,6 @@ export default [
     count: 57,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 190,
@@ -1189,7 +1041,6 @@ export default [
     count: 149,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 191,
@@ -1197,7 +1048,6 @@ export default [
     count: 229,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 192,
@@ -1205,7 +1055,6 @@ export default [
     count: 11,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 193,
@@ -1213,7 +1062,6 @@ export default [
     count: 2,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 194,
@@ -1221,7 +1069,6 @@ export default [
     count: 161,
     fic: "out of the blue",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 195,
@@ -1229,7 +1076,6 @@ export default [
     count: 310,
     fic: "coffee shop AU",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 196,
@@ -1237,7 +1083,6 @@ export default [
     count: 19,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 197,
@@ -1245,7 +1090,6 @@ export default [
     count: 41,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 198,
@@ -1253,7 +1097,6 @@ export default [
     count: 28,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 199,
@@ -1261,7 +1104,6 @@ export default [
     count: 163,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 200,
@@ -1269,7 +1111,6 @@ export default [
     count: 37,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 201,
@@ -1277,7 +1118,6 @@ export default [
     count: 8,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 202,
@@ -1285,7 +1125,6 @@ export default [
     count: 3,
     fic: "coffee shop AU",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 203,
@@ -1293,7 +1132,6 @@ export default [
     count: 33,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 204,
@@ -1301,7 +1139,6 @@ export default [
     count: 44,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 205,
@@ -1309,7 +1146,6 @@ export default [
     count: 3,
     fic: "coffee shop AU 2",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 206,
@@ -1317,7 +1153,6 @@ export default [
     count: 127,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 207,
@@ -1325,7 +1160,6 @@ export default [
     count: 87,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 208,
@@ -1333,7 +1167,6 @@ export default [
     count: 375,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 209,
@@ -1341,7 +1174,6 @@ export default [
     count: 29,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 210,
@@ -1349,7 +1181,6 @@ export default [
     count: 80,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 211,
@@ -1357,7 +1188,6 @@ export default [
     count: 158,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 212,
@@ -1365,7 +1195,6 @@ export default [
     count: 729,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 213,
@@ -1373,7 +1202,6 @@ export default [
     count: 7,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 214,
@@ -1381,7 +1209,6 @@ export default [
     count: 395,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 215,
@@ -1389,7 +1216,6 @@ export default [
     count: 24,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 216,
@@ -1397,7 +1223,6 @@ export default [
     count: 285,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 217,
@@ -1405,7 +1230,6 @@ export default [
     count: 182,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 218,
@@ -1413,7 +1237,6 @@ export default [
     count: 43,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 219,
@@ -1421,7 +1244,6 @@ export default [
     count: 56,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 220,
@@ -1429,7 +1251,6 @@ export default [
     count: 52,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 221,
@@ -1437,7 +1258,6 @@ export default [
     count: 37,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 222,
@@ -1445,7 +1265,6 @@ export default [
     count: 62,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 223,
@@ -1453,7 +1272,6 @@ export default [
     count: 476,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 224,
@@ -1461,7 +1279,6 @@ export default [
     count: 92,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 225,
@@ -1469,7 +1286,6 @@ export default [
     count: 234,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 226,
@@ -1477,7 +1293,6 @@ export default [
     count: 139,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 227,
@@ -1485,7 +1300,6 @@ export default [
     count: 180,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 228,
@@ -1493,7 +1307,6 @@ export default [
     count: 149,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 229,
@@ -1501,7 +1314,6 @@ export default [
     count: 5,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 230,
@@ -1509,7 +1321,6 @@ export default [
     count: 42,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 231,
@@ -1517,7 +1328,6 @@ export default [
     count: 41,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 232,
@@ -1525,7 +1335,6 @@ export default [
     count: 20,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 233,
@@ -1533,7 +1342,6 @@ export default [
     count: 25,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 234,
@@ -1541,7 +1349,6 @@ export default [
     count: 4,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 235,
@@ -1549,7 +1356,6 @@ export default [
     count: 29,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 236,
@@ -1557,7 +1363,6 @@ export default [
     count: 31,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 237,
@@ -1565,7 +1370,6 @@ export default [
     count: 24,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 238,
@@ -1573,7 +1377,6 @@ export default [
     count: 65,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 239,
@@ -1581,7 +1384,6 @@ export default [
     count: 6,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 240,
@@ -1589,7 +1391,6 @@ export default [
     count: 430,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 241,
@@ -1597,7 +1398,6 @@ export default [
     count: 97,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 242,
@@ -1605,7 +1405,6 @@ export default [
     count: 15,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 243,
@@ -1613,7 +1412,6 @@ export default [
     count: 4,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 244,
@@ -1621,7 +1419,6 @@ export default [
     count: 17,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 245,
@@ -1629,7 +1426,6 @@ export default [
     count: 17,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 246,
@@ -1637,7 +1433,6 @@ export default [
     count: 41,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 247,
@@ -1645,7 +1440,6 @@ export default [
     count: 20,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 248,
@@ -1653,7 +1447,6 @@ export default [
     count: 72,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 249,
@@ -1661,7 +1454,6 @@ export default [
     count: 74,
     fic: "nancy shoots first",
     fandom: "Stranger Things",
-    ship: null,
   },
   {
     id: 250,
@@ -1669,7 +1461,6 @@ export default [
     count: 70,
     fic: "nancy shoots first",
     fandom: "Stranger Things",
-    ship: null,
   },
   {
     id: 251,
@@ -1677,7 +1468,6 @@ export default [
     count: 97,
     fic: "nancy shoots first",
     fandom: "Stranger Things",
-    ship: null,
   },
   {
     id: 252,
@@ -1685,7 +1475,6 @@ export default [
     count: 282,
     fic: "nancy shoots first",
     fandom: "Stranger Things",
-    ship: null,
   },
   {
     id: 253,
@@ -1693,7 +1482,6 @@ export default [
     count: 17,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 254,
@@ -1701,7 +1489,6 @@ export default [
     count: 89,
     fic: "nancy shoots first",
     fandom: "Stranger Things",
-    ship: null,
   },
   {
     id: 255,
@@ -1709,7 +1496,6 @@ export default [
     count: 54,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 256,
@@ -1717,7 +1503,6 @@ export default [
     count: 9,
     fic: "nancy shoots first",
     fandom: "Stranger Things",
-    ship: null,
   },
   {
     id: 257,
@@ -1725,7 +1510,6 @@ export default [
     count: 84,
     fic: "nancy shoots first",
     fandom: "Stranger Things",
-    ship: null,
   },
   {
     id: 258,
@@ -1733,7 +1517,6 @@ export default [
     count: 73,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 259,
@@ -1741,7 +1524,6 @@ export default [
     count: 34,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 260,
@@ -1749,7 +1531,6 @@ export default [
     count: 11,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 261,
@@ -1757,7 +1538,6 @@ export default [
     count: 77,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 262,
@@ -1765,7 +1545,6 @@ export default [
     count: 21,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 263,
@@ -1773,7 +1552,6 @@ export default [
     count: 58,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 264,
@@ -1781,7 +1559,6 @@ export default [
     count: 143,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 265,
@@ -1789,7 +1566,6 @@ export default [
     count: 28,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 266,
@@ -1797,7 +1573,6 @@ export default [
     count: 106,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 267,
@@ -1805,7 +1580,6 @@ export default [
     count: 62,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 268,
@@ -1813,7 +1587,6 @@ export default [
     count: 5,
     fic: "nancy shoots first",
     fandom: "Stranger Things",
-    ship: null,
   },
   {
     id: 1796,
@@ -1821,7 +1594,6 @@ export default [
     count: 293,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 1,
@@ -1829,7 +1601,6 @@ export default [
     count: 119,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 2,
@@ -1837,7 +1608,6 @@ export default [
     count: 243,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 3,
@@ -1845,7 +1615,6 @@ export default [
     count: 211,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 4,
@@ -1853,7 +1622,6 @@ export default [
     count: 108,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 5,
@@ -1861,7 +1629,6 @@ export default [
     count: 72,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 6,
@@ -1869,7 +1636,6 @@ export default [
     count: 135,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 7,
@@ -1877,7 +1643,6 @@ export default [
     count: 1,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 8,
@@ -1885,7 +1650,6 @@ export default [
     count: 64,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 9,
@@ -1893,7 +1657,6 @@ export default [
     count: 432,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 10,
@@ -1901,7 +1664,6 @@ export default [
     count: 7,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 11,
@@ -1909,7 +1671,6 @@ export default [
     count: 152,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 12,
@@ -1917,7 +1678,6 @@ export default [
     count: 167,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 13,
@@ -1925,7 +1685,6 @@ export default [
     count: 131,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 14,
@@ -1933,7 +1692,6 @@ export default [
     count: 13,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 15,
@@ -1941,7 +1699,6 @@ export default [
     count: 24,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 16,
@@ -1949,7 +1706,6 @@ export default [
     count: 13,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 17,
@@ -1957,7 +1713,6 @@ export default [
     count: 52,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 18,
@@ -1965,7 +1720,6 @@ export default [
     count: 53,
     fic: "coffee shop AU 1",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 19,
@@ -1973,7 +1727,6 @@ export default [
     count: 18,
     fic: "coffee shop AU 2",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 20,
@@ -1981,7 +1734,6 @@ export default [
     count: 261,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 21,
@@ -1989,7 +1741,6 @@ export default [
     count: 73,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 22,
@@ -1997,7 +1748,6 @@ export default [
     count: 32,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 23,
@@ -2005,7 +1755,6 @@ export default [
     count: 39,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 24,
@@ -2013,7 +1762,6 @@ export default [
     count: 47,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 25,
@@ -2021,7 +1769,6 @@ export default [
     count: 64,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 26,
@@ -2029,7 +1776,6 @@ export default [
     count: 133,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 27,
@@ -2037,7 +1783,6 @@ export default [
     count: 10,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 28,
@@ -2045,7 +1790,6 @@ export default [
     count: 21,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 29,
@@ -2053,7 +1797,6 @@ export default [
     count: 35,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 30,
@@ -2061,7 +1804,6 @@ export default [
     count: 43,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 31,
@@ -2069,7 +1811,6 @@ export default [
     count: 4,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 32,
@@ -2077,7 +1818,6 @@ export default [
     count: 14,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 33,
@@ -2085,7 +1825,6 @@ export default [
     count: 34,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 34,
@@ -2093,7 +1832,6 @@ export default [
     count: 56,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 1021,
@@ -2101,7 +1839,6 @@ export default [
     count: 30,
     fic: "out of the blue",
     fandom: "Game of Thrones",
-    ship: "jaime/brienne",
   },
   {
     id: 35,
@@ -2109,7 +1846,6 @@ export default [
     count: 89,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 36,
@@ -2117,7 +1853,6 @@ export default [
     count: 54,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 37,
@@ -2125,7 +1860,6 @@ export default [
     count: 206,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 38,
@@ -2133,7 +1867,6 @@ export default [
     count: 25,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 39,
@@ -2141,7 +1874,6 @@ export default [
     count: 56,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 40,
@@ -2149,7 +1881,6 @@ export default [
     count: 60,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 41,
@@ -2157,7 +1888,6 @@ export default [
     count: 27,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 278,
@@ -2165,7 +1895,6 @@ export default [
     count: 27,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 277,
@@ -2173,7 +1902,6 @@ export default [
     count: 26,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 271,
@@ -2181,7 +1909,6 @@ export default [
     count: 5,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 276,
@@ -2189,7 +1916,6 @@ export default [
     count: 24,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 275,
@@ -2197,7 +1923,6 @@ export default [
     count: 1,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 273,
@@ -2205,7 +1930,6 @@ export default [
     count: 22,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 1016,
@@ -2213,7 +1937,6 @@ export default [
     count: 25,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 1019,
@@ -2221,7 +1944,6 @@ export default [
     count: 160,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 1020,
@@ -2229,7 +1951,6 @@ export default [
     count: 72,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 1022,
@@ -2237,7 +1958,6 @@ export default [
     count: 68,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 1023,
@@ -2245,7 +1965,6 @@ export default [
     count: 3,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 1789,
@@ -2253,7 +1972,6 @@ export default [
     count: 67,
     fic: "coffee shop AU 1",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 1790,
@@ -2261,7 +1979,6 @@ export default [
     count: 5,
     fic: "coffee shop AU 1",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 1786,
@@ -2269,7 +1986,6 @@ export default [
     count: 1,
     fic: "coffee shop AU 3",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 1787,
@@ -2277,7 +1993,6 @@ export default [
     count: 52,
     fic: "coffee shop AU 4",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 1791,
@@ -2285,7 +2000,6 @@ export default [
     count: 1,
     fic: "coffee shop AU 2",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 1788,
@@ -2293,7 +2007,6 @@ export default [
     count: 110,
     fic: "coffee shop AU 4",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 1792,
@@ -2301,7 +2014,6 @@ export default [
     count: 23,
     fic: "coffee shop AU 4",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 1793,
@@ -2309,7 +2021,6 @@ export default [
     count: 24,
     fic: "coffee shop AU 4",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 1794,
@@ -2317,7 +2028,6 @@ export default [
     count: 39,
     fic: "coffee shop AU 4",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 1795,
@@ -2325,7 +2035,6 @@ export default [
     count: 43,
     fic: "coffee shop AU 4",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 1799,
@@ -2333,7 +2042,6 @@ export default [
     count: 66,
     fic: "coffee shop AU 4",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 1797,
@@ -2341,7 +2049,6 @@ export default [
     count: 18,
     fic: "coffee shop AU 4",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 1798,
@@ -2349,7 +2056,6 @@ export default [
     count: 65,
     fic: "coffee shop AU 4",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 1800,
@@ -2357,7 +2063,6 @@ export default [
     count: 45,
     fic: "coffee shop AU 4",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 2334,
@@ -2365,7 +2070,6 @@ export default [
     count: 5,
     fic: "coffee shop AU 4",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 2335,
@@ -2373,7 +2077,6 @@ export default [
     count: 158,
     fic: "coffee shop AU 4",
     fandom: "Superman",
-    ship: "superbat",
   },
   {
     id: 2336,
@@ -2381,6 +2084,5 @@ export default [
     count: 58,
     fic: "coffee shop AU 4",
     fandom: "Superman",
-    ship: "superbat",
   },
 ];
