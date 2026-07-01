@@ -7,6 +7,7 @@ type Props<T extends string | number> = {
   defaultValue?: T | null;
   required?: boolean;
   hidden?: boolean;
+  readOnly?: boolean;
   placeholder?: string;
   autoFocus?: boolean;
   onBlur?: FocusEventHandler<HTMLInputElement>;
@@ -19,6 +20,7 @@ const Input = <T extends string | number>({
   defaultValue,
   required,
   hidden,
+  readOnly,
   placeholder,
   autoFocus,
   onBlur,
@@ -27,7 +29,7 @@ const Input = <T extends string | number>({
   const [value, setValue] = useState<T | null>(defaultValue ?? null);
 
   useEffect(() => {
-    if (defaultValue != null) {
+    if (!readOnly && defaultValue != null) {
       setValue(defaultValue)
     }
   }, [defaultValue])
@@ -41,6 +43,7 @@ const Input = <T extends string | number>({
         placeholder={placeholder}
         value={value ?? ''}
         required={required}
+        readOnly={readOnly}
         onChange={e => setValue(e.target.value as T)}
         className='w-full rounded-md p-2 border-2 border-primary/50 focus-within:border-primary outline-0'
         autoFocus={autoFocus}
