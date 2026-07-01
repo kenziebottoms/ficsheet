@@ -4,7 +4,7 @@ type Props<T extends string | number> = {
   name: string;
   type: 'text' | 'number';
   label: string;
-  defaultValue?: T;
+  defaultValue?: T | null;
   required?: boolean;
   placeholder?: string;
   autoFocus?: boolean;

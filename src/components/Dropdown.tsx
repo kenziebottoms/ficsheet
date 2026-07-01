@@ -8,7 +8,7 @@ type Props<T extends string | number> = {
   label: string;
   placeholder?: string;
   options: (T | DropdownOption<T>)[];
-  defaultValue?: T;
+  defaultValue?: T | null;
 }
 const Dropdown = <T extends string | number>({
   name,
