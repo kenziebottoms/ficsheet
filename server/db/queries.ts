@@ -13,12 +13,6 @@ import { type ApiError } from "../types.ts";
 
 export const db = new DatabaseSync("ficsheet.sqlite");
 
-export function select<TRow>(query: string): TRow[] {
-  console.log(`selecting "${query}"`);
-  const q = db.prepare(`SELECT ${query}`);
-  return q.all() as TRow[];
-}
-
 export const selectEntries = (
   whereClause?: string,
 ): WithId<WordCountEntry>[] => {
@@ -123,6 +117,12 @@ export const deleteEntriesByYear = (year: string) => {
   );
   deleteQuery.run();
 };
+
+export function select<TRow>(query: string): TRow[] {
+  console.log(`selecting "${query}"`);
+  const q = db.prepare(`SELECT ${query}`);
+  return q.all() as TRow[];
+}
 
 /** Return a parsed valid positive integer or false given a string? number. */
 export const validateYear = (year?: string | number): number | false => {
