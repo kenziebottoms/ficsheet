@@ -22,6 +22,11 @@ export const DaysOfWeek = [
 ] as const;
 export type DayOfWeek = (typeof DaysOfWeek)[number];
 
+export type DropdownOption<T> = {
+  value: T;
+  label: string;
+};
+
 export type FandomTotal = {
   fandom: string;
   count: number;
