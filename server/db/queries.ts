@@ -1,10 +1,12 @@
 import { DatabaseSync } from "node:sqlite";
 
-import type { WordCountEntry } from "../../src/types.ts";
+import type { WithId, WordCountEntry } from "../../src/types.ts";
 
 export const db = new DatabaseSync("ficsheet.sqlite");
 
-export const updateEntry = (entry: WordCountEntry & { id: number }) => {
+export const updateEntry = (
+  entry: WithId<WordCountEntry>,
+): WithId<WordCountEntry> => {
   const { id, date, count, fic, fandom, ship = null } = entry;
   const insert = db.prepare(
     `UPDATE word_count \
@@ -12,14 +14,19 @@ export const updateEntry = (entry: WordCountEntry & { id: number }) => {
     WHERE id = ?;`,
   );
   insert.run(date, count, fic, fandom, ship, id);
+  return entry;
 };
 
-export const insertEntry = (entry: WordCountEntry) => {
+export const insertEntry = (entry: WordCountEntry): WithId<WordCountEntry> => {
   const { date, count, fic, fandom, ship = null } = entry;
   const insert = db.prepare(
     `INSERT INTO word_count (date, count, fic, fandom, ship) VALUES (?, ?, ?, ?, ?)`,
   );
-  insert.run(date, count, fic, fandom, ship);
+  const result = insert.run(date, count, fic, fandom, ship);
+  return {
+    ...entry,
+    id: result.lastInsertRowid as number,
+  };
 };
 
 export const deleteEntry = (id: string) => {
@@ -34,7 +41,7 @@ export const deleteEntriesByYear = (year: string) => {
   deleteQuery.run();
 };
 
-export function select<TRow>(query: string) {
+export function select<TRow>(query: string): TRow[] {
   console.log(`selecting "${query}"`);
   const q = db.prepare(`SELECT ${query}`);
   return q.all() as TRow[];

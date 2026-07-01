@@ -70,6 +70,10 @@ export type TimelineData = {
   range: [number, number][];
 };
 
+export type WithId<T> = T & {
+  id: number;
+};
+
 export type WordCountEntry = {
   id?: number;
   date: string;

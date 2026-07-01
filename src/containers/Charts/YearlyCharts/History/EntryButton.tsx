@@ -1,17 +1,20 @@
-import Button from '@/components/Button';
-import DailyProjectWordCountForm from '@/components/DailyProjectWordCountForm';
-import { DataCacheContext } from '@/contexts/DataCache/DataCacheContext';
-import { YearContext } from '@/contexts/Year/YearContext';
-import type { WordCountEntry } from '@/types'
-import Modal from "@/components/Modal";
 import { use, useState } from 'react';
 import { Edit } from '@mui/icons-material';
+
+import Button from '@/components/Button';
+import DailyProjectWordCountForm from '@/components/DailyProjectWordCountForm';
+import Modal from "@/components/Modal";
 import Pill from '@/components/Pill';
+
+import { DataCacheContext } from '@/contexts/DataCache/DataCacheContext';
+import { YearContext } from '@/contexts/Year/YearContext';
+
+import type { WithId, WordCountEntry } from '@/types';
 
 const EntryButton = ({
   entry
 }: {
-  entry: WordCountEntry;
+  entry: WithId<WordCountEntry>;
 }) => {
   const { refreshData } = use(DataCacheContext)
   const { year } = use(YearContext)
