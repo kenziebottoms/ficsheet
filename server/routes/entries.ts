@@ -1,6 +1,10 @@
 import express, { type Request } from "express";
 
-import { type WithId, type WordCountEntry } from "../../src/types.ts";
+import {
+  type DailyWordCountFormValues,
+  type WithId,
+  type WordCountEntry,
+} from "../../src/types.ts";
 
 import { readJson } from "../csvHandler.ts";
 import {
@@ -8,6 +12,7 @@ import {
   getEntriesByYear,
   getEntry,
   insertEntry,
+  insertFic,
   processFandomForEntry,
   updateEntry,
 } from "../db/queries.ts";
@@ -30,6 +35,55 @@ entriesRouter.post("/", (req, res) => {
   console.log("posting word counts entry: ", entries);
   entries.map(insertEntry);
   return res.json(entries).status(200);
+});
+
+/**
+ * POST /api/entries/form
+ * BODY: DailyWordCountFormValues
+ */
+entriesRouter.post("/form", (req, res) => {
+  const formData = req.body as DailyWordCountFormValues;
+  console.log("submitting DailyWordCountForm", formData);
+
+  if (formData.id != null) {
+    if (formData.ficId == null) {
+      return res.status(400).send("Please supply a valid ficId.");
+    }
+    const entry: WithId<WordCountEntry> = {
+      id: formData.id,
+      count: formData.count,
+      ficId: formData.ficId,
+      date: formData.date,
+    };
+    updateEntry(entry);
+    return res.json(entry).status(200);
+  }
+
+  let ficId = formData.ficId;
+  if (ficId == null) {
+    if (!formData.fic) {
+      return res.status(400).send("Please supply a valid fic.");
+    }
+    if (!formData.fandom) {
+      return res.status(400).send("Please supply a valid fandom.");
+    }
+    ficId = insertFic({
+      name: formData.fic,
+      fandom: formData.fandom,
+      ship: formData.ship,
+    });
+  }
+
+  if (ficId == null) {
+    return res.status(500).send("Failed to create fic.");
+  }
+
+  const entry = insertEntry({
+    date: formData.date,
+    count: formData.count,
+    ficId,
+  });
+  return res.json(entry).status(201);
 });
 
 /**

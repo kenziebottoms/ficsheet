@@ -11,6 +11,26 @@ export type DailyTotal = {
   daily_total: number;
 };
 
+export type DailyWordCountRawFormValues = {
+  id?: string;
+  date: string;
+  fic?: string;
+  ficId?: string;
+  fandom?: string;
+  ship?: string;
+  pastedWords?: string;
+  count?: string;
+};
+export type DailyWordCountFormValues = {
+  id: number | null;
+  date: string;
+  fic: string | null;
+  ficId: number | null;
+  fandom: string | null;
+  ship: string | null;
+  count: number;
+};
+
 export const DaysOfWeek = [
   "Sunday",
   "Monday",
@@ -88,10 +108,11 @@ export type WithId<T> = T & {
 };
 
 export type WordCountEntry = {
-  id: number | undefined;
+  id?: number;
   date: string;
   fic?: string;
   fandom?: string;
+  ship?: string | null;
   ficId?: number | null;
   count: number;
 };
