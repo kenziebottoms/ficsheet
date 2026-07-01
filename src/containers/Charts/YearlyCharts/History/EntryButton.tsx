@@ -11,7 +11,7 @@ import Pill from '@/components/Pill';
 import { DataCacheContext } from '@/contexts/DataCache/DataCacheContext';
 import { YearContext } from '@/contexts/Year/YearContext';
 
-import type { WithId, WordCountEntry } from '@/types'
+import type { WithId, WordCountEntry } from '@/types';
 
 const EntryButton = ({
   entry
