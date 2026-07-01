@@ -35,6 +35,9 @@ apiRouter.get("/export", (_req, res) => {
 
 apiRouter.use("/fics", ficsRouter);
 
+/**
+ * GET /api/fandoms
+ */
 apiRouter.get("/fandoms", (_req, res) => {
   console.log("fetching fandoms (all time)");
   const data = getFandomsByYear();
@@ -52,7 +55,10 @@ apiRouter.get("/runningTotal", (_req, res) => {
   return res.json(data).status(200);
 });
 
-apiRouter.get("/ships", (req, res) => {
+/**
+ * GET /api/ships
+ */
+apiRouter.get("/ships", (_req, res) => {
   console.log("Getting ships (all time)");
   const data = getAllShips();
   return res.json(data).status(200);
