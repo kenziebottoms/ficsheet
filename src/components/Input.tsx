@@ -6,6 +6,7 @@ type Props<T extends string | number> = {
   label: string;
   defaultValue?: T | null;
   required?: boolean;
+  hidden?: boolean;
   placeholder?: string;
   autoFocus?: boolean;
   onBlur?: FocusEventHandler<HTMLInputElement>;
@@ -17,6 +18,7 @@ const Input = <T extends string | number>({
   label,
   defaultValue,
   required,
+  hidden,
   placeholder,
   autoFocus,
   onBlur,
@@ -30,7 +32,7 @@ const Input = <T extends string | number>({
     }
   }, [defaultValue])
 
-  return <div className='flex flex-col w-full'>
+  return <div className={`flex flex-col w-full ${hidden ? 'hidden' : ''}`}>
     <label>
       <div>{label}</div>
       <input
