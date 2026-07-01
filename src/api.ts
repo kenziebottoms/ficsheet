@@ -33,11 +33,11 @@ async function get<TReturnType>(
 
 async function post<TRequestBody, TReturnType>(
   path: string,
-  body: TRequestBody,
+  body?: TRequestBody,
 ): Promise<TReturnType> {
   return get<TReturnType>(path, {
     method: "POST",
-    body: JSON.stringify(body),
+    body: body == null ? undefined : JSON.stringify(body),
   });
 }
 async function put<TRequestBody, TReturnType>(
