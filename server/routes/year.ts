@@ -2,7 +2,6 @@ import express, { type Request } from "express";
 
 import { type RunningTotal, type Timeframe } from "../../src/types.ts";
 
-import { readCSV } from "../csvHandler.ts";
 import {
   deleteEntriesByYear,
   getYearlyWhereClause,
@@ -91,23 +90,6 @@ yearRouter.get("/ficTimelines", (req: YearRequest, res) => {
     `DISTINCT min(date) as firstWritten, max(date) as lastWritten, fic as label FROM word_count ${getYearlyWhereClause(req.params.year)} GROUP BY fic ORDER BY firstWritten ASC`,
   );
   return res.json(data).status(200);
-});
-
-/**
- * POST /api/year/:year/ingest?filename=file.csv&updateDb=true
- * For ingesting lossy Word Count CSVs
- */
-yearRouter.post("/ingest", (req: YearRequest, res) => {
-  const { filename, updateDb } = req.query as Record<string, string>;
-  console.log(
-    `ingesting ${filename} for ${req.params.year} (${updateDb === "true" ? "updating the database" : "dry run"})`,
-  );
-  if (!filename) {
-    return res.status(400).send("please supply a filename");
-  }
-  return readCSV(filename, parseInt(req.params.year, 10), updateDb === "true")
-    .then((rows) => res.json(rows).status(updateDb === "true" ? 201 : 200))
-    .catch((error) => res.json(error).status(500));
 });
 
 /**
