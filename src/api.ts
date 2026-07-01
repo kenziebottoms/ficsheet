@@ -6,6 +6,7 @@ import {
   type DailyTotal,
   type FandomTotal,
   type Timeframe,
+  type WithId,
 } from "@/types";
 
 import { getDatesBetween } from "./utils";
@@ -56,9 +57,12 @@ async function restDelete(path: string): Promise<null> {
 }
 
 export const insertEntries = (entries: WordCountEntry[]) =>
-  post<WordCountEntry[], WordCountEntry[]>(`entries`, entries);
-export const putEntry = (entry: WordCountEntry) =>
-  put<WordCountEntry, WordCountEntry>(`entries/${entry.id}`, entry);
+  post<WordCountEntry[], WithId<WordCountEntry>[]>(`entries`, entries);
+export const putEntry = (entry: WithId<WordCountEntry>) =>
+  put<WithId<WordCountEntry>, WithId<WordCountEntry>>(
+    `entries/${entry.id}`,
+    entry,
+  );
 export const deleteEntry = (id: number) => restDelete(`entries/${id}`);
 export const selectAllWordCounts = (year?: number) =>
   get<WordCountEntry[]>(`${year ? `year/${year}/` : ""}entries`);
