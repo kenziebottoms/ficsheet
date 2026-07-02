@@ -12,7 +12,7 @@ import EntryList from "./EntryList";
 type Props = {
   showEmpty: boolean;
 }
-const History = ({ showEmpty }: Props) => {
+const Journal = ({ showEmpty }: Props) => {
   const { refreshData } = use(DataCacheContext)
 
   const [editedEntry, setEditedEntry] = useState<Partial<WordCountEntry> | null>(null)
@@ -44,4 +44,4 @@ const History = ({ showEmpty }: Props) => {
   </>
 }
 
-export default History
+export default Journal

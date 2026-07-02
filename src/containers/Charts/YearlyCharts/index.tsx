@@ -1,5 +1,5 @@
 import { use, useEffect, useState } from 'react';
-import { AutoDelete, AutoMode, AutoStories, ContentPaste, Delete, Equalizer, NoteAdd, TableChart, type SvgIconComponent } from '@mui/icons-material';
+import { AppRegistration, AutoDelete, AutoMode, AutoStories, ContentPaste, Delete, Equalizer, NoteAdd, TableChart, type SvgIconComponent } from '@mui/icons-material';
 
 import { deleteEntriesByYear, exportData, processFandomsForYear } from '@/api';
 
@@ -14,10 +14,10 @@ import { YearContext } from '@/contexts/Year/YearContext';
 
 import { copyPrettyJson } from '@/utils';
 
-import { MonthlyChartTabNames, type MonthlyChartTabName } from '../constants';
+import { type MonthlyChartTabName } from '../constants';
 
 import FandomTimelineBarChart from './FandomTimelineBarChart';
-import History from './History';
+import Journal from './Journal';
 import MonthlyFandomBar from './MonthlyFandomBar';
 import MonthlyCharts from './MonthlyCharts';
 import ProjectedAnnualWordCount from './ProjectedAnnualWordCount';
@@ -27,7 +27,7 @@ import FicManager from './FicManager';
 
 const TabIcons: Record<MonthlyChartTabName, SvgIconComponent> = {
   charts: Equalizer,
-  history: TableChart,
+  journal: TableChart,
   fics: AutoStories,
 }
 
@@ -72,8 +72,8 @@ const YearlyCharts = () => {
     <FicTimelineBarChart />
 
     <MonthProvider>
-      <div className="bg-zinc-800 px-4 p-[0.35rem] rounded-full text-zinc-400 flex flex-row flex-wrap gap-3">
-        {MonthlyChartTabNames.map(tab =>
+      <div className="bg-zinc-800 px-5 py-2 rounded-full text-zinc-400 flex flex-row flex-wrap gap-3">
+        {(['charts', 'fics'] as const).map(tab =>
           <Button
             key={tab}
             style={activeTab === tab ? "primary" : "subtle"}
@@ -84,42 +84,10 @@ const YearlyCharts = () => {
             {tab}
           </Button>
         )}
-        {activeTab === 'history' && <>
-          <div className='grow' />
-          <Button
-            style="cautionary"
-            icon={confirmDelete ? AutoDelete : Delete}
-            onClick={() => confirmDelete ? handleDelete() : setConfirmDelete(true)}
-            small
-          >
-            {confirmDelete && <em>Please</em>} Delete {year}
-          </Button>
-          <Button
-            style="cautionary"
-            icon={AutoMode}
-            onClick={() => processFandomsForYear(year).then(() => refreshData(year))}
-            small
-          >
-            Migrate Fandoms
-          </Button>
-          <Button
-            style="transparent"
-            icon={ContentPaste}
-            onClick={handleExport}
-            small
-          >
-            Export
-          </Button>
-          <Toggle
-            label="Show empty"
-            value={showEmpty}
-            onChange={setShowEmpty}
-            className="text-sm"
-          />
-        </>}
+
+        <div className='grow' />
 
         {activeTab === 'fics' && <>
-          <div className='grow' />
           <Button
             icon={NoteAdd}
             onClick={() => setShowFicForm(true)}
@@ -129,9 +97,61 @@ const YearlyCharts = () => {
             New Fic
           </Button>
         </>}
+
+        <Button
+          style={activeTab === 'journal' ? 'active_transparent' : "transparent"}
+          icon={AppRegistration}
+          onClick={() => setActiveTab('journal')}
+          small
+        >
+          Journal
+        </Button>
       </div>
+
       {activeTab === 'charts' && <MonthlyCharts />}
-      {activeTab === 'history' && <History showEmpty={showEmpty} />}
+
+      {activeTab === 'journal' && <div className='space-y-2'>
+        <div className='bg-zinc-900 p-2 rounded-md flex flex-row justify-end gap-4'>
+          <Button
+            style="cautionary"
+            icon={confirmDelete ? AutoDelete : Delete}
+            onClick={() => confirmDelete ? handleDelete() : setConfirmDelete(true)}
+            small
+          >
+            {confirmDelete && <em>Please</em>} Delete {year}
+          </Button>
+
+          <Button
+            style="cautionary"
+            icon={AutoMode}
+            onClick={() => processFandomsForYear(year).then(() => refreshData(year))}
+            small
+          >
+            Migrate Fandoms
+          </Button>
+
+          <div className='grow' />
+
+          <Button
+            style="transparent"
+            icon={ContentPaste}
+            onClick={handleExport}
+            small
+          >
+            Export to Clipboard
+          </Button>
+
+          <Toggle
+            label="Show empty"
+            value={showEmpty}
+            onChange={setShowEmpty}
+            className="text-sm"
+          />
+        </div>
+
+        <Journal showEmpty={showEmpty} />
+      </div>}
+
       {activeTab === 'fics' && <FicManager />}
       <Modal
         open={showFicForm}
