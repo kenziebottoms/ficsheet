@@ -3,6 +3,7 @@ export type ButtonStyle =
   | "secondary"
   | "subtle"
   | "transparent"
+  | "active_transparent"
   | "cautionary";
 
 export const ButtonTextClassNames: Record<ButtonStyle, string> = {
@@ -10,6 +11,7 @@ export const ButtonTextClassNames: Record<ButtonStyle, string> = {
   secondary: "text-white text-shadow-lg/50 text-shadow-pink-950",
   subtle: "text-white text-shadow-lg/30",
   transparent: "text-pink-300",
+  active_transparent: "text-zinc-800",
   cautionary: "text-orange-400",
 };
 export const ButtonBackgroundClassNames: Record<ButtonStyle, string> = {
@@ -20,6 +22,7 @@ export const ButtonBackgroundClassNames: Record<ButtonStyle, string> = {
   subtle:
     "bg-linear-45/shorter from-zinc-600 via-zinc-400 to-zinc-600 from-20% via-80% to-90%",
   transparent: "border-2 border-pink-300",
+  active_transparent: "bg-pink-300",
   cautionary: "border-2 border-orange-400",
 };
 
@@ -40,5 +43,6 @@ export const IconColors: Record<
   secondary: undefined,
   subtle: undefined,
   transparent: "secondary",
+  active_transparent: "inherit",
   cautionary: "warning",
 };
