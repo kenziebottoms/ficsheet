@@ -113,7 +113,7 @@ const DailyWordCountForm = ({
           label="Fic"
           name="ficId"
           defaultValue={values?.ficId}
-          options={(showOldFics ? allFics : fics).map(fic => ({ value: fic.id, label: fic.name }))}
+          options={(showOldFics ? allFics : fics).map(fic => ({ value: fic.id, label: `${fic.name} (${fic.fandom})` }))}
         />}
       {!showOldFics && !typeNewFic && (
         <Button
