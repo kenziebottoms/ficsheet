@@ -87,17 +87,6 @@ const YearlyCharts = () => {
 
         <div className='grow' />
 
-        {activeTab === 'fics' && <>
-          <Button
-            icon={NoteAdd}
-            onClick={() => setShowFicForm(true)}
-            small
-            style="transparent"
-          >
-            New Fic
-          </Button>
-        </>}
-
         <Button
           style={activeTab === 'journal' ? 'active_transparent' : "transparent"}
           icon={AppRegistration}
@@ -152,7 +141,19 @@ const YearlyCharts = () => {
         <Journal showEmpty={showEmpty} />
       </div>}
 
-      {activeTab === 'fics' && <FicManager />}
+      {activeTab === 'fics' && <div className='space-y-2'>
+        <div className='bg-zinc-900 p-2 rounded-md flex flex-row justify-end gap-4'>
+          <Button
+            icon={NoteAdd}
+            onClick={() => setShowFicForm(true)}
+            small
+            style="transparent"
+          >
+            New Fic
+          </Button>
+        </div>
+        <FicManager />
+      </div>}
       <Modal
         open={showFicForm}
         setOpen={setShowFicForm}
