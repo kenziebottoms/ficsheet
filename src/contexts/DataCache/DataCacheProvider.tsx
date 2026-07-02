@@ -17,16 +17,16 @@ type Props = PropsWithChildren & {
 export const DataCacheProvider = ({ year, children }: Props) => {
   const [fandoms, setFandoms] = useState<Fandom[]>([])
   const [fics, setFics] = useState<WithId<Fic>[]>([])
-  const [dailyEntries, setDailyEntries] = useState<WordCountEntry[]>([])
+  const [dailyEntries, setDailyEntries] = useState<WithId<WordCountEntry>[]>([])
   const [dailyTotals, setDailyTotals] = useState<DailyTotal[]>([])
   const [runningTotal, setRunningTotal] = useState<RunningTotal[]>([])
 
-  const refreshData = (year: number) => {
-    selectFandoms(year).then(setFandoms)
-    selectFics(year).then(setFics)
-    selectAllWordCounts(year).then(setDailyEntries)
-    selectDailyTotals(year).then(setDailyTotals)
-    selectRunningTotal(year).then(setRunningTotal)
+  const refreshData = (y?: number) => {
+    selectFandoms(y || year).then(setFandoms)
+    selectFics(y || year).then(setFics)
+    selectAllWordCounts(y || year).then(setDailyEntries)
+    selectDailyTotals(y || year).then(setDailyTotals)
+    selectRunningTotal(y || year).then(setRunningTotal)
   }
 
   useEffect(() => {

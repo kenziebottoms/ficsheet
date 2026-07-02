@@ -1,11 +1,9 @@
-import { use, useState } from 'react';
+import { use } from 'react';
 import { Edit, Refresh } from '@mui/icons-material';
 
 import { processFandom } from '@/api';
 
 import Button from '@/components/Button';
-import DailyProjectWordCountForm from '@/components/DailyProjectWordCountForm';
-import Modal from "@/components/Modal";
 import Pill from '@/components/Pill';
 
 import { DataCacheContext } from '@/contexts/DataCache/DataCacheContext';
@@ -14,51 +12,37 @@ import { YearContext } from '@/contexts/Year/YearContext';
 import type { WithId, WordCountEntry } from '@/types';
 
 const EntryButton = ({
-  entry
+  entry,
+  onClick,
 }: {
-  entry: WithId<WordCountEntry>
+  entry: WithId<WordCountEntry>;
+  onClick: (entry: WithId<WordCountEntry>) => void;
 }) => {
   const { refreshData } = use(DataCacheContext)
   const { year } = use(YearContext)
-  const [showForm, setShowForm] = useState<boolean>(false)
 
   if (year == null) return null;
 
-  return <>
-    {showForm && <Modal
-      open={showForm}
-      setOpen={setShowForm}
+  return <div className="flex flex-row items-stretch">
+    <Pill style="primary" className="rounded-r-none">
+      {entry.fic}
+    </Pill>
+    {entry.ficId == null && <Button
+      icon={Refresh}
+      style="cautionary"
+      className='rounded-none'
+      onClick={() => processFandom(entry.id).then(() => refreshData(year))}
+    />}
+    <Button
+      style="transparent"
+      small
+      onClick={() => onClick(entry)}
+      icon={Edit}
+      className='rounded-l-none'
     >
-      <DailyProjectWordCountForm
-        className='bg-zinc-800'
-        values={entry}
-        onCompleted={() => {
-          setShowForm(false);
-          refreshData(year);
-        }}
-      />
-    </Modal>}
-    <div className="flex flex-row items-stretch">
-      <Pill style="primary" className="rounded-r-none">
-        {entry.fic}
-      </Pill>
-      {entry.ficId == null && <Button
-        icon={Refresh}
-        style="cautionary"
-        className='rounded-none'
-        onClick={() => processFandom(entry.id).then(() => refreshData(year))}
-      />}
-      <Button
-        style="transparent"
-        small
-        onClick={() => setShowForm(true)}
-        icon={Edit}
-        className='rounded-l-none'
-      >
-        {entry.count}
-      </Button>
-    </div>
-  </>
+      {entry.count}
+    </Button>
+  </div>
 }
 
 export default EntryButton

@@ -3,7 +3,7 @@ import { use, useEffect, useState, type PropsWithChildren } from "react";
 import Button from "@/components/Button";
 import { ButtonBackgroundClassNames } from "@/components/constants";
 
-import { MonthNames, type DailyTotal, type WordCountEntry } from "@/types";
+import { MonthNames, type DailyTotal, type WithId, type WordCountEntry } from "@/types";
 
 import { filterByYearAndMonth } from "@/containers/Charts/YearlyCharts/utils";
 
@@ -19,10 +19,10 @@ export const MonthProvider = ({ initialValue, children }: Props) => {
   const { year } = use(YearContext)
   const { dailyEntries, dailyTotals } = use(DataCacheContext)
   const thisYear = new Date().getFullYear()
-  
+
   // month=null means select the entire year
   const [month, setMonth] = useState<number | null>(initialValue ?? null)
-  const [filteredEntries, setFilteredEntries] = useState<WordCountEntry[]>([])
+  const [filteredEntries, setFilteredEntries] = useState<WithId<WordCountEntry>[]>([])
   const [filteredDailyTotals, setFilteredDailyTotals] = useState<DailyTotal[]>([])
 
   useEffect(() => {
@@ -33,7 +33,7 @@ export const MonthProvider = ({ initialValue, children }: Props) => {
     if (year != null) {
       setFilteredEntries(filterByYearAndMonth(dailyEntries, year, month, true))
     }
-  }, [dailyEntries, year, month])  
+  }, [dailyEntries, year, month])
 
   useEffect(() => {
     if (year != null) {

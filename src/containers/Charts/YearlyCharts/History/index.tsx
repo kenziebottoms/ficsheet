@@ -1,80 +1,44 @@
 import { use, useState } from "react";
-import _ from 'lodash'
-import { isFuture, lastDayOfMonth, lastDayOfYear } from "date-fns";
-import { Add } from '@mui/icons-material';
 
 import { DataCacheContext } from "@/contexts/DataCache/DataCacheContext";
-import { MonthContext } from "@/contexts/Month/MonthContext";
-import { YearContext } from "@/contexts/Year/YearContext";
 
-import Button from "@/components/Button";
 import DailyProjectWordCountForm from "@/components/DailyProjectWordCountForm";
 import Modal from "@/components/Modal";
-import Table from "@/components/Table";
 
 import type { WordCountEntry } from "@/types";
 
-import { getDatesBetween } from "@/utils";
-import EntryButton from "./EntryButton";
+import EntryList from "./EntryList";
 
 type Props = {
   showEmpty: boolean;
 }
 const History = ({ showEmpty }: Props) => {
   const { refreshData } = use(DataCacheContext)
-  const { year } = use(YearContext)
-  const { month, filteredEntries, filteredDailyTotals } = use(MonthContext)
 
-  const [newEntry, setNewEntry] = useState<Partial<WordCountEntry> | null>(null)
-
-  if (year == null) return null;
-
-  const dates = getDatesBetween(new Date(year, month ?? 0, 1), (month == null ? lastDayOfYear : lastDayOfMonth)(new Date(year, month ?? 0, 1)))
-    .filter(date => !isFuture(date))
-  const filteredDates = dates.filter(date => showEmpty || _.filter(filteredEntries, { date }).length > 0)
+  const [editedEntry, setEditedEntry] = useState<Partial<WordCountEntry> | null>(null)
 
   return <>
-    {newEntry != null && <Modal
+    {editedEntry != null && <Modal
       open
       setOpen={(newOpen: boolean) => {
         if (!newOpen) {
-          setNewEntry(null)
+          setEditedEntry(null)
         }
       }}
     >
       <DailyProjectWordCountForm
         className='bg-zinc-800'
-        values={newEntry}
+        values={editedEntry}
         onCompleted={() => {
-          setNewEntry(null)
-          refreshData(year)
+          setEditedEntry(null)
+          refreshData()
         }}
       />
     </Modal>}
     <div className="overflow-auto w-full">
-      <Table
-        headers={[
-          'Date',
-          'Entries',
-          'Total',
-        ]}
-        data={filteredDates
-          .map((date) => ({ date, entries: _.filter(filteredEntries, { date }) }))
-          .map(({ date, entries }) => [
-            `${parseInt(date.substring(5, 7), 10)}/${parseInt(date.substring(8, 10), 10)}/${date.substring(2, 4)}`,
-            <div className="p-1 gap-y-1 flex flex-row flex-wrap gap-2">
-              {entries.map((entry) => <EntryButton key={entry.id} entry={entry} />)}
-              <div className="grow" />
-              <Button
-                style="transparent"
-                small
-                onClick={() => setNewEntry({ date })}
-                icon={Add}
-                className="self-end"
-              />
-            </div>,
-            <span className="font-bold">{_.find(filteredDailyTotals, { date })?.daily_total || 0}</span>
-          ])}
+      <EntryList
+        showEmpty={showEmpty}
+        setEditedEntry={setEditedEntry}
       />
     </div>
   </>

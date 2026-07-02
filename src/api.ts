@@ -75,7 +75,7 @@ export const processFandomsForYear = (year: number) =>
   post<never, WithId<WordCountEntry>[]>(`year/${year}/entries/processFandoms`);
 export const deleteEntry = (id: number) => restDelete(`entries/${id}`);
 export const selectAllWordCounts = (year?: number) =>
-  get<WordCountEntry[]>(`${year ? `year/${year}/` : ""}entries`);
+  get<WithId<WordCountEntry>[]>(`${year ? `year/${year}/` : ""}entries`);
 export const selectDailyTotals = (year: number) =>
   get<DailyTotal[]>(`year/${year}/dailyTotals`).then((nonEmptyDailyTotals) =>
     getDatesBetween(new Date(year, 0, 1), new Date(year, 11, 31)).map(
