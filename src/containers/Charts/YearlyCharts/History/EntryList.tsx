@@ -6,6 +6,7 @@ import { Add } from '@mui/icons-material';
 import Button from '@/components/Button';
 import Table from '@/components/Table'
 
+import { DataCacheContext } from '@/contexts/DataCache/DataCacheContext';
 import { MonthContext } from '@/contexts/Month/MonthContext'
 import { YearContext } from '@/contexts/Year/YearContext'
 
@@ -22,6 +23,7 @@ const EntryList = memo(({
   setEditedEntry: (entry: Partial<WordCountEntry>) => void;
 }) => {
   const { year } = use(YearContext)
+  const { runningTotal } = use(DataCacheContext)
   const { month, filteredEntries, filteredDailyTotals } = use(MonthContext)
 
   if (year == null) return null;
@@ -34,7 +36,8 @@ const EntryList = memo(({
     headers={[
       'Date',
       'Entries',
-      'Total',
+      'Daily Total',
+      'Running Total',
     ]}
     data={filteredDates
       .map((date) => ({ date, entries: _.filter(filteredEntries, { date }) }))
@@ -51,7 +54,8 @@ const EntryList = memo(({
             className="self-end"
           />
         </div>,
-        <span className="font-bold">{_.find(filteredDailyTotals, { date })?.daily_total || 0}</span>
+        <span className="font-bold">{_.find(filteredDailyTotals, { date })?.daily_total.toLocaleString() || 0}</span>,
+        <span className="font-bold">{_.find(runningTotal, { date })?.running_total.toLocaleString()}</span>,
       ])}
   />
 })
