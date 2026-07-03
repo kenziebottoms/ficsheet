@@ -18,11 +18,11 @@ const ShipPie = () => {
     value: _.sumBy(_.filter(filteredEntries, { ship }), 'count'),
   }))
 
-  return <Widget title="Word Count By Ship" className='grow self-stretch'>
+  return <Widget title="Word Count By Ship">
     <PieChart
       series={[{ data }]}
-      width={300}
-      height={300}
+      width={400}
+      height={400}
       colors={getDynamicColorPalette(ships.length)}
     />
   </Widget>

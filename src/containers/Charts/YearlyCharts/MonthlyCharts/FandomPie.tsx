@@ -18,11 +18,11 @@ const FandomPie = () => {
     value: _.sumBy(_.filter(filteredEntries, { fandom }), 'count'),
   }))
 
-  return <Widget title="Word Count By Fandom" className='grow self-stretch'>
+  return <Widget title="Word Count By Fandom">
     <PieChart
       series={[{ data }]}
-      width={300}
-      height={300}
+      width={400}
+      height={400}
       colors={getDynamicColorPalette(fandoms.length)}
     />
   </Widget>
