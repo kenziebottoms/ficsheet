@@ -45,9 +45,9 @@ const MonthlyCharts = () => {
     <div className="flex flex-row flex-wrap gap-3 items-start">
       <DailyWordCountStats />
       {month == null && <MonthlyFandomBar />}
-      <DayOfWeekRadar />
       <FandomPie />
       <ShipPie />
+      <DayOfWeekRadar />
     </div >
   </>
 }

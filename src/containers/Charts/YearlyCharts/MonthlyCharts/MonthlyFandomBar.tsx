@@ -6,15 +6,15 @@ import { parse } from 'date-fns';
 import { DataCacheContext } from '@/contexts/DataCache/DataCacheContext';
 import { YearContext } from '@/contexts/Year/YearContext';
 
+import Spinner from '@/components/Spinner';
 import Widget from '@/components/Widget';
 
 import { MonthNames, type WordCountEntry } from '@/types';
 import { largeNumberFormatter } from '@/utils';
 
-import { getDynamicColorPalette } from '../constants';
+import { getDynamicColorPalette } from '../../constants';
 
-import { filterByYearAndMonth } from './utils';
-import Spinner from '@/components/Spinner';
+import { filterByYearAndMonth } from '../utils';
 
 const MonthlyFandomBar = () => {
   const { dailyEntries } = use(DataCacheContext)
