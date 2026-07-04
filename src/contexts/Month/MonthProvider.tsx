@@ -51,7 +51,7 @@ export const MonthProvider = ({ initialValue, children }: Props) => {
         filteredEntries,
         filteredDailyTotals,
       }}>
-        <div className='flex flex-row gap-2 mt-3'>
+        <div className='flex flex-row gap-2'>
           <Button
             style={month == null ? 'primary' : 'subtle'}
             onClick={() => setMonth(null)}
