@@ -24,7 +24,7 @@ const DayOfWeekRadar = () => {
           max: _.max(data)
         })),
       }}
-      height={400}
+      height={380}
       width={400}
     />
   </Widget>

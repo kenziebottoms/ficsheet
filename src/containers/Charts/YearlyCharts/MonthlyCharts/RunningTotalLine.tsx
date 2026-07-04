@@ -4,28 +4,26 @@ import _ from 'lodash'
 import { format, isValid } from 'date-fns';
 
 import { DataCacheContext } from '@/contexts/DataCache/DataCacheContext';
+import { MonthContext } from '@/contexts/Month/MonthContext';
 import { YearContext } from '@/contexts/Year/YearContext';
 
+import Spinner from '@/components/Spinner';
 import Widget from '@/components/Widget';
 
 import { largeNumberFormatter } from '@/utils';
 
-import { colors } from '../constants';
+import { colors } from '../../constants';
 
-import { addTimestamp, filterByYearAndMonth, } from './utils';
-import Spinner from '@/components/Spinner';
+import { addTimestamp, filterByYearAndMonth, } from '../utils';
 
 const RunningTotalLine = () => {
   const { runningTotal } = use(DataCacheContext)
   const { year } = use(YearContext)
+  const { month } = use(MonthContext)
 
   if (year == null) return null;
 
-  const paddedRunningTotal = runningTotal.slice()
-  if (!runningTotal[0]?.date.includes("01-01")) {
-    paddedRunningTotal.unshift({ date: `${year}-01-01`, running_total: 0 })
-  }
-  const dataset = filterByYearAndMonth(paddedRunningTotal, year, null, true).map(addTimestamp)
+  const dataset = filterByYearAndMonth(runningTotal, year, month, true).map(addTimestamp)
 
   return <Widget title="Running Total">
     {dataset.length > 0 ? <LineChart
