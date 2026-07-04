@@ -16,11 +16,9 @@ import { copyPrettyJson } from '@/utils';
 
 import { type MonthlyChartTabName } from '../constants';
 
-import FandomTimelineBarChart from './FandomTimelineBarChart';
 import Journal from './Journal';
 import MonthlyCharts from './MonthlyCharts';
 import ProjectedAnnualWordCount from './ProjectedAnnualWordCount';
-import FicTimelineBarChart from './FicTimelineBarChart';
 import FicManager from './FicManager';
 
 const TabIcons: Record<MonthlyChartTabName, SvgIconComponent> = {
@@ -60,9 +58,6 @@ const YearlyCharts = () => {
 
   return <div className="bg-zinc-900 p-3 rounded-xl space-y-3">
     {year === thisYear && <ProjectedAnnualWordCount />}
-
-    <FandomTimelineBarChart />
-    <FicTimelineBarChart />
 
     <MonthProvider>
       <div className="bg-zinc-800 px-5 py-2 rounded-full text-zinc-400 flex flex-row flex-wrap gap-3">

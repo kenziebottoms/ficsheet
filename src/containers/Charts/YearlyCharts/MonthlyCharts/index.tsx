@@ -13,6 +13,8 @@ import FandomPie from './FandomPie';
 import MonthlyFandomBar from "./MonthlyFandomBar";
 import RunningTotalLine from "./RunningTotalLine";
 import ShipPie from "./ShipPie";
+import FandomTimelineBarChart from "./FandomTimelineBarChart";
+import FicTimelineBarChart from "./FicTimelineBarChart";
 
 const MonthlyCharts = () => {
   const { month, filteredDailyTotals, filteredEntries } = use(MonthContext)
@@ -48,7 +50,10 @@ const MonthlyCharts = () => {
       <FandomPie />
       <ShipPie />
       <DayOfWeekRadar />
-    </div >
+    </div>
+
+    <FandomTimelineBarChart />
+    <FicTimelineBarChart />
   </>
 }
 
