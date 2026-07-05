@@ -69,8 +69,10 @@ const MonthlyCharts = () => {
       <DayOfWeekRadar />
     </div>
 
-    <FandomTimelineBarChart />
-    <FicTimelineBarChart />
+    {month == null && <>
+      <FandomTimelineBarChart />
+      <FicTimelineBarChart />
+    </>}
   </>
 }
 
