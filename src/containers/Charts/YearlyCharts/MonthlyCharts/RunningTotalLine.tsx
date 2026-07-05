@@ -44,7 +44,7 @@ const RunningTotalLine = () => {
         data: _.map(dataset, 'running_total'),
         showMark: false,
       }]}
-      width={year === new Date().getFullYear() ? Math.min(100 + (new Date().getMonth() + 1) * 60, 800) : 800}
+      width={650}
       height={380}
       colors={colors}
       yAxis={[{ valueFormatter: largeNumberFormatter }]}
