@@ -13,7 +13,7 @@ import {
   getEntry,
   insertEntry,
   insertFic,
-  processFandomForEntry,
+  importFicForEntry,
   updateEntry,
 } from "../db/queries.ts";
 import { seedTables } from "../db/setup.ts";
@@ -190,18 +190,18 @@ entriesRouter.put("/:id", (req: RequestWithId, res) => {
 });
 
 /**
- * POST /api/entries/:id/processFandom
+ * POST /api/entries/:id/importFic
  */
-entriesRouter.post("/:id/processFandom", (req: RequestWithId, res) => {
+entriesRouter.post("/:id/importFic", (req: RequestWithId, res) => {
   const id = validateId(req.params.id);
   if (!id) return res.status(400);
 
   const entry = getEntry(id);
-  console.log("processing fandom for fic #", id);
+  console.log("importing fic for fic #", id);
 
   if (entry == null) return res.status(404);
 
-  const response = processFandomForEntry(entry);
+  const response = importFicForEntry(entry);
 
   if ("status" in response) {
     const error: ApiError = response as ApiError;

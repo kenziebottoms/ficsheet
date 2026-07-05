@@ -13,7 +13,7 @@ import {
   getFandomsByYear,
   getFicsByYear,
   getYearlyWhereClause,
-  processFandomForEntry,
+  importFicForEntry,
   select,
   validateYear,
 } from "../db/queries.ts";
@@ -58,12 +58,12 @@ yearRouter.get("/entries", (req: YearRequest, res) => {
 });
 
 /**
- * POST /api/year/:year/entries/processFandoms
+ * POST /api/year/:year/entries/importFics
  */
-yearRouter.post("/entries/processFandoms", (req: YearRequest, res) => {
-  console.log(`processing fandoms (${req.params.year})`);
+yearRouter.post("/entries/importFics", (req: YearRequest, res) => {
+  console.log(`importing fics (${req.params.year})`);
   const entries = getEntriesByYear(req.params.year);
-  const results = entries.map(processFandomForEntry);
+  const results = entries.map(importFicForEntry);
   const errors = results.filter(
     (result) =>
       _.get(result, "status") != null && _.get(result, "status") !== 304,

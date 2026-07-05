@@ -1,7 +1,7 @@
 import { use } from 'react';
 import { Edit, Refresh } from '@mui/icons-material';
 
-import { processFandom } from '@/api';
+import { importFic } from '@/api';
 
 import Button from '@/components/Button';
 import Pill from '@/components/Pill';
@@ -31,7 +31,7 @@ const EntryButton = ({
       icon={Refresh}
       style="cautionary"
       className='rounded-none'
-      onClick={() => processFandom(entry.id).then(() => refreshData(year))}
+      onClick={() => importFic(entry.id).then(() => refreshData(year))}
     />}
     <Button
       style="transparent"

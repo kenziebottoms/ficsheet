@@ -195,7 +195,7 @@ export const getFicById = (ficId: string | number): WithId<Fic> | null => {
   return null;
 };
 
-export const processFandomForEntry = (
+export const importFicForEntry = (
   entry: WithId<WordCountEntry>,
 ): WithId<WordCountEntry> | ApiError => {
   const { id } = entry;

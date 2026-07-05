@@ -1,7 +1,7 @@
 import { use, useEffect, useState } from 'react';
-import { AppRegistration, AutoDelete, AutoMode, AutoStories, ContentPaste, Delete, Equalizer, NoteAdd, TableChart, type SvgIconComponent } from '@mui/icons-material';
+import { AppRegistration, AutoDelete, AutoMode, AutoStories, ContentPasteGoOutlined, Delete, Equalizer, NoteAdd, TableChart, type SvgIconComponent } from '@mui/icons-material';
 
-import { deleteEntriesByYear, exportData, processFandomsForYear } from '@/api';
+import { deleteEntriesByYear, exportData, importFicsForYear as importFicsForYear } from '@/api';
 
 import Button from '@/components/Button';
 import FicForm from '@/components/FicForm';
@@ -101,17 +101,17 @@ const YearlyCharts = () => {
           <Button
             style="cautionary"
             icon={AutoMode}
-            onClick={() => processFandomsForYear(year).then(() => refreshData(year))}
+            onClick={() => importFicsForYear(year).then(() => refreshData(year))}
             small
           >
-            Migrate Fandoms
+            Import Fics
           </Button>
 
           <div className='grow' />
 
           <Button
             style="transparent"
-            icon={ContentPaste}
+            icon={ContentPasteGoOutlined}
             onClick={handleExport}
             small
           >
