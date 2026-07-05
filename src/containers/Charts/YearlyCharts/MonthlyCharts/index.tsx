@@ -34,14 +34,20 @@ const MonthlyCharts = () => {
         <Badge title="Longest Streak" style="secondary">
           <span className='font-semibold text-white'>{getLongestStreak(filteredDailyTotals, x => x.daily_total !== 0).toLocaleString("en-US")}</span> days
         </Badge>
-        <Badge title="Most Worked On" style="subtle">
+        <Badge title="Rest Days" style="subtle">
+          <span className='font-semibold text-white'>{_.filter(filteredDailyTotals, x => x.daily_total === 0).length.toLocaleString()}</span> days
+        </Badge>
+      </div>
+      <RunningTotalLine />
+
+      <div className="flex flex-col gap-2 items-stretch">
+        <Badge title="Top Fic" style="primary">
           <div>
             <div className='font-semibold text-white'>{_.maxBy(ficTotals, 'count')?.fic}</div>
             <div className="text-sm">{_.maxBy(ficTotals, 'count')?.count.toLocaleString('en-US')} words written</div>
           </div>
         </Badge>
       </div>
-      <RunningTotalLine />
     </div>
 
     <div className="flex flex-row flex-wrap gap-3 items-start">
