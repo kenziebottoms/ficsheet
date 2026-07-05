@@ -29,6 +29,7 @@ const FicManager = () => {
     fic.name,
     fic.fandom,
     fic.ship,
+    _.sumBy(_.filter(filteredEntries, { ficId: fic.id }), 'count').toLocaleString(),
     <Button
       style="transparent"
       icon={Edit}
@@ -69,7 +70,7 @@ const FicManager = () => {
       />
     </Modal>
     <Table
-      headers={[...sortableHeaders, null]}
+      headers={[...sortableHeaders, 'Words Written', null]}
       data={data}
     />
   </>
