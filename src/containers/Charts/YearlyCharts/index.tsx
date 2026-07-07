@@ -1,5 +1,5 @@
 import { use, useEffect, useState } from 'react';
-import { AppRegistration, AutoDelete, AutoMode, AutoStories, ContentPasteGoOutlined, Delete, Equalizer, NoteAdd, TableChart, type SvgIconComponent } from '@mui/icons-material';
+import { AppRegistration, AutoDelete, AutoMode, AutoStories, ContentPasteGoOutlined, Delete, Equalizer, TableChart, type SvgIconComponent } from '@mui/icons-material';
 
 import { deleteEntriesByYear, exportData, importFicsForYear as importFicsForYear } from '@/api';
 
@@ -129,19 +129,7 @@ const YearlyCharts = () => {
         <Journal showEmpty={showEmpty} />
       </div>}
 
-      {activeTab === 'fics' && <div className='space-y-2'>
-        <div className='bg-zinc-900 p-2 rounded-md flex flex-row justify-end gap-4'>
-          <Button
-            icon={NoteAdd}
-            onClick={() => setShowFicForm(true)}
-            small
-            style="transparent"
-          >
-            New Fic
-          </Button>
-        </div>
-        <FicManager />
-      </div>}
+      {activeTab === 'fics' && <FicManager />}
       <Modal
         open={showFicForm}
         setOpen={setShowFicForm}

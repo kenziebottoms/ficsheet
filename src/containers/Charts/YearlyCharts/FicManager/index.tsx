@@ -1,6 +1,6 @@
 import { use, useContext, useState } from 'react'
 import _ from 'lodash'
-import { ArrowDropDown, ArrowDropUp, Edit } from '@mui/icons-material'
+import { Add, ArrowDropDown, ArrowDropUp, Edit } from '@mui/icons-material'
 
 import Button from '@/components/Button'
 import FicForm from '@/components/FicForm'
@@ -20,7 +20,7 @@ const FicManager = () => {
 
   const [sortPropertyIndex, setSortPropertyIndex] = useState<number>(0)
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('desc')
-  const [ficFormValues, setFicFormValues] = useState<Fic | null>(null)
+  const [ficFormValues, setFicFormValues] = useState<Partial<Fic> | null>(null)
 
   const filteredFicIds = _.uniq(_.map(filteredEntries, 'ficId')).filter(x => x != null)
   const filteredFics = filteredFicIds.map(id => _.find(fics, { id })).filter(x => x != null)
@@ -70,7 +70,12 @@ const FicManager = () => {
       />
     </Modal>
     <Table
-      headers={[...sortableHeaders, 'Words Written', null]}
+      headers={[...sortableHeaders, 'Words Written', <Button
+        style="transparent"
+        icon={Add}
+        onClick={() => setFicFormValues({})}
+        small
+      />]}
       data={data}
     />
   </>
