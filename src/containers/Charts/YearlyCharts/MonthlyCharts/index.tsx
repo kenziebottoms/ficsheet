@@ -29,6 +29,11 @@ const MonthlyCharts = () => {
     fandom,
     count: _.sumBy(entries, 'count')
   }))
+  const entriesByShip = _.omit(_.groupBy(filteredEntries, 'ship'), 'null')
+  const shipTotals = _.map(entriesByShip, (entries, ship) => ({
+    ship,
+    count: _.sumBy(entries, 'count')
+  }))
 
   return <>
     <div className="flex flex-row flex-wrap gap-3 items-start">
@@ -56,6 +61,12 @@ const MonthlyCharts = () => {
           <div>
             <div className='font-semibold text-white'>{_.maxBy(fandomTotals, 'count')?.fandom}</div>
             <div className="text-sm">{_.maxBy(fandomTotals, 'count')?.count.toLocaleString('en-US')} words written</div>
+          </div>
+        </Badge>
+        <Badge title="Top Ship" style="subtle">
+          <div>
+            <div className='font-semibold text-white'>{_.maxBy(shipTotals, 'count')?.ship}</div>
+            <div className="text-sm">{_.maxBy(shipTotals, 'count')?.count.toLocaleString('en-US')} words written</div>
           </div>
         </Badge>
       </div>
