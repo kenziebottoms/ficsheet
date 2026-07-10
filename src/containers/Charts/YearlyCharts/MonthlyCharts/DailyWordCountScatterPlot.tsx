@@ -8,7 +8,11 @@ import { MonthContext } from "@/contexts/Month/MonthContext"
 
 import { colors } from "../../constants"
 
-const DailyWordCountScatterPlot = () => {
+const DailyWordCountScatterPlot = ({
+  className = ''
+}: {
+  className?: string;
+}) => {
   const { month, filteredDailyTotals } = use(MonthContext)
 
   const [showZero, setShowZero] = useState<boolean>(true)
@@ -25,7 +29,7 @@ const DailyWordCountScatterPlot = () => {
   if (data.length === 0) return null;
 
   return (
-    <Widget title="Daily Word Count" className="flex flex-col">
+    <Widget title="Daily Word Count" className={`flex flex-col ${className}`}>
       <Toggle
         label="Show 0"
         value={showZero}
