@@ -33,14 +33,14 @@ export const YearProvider = ({ initialValue, children }: Props) => {
       availableYears,
       refreshYears,
     }}>
-      <div className="flex flex-row items-start gap-2 pl-2 mt-2">
-        <h3 className='px-3 text-xs m-1 flex flex-row items-center gap-2'>
+      <div className="w-full flex flex-col md:flex-row items-center gap-2 pt-2">
+        <h3 className='text-xs md:mb-2 md:px-3 flex flex-row items-center gap-2'>
           <Insights htmlColor="#9f9fa9" />
           <div>
             <span className='text-primary-medium'>fic</span>sheet
           </div>
         </h3>
-        <div className="flex flex-row items-center gap-2 overflow-x-auto pr-3">
+        <div className="w-full flex flex-row items-center gap-2 overflow-x-auto px-2">
           {availableYears.map(y => <Button
             key={y}
             style={year === y ? (y == null ? 'primary' : 'secondary') : 'subtle'}
