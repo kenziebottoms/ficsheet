@@ -37,7 +37,7 @@ const LifetimeWordCountLineChart = ({
         data: _.map(lifetimeRunningTotal, 'running_total'),
         showMark: false,
       }]}
-      width={1200}
+      width={800}
       height={600}
       colors={colors}
       yAxis={[{ valueFormatter: largeNumberFormatter }]}

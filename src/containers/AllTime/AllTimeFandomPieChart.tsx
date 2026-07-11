@@ -22,7 +22,7 @@ const AllTimeFandomPieChart = ({
     <PieChart
       series={[{ data, innerRadius: '50%' }]}
       width={800}
-      height={800}
+      height={600}
       colors={getDynamicColorPalette(fandoms.length)}
       slotProps={{ legend: { direction: 'vertical' } }}
     />
