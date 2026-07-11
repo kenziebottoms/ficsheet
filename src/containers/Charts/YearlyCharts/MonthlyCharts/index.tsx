@@ -82,7 +82,7 @@ const MonthlyCharts = () => {
       </div>
     </div>
 
-    <div className="flex flex-row flex-wrap gap-3 items-start">
+    <div className="flex flex-row flex-wrap gap-3 items-stretch">
       <DailyWordCountStats />
       {month == null && <MonthlyFandomBar />}
       <FandomPie />
