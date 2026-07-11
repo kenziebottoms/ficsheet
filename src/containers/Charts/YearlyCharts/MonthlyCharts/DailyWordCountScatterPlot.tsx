@@ -13,7 +13,7 @@ const DailyWordCountScatterPlot = ({
 }: {
   className?: string;
 }) => {
-  const { month, filteredDailyTotals } = use(MonthContext)
+  const { filteredDailyTotals } = use(MonthContext)
 
   const [showZero, setShowZero] = useState<boolean>(true)
 
@@ -39,8 +39,7 @@ const DailyWordCountScatterPlot = ({
       <ScatterChart
         series={[{ data, markerSize: 2 }]}
         colors={[colors[2]]}
-        // 375px is the min required to show the widget title and toggle on the same line
-        width={month == null ? 800 : 375}
+        width={600}
         height={300}
       />
     </Widget>
