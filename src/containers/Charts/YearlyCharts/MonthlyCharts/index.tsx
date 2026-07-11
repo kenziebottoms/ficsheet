@@ -66,7 +66,7 @@ const MonthlyCharts = () => {
 
       <RunningTotalLine className="grow" />
 
-      <div className="flex flex-row flex-wrap xl:flex-col gap-2 items-stretch grow">
+      <div className="flex flex-row flex-wrap 2xl:flex-col gap-2 items-stretch grow">
         <Badge title="Top Fic" style="primary" className="grow">
           <div className='font-semibold text-white text-2xl'>{_.maxBy(ficTotals, 'count')?.fic}</div>
           <div className="text-sm">{_.maxBy(ficTotals, 'count')?.count.toLocaleString('en-US')} words written</div>
