@@ -16,7 +16,9 @@ import { colors } from '../../constants';
 
 import { addTimestamp, filterByYearAndMonth, } from '../utils';
 
-const RunningTotalLine = () => {
+const RunningTotalLine = ({
+  className = '',
+}) => {
   const { runningTotal } = use(DataCacheContext)
   const { year } = use(YearContext)
   const { month } = use(MonthContext)
@@ -25,7 +27,7 @@ const RunningTotalLine = () => {
 
   const dataset = filterByYearAndMonth(runningTotal, year, month, true).map(addTimestamp)
 
-  return <Widget title="Running Total">
+  return <Widget title="Running Total" className={className}>
     {dataset.length > 0 ? <LineChart
       dataset={dataset}
       xAxis={[

@@ -36,36 +36,52 @@ const MonthlyCharts = () => {
   }))
 
   return <>
-    <div className="flex flex-row flex-wrap gap-3 items-start">
-      <div className="flex flex-col gap-2">
-        <Badge title="Total" style="primary">
-          <span className='font-semibold text-white'>{_.sumBy(filteredDailyTotals, 'daily_total').toLocaleString("en-US")}</span> words
+    <div className="flex flex-row flex-wrap gap-3 items-stretch">
+      <div className="flex flex-row lg:flex-col flex-wrap gap-2 grow">
+        <Badge
+          title="Total"
+          style="primary"
+          className="grow"
+        >
+          <div className='font-semibold text-white text-2xl'>{_.sumBy(filteredDailyTotals, 'daily_total').toLocaleString("en-US")}</div>
+          <div className="text-sm">words</div>
         </Badge>
-        <Badge title="Longest Streak" style="secondary">
-          <span className='font-semibold text-white'>{getLongestStreak(filteredDailyTotals, x => x.daily_total !== 0).toLocaleString("en-US")}</span> days
+        <Badge
+          title={<>Longest<br />Streak</>}
+          style="secondary"
+          className="grow"
+        >
+          <span className='font-semibold text-white text-2xl'>{getLongestStreak(filteredDailyTotals, x => x.daily_total !== 0).toLocaleString("en-US")}</span>
+          <span className="text-sm"> days</span>
         </Badge>
-        <Badge title="Rest Days" style="subtle">
-          <span className='font-semibold text-white'>{_.filter(filteredDailyTotals, x => x.daily_total === 0).length.toLocaleString()}</span> days
+        <Badge
+          title="Rest Days"
+          style="subtle"
+          className="grow"
+        >
+          <span className='font-semibold text-white text-2xl'>{_.filter(filteredDailyTotals, x => x.daily_total === 0).length.toLocaleString()}</span>
+          <span className="text-sm"> days</span>
         </Badge>
       </div>
-      <RunningTotalLine />
 
-      <div className="flex flex-col gap-2 items-stretch">
-        <Badge title="Top Fic" style="primary">
+      <RunningTotalLine className="grow" />
+
+      <div className="flex flex-row flex-wrap xl:flex-col gap-2 items-stretch grow">
+        <Badge title="Top Fic" style="primary" className="grow">
           <div>
-            <div className='font-semibold text-white'>{_.maxBy(ficTotals, 'count')?.fic}</div>
+            <div className='font-semibold text-white text-2xl'>{_.maxBy(ficTotals, 'count')?.fic}</div>
             <div className="text-sm">{_.maxBy(ficTotals, 'count')?.count.toLocaleString('en-US')} words written</div>
           </div>
         </Badge>
-        <Badge title="Top Fandom" style="secondary">
+        <Badge title="Top Fandom" style="secondary" className="grow">
           <div>
-            <div className='font-semibold text-white'>{_.maxBy(fandomTotals, 'count')?.fandom}</div>
+            <div className='font-semibold text-white text-2xl'>{_.maxBy(fandomTotals, 'count')?.fandom}</div>
             <div className="text-sm">{_.maxBy(fandomTotals, 'count')?.count.toLocaleString('en-US')} words written</div>
           </div>
         </Badge>
-        <Badge title="Top Ship" style="subtle">
+        <Badge title="Top Ship" style="subtle" className="grow">
           <div>
-            <div className='font-semibold text-white'>{_.maxBy(shipTotals, 'count')?.ship}</div>
+            <div className='font-semibold text-white text-2xl'>{_.maxBy(shipTotals, 'count')?.ship}</div>
             <div className="text-sm">{_.maxBy(shipTotals, 'count')?.count.toLocaleString('en-US')} words written</div>
           </div>
         </Badge>
