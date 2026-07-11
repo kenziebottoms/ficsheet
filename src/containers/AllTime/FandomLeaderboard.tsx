@@ -12,7 +12,7 @@ const FandomLeaderboard = ({
 }) => {
   const topFandoms = _.orderBy(fandoms, 'totalWordsWritten').reverse().slice(0, 10)
 
-  return <Widget title={`Top ${topFandoms.length} Fandoms`} className='space-y-2'>
+  return <Widget title={`Top ${topFandoms.length} Fandoms`} className='w-full space-y-2'>
     <Table
       headers={['Fandom', 'Words Written', 'Years Active']}
       data={topFandoms.map(fandom => ([

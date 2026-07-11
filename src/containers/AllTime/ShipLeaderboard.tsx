@@ -12,7 +12,7 @@ const ShipLeaderboard = ({
 }) => {
   const topShips = _.orderBy(ships, 'totalWordsWritten').reverse().slice(0, 10)
 
-  return <Widget title={`Top ${topShips.length} Ships`} className='space-y-2'>
+  return <Widget title={`Top ${topShips.length} Ships`} className='space-y-2 w-full'>
     <Table
       headers={['Ship', 'Fandom', 'Words Written', 'Years Active']}
       data={topShips.map(ship => ([

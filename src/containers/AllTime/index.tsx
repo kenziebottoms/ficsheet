@@ -42,7 +42,7 @@ const AllTime = () => {
 
   return <div className='p-3 bg-zinc-900 rounded-md flex flex-col gap-3 items-center'>
     <div className='flex flex-row gap-3'>
-      <Badge title='Total Words Written'>
+      <Badge title='Total Words Written' style="primary">
         {lifetimeRunningTotal[lifetimeRunningTotal.length - 1].running_total.toLocaleString('en-US')}
       </Badge>
       <Badge
@@ -50,6 +50,12 @@ const AllTime = () => {
         style="secondary"
       >
         {fandoms.length}
+      </Badge>
+      <Badge
+        title="Total Ships"
+        style="subtle"
+      >
+        {ships.length}
       </Badge>
       <Button
         style="transparent"
@@ -60,10 +66,10 @@ const AllTime = () => {
         Export
       </Button>
     </div>
-    <div className='flex flex-row gap-2'>
-      <FandomLeaderboard fandoms={fandoms} />
-      <ShipLeaderboard ships={ships} />
-    </div>
+
+    <FandomLeaderboard fandoms={fandoms} />
+    <ShipLeaderboard ships={ships} />
+
     <YearlyRunningWordCountLineChart runningTotals={runningTotals} />
     <AllTimeFandomPieChart fandoms={fandoms} />
     <LifetimeWordCountLineChart lifetimeRunningTotal={lifetimeRunningTotal} />
