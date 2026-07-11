@@ -68,22 +68,16 @@ const MonthlyCharts = () => {
 
       <div className="flex flex-row flex-wrap xl:flex-col gap-2 items-stretch grow">
         <Badge title="Top Fic" style="primary" className="grow">
-          <div>
-            <div className='font-semibold text-white text-2xl'>{_.maxBy(ficTotals, 'count')?.fic}</div>
-            <div className="text-sm">{_.maxBy(ficTotals, 'count')?.count.toLocaleString('en-US')} words written</div>
-          </div>
+          <div className='font-semibold text-white text-2xl'>{_.maxBy(ficTotals, 'count')?.fic}</div>
+          <div className="text-sm">{_.maxBy(ficTotals, 'count')?.count.toLocaleString('en-US')} words written</div>
         </Badge>
         <Badge title="Top Fandom" style="secondary" className="grow">
-          <div>
-            <div className='font-semibold text-white text-2xl'>{_.maxBy(fandomTotals, 'count')?.fandom}</div>
-            <div className="text-sm">{_.maxBy(fandomTotals, 'count')?.count.toLocaleString('en-US')} words written</div>
-          </div>
+          <div className='font-semibold text-white text-2xl'>{_.maxBy(fandomTotals, 'count')?.fandom}</div>
+          <div className="text-sm">{_.maxBy(fandomTotals, 'count')?.count.toLocaleString('en-US')} words written</div>
         </Badge>
         <Badge title="Top Ship" style="subtle" className="grow">
-          <div>
-            <div className='font-semibold text-white text-2xl'>{_.maxBy(shipTotals, 'count')?.ship}</div>
-            <div className="text-sm">{_.maxBy(shipTotals, 'count')?.count.toLocaleString('en-US')} words written</div>
-          </div>
+          <div className='font-semibold text-white text-2xl'>{_.maxBy(shipTotals, 'count')?.ship}</div>
+          <div className="text-sm">{_.maxBy(shipTotals, 'count')?.count.toLocaleString('en-US')} words written</div>
         </Badge>
       </div>
     </div>
