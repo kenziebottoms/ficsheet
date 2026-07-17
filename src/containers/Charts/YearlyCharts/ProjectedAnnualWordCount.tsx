@@ -29,6 +29,8 @@ const ProjectedAnnualWordCount = ({
   const daysInYear = isLeapYear(year) ? 366 : 365
   const daysPast = getDayOfYear(new Date())
 
+  const hr = <div className='border border-dotted border-zinc-500 h-4 md:h-0 w-0 md:w-4 grow-[0.35]' />
+
   return <>
     <Modal open={showEntryForm} setOpen={setShowEntryForm}>
       <DailyProjectWordCountForm
@@ -40,13 +42,13 @@ const ProjectedAnnualWordCount = ({
       />
     </Modal>
 
-    <div className={['p-3 w-full flex flex-row flex-wrap justify-center items-center gap-y-3', className].join(" ")}>
+    <div className={['p-2 w-full flex flex-col md:flex-row flex-wrap justify-center items-center md:gap-y-3', className].join(" ")}>
       <div className={[
         ButtonBackgroundClassNames.secondary,
         'bg-primary h-8 w-8 rounded-full shrink-0 grow-0'
       ].join(" ")} />
 
-      <div className='border border-dotted border-zinc-500 h-0 w-2 grow-[0.35]' />
+      {hr}
 
       <Widget title="Days past" className='items-center'>
         <Gauge
@@ -59,13 +61,13 @@ const ProjectedAnnualWordCount = ({
         />
       </Widget>
 
-      <div className='border border-dotted border-zinc-500 h-0 w-2 grow' />
+      {hr}
 
       <Badge style="secondary" title="Total Words Written">
         {running_total.toLocaleString("en-US")}
       </Badge>
 
-      <div className='border border-dotted border-zinc-500 h-0 w-2 grow' />
+      {hr}
 
       <Badge style="subtle">
         <div className='text-sm text-center text-foreground mb-2'>Write {Math.ceil(running_total / daysPast).toLocaleString("en-US")} words to<br />to stay on track!</div>
@@ -79,7 +81,7 @@ const ProjectedAnnualWordCount = ({
         </Button>
       </Badge>
 
-      <div className='border border-dotted border-zinc-500 h-0 w-2 grow' />
+      {hr}
 
       <Badge style="primary" title={(<>Projected Annual<br />Word Count</>)}>
         {Math.round(running_total * (daysInYear / daysPast)).toLocaleString("en-US")}
