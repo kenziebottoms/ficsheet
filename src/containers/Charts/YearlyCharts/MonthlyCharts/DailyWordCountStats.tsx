@@ -7,11 +7,13 @@ import { MonthContext } from '@/contexts/Month/MonthContext'
 
 import DailyWordCountScatterPlot from './DailyWordCountScatterPlot'
 
-const DailyWordCountStats = () => {
+const DailyWordCountStats = ({
+  className = ''
+}) => {
   const { filteredDailyTotals } = use(MonthContext)
 
   return (
-    <div className='bg-zinc-900 p-2 rounded-md w-auto flex flex-row flex-wrap gap-2 grow'>
+    <div className={`${className} bg-zinc-900 p-2 rounded-md w-auto flex flex-row flex-wrap gap-2 grow`}>
       <DailyWordCountScatterPlot className="grow" />
       <div className='flex flex-col sm:flex-row lg:flex-col flex-wrap gap-2 grow'>
         <Badge title="Maximum" style="primary" className='grow'>

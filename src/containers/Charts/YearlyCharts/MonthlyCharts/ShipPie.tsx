@@ -8,7 +8,9 @@ import Widget from '@/components/Widget';
 
 import { getDynamicColorPalette } from '../../constants';
 
-const ShipPie = () => {
+const ShipPie = ({
+  className = ''
+}) => {
   const { filteredEntries } = use(MonthContext)
 
   const ships = _.uniq(_.map(filteredEntries, 'ship')).sort()
@@ -18,7 +20,7 @@ const ShipPie = () => {
     value: _.sumBy(_.filter(filteredEntries, { ship }), 'count'),
   }))
 
-  return <Widget title="Word Count By Ship">
+  return <Widget title="Word Count By Ship" className={className}>
     <PieChart
       series={[{ data }]}
       width={400}

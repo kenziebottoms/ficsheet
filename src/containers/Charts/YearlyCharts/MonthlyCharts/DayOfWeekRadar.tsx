@@ -9,12 +9,14 @@ import { DaysOfWeek } from '@/types'
 
 import Widget from '@/components/Widget'
 
-const DayOfWeekRadar = () => {
+const DayOfWeekRadar = ({
+  className = ''
+}) => {
   const { filteredDailyTotals } = use(MonthContext)
   const dailyTotalsByWeekday = _.groupBy(filteredDailyTotals, dt => parse(dt.date, 'yyyy-MM-dd', new Date()).getDay());
   const data = DaysOfWeek.map((_day, i) => _.meanBy(dailyTotalsByWeekday[i], 'daily_total') || 0)
 
-  return <Widget title="Day Of Week Average">
+  return <Widget title="Day Of Week Average" className={className}>
     <RadarChart
       series={[{ data, fillArea: true }]}
       radar={{

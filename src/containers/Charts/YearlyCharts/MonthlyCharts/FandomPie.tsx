@@ -8,7 +8,9 @@ import Widget from '@/components/Widget';
 
 import { getDynamicColorPalette } from '../../constants';
 
-const FandomPie = () => {
+const FandomPie = ({
+  className = ''
+}) => {
   const { filteredEntries } = use(MonthContext)
 
   const fandoms = _.uniq(_.map(filteredEntries, 'fandom')).sort()
@@ -18,7 +20,7 @@ const FandomPie = () => {
     value: _.sumBy(_.filter(filteredEntries, { fandom }), 'count'),
   }))
 
-  return <Widget title="Word Count By Fandom">
+  return <Widget title="Word Count By Fandom" className={className}>
     <PieChart
       series={[{ data }]}
       width={400}

@@ -16,7 +16,9 @@ import { getDynamicColorPalette } from '../../constants';
 
 import { filterByYearAndMonth } from '../utils';
 
-const MonthlyFandomBar = () => {
+const MonthlyFandomBar = ({
+  className = ''
+}) => {
   const { dailyEntries } = use(DataCacheContext)
   const { year } = use(YearContext)
 
@@ -44,7 +46,7 @@ const MonthlyFandomBar = () => {
       month: MonthNames[monthIndex].slice(0, 3)
     }));
 
-  return <Widget title="Monthly Word Count By Fandom">
+  return <Widget title="Monthly Word Count By Fandom" className={className}>
     {entries.length > 0 ? <BarChart
       dataset={monthlyTotalByFandom}
       xAxis={[{ dataKey: 'month' }]}
