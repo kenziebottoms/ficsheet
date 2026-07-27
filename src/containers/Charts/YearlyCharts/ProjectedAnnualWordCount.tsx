@@ -1,6 +1,6 @@
 import { use, useState } from 'react'
 import { getDayOfYear, isLeapYear } from 'date-fns'
-import { Gauge } from '@mui/x-charts'
+import { Gauge, gaugeClasses } from '@mui/x-charts'
 import { EditCalendar } from '@mui/icons-material'
 
 import Badge from '@/components/Badge'
@@ -58,6 +58,11 @@ const ProjectedAnnualWordCount = ({
           valueMax={daysInYear}
           value={daysPast}
           className='mx-auto'
+          sx={{
+            [`& .${gaugeClasses.valueArc}`]: {
+              fill: '#f472b6',
+            },
+          }}
         />
       </Widget>
 
