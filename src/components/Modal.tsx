@@ -16,9 +16,9 @@ const Modal = ({
 }: Props) => {
 
   const handleEscape = (e: KeyboardEvent) => {
-    // don't do anything else with the escape key
-    e.stopPropagation()
     if (e.key === 'Escape') {
+      // don't do anything else with the escape key
+      e.stopPropagation()
       setOpen(false);
     }
   };
