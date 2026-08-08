@@ -2,6 +2,17 @@
 
 A TypeScript/React app to track and visualize periodic writing goals and trends.
 
+## Features:
+- **Just paste.** Paste your word count directly into the app and only your daily word count will be stored. None of your writing is stored anywhere!
+- **Fic analytics.** Drill down into your writing data and get colorful, dynamic charts and graphs for any year or month.
+- **Host your own data.** If you run the app locally, you get all the bells and whistles, but no data leaves your computer. Be sure to save backups in multiple places to prevent data loss.
+  > Next up: web hosting for everyone! I'm in the process of tracking down and setting up privacy-first hosting.
+- **Export to clipboard.** Copy JSON backups, save them, edit them.
+- **Import from file.** Import saved backups. Great for if you need to move devices but want to keep that local-first experience.
+
+![A screenshot of an app dashboard in shades of pin, orange and purple. There are several stats badges, charts, and graphs showing writing activity broken down by fandom and fanfic.](thumb.png)
+![A screenshot of the form used to log daily word count.](thumb2.png)
+
 ## Local development
 
 Running this app locally saves your data in a `.sqlite` file on your computer. No data is sent, sold, or tracked (...by me). You can export this data by going to the History tab and clicking "Export", which will copy your data in a JSON format that may be saved and imported into the app.
