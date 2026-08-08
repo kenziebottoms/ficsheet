@@ -12,6 +12,7 @@ A TypeScript/React app to track and visualize periodic writing goals and trends.
 
 ![A screenshot of an app dashboard in shades of pin, orange and purple. There are several stats badges, charts, and graphs showing writing activity broken down by fandom and fanfic.](thumb.png)
 ![A screenshot of the form used to log daily word count.](thumb2.png)
+![A screenshot of the All Time tab, featuring all-time fandom, ship, and fic charts and line charts comparing each year's daily word count.](thumb2.png)
 
 ## Local development
 
