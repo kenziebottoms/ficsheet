@@ -14,10 +14,12 @@ import { DataCacheContext } from '@/contexts/DataCache/DataCacheContext'
 
 import type { ContainerProps } from '@/types'
 
+import { reformatDate } from '@/utils'
+
 const ProjectedAnnualWordCount = ({
   className = ''
 }: ContainerProps) => {
-  const { runningTotal, refreshData } = use(DataCacheContext)
+  const { dailyEntries, runningTotal, refreshData } = use(DataCacheContext)
   const [showEntryForm, setShowEntryForm] = useState<boolean>(false)
 
   if (runningTotal.length === 0) {
@@ -75,15 +77,16 @@ const ProjectedAnnualWordCount = ({
       {hr}
 
       <Badge style="subtle">
-        <div className='text-sm text-center text-foreground mb-2'>Write {Math.ceil(running_total / daysPast).toLocaleString("en-US")} words to<br />to stay on track!</div>
+        <div className='text-sm text-center text-foreground'>Write {Math.ceil(running_total / daysPast).toLocaleString("en-US")} words to<br />to stay on track!</div>
         <Button
           onClick={() => setShowEntryForm(!showEntryForm)}
           style='primary'
-          className='mx-auto'
+          className='mx-auto my-2'
           icon={EditCalendar}
         >
           Log
         </Button>
+        <div className='text-xs max-w-36'>Your last entry was on {reformatDate(dailyEntries[dailyEntries.length - 1].date, 'yyyy-MM-dd', 'MM/dd/yy')}.</div>
       </Badge>
 
       {hr}
