@@ -5,6 +5,7 @@ import {
   isBefore,
   isSameDay,
   isSameMonth,
+  parse,
 } from "date-fns";
 
 export const copy = (text: string) =>
@@ -78,4 +79,13 @@ export const largeNumberFormatter = (x: string) => {
   return number >= 1000
     ? `${(number / 1000).toFixed(1).replace(".0", "")}k`
     : `${number}`;
+};
+
+export const reformatDate = (
+  dateString: string,
+  originalFormat: string,
+  newFormat: string,
+): string => {
+  const date = parse(dateString, originalFormat, new Date());
+  return format(date, newFormat);
 };
