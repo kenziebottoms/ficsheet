@@ -86,7 +86,7 @@ const ProjectedAnnualWordCount = ({
         >
           Log
         </Button>
-        <div className='text-xs max-w-36'>Your last entry was on {reformatDate(dailyEntries[dailyEntries.length - 1].date, 'yyyy-MM-dd', 'MM/dd/yy')}.</div>
+        <div className='text-xs max-w-36'>Your last entry was on {reformatDate(dailyEntries[dailyEntries.length - 1].date, 'yyyy-MM-dd', 'M/d/yy')}.</div>
       </Badge>
 
       {hr}
