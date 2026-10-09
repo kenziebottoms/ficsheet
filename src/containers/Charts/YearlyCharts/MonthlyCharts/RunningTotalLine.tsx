@@ -1,7 +1,7 @@
 import { use, useEffect, useState } from 'react';
 import { LineChart, } from '@mui/x-charts'
 import _ from 'lodash'
-import { format, getDayOfYear, isFuture, isLeapYear, isValid, } from 'date-fns';
+import { format, getDayOfYear, isLeapYear, isValid, } from 'date-fns';
 
 import { DataCacheContext } from '@/contexts/DataCache/DataCacheContext';
 import { MonthContext } from '@/contexts/Month/MonthContext';
@@ -70,9 +70,6 @@ const RunningTotalLine = ({
             let stringValue = '';
             if (isValid(date)) {
               stringValue = format(new Date(date), 'MMM d')
-            }
-            if (isFuture(date)) {
-              stringValue += ' (est.)';
             }
             return stringValue;
           }
