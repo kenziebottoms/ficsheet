@@ -1,51 +1,59 @@
-import { use, useState } from 'react';
+import { use, useEffect, useState } from 'react';
 import { LineChart, } from '@mui/x-charts'
 import _ from 'lodash'
 import { format, getDayOfYear, isFuture, isLeapYear, isValid, } from 'date-fns';
 
 import { DataCacheContext } from '@/contexts/DataCache/DataCacheContext';
+import { MonthContext } from '@/contexts/Month/MonthContext';
 import { YearContext } from '@/contexts/Year/YearContext';
 
 import Spinner from '@/components/Spinner';
 import Toggle from '@/components/Toggle';
 import Widget from '@/components/Widget';
 
-import type { RunningTotal } from '@/types';
-
 import { largeNumberFormatter } from '@/utils';
 
 import { colors } from '../../constants';
 
-import { addTimestamp } from '../utils';
+import { addTimestamp, filterByYearAndMonth } from '../utils';
 
 const RunningTotalLine = ({
   className = '',
 }) => {
   const { runningTotal } = use(DataCacheContext)
   const { year } = use(YearContext)
+  const { month } = use(MonthContext)
 
-  const [showProjection, setShowProjection] = useState(year === new Date().getFullYear())
+  const isThisYear = year === new Date().getFullYear()
+
+  const [showProjection, setShowProjection] = useState(isThisYear && month == null)
+
+  useEffect(() => {
+    setShowProjection(isThisYear && month == null)
+  }, [year, month])
 
   if (year == null || runningTotal == null || runningTotal.length < 1) return null;
 
+  const filteredTotals = filterByYearAndMonth(runningTotal, year, month, true)
+
+  if (filteredTotals.length === 0) return null;
+
   const daysInYear = isLeapYear(year) ? 366 : 365
   const daysPast = getDayOfYear(new Date())
-  const todaysTotal = runningTotal[daysPast - 1]
+  const todaysTotal = filteredTotals[filteredTotals.length - 1]
   const projectedAnnualWordCount = Math.round(todaysTotal.running_total * (daysInYear / daysPast))
 
-  let points: RunningTotal[] = []
-  if (year === new Date().getFullYear()) {
-    points = runningTotal.slice(0, daysPast)
-    if (showProjection) {
-      points.push({
-        date: `${year}-12-31`,
-        running_total: projectedAnnualWordCount
-      })
-    }
+  const points = filteredTotals.slice()
+
+  if (showProjection) {
+    points.push({
+      date: `${year}-12-31`,
+      running_total: projectedAnnualWordCount
+    })
   }
 
   return <Widget title="Running Total" className={`${className} flex flex-col`}>
-    {year === new Date().getFullYear() && <Toggle
+    {(isThisYear && month == null) && <Toggle
       label='Show Projected Annual Word Count'
       value={showProjection}
       onChange={setShowProjection}
