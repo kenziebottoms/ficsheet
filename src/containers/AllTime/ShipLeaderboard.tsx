@@ -18,7 +18,7 @@ const ShipLeaderboard = ({
       data={topShips.map(ship => ([
         <div className='py-1'>{ship.name}</div>,
         <div className='py-1'>{ship.fandom}</div>,
-        <div className='py-1'>{ship.totalWordsWritten.toLocaleString('en-US')}</div>,
+        <div className='py-1'>{ship.totalWordsWritten.toLocaleString()}</div>,
         <div className='py-1'>
           {ship.firstWritten.slice(0, 4)}
           {ship.firstWritten.slice(0, 4) === ship.lastWritten.slice(0, 4) ? '' : `-'${ship.lastWritten.slice(2, 4)}`}

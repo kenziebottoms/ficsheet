@@ -17,7 +17,7 @@ const FandomLeaderboard = ({
       headers={['Fandom', 'Words Written', 'Years Active']}
       data={topFandoms.map(fandom => ([
         <div className='py-1'>{fandom.name}</div>,
-        <div className='py-1'>{fandom.totalWordsWritten.toLocaleString('en-US')}</div>,
+        <div className='py-1'>{fandom.totalWordsWritten.toLocaleString()}</div>,
         <div className='py-1'>
           {fandom.firstWritten.slice(0, 4)}
           {fandom.firstWritten.slice(0, 4) === fandom.lastWritten.slice(0, 4) ? '' : `-'${fandom.lastWritten.slice(2, 4)}`}
