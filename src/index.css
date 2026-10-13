@@ -9,6 +9,16 @@
   src: url('./assets/SUSEMono-Italic.ttf') format('truetype');
   font-style: italic;
 }
+@font-face {
+  font-family: "Atkinson Hyperlegible";
+  src: url('./assets/AtkinsonHyperlegible-Regular.ttf') format('truetype');
+  font-weight: 400;
+}
+@font-face {
+  font-family: "Atkinson Hyperlegible";
+  src: url('./assets/SUSEMono-Bold.ttf') format('truetype');
+  font-weight: 700;
+}
 
 @theme {
   --color-background: var(--color-zinc-900);
@@ -20,10 +30,7 @@
   --default-ring-width: 2px;
   --default-ring-color: var(--color-pink-500);
   --font-mono: "SUSE Mono", mono;
-}
-
-html {
-  font-size: 20px;
+  --font-sans: "Atkinson Hyperlegible", sans-serif;
 }
 
 #root {
@@ -32,7 +39,8 @@ html {
 }
 
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: var(--font-sans), system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-size: 20px;
   line-height: 1.5;
   font-weight: 400;
 
