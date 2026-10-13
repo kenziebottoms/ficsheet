@@ -63,6 +63,27 @@ export type Fic = {
   lastWritten: string;
 };
 
+export type GoalColor =
+  | "pink"
+  | "orange"
+  | "lime"
+  | "emerald"
+  | "cyan"
+  | "indigo"
+  | "rainbow"
+  | "gray";
+export type Goal = {
+  name: string;
+  targetWordCount: number;
+  startDate: string;
+  endDate?: string | null;
+  fic?: string | null;
+  ficId?: number | null;
+  fandom?: string | null;
+  ship?: string | null;
+  color: GoalColor;
+};
+
 export type MonthContextValue = {
   month: number | null;
   setMonth: (newMonth: number | null) => void;

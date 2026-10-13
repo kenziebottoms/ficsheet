@@ -6,9 +6,9 @@ import _ from 'lodash'
 
 import { DataCacheContext } from "@/contexts/DataCache/DataCacheContext";
 
-import { reformatDate } from "@/utils";
+import type { Goal, GoalColor } from "@/types";
 
-export type GoalColor = 'pink' | 'orange' | 'lime' | 'emerald' | 'cyan' | 'indigo' | 'rainbow' | 'gray';
+import { reformatDate } from "@/utils";
 
 const bgClassNames: Record<GoalColor, string> = {
   'rainbow': "bg-linear-45/shorter from-indigo-600 via-orange-400 to-indigo-500 from-40% via-80% to-85%",
@@ -41,7 +41,7 @@ const titleClassNames: Record<GoalColor, string> = {
   gray: "text-zinc-300"
 }
 
-const Goal = ({
+const GoalRow = ({
   startDate,
   endDate,
   name,
@@ -50,19 +50,10 @@ const Goal = ({
   fandom,
   ship,
   color = 'pink'
-}: {
-  startDate: string;
-  endDate: string;
-  name: string;
-  targetWordCount: number;
-  fic?: string;
-  fandom?: string;
-  ship?: string;
-  color?: GoalColor
-}) => {
+}: Goal) => {
   const { dailyEntries } = use(DataCacheContext)
   const parsedStartDate = parse(startDate, 'yyyy-MM-dd', new Date())
-  const parsedEndDate = parse(endDate, 'yyyy-MM-dd', new Date())
+  const parsedEndDate: Date | null = endDate == null ? null : parse(endDate, 'yyyy-MM-dd', new Date())
 
   const filteredEntries = dailyEntries
     .filter(entry => {
@@ -70,7 +61,7 @@ const Goal = ({
       return (
         isBefore(parsedStartDate, entryDate) || isSameDay(parsedStartDate, entryDate)
       ) && (
-          isBefore(entryDate, parsedEndDate) || isSameDay(parsedEndDate, entryDate)
+          parsedEndDate == null || (isBefore(entryDate, parsedEndDate) || isSameDay(parsedEndDate, entryDate))
         )
     })
     .filter(entry => (fic == null || entry.fic === fic)
@@ -88,10 +79,10 @@ const Goal = ({
     <div className="grow flex flex-row flex-wrap items-center justify-around gap-2">
       <div className='whitespace-nowrap px-2 py-1 bg-zinc-900/50 rounded-md flex flex-row gap-2 items-center inset-shadow-background/25 inset-shadow-sm'>
         <div>{reformatDate(startDate, 'yyyy-MM-dd', 'MMM d, \'\'yy')}</div>
-        {isPast(parsedEndDate) ?
+        {(parsedEndDate == null ? (wordsWritten >= targetWordCount) : isPast(parsedEndDate)) ?
           <EventAvailable htmlColor={dialColors[color]} /> :
           <CalendarToday htmlColor={dialColors[color]} />}
-        <div>{reformatDate(endDate, 'yyyy-MM-dd', 'MMM d, \'\'yy')}</div>
+        {endDate != null && <div>{reformatDate(endDate, 'yyyy-MM-dd', 'MMM d, \'\'yy')}</div>}
       </div>
 
       {([
@@ -100,7 +91,7 @@ const Goal = ({
         [TextSnippet, fic]
       ] as [SvgIconComponent, string][])
         .filter(([, text]) => text != null)
-        .map(([Icon, text]) => <div className="bg-zinc-900/50 rounded-md py-1 px-2 flex flex-row items-center gap-2 inset-shadow-background/25 inset-shadow-sm">
+        .map(([Icon, text]) => <div key={text} className="bg-zinc-900/50 rounded-md py-1 px-2 flex flex-row items-center gap-2 inset-shadow-background/25 inset-shadow-sm">
           <Icon htmlColor={dialColors[color]} />
           {text}
         </div>)}
@@ -116,7 +107,7 @@ const Goal = ({
           valueMin={0}
           valueMax={targetWordCount}
           value={Math.min(wordsWritten, targetWordCount)}
-          className='text-sm -mr-12'
+          className={`text-sm ${endDate == null ? '' : '-mr-2'}`}
           sx={{
             [`& .${gaugeClasses.valueArc}`]: {
               fill: dialColors[color],
@@ -124,23 +115,23 @@ const Goal = ({
           }}
           text=""
         />
-        <Gauge
+        {parsedEndDate != null && <Gauge
           width={50}
           height={50}
           valueMin={0}
           valueMax={Math.ceil(differenceInDays(parsedEndDate, parsedStartDate))}
           value={differenceInDays(new Date(), parsedStartDate)}
-          className='text-sm mr-2'
+          className='text-sm -ml-10 mr-2'
           sx={{
             [`& .${gaugeClasses.valueArc}`]: {
               fill: "#fff8",
             },
           }}
           text=""
-        />
+        />}
       </div>
     </div>
   </div>
 }
 
-export default Goal
+export default GoalRow
