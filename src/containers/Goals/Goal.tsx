@@ -24,11 +24,11 @@ const dialColors: Record<GoalColor, string> = {
   'pink': '#f472b6',
   orange: "#f97316",
   lime: "#84cc16",
-  emerald: "#059669",
+  emerald: "#03ad77",
   cyan: "#23b9ff",
   indigo: "#7c86ff",
   rainbow: "#f472b6",
-  gray: "#888"
+  gray: "#999"
 }
 const titleClassNames: Record<GoalColor, string> = {
   'pink': 'text-pink-300',
