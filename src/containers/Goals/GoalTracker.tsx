@@ -41,7 +41,7 @@ const titleClassNames: Record<GoalColor, string> = {
   gray: "text-zinc-300"
 }
 
-const GoalRow = ({
+const GoalTracker = ({
   startDate,
   endDate,
   name,
@@ -69,37 +69,14 @@ const GoalRow = ({
       && (ship == null || entry.ship === ship))
   const wordsWritten = _.sumBy(filteredEntries, 'count')
 
-  return <div className={`rounded-xl flex flex-col md:flex-row flex-wrap items-center justify-between gap-2 p-1 ${bgClassNames[color]}`}>
-    <div className="flex flex-row gap-3 items-center w-full md:w-auto">
-      {wordsWritten >= targetWordCount ? <Flag /> : <OutlinedFlag />}
+  return <div className={`rounded-xl flex flex-row flex-wrap lg:flex-nowrap items-center justify-center md:justify-between gap-x-2 gap-y-1 p-1 ${bgClassNames[color]}`}>
+    <div className="flex flex-row gap-1 items-center grow lg:grow-0 w-3/4 lg:w-auto">
+      <div className="pr-1">{wordsWritten >= targetWordCount ? <Flag /> : <OutlinedFlag />}</div>
 
-      <div className={`px-5 py-1 grow text-lg bg-zinc-800 inset-shadow-black/50 inset-shadow-sm rounded-full font-mono ${titleClassNames[color]}`}>{name}</div>
+      <div className={`px-5 py-1 grow lg:grow-0 text-lg bg-zinc-800 inset-shadow-black/50 inset-shadow-sm rounded-full font-sans ${titleClassNames[color]}`}>{name}</div>
     </div>
 
-    <div className="grow flex flex-row flex-wrap items-center justify-around gap-2">
-      <div className='whitespace-nowrap px-2 py-1 bg-zinc-900/50 rounded-md flex flex-row gap-2 items-center inset-shadow-background/25 inset-shadow-sm'>
-        <div>{reformatDate(startDate, 'yyyy-MM-dd', 'MMM d, \'\'yy')}</div>
-        {(parsedEndDate == null ? (wordsWritten >= targetWordCount) : isPast(parsedEndDate)) ?
-          <EventAvailable htmlColor={dialColors[color]} /> :
-          <CalendarToday htmlColor={dialColors[color]} />}
-        {endDate != null && <div>{reformatDate(endDate, 'yyyy-MM-dd', 'MMM d, \'\'yy')}</div>}
-      </div>
-
-      {([
-        [WindPower, fandom],
-        [Favorite, ship],
-        [TextSnippet, fic]
-      ] as [SvgIconComponent, string][])
-        .filter(([, text]) => text != null)
-        .map(([Icon, text]) => <div key={text} className="bg-zinc-900/50 rounded-md py-1 px-2 flex flex-row items-center gap-2 inset-shadow-background/25 inset-shadow-sm">
-          <Icon htmlColor={dialColors[color]} />
-          {text}
-        </div>)}
-    </div>
-
-    <div className="flex flex-row gap-3 items-center">
-      <div className="whitespace-nowrap bg-white/50 rounded-full py-1 px-3 font-sans text-zinc-900">{wordsWritten.toLocaleString()} / {targetWordCount.toLocaleString()}</div>
-
+    <div className="lg:order-last flex flex-row gap-3 items-center">
       <div className="bg-zinc-900 rounded-full flex flex-row items-center">
         <Gauge
           width={70}
@@ -131,7 +108,30 @@ const GoalRow = ({
         />}
       </div>
     </div>
+
+    <div className="flex grow text-sm flex-row flex-wrap items-center justify-around gap-1">
+      <div className='whitespace-nowrap px-2 py-1 bg-zinc-900/50 rounded-md flex flex-row gap-2 items-center inset-shadow-background/25 inset-shadow-sm'>
+        <div>{reformatDate(startDate, 'yyyy-MM-dd', 'MMM d, \'\'yy')}</div>
+        {(parsedEndDate == null ? (wordsWritten >= targetWordCount) : isPast(parsedEndDate)) ?
+          <EventAvailable htmlColor={dialColors[color]} /> :
+          <CalendarToday htmlColor={dialColors[color]} />}
+        {endDate != null && <div>{reformatDate(endDate, 'yyyy-MM-dd', 'MMM d, \'\'yy')}</div>}
+      </div>
+
+      {([
+        [WindPower, fandom],
+        [Favorite, ship],
+        [TextSnippet, fic]
+      ] as [SvgIconComponent, string][])
+        .filter(([, text]) => text != null)
+        .map(([Icon, text]) => <div key={text} className="bg-zinc-900/50 rounded-md py-1 px-2 flex flex-row items-center gap-2 inset-shadow-background/25 inset-shadow-sm">
+          <Icon htmlColor={dialColors[color]} />
+          {text}
+        </div>)}
+    </div>
+
+    <div className="whitespace-nowrap bg-white/50 rounded-full py-1 px-3 font-sans text-zinc-900">{wordsWritten.toLocaleString()} / {targetWordCount.toLocaleString()}</div>
   </div>
 }
 
-export default GoalRow
+export default GoalTracker
