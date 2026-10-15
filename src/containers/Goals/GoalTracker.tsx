@@ -1,12 +1,16 @@
-import { use } from "react";
+import { use, useState } from "react";
 import { differenceInDays, isBefore, isPast, isSameDay, parse } from "date-fns";
-import { CalendarToday, EventAvailable, Favorite, Flag, OutlinedFlag, TextSnippet, WindPower, type SvgIconComponent } from "@mui/icons-material";
+import { CalendarToday, EditCalendar, EventAvailable, Favorite, Flag, OutlinedFlag, TextSnippet, WindPower, type SvgIconComponent } from "@mui/icons-material";
 import { Gauge, gaugeClasses } from "@mui/x-charts";
 import _ from 'lodash'
 
+import Button from "@/components/Button";
+import EntryForm from "@/components/EntryForm";
+import Modal from "@/components/Modal";
+
 import { DataCacheContext } from "@/contexts/DataCache/DataCacheContext";
 
-import type { Goal, GoalColor } from "@/types";
+import type { Goal, GoalColor, WordCountEntry } from "@/types";
 
 import { reformatDate } from "@/utils";
 
@@ -47,11 +51,14 @@ const GoalTracker = ({
   name,
   targetWordCount,
   fic,
+  ficId,
   fandom,
   ship,
-  color = 'pink'
+  color,
 }: Goal) => {
   const { dailyEntries } = use(DataCacheContext)
+  const [entryFormValues, setEntryFormValues] = useState<Partial<WordCountEntry> | null>(null)
+
   const parsedStartDate = parse(startDate, 'yyyy-MM-dd', new Date())
   const parsedEndDate: Date | null = endDate == null ? null : parse(endDate, 'yyyy-MM-dd', new Date())
 
@@ -131,6 +138,23 @@ const GoalTracker = ({
     </div>
 
     <div className="whitespace-nowrap bg-white/50 rounded-full py-1 px-3 font-sans text-zinc-900">{wordsWritten.toLocaleString()} / {targetWordCount.toLocaleString()}</div>
+
+    {ficId != null && <Button
+      onClick={() => setEntryFormValues({ ficId })}
+      icon={EditCalendar}
+    >
+      Log
+    </Button>}
+
+    <Modal
+      open={entryFormValues != null}
+      setOpen={(newOpen: boolean) => !newOpen && setEntryFormValues(null)}
+    >
+      <EntryForm
+        className='bg-zinc-800'
+        values={entryFormValues}
+      />
+    </Modal>
   </div>
 }
 
