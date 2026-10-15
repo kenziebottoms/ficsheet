@@ -3,14 +3,13 @@ import { addDays, isBefore, parse } from 'date-fns';
 import { Add, DeleteForever, EditCalendar, Restore } from '@mui/icons-material';
 import _ from 'lodash';
 
-import { deleteEntry, selectFics, submitDailyProjectWordCountForm } from '@/api';
+import { deleteEntry, selectFics, submitEntryForm } from '@/api';
 
 import { DataCacheContext } from '@/contexts/DataCache/DataCacheContext';
 import { YearContext } from '@/contexts/Year/YearContext';
 
 import type {
-  DailyWordCountFormValues,
-  DailyWordCountRawFormValues,
+  EntryFormValues,
   Fic,
   WithId,
   WordCountEntry
@@ -29,7 +28,7 @@ type Props = {
   values?: Partial<WordCountEntry> | null;
   onCompleted?: (response: WordCountEntry[] | null) => void;
 }
-const DailyWordCountForm = ({
+const EntryForm = ({
   className = '',
   values,
   onCompleted: _onCompleted = () => { },
@@ -57,19 +56,19 @@ const DailyWordCountForm = ({
     // Prevent the browser from reloading the page
     e.preventDefault();
 
-    const formData = Object.fromEntries(new FormData(e.target).entries()) as DailyWordCountRawFormValues;
-    const payload: DailyWordCountFormValues = {
+    const formData = Object.fromEntries(new FormData(e.target).entries()) as Record<string, string>;
+    const payload: EntryFormValues = {
       id: parseInt(formData.id || '', 10) || null,
       date: formData.date,
       fandom: formData.fandom || null,
       fic: formData.fic || null,
-      ficId: parseInt(formData.ficId || '', 10) || null,
-      count: parseInt(formData.count || '', 10) || countWords(formData.pastedWords),
+      ficId: parseInt(formData.ficId, 10) || null,
+      count: parseInt(formData.count, 10) || countWords(formData.pastedWords),
       ship: formData.ship || null,
     }
 
     if (payload.count !== 0) {
-      submitDailyProjectWordCountForm(payload).then(response => onCompleted([response]))
+      submitEntryForm(payload).then(response => onCompleted([response]))
     } else if (payload.id != null) {
       deleteEntry(payload.id).then(() => onCompleted([]))
     }
@@ -191,4 +190,4 @@ const DailyWordCountForm = ({
   </form>
 }
 
-export default DailyWordCountForm
+export default EntryForm

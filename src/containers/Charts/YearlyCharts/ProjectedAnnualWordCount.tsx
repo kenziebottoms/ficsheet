@@ -5,7 +5,7 @@ import { EditCalendar } from '@mui/icons-material'
 
 import Badge from '@/components/Badge'
 import Button from '@/components/Button'
-import DailyProjectWordCountForm from '@/components/DailyProjectWordCountForm'
+import EntryForm from '@/components/EntryForm'
 import Modal from '@/components/Modal'
 import Widget from '@/components/Widget'
 import { ButtonBackgroundClassNames } from '@/components/constants'
@@ -35,7 +35,7 @@ const ProjectedAnnualWordCount = ({
 
   return <>
     <Modal open={showEntryForm} setOpen={setShowEntryForm}>
-      <DailyProjectWordCountForm
+      <EntryForm
         className='bg-zinc-800'
         onCompleted={() => {
           setShowEntryForm(false)

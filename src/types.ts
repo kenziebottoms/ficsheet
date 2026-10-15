@@ -11,17 +11,7 @@ export type DailyTotal = {
   daily_total: number;
 };
 
-export type DailyWordCountRawFormValues = {
-  id?: string;
-  date: string;
-  fic?: string;
-  ficId?: string;
-  fandom?: string;
-  ship?: string;
-  pastedWords?: string;
-  count?: string;
-};
-export type DailyWordCountFormValues = {
+export type EntryFormValues = {
   id: number | null;
   date: string;
   fic: string | null;

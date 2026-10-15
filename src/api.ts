@@ -4,7 +4,7 @@ import {
   type WordCountEntry,
   type RunningTotal,
   type DailyTotal,
-  type DailyWordCountFormValues,
+  type EntryFormValues,
   type Fic,
   type Fandom,
   type Ship,
@@ -100,10 +100,5 @@ export const deleteEntriesByYear = (year: number) =>
   restDelete(`year/${year}/entries`);
 export const selectAvailableYears = () => get<number[]>("years");
 
-export const submitDailyProjectWordCountForm = (
-  formData: DailyWordCountFormValues,
-) =>
-  post<DailyWordCountFormValues, WithId<WordCountEntry>>(
-    `entries/form`,
-    formData,
-  );
+export const submitEntryForm = (formData: EntryFormValues) =>
+  post<EntryFormValues, WithId<WordCountEntry>>(`entries/form`, formData);

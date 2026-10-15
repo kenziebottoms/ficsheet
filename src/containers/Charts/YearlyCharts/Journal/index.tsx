@@ -2,7 +2,7 @@ import { use, useState } from "react";
 
 import { DataCacheContext } from "@/contexts/DataCache/DataCacheContext";
 
-import DailyProjectWordCountForm from "@/components/DailyProjectWordCountForm";
+import EntryForm from "@/components/EntryForm";
 import Modal from "@/components/Modal";
 
 import type { WordCountEntry } from "@/types";
@@ -26,7 +26,7 @@ const Journal = ({ showEmpty }: Props) => {
         }
       }}
     >
-      <DailyProjectWordCountForm
+      <EntryForm
         className='bg-zinc-800'
         values={editedEntry}
         onCompleted={() => {

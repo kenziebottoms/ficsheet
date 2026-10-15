@@ -1,7 +1,7 @@
 import express, { type Request } from "express";
 
 import {
-  type DailyWordCountFormValues,
+  type EntryFormValues,
   type WithId,
   type WordCountEntry,
 } from "../../src/types.ts";
@@ -39,11 +39,11 @@ entriesRouter.post("/", (req, res) => {
 
 /**
  * POST /api/entries/form
- * BODY: DailyWordCountFormValues
+ * BODY: EntryFormValues
  */
 entriesRouter.post("/form", (req, res) => {
-  const formData = req.body as DailyWordCountFormValues;
-  console.log("submitting DailyWordCountForm", formData);
+  const formData = req.body as EntryFormValues;
+  console.log("submitting EntryForm", formData);
 
   if (formData.id != null) {
     if (formData.ficId == null) {
