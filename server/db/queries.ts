@@ -4,6 +4,7 @@ import {
   type WithId,
   type Fandom,
   type Fic,
+  type Goal,
   type Ship,
   type WordCountEntry,
 } from "../../src/types.ts";
@@ -20,6 +21,12 @@ export const selectEntries = (
     `word_count.id, date, fic_id as ficId, IIF(fic_id, fic_table.name, word_count.fic) as fic, IIF(fic_id, fic_table.ship, null) as ship, IIF(fic_id, fic_table.fandom, word_count.fandom) as fandom, count from word_count LEFT JOIN fic as fic_table ON fic_table.id = fic_id ${whereClause ?? ""}`,
   );
   return entries;
+};
+export const selectGoals = (whereClause?: string): WithId<Goal>[] => {
+  const goals = select<WithId<Goal>>(
+    `goal.id, goal.target_word_count as targetWordCount, goal.name, start_date as startDate, end_date as endDate, fic_id, goal.fandom, goal.ship, color from goal LEFT JOIN fic as fic_table ON fic_table.id = fic_id ${whereClause ?? ""}`,
+  );
+  return goals;
 };
 
 export const getEntry = (
@@ -71,6 +78,8 @@ export const getFicsByYear = (year?: number | string) =>
     FROM word_count JOIN fic ON word_count.fic_id = fic.id \
     ${getYearlyWhereClause(year)} GROUP BY fic.id ORDER BY name ASC`,
   );
+export const getGoalsByYear = (year?: number | string) =>
+  selectGoals(getYearlyWhereClause(year, "start_date"));
 export const getAllFics = () =>
   select<WithId<Fic>>(`* FROM fic ORDER BY id ASC`);
 export const getAllShips = () =>
@@ -136,7 +145,10 @@ export const validateYear = (year?: string | number): number | false => {
   return parsedYear;
 };
 
-export const getYearlyWhereClause = (year?: string | number): string => {
+export const getYearlyWhereClause = (
+  year: string | number | null | undefined,
+  dateProperty = "date",
+): string => {
   // null for no filtering
   if (year == null) return "";
   const validatedYear = validateYear(year);
@@ -144,7 +156,7 @@ export const getYearlyWhereClause = (year?: string | number): string => {
     console.warn(`!! omitting where clause for invalid year ${year} !!`);
     return "";
   } else {
-    return ` WHERE date BETWEEN '${validatedYear}-01-01' AND '${validatedYear}-12-31' `;
+    return ` WHERE ${dateProperty} BETWEEN '${validatedYear}-01-01' AND '${validatedYear}-12-31' `;
   }
 };
 
