@@ -1,5 +1,5 @@
 import { use, useEffect, useState } from 'react';
-import { AppRegistration, AutoDelete, AutoMode, ContentPasteGoOutlined, Delete, Flag, PieChart, TableChart, TextSnippet, type SvgIconComponent } from '@mui/icons-material';
+import { AutoDelete, AutoMode, ContentPasteGoOutlined, Delete, Flag, PieChart, TableChart, TextSnippet, type SvgIconComponent } from '@mui/icons-material';
 
 import { deleteEntriesByYear, exportData, importFicsForYear as importFicsForYear } from '@/api';
 
@@ -63,8 +63,8 @@ const YearlyCharts = () => {
     {year === thisYear && <ProjectedAnnualWordCount />}
 
     <MonthProvider>
-      <div className="bg-zinc-800 px-5 py-2 rounded-full text-zinc-400 flex flex-row flex-wrap gap-3">
-        {(['charts', 'fics', 'goals'] as const).map(tab =>
+      <div className="bg-zinc-800 px-5 py-2 rounded-full text-zinc-400 flex flex-row flex-wrap justify-around gap-3">
+        {(['charts', 'fics', 'goals', 'journal'] as const).map(tab =>
           <Button
             key={tab}
             style={activeTab === tab ? "primary" : "subtle"}
@@ -75,17 +75,6 @@ const YearlyCharts = () => {
             {tab}
           </Button>
         )}
-
-        <div className='grow' />
-
-        <Button
-          style={activeTab === 'journal' ? 'active_transparent' : "transparent"}
-          icon={AppRegistration}
-          onClick={() => setActiveTab('journal')}
-          small
-        >
-          Journal
-        </Button>
       </div>
 
       {activeTab === 'charts' && <MonthlyCharts />}
