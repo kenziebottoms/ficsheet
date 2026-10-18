@@ -56,5 +56,10 @@ export const blendColors = (
   );
 };
 
-export const MonthlyChartTabNames = ["charts", "journal", "fics"] as const;
+export const MonthlyChartTabNames = [
+  "charts",
+  "journal",
+  "fics",
+  "goals",
+] as const;
 export type MonthlyChartTabName = (typeof MonthlyChartTabNames)[number];

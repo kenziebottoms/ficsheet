@@ -9,6 +9,7 @@ import {
   type Fandom,
   type Ship,
   type WithId,
+  type Goal,
 } from "@/types";
 
 import { getDatesBetween } from "./utils";
@@ -87,6 +88,8 @@ export const selectDailyTotals = (year: number) =>
   );
 export const selectFandoms = (year?: number) =>
   get<Fandom[]>(`${year ? `year/${year}/` : ""}fandoms`);
+export const selectGoals = (year?: number) =>
+  get<WithId<Goal>[]>(`${year ? `year/${year}/` : ""}goals`);
 export const selectShips = () => get<Ship[]>(`ships`);
 export const insertFics = (fics: Fic[]) => post<Fic[], Fic[]>(`fics`, fics);
 export const putFic = (fic: Fic) => put<Fic, Fic>(`fics/${fic.id}`, fic);

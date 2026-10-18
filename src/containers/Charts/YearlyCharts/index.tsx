@@ -1,5 +1,5 @@
 import { use, useEffect, useState } from 'react';
-import { AppRegistration, AutoDelete, AutoMode, AutoStories, ContentPasteGoOutlined, Delete, Equalizer, TableChart, type SvgIconComponent } from '@mui/icons-material';
+import { AppRegistration, AutoDelete, AutoMode, ContentPasteGoOutlined, Delete, Flag, PieChart, TableChart, TextSnippet, type SvgIconComponent } from '@mui/icons-material';
 
 import { deleteEntriesByYear, exportData, importFicsForYear as importFicsForYear } from '@/api';
 
@@ -7,6 +7,8 @@ import Button from '@/components/Button';
 import FicForm from '@/components/FicForm';
 import Toggle from '@/components/Toggle';
 import Modal from '@/components/Modal';
+
+import Goals from '@/containers/Goals';
 
 import { DataCacheContext } from '@/contexts/DataCache/DataCacheContext';
 import { MonthProvider } from '@/contexts/Month/MonthProvider';
@@ -22,9 +24,10 @@ import ProjectedAnnualWordCount from './ProjectedAnnualWordCount';
 import FicManager from './FicManager';
 
 const TabIcons: Record<MonthlyChartTabName, SvgIconComponent> = {
-  charts: Equalizer,
+  charts: PieChart,
   journal: TableChart,
-  fics: AutoStories,
+  fics: TextSnippet,
+  goals: Flag,
 }
 
 const YearlyCharts = () => {
@@ -61,7 +64,7 @@ const YearlyCharts = () => {
 
     <MonthProvider>
       <div className="bg-zinc-800 px-5 py-2 rounded-full text-zinc-400 flex flex-row flex-wrap gap-3">
-        {(['charts', 'fics'] as const).map(tab =>
+        {(['charts', 'fics', 'goals'] as const).map(tab =>
           <Button
             key={tab}
             style={activeTab === tab ? "primary" : "subtle"}
@@ -86,6 +89,8 @@ const YearlyCharts = () => {
       </div>
 
       {activeTab === 'charts' && <MonthlyCharts />}
+
+      {activeTab === 'goals' && <Goals />}
 
       {activeTab === 'journal' && <div className='space-y-2'>
         <div className='bg-zinc-900 p-2 rounded-md flex flex-row justify-end gap-4'>

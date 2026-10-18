@@ -6,9 +6,10 @@ import {
   selectDailyTotals,
   selectFandoms,
   selectFics,
+  selectGoals,
   selectRunningTotal,
 } from "@/api";
-import { type WordCountEntry, type RunningTotal, type DailyTotal, type Fic, type Fandom, type WithId } from "@/types";
+import { type WordCountEntry, type RunningTotal, type DailyTotal, type Fic, type Fandom, type WithId, type Goal } from "@/types";
 import { getDatesBetween } from "@/utils";
 
 import { DataCacheContext } from "./DataCacheContext";
@@ -19,6 +20,7 @@ type Props = PropsWithChildren & {
 export const DataCacheProvider = ({ year, children }: Props) => {
   const [fandoms, setFandoms] = useState<Fandom[]>([])
   const [fics, setFics] = useState<WithId<Fic>[]>([])
+  const [goals, setGoals] = useState<WithId<Goal>[]>([])
   const [dailyEntries, setDailyEntries] = useState<WithId<WordCountEntry>[]>([])
   const [dailyTotals, setDailyTotals] = useState<DailyTotal[]>([])
   const [runningTotal, setRunningTotal] = useState<RunningTotal[]>([])
@@ -26,6 +28,7 @@ export const DataCacheProvider = ({ year, children }: Props) => {
   const refreshData = (y?: number) => {
     selectFandoms(y || year).then(setFandoms)
     selectFics(y || year).then(setFics)
+    selectGoals(y || year).then(setGoals)
     selectAllWordCounts(y || year).then(setDailyEntries)
     selectDailyTotals(y || year).then(setDailyTotals)
     selectRunningTotal(y || year).then(nonEmptyRunningTotals => {
@@ -56,6 +59,7 @@ export const DataCacheProvider = ({ year, children }: Props) => {
       dailyTotals,
       fandoms,
       fics,
+      goals,
       runningTotal,
       refreshData,
     }}>
