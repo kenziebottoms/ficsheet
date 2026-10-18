@@ -1,20 +1,14 @@
-import { use, useEffect, useState } from 'react';
-import { AutoDelete, AutoMode, ContentPasteGoOutlined, Delete, Flag, PieChart, TableChart, TextSnippet, type SvgIconComponent } from '@mui/icons-material';
-
-import { deleteEntriesByYear, exportData, importFicsForYear as importFicsForYear } from '@/api';
+import { use, useState } from 'react';
+import { Flag, PieChart, TableChart, TextSnippet, type SvgIconComponent } from '@mui/icons-material';
 
 import Button from '@/components/Button';
 import FicForm from '@/components/FicForm';
-import Toggle from '@/components/Toggle';
 import Modal from '@/components/Modal';
 
 import Goals from '@/containers/Goals';
 
-import { DataCacheContext } from '@/contexts/DataCache/DataCacheContext';
 import { MonthProvider } from '@/contexts/Month/MonthProvider';
 import { YearContext } from '@/contexts/Year/YearContext';
-
-import { copyPrettyJson } from '@/utils';
 
 import { type MonthlyChartTabName } from '../constants';
 
@@ -32,32 +26,11 @@ const TabIcons: Record<MonthlyChartTabName, SvgIconComponent> = {
 
 const YearlyCharts = () => {
   const { year } = use(YearContext)
-  const { refreshData } = use(DataCacheContext)
   const thisYear = new Date().getFullYear()
 
   const [activeTab, setActiveTab] = useState<MonthlyChartTabName>('charts')
-  const [showEmpty, setShowEmpty] = useState<boolean>(false)
-  const [confirmDelete, setConfirmDelete] = useState<boolean>(false)
   const [showFicForm, setShowFicForm] = useState<boolean>(false)
 
-  // must click delete button twice within 5 seconds to delete
-  useEffect(() => {
-    if (confirmDelete) {
-      setTimeout(() => {
-        setConfirmDelete(false)
-      }, 5000)
-    }
-  }, [confirmDelete])
-
-  if (year == null) return null;
-
-  const handleExport = () => {
-    exportData(year).then(copyPrettyJson)
-  }
-
-  const handleDelete = () => {
-    deleteEntriesByYear(year).then(() => refreshData(year))
-  }
 
   return <div className="bg-zinc-900 p-3 rounded-xl space-y-3">
     {year === thisYear && <ProjectedAnnualWordCount />}
@@ -81,47 +54,7 @@ const YearlyCharts = () => {
 
       {activeTab === 'goals' && <Goals />}
 
-      {activeTab === 'journal' && <div className='space-y-2'>
-        <div className='bg-zinc-900 p-2 rounded-md flex flex-row justify-end gap-4'>
-          <Button
-            style="cautionary"
-            icon={confirmDelete ? AutoDelete : Delete}
-            onClick={() => confirmDelete ? handleDelete() : setConfirmDelete(true)}
-            small
-          >
-            {confirmDelete && <em>Please</em>} Delete {year}
-          </Button>
-
-          <Button
-            style="cautionary"
-            icon={AutoMode}
-            onClick={() => importFicsForYear(year).then(() => refreshData(year))}
-            small
-          >
-            Import Fics
-          </Button>
-
-          <div className='grow' />
-
-          <Button
-            style="transparent"
-            icon={ContentPasteGoOutlined}
-            onClick={handleExport}
-            small
-          >
-            Export to Clipboard
-          </Button>
-
-          <Toggle
-            label="Show empty"
-            value={showEmpty}
-            onChange={setShowEmpty}
-            className="text-sm"
-          />
-        </div>
-
-        <Journal showEmpty={showEmpty} />
-      </div>}
+      {activeTab === 'journal' && <Journal />}
 
       {activeTab === 'fics' && <FicManager />}
       <Modal
