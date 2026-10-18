@@ -1,6 +1,6 @@
 import { use, useState } from "react";
 import { differenceInDays, isBefore, isPast, isSameDay, parse } from "date-fns";
-import { CalendarToday, EditCalendar, EventAvailable, Favorite, Flag, OutlinedFlag, TextSnippet, WindPower, type SvgIconComponent } from "@mui/icons-material";
+import { CalendarToday, Edit, EditCalendar, EventAvailable, Favorite, Flag, OutlinedFlag, TextSnippet, WindPower, type SvgIconComponent } from "@mui/icons-material";
 import { Gauge, gaugeClasses } from "@mui/x-charts";
 import _ from 'lodash'
 
@@ -46,21 +46,16 @@ const titleClassNames: Record<GoalColor, string> = {
 }
 
 const GoalTracker = ({
-  startDate,
-  endDate,
-  name,
-  targetWordCount,
-  fic,
-  ficId,
-  fandom,
-  ship,
-  color,
-}: Goal) => {
+  goal,
+  onEdit,
+}: {
+  goal: Goal & { id?: number };
+  onEdit: () => void;
+}) => {
   const { dailyEntries } = use(DataCacheContext)
   const [entryFormValues, setEntryFormValues] = useState<Partial<WordCountEntry> | null>(null)
-
-  const parsedStartDate = parse(startDate, 'yyyy-MM-dd', new Date())
-  const parsedEndDate: Date | null = endDate == null ? null : parse(endDate, 'yyyy-MM-dd', new Date())
+  const parsedStartDate = parse(goal.startDate, 'yyyy-MM-dd', new Date())
+  const parsedEndDate: Date | null = goal.endDate == null ? null : parse(goal.endDate, 'yyyy-MM-dd', new Date())
 
   const filteredEntries = dailyEntries
     .filter(entry => {
@@ -71,16 +66,26 @@ const GoalTracker = ({
           parsedEndDate == null || (isBefore(entryDate, parsedEndDate) || isSameDay(parsedEndDate, entryDate))
         )
     })
-    .filter(entry => (fic == null || entry.fic === fic)
-      && (fandom == null || entry.fandom === fandom)
-      && (ship == null || entry.ship === ship))
+    .filter(entry => (goal.fic == null || entry.fic === goal.fic)
+      && (goal.fandom == null || entry.fandom === goal.fandom)
+      && (goal.ship == null || entry.ship === goal.ship))
   const wordsWritten = _.sumBy(filteredEntries, 'count')
 
-  return <div className={`rounded-xl flex flex-row flex-wrap lg:flex-nowrap items-center justify-center md:justify-between gap-x-2 gap-y-1 p-1 ${bgClassNames[color]}`}>
+  return <div className={`rounded-xl flex flex-row flex-wrap lg:flex-nowrap items-center justify-center md:justify-between gap-x-2 gap-y-1 p-1 ${bgClassNames[goal.color]}`}>
     <div className="flex flex-row gap-1 items-center grow lg:grow-0 w-3/4 lg:w-auto">
-      <div className="pr-1">{wordsWritten >= targetWordCount ? <Flag /> : <OutlinedFlag />}</div>
+      <div className="pr-1">{wordsWritten >= goal.targetWordCount ? <Flag /> : <OutlinedFlag />}</div>
 
-      <div className={`px-5 py-1 grow lg:grow-0 text-lg bg-zinc-800 inset-shadow-black/50 inset-shadow-sm rounded-full font-sans ${titleClassNames[color]}`}>{name}</div>
+      <div className={`group px-5 py-1 flex flex-row items-center gap-2 grow lg:grow-0 text-lg bg-zinc-800 inset-shadow-black/50 inset-shadow-sm rounded-full font-sans ${titleClassNames[goal.color]}`}>
+        {goal.name}
+
+        <Button
+          style="transparent"
+          className="opacity-0 group-hover:opacity-80"
+          small
+          icon={Edit}
+          onClick={onEdit}
+        />
+      </div>
     </div>
 
     <div className="lg:order-last flex flex-row gap-3 items-center">
@@ -89,12 +94,12 @@ const GoalTracker = ({
           width={70}
           height={70}
           valueMin={0}
-          valueMax={targetWordCount}
-          value={Math.min(wordsWritten, targetWordCount)}
-          className={`text-sm ${endDate == null ? '' : '-mr-2'}`}
+          valueMax={goal.targetWordCount}
+          value={Math.min(wordsWritten, goal.targetWordCount)}
+          className={`text-sm ${goal.endDate == null ? '' : '-mr-2'}`}
           sx={{
             [`& .${gaugeClasses.valueArc}`]: {
-              fill: dialColors[color],
+              fill: dialColors[goal.color],
             },
           }}
           text=""
@@ -118,29 +123,29 @@ const GoalTracker = ({
 
     <div className="flex grow text-sm flex-row flex-wrap items-center justify-around gap-1">
       <div className='whitespace-nowrap px-2 py-1 bg-zinc-900/50 rounded-md flex flex-row gap-2 items-center inset-shadow-background/25 inset-shadow-sm'>
-        <div>{reformatDate(startDate, 'yyyy-MM-dd', 'MMM d, \'\'yy')}</div>
-        {(parsedEndDate == null ? (wordsWritten >= targetWordCount) : isPast(parsedEndDate)) ?
-          <EventAvailable htmlColor={dialColors[color]} /> :
-          <CalendarToday htmlColor={dialColors[color]} />}
-        {endDate != null && <div>{reformatDate(endDate, 'yyyy-MM-dd', 'MMM d, \'\'yy')}</div>}
+        <div>{reformatDate(goal.startDate, 'yyyy-MM-dd', 'MMM d, \'\'yy')}</div>
+        {(parsedEndDate == null ? (wordsWritten >= goal.targetWordCount) : isPast(parsedEndDate)) ?
+          <EventAvailable htmlColor={dialColors[goal.color]} /> :
+          <CalendarToday htmlColor={dialColors[goal.color]} />}
+        {goal.endDate != null && <div>{reformatDate(goal.endDate, 'yyyy-MM-dd', 'MMM d, \'\'yy')}</div>}
       </div>
 
       {([
-        [WindPower, fandom],
-        [Favorite, ship],
-        [TextSnippet, fic]
+        [WindPower, goal.fandom],
+        [Favorite, goal.ship],
+        [TextSnippet, goal.fic]
       ] as [SvgIconComponent, string][])
         .filter(([, text]) => text != null)
         .map(([Icon, text]) => <div key={text} className="bg-zinc-900/50 rounded-md py-1 px-2 flex flex-row items-center gap-2 inset-shadow-background/25 inset-shadow-sm">
-          <Icon htmlColor={dialColors[color]} />
+          <Icon htmlColor={dialColors[goal.color]} />
           {text}
         </div>)}
     </div>
 
-    <div className="whitespace-nowrap bg-white/50 rounded-full py-1 px-3 font-sans text-zinc-900">{wordsWritten.toLocaleString()} / {targetWordCount.toLocaleString()}</div>
+    <div className="whitespace-nowrap bg-white/50 rounded-full py-1 px-3 font-sans text-zinc-900">{wordsWritten.toLocaleString()} / {goal.targetWordCount.toLocaleString()}</div>
 
-    {ficId != null && <Button
-      onClick={() => setEntryFormValues({ ficId })}
+    {goal.ficId != null && <Button
+      onClick={() => setEntryFormValues({ ficId: goal.ficId })}
       icon={EditCalendar}
     >
       Log
