@@ -5,7 +5,6 @@ import Button from '@/components/Button';
 import FicForm from '@/components/FicForm';
 import Modal from '@/components/Modal';
 
-import Goals from '@/containers/Goals';
 
 import { MonthProvider } from '@/contexts/Month/MonthProvider';
 import { YearContext } from '@/contexts/Year/YearContext';
@@ -14,6 +13,7 @@ import { type MonthlyChartTabName } from '../constants';
 
 import Journal from './Journal';
 import MonthlyCharts from './MonthlyCharts';
+import Goals from './Goals';
 import ProjectedAnnualWordCount from './ProjectedAnnualWordCount';
 import FicManager from './FicManager';
 
