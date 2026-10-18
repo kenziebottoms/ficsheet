@@ -12,6 +12,7 @@ import {
 
 import entriesRouter from "./entries.ts";
 import ficsRouter from "./fics.ts";
+import goalsRouter from "./goals.ts";
 import yearRouter from "./year.ts";
 
 const apiRouter = express.Router({
@@ -43,6 +44,8 @@ apiRouter.get("/fandoms", (_req, res) => {
   const data = getFandomsByYear();
   return res.json(data).status(200);
 });
+
+apiRouter.use("/goals", goalsRouter);
 
 /**
  * GET /api/runningTotal

@@ -12,6 +12,7 @@ import {
   getEntriesByYear,
   getFandomsByYear,
   getFicsByYear,
+  getGoalsByYear,
   getYearlyWhereClause,
   importFicForEntry,
   select,
@@ -54,6 +55,15 @@ yearRouter.get("/dailyTotals", (req: YearRequest, res) => {
 yearRouter.get("/entries", (req: YearRequest, res) => {
   console.log(`fetching word counts (${req.params.year})`);
   const data = getEntriesByYear(req.params.year);
+  return res.json(data).status(200);
+});
+
+/**
+ * GET /api/year/:year/goals
+ */
+yearRouter.get("/goals", (req: YearRequest, res) => {
+  console.log(`fetching goals (${req.params.year})`);
+  const data = getGoalsByYear(req.params.year);
   return res.json(data).status(200);
 });
 
