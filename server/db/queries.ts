@@ -64,6 +64,36 @@ export const insertEntry = (entry: WordCountEntry): WithId<WordCountEntry> => {
   };
 };
 
+export const insertGoal = (goal: Goal): WithId<Goal> => {
+  const {
+    name,
+    fandom = null,
+    ficId = null,
+    ship = null,
+    startDate,
+    endDate = null,
+    targetWordCount,
+    color,
+  } = goal;
+  const insert = db.prepare(
+    `INSERT INTO goal (name, start_date, end_date, fandom, fic_id, ship, target_word_count, color) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+  );
+  const result = insert.run(
+    name,
+    startDate,
+    endDate,
+    fandom,
+    ficId,
+    ship,
+    targetWordCount,
+    color,
+  );
+  return {
+    ...goal,
+    id: result.lastInsertRowid as number,
+  };
+};
+
 export const getEntriesByYear = (year?: number | string) =>
   selectEntries(`${getYearlyWhereClause(year)} ORDER BY date ASC`);
 export const getFandomsByYear = (year?: number | string) =>
