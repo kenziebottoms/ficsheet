@@ -106,7 +106,8 @@ yearRouter.get("/export", (req: YearRequest, res) => {
   console.log(`fetching fics (${req.params.year})`);
   const entries = getEntriesByYear(req.params.year);
   const fics = getFicsByYear(req.params.year);
-  return res.json({ entries, fics }).status(200);
+  const goals = getGoalsByYear(req.params.year);
+  return res.json({ entries, fics, goals }).status(200);
 });
 
 /**
