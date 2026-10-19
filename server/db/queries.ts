@@ -29,10 +29,13 @@ export const selectGoals = (whereClause?: string): WithId<Goal>[] => {
     goal.target_word_count as targetWordCount, \
     SUM(word_count.count) AS totalWordsWritten \
     from goal \
-    LEFT JOIN fic as fic_table ON fic_table.id = goal.fic_id \
-    LEFT JOIN word_count ON ( \ 
-      (word_count.date BETWEEN goal.start_date AND goal.end_date)
-    ) ${whereClause ?? ""} GROUP BY goal.id;`,
+    INNER JOIN word_count ON word_count.date BETWEEN goal.start_date AND goal.end_date \
+    INNER JOIN fic as fic_table ON fic_table.id = word_count.fic_id \
+    ${whereClause ? `${whereClause} AND` : " WHERE "}
+    (goal.fandom IS NULL OR goal.fandom = fic_table.fandom) \
+    AND (goal.fic_id IS NULL or goal.fic_id = fic_table.id) \
+    AND (goal.ship IS NULL or goal.ship = fic_table.ship) \
+    GROUP BY goal.id;`,
   );
   return goals;
 };
