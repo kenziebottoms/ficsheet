@@ -90,6 +90,10 @@ export const selectFandoms = (year?: number) =>
   get<Fandom[]>(`${year ? `year/${year}/` : ""}fandoms`);
 export const selectGoals = (year?: number) =>
   get<WithId<Goal>[]>(`${year ? `year/${year}/` : ""}goals`);
+export const insertGoal = (goal: Goal) =>
+  post<Goal, WithId<Goal>>(`goals`, goal);
+export const putGoal = (goal: WithId<Goal>) =>
+  put<WithId<Goal>, WithId<Goal>>(`goals/${goal.id}`, goal);
 export const selectShips = () => get<Ship[]>(`ships`);
 export const insertFics = (fics: Fic[]) => post<Fic[], Fic[]>(`fics`, fics);
 export const putFic = (fic: Fic) => put<Fic, Fic>(`fics/${fic.id}`, fic);

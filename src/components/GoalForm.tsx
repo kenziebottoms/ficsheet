@@ -3,7 +3,7 @@ import { parse } from 'date-fns';
 import { DeleteForever, Flag, Restore } from '@mui/icons-material';
 import _ from 'lodash';
 
-import { deleteEntry, selectFics } from '@/api';
+import { deleteEntry, insertGoal, putGoal, selectFics } from '@/api';
 
 import { DataCacheContext } from '@/contexts/DataCache/DataCacheContext';
 import { YearContext } from '@/contexts/Year/YearContext';
@@ -24,7 +24,7 @@ import Input from './Input';
 type Props = {
   className?: string;
   values?: Partial<GoalFormValues> | null;
-  onCompleted?: (response: Goal[] | null) => void;
+  onCompleted?: (response: Goal | null) => void;
 }
 const GoalForm = ({
   className = '',
@@ -37,9 +37,9 @@ const GoalForm = ({
   const [allFics, setAllFics] = useState<WithId<Fic>[]>([])
   const [showOldFics, setShowOldFics] = useState<boolean>(false)
 
-  const onCompleted = (response: Goal[]) => {
-    if (response.length > 0) {
-      const yearOfLastEntry = parseInt(response[0]?.startDate.slice(0, 4), 10)
+  const onCompleted = (response: Goal | null) => {
+    if (response != null) {
+      const yearOfLastEntry = parseInt(response.startDate.slice(0, 4), 10)
       if (yearOfLastEntry !== year) {
         refreshData(yearOfLastEntry)
         refreshYears()
@@ -53,7 +53,7 @@ const GoalForm = ({
     e.preventDefault();
 
     const formData = Object.fromEntries(new FormData(e.target).entries()) as Record<string, string>;
-    const payload: GoalFormValues = {
+    const payload: Goal & { id: number | null } = {
       id: parseInt(formData.id, 10) || null,
       startDate: formData.startDate,
       name: formData.name,
@@ -65,7 +65,10 @@ const GoalForm = ({
       color: formData.color as GoalColor
     }
 
-    console.log(payload)//.then(response => onCompleted([response]))
+    if (payload.id) {
+      return putGoal(payload as WithId<Goal>).then(response => onCompleted(response))
+    }
+    return insertGoal(payload).then(response => onCompleted(response))
   }
 
   useEffect(() => {
@@ -124,6 +127,13 @@ const GoalForm = ({
       defaultValue={values?.ship}
     />
 
+    <Dropdown
+      label="Color"
+      name="color"
+      defaultValue={values?.color}
+      options={["pink", "orange", "lime", "emerald", "cyan", "indigo", "rainbow", "gray"]}
+    />
+
     <div className='flex flex-row gap-2'>
       <Dropdown
         label="Fic"
@@ -154,7 +164,7 @@ const GoalForm = ({
       <Button
         style="cautionary"
         icon={DeleteForever}
-        onClick={() => deleteEntry(values.id as number).then(() => onCompleted([]))}
+        onClick={() => deleteEntry(values.id as number).then(() => onCompleted(null))}
         className='mt-4'
       >
         Delete goal

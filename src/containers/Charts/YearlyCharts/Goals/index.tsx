@@ -14,7 +14,7 @@ import GoalTracker from './GoalTracker'
 
 const Goals = () => {
   const { year } = use(YearContext)
-  const { goals } = use(DataCacheContext)
+  const { goals, refreshData } = use(DataCacheContext)
   const [goalFormValues, setGoalFormValues] = useState<Partial<WithId<Goal>> | null>(null)
 
   if (year == null || !goals) return null;
@@ -45,6 +45,10 @@ const Goals = () => {
         <GoalForm
           className='bg-zinc-800'
           values={goalFormValues}
+          onCompleted={() => {
+            setGoalFormValues(null)
+            refreshData()
+          }}
         />
       </Modal>
     </div>

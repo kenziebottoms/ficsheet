@@ -24,7 +24,15 @@ export const selectEntries = (
 };
 export const selectGoals = (whereClause?: string): WithId<Goal>[] => {
   const goals = select<WithId<Goal>>(
-    `goal.id, goal.target_word_count as targetWordCount, goal.name, start_date as startDate, end_date as endDate, fic_id, goal.fandom, goal.ship, color from goal LEFT JOIN fic as fic_table ON fic_table.id = fic_id ${whereClause ?? ""}`,
+    `goal.id, goal.name, color, goal.fic_id, goal.fandom, goal.ship, \
+    start_date as startDate, end_date as endDate, \
+    goal.target_word_count as targetWordCount, \
+    SUM(word_count.count) AS totalWordsWritten \
+    from goal \
+    LEFT JOIN fic as fic_table ON fic_table.id = goal.fic_id \
+    LEFT JOIN word_count ON ( \ 
+      (word_count.date BETWEEN goal.start_date AND goal.end_date)
+    ) ${whereClause ?? ""} GROUP BY goal.id;`,
   );
   return goals;
 };
@@ -92,6 +100,35 @@ export const insertGoal = (goal: Goal): WithId<Goal> => {
     ...goal,
     id: result.lastInsertRowid as number,
   };
+};
+
+export const updateGoal = (goal: WithId<Goal>): WithId<Goal> => {
+  const {
+    id,
+    name,
+    fandom = null,
+    ficId = null,
+    ship = null,
+    startDate,
+    endDate = null,
+    targetWordCount,
+    color,
+  } = goal;
+  const update = db.prepare(
+    `UPDATE goal SET name = ?, start_date = ?, end_date = ?, fandom = ?, fic_id = ?, ship = ?, target_word_count = ?, color = ? WHERE id = ?;`,
+  );
+  update.run(
+    name,
+    startDate,
+    endDate,
+    fandom,
+    ficId,
+    ship,
+    targetWordCount,
+    color,
+    id,
+  );
+  return goal;
 };
 
 export const getEntriesByYear = (year?: number | string) =>
