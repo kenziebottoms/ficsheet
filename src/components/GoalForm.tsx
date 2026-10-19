@@ -12,7 +12,6 @@ import type {
   Fic,
   Goal,
   GoalColor,
-  GoalFormValues,
   WithId,
 } from '@/types';
 
@@ -23,8 +22,8 @@ import Input from './Input';
 
 type Props = {
   className?: string;
-  values?: Partial<GoalFormValues> | null;
-  onCompleted?: (response: Goal | null) => void;
+  values?: Partial<WithId<Goal>> | null;
+  onCompleted?: (response: WithId<Goal> | null) => void;
 }
 const GoalForm = ({
   className = '',
@@ -37,7 +36,7 @@ const GoalForm = ({
   const [allFics, setAllFics] = useState<WithId<Fic>[]>([])
   const [showOldFics, setShowOldFics] = useState<boolean>(false)
 
-  const onCompleted = (response: Goal | null) => {
+  const onCompleted = (response: WithId<Goal> | null) => {
     if (response != null) {
       const yearOfLastEntry = parseInt(response.startDate.slice(0, 4), 10)
       if (yearOfLastEntry !== year) {

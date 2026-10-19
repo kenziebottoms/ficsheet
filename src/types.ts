@@ -72,6 +72,7 @@ export type Goal = {
   fandom?: string | null;
   ship?: string | null;
   color: GoalColor;
+  totalWordsWritten?: number;
 };
 
 export type MonthContextValue = {
@@ -144,6 +145,7 @@ export type DataCache = {
   dailyTotals: DailyTotal[];
   fandoms: Fandom[];
   fics: WithId<Fic>[];
+  goals: WithId<Goal>[];
   runningTotal: RunningTotal[];
   refreshData: (year?: number) => void;
 };
