@@ -1,17 +1,21 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { format, parse } from 'date-fns';
 
 type Props = {
   name: string;
   label: string;
-  defaultValue?: Date;
+  defaultValue?: Date | null;
 }
 const DateInput = ({
   name,
   label,
   defaultValue,
 }: Props) => {
-  const [value, setValue] = useState<Date | null>(defaultValue || new Date());
+  const [value, setValue] = useState<Date | null>(defaultValue ?? new Date());
+
+  useEffect(() => {
+    setValue(defaultValue ?? null)
+  }, [defaultValue])
 
   return <div className='flex flex-col'>
     <label>
