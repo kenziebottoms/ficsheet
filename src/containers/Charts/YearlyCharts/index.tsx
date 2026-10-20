@@ -43,7 +43,7 @@ const YearlyCharts = () => {
             style={activeTab === tab ? "primary" : "subtle"}
             icon={TabIcons[tab]}
             onClick={() => setActiveTab(tab)}
-            className='capitalize'
+            className='capitalize font-mono'
           >
             {tab}
           </Button>
