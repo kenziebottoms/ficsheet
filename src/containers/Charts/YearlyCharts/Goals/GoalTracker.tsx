@@ -1,14 +1,11 @@
-import { use, useState } from "react";
-import { differenceInDays, isBefore, isPast, isSameDay, parse } from "date-fns";
+import { useState } from "react";
+import { differenceInDays, isPast, parse } from "date-fns";
 import { CalendarToday, Edit, EditCalendar, EventAvailable, Favorite, Flag, OutlinedFlag, TextSnippet, WindPower, type SvgIconComponent } from "@mui/icons-material";
 import { Gauge, gaugeClasses } from "@mui/x-charts";
-import _ from 'lodash'
 
 import Button from "@/components/Button";
 import EntryForm from "@/components/EntryForm";
 import Modal from "@/components/Modal";
-
-import { DataCacheContext } from "@/contexts/DataCache/DataCacheContext";
 
 import type { Goal, GoalColor, WordCountEntry } from "@/types";
 
@@ -52,28 +49,13 @@ const GoalTracker = ({
   goal: Goal & { id?: number };
   onEdit: () => void;
 }) => {
-  const { dailyEntries } = use(DataCacheContext)
   const [entryFormValues, setEntryFormValues] = useState<Partial<WordCountEntry> | null>(null)
   const parsedStartDate = parse(goal.startDate, 'yyyy-MM-dd', new Date())
   const parsedEndDate: Date | null = goal.endDate == null ? null : parse(goal.endDate, 'yyyy-MM-dd', new Date())
 
-  const filteredEntries = dailyEntries
-    .filter(entry => {
-      const entryDate = parse(entry.date, 'yyyy-MM-dd', new Date())
-      return (
-        isBefore(parsedStartDate, entryDate) || isSameDay(parsedStartDate, entryDate)
-      ) && (
-          parsedEndDate == null || (isBefore(entryDate, parsedEndDate) || isSameDay(parsedEndDate, entryDate))
-        )
-    })
-    .filter(entry => (goal.fic == null || entry.fic === goal.fic)
-      && (goal.fandom == null || entry.fandom === goal.fandom)
-      && (goal.ship == null || entry.ship === goal.ship))
-  const wordsWritten = _.sumBy(filteredEntries, 'count')
-
   return <div className={`rounded-xl flex flex-row flex-wrap lg:flex-nowrap items-center justify-center md:justify-between gap-x-2 gap-y-1 p-1 ${bgClassNames[goal.color]}`}>
     <div className="flex flex-row gap-1 items-center grow lg:grow-0 w-3/4 lg:w-auto">
-      <div className="pr-1">{wordsWritten >= goal.targetWordCount ? <Flag /> : <OutlinedFlag />}</div>
+      <div className="pr-1">{goal.totalWordsWritten >= goal.targetWordCount ? <Flag /> : <OutlinedFlag />}</div>
 
       <div className={`group px-5 py-1 flex flex-row items-center gap-2 grow lg:grow-0 text-lg bg-zinc-800 inset-shadow-black/50 inset-shadow-sm rounded-full font-sans ${titleClassNames[goal.color]}`}>
         {goal.name}
@@ -95,7 +77,7 @@ const GoalTracker = ({
           height={70}
           valueMin={0}
           valueMax={goal.targetWordCount}
-          value={Math.min(wordsWritten, goal.targetWordCount)}
+          value={Math.min(goal.totalWordsWritten, goal.targetWordCount)}
           className={`text-sm ${goal.endDate == null ? '' : '-mr-2'}`}
           sx={{
             [`& .${gaugeClasses.valueArc}`]: {
@@ -124,7 +106,7 @@ const GoalTracker = ({
     <div className="flex grow text-sm flex-row flex-wrap items-center justify-around gap-1">
       <div className='whitespace-nowrap px-2 py-1 bg-zinc-900/50 rounded-md flex flex-row gap-2 items-center inset-shadow-background/25 inset-shadow-sm'>
         <div>{reformatDate(goal.startDate, 'yyyy-MM-dd', 'MMM d, \'\'yy')}</div>
-        {(parsedEndDate == null ? (wordsWritten >= goal.targetWordCount) : isPast(parsedEndDate)) ?
+        {(parsedEndDate == null ? (goal.totalWordsWritten >= goal.targetWordCount) : isPast(parsedEndDate)) ?
           <EventAvailable htmlColor={dialColors[goal.color]} /> :
           <CalendarToday htmlColor={dialColors[goal.color]} />}
         {goal.endDate != null && <div>{reformatDate(goal.endDate, 'yyyy-MM-dd', 'MMM d, \'\'yy')}</div>}
@@ -142,24 +124,26 @@ const GoalTracker = ({
         </div>)}
     </div>
 
-    <div className="whitespace-nowrap bg-white/50 rounded-full py-1 px-3 font-sans text-zinc-900">{wordsWritten.toLocaleString()} / {goal.targetWordCount.toLocaleString()}</div>
+    <div className="whitespace-nowrap bg-white/50 rounded-full py-1 px-3 font-sans text-zinc-900">{goal.totalWordsWritten.toLocaleString()} / {goal.targetWordCount.toLocaleString()}</div>
 
-    {goal.ficId != null && <Button
-      onClick={() => setEntryFormValues({ ficId: goal.ficId })}
-      icon={EditCalendar}
-    >
-      Log
-    </Button>}
+    {goal.ficId != null && <>
+      <Button
+        onClick={() => setEntryFormValues({ ficId: goal.ficId })}
+        icon={EditCalendar}
+      >
+        Log
+      </Button>
 
-    <Modal
-      open={entryFormValues != null}
-      setOpen={(newOpen: boolean) => !newOpen && setEntryFormValues(null)}
-    >
-      <EntryForm
-        className='bg-zinc-800'
-        values={entryFormValues}
-      />
-    </Modal>
+      <Modal
+        open={entryFormValues != null}
+        setOpen={(newOpen: boolean) => !newOpen && setEntryFormValues(null)}
+      >
+        <EntryForm
+          className='bg-zinc-800'
+          values={entryFormValues}
+        />
+      </Modal>
+    </>}
   </div>
 }
 
