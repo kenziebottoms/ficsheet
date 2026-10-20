@@ -28,10 +28,9 @@ goalsRouter.get("/", (_req, res) => {
  * BODY: Goal
  */
 goalsRouter.post("/", (req, res) => {
-  const goal = req.body as Goal;
-  console.log("posting goal: ", goal);
-  insertGoal(goal);
-  return res.json(goal).status(200);
+  console.log("posting goal: ", req.body);
+  const result = insertGoal(req.body satisfies Goal);
+  return res.json(result).status(200);
 });
 
 /**
