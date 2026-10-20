@@ -72,7 +72,7 @@ export type Goal = {
   fandom?: string | null;
   ship?: string | null;
   color: GoalColor;
-  totalWordsWritten?: number;
+  totalWordsWritten: number;
 };
 
 export type MonthContextValue = {

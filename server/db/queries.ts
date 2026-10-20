@@ -25,18 +25,23 @@ export const selectEntries = (
 export const selectGoals = (whereClause?: string): WithId<Goal>[] => {
   const goals = select<WithId<Goal>>(
     `goal.id, goal.name, goal.color, goal.fic_id AS ficId, \
-    goal.fandom, goal.ship, IIF(goal.fic_id, fic.name, NULL) as fic, \
+    goal.fandom, goal.ship, goal_fic.name as fic, \
     goal.start_date as startDate, goal.end_date as endDate, \
     goal.target_word_count as targetWordCount, \
-    COALESCE(SUM(word_count.[count]), 0) AS totalWordsWritten \
+    COALESCE(SUM(word_counts.[count]), 0) AS totalWordsWritten \
     FROM goal \
-    FULL OUTER JOIN word_count \
-    FULL OUTER JOIN fic ON fic.id = word_count.fic_id OR fic.id = goal.fic_id \
-    ${whereClause ? `${whereClause} AND` : "WHERE"} \
-    (word_count.date BETWEEN goal.start_date AND goal.end_date) \
-    AND (goal.fandom IS NULL OR goal.fandom = fic.fandom) \
-    AND (goal.fic_id IS NULL or goal.fic_id = fic.id) \
-    AND (goal.ship IS NULL or goal.ship = fic.ship) \
+    LEFT JOIN fic goal_fic ON goal_fic.id = goal.fic_id \
+    LEFT JOIN ( \
+      SELECT [count], date, fic_id, fic.fandom, fic.ship \
+      FROM word_count \
+      JOIN fic ON fic.id = word_count.fic_id \
+    ) word_counts ON ( \
+      (word_counts.date BETWEEN goal.start_date AND goal.end_date) \
+      AND (goal.fic_id IS NULL OR goal.fic_id = word_counts.fic_id) \
+      AND (goal.fandom IS NULL OR goal.fandom = word_counts.fandom) \
+      AND (goal.ship IS NULL OR goal.ship = word_counts.ship) \
+    ) \
+    ${whereClause ?? ""} \
     GROUP BY goal.id;`,
   );
   return goals;
