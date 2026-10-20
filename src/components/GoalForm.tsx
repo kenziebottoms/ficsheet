@@ -12,6 +12,7 @@ import type {
   Fic,
   Goal,
   GoalColor,
+  GoalType,
   WithId,
 } from '@/types';
 
@@ -19,6 +20,7 @@ import Button from './Button';
 import DateInput from './DateInput';
 import Dropdown from './Dropdown';
 import Input from './Input';
+import ButtonGroup from './ButtonGroup';
 
 type Props = {
   className?: string;
@@ -35,6 +37,7 @@ const GoalForm = ({
 
   const [allFics, setAllFics] = useState<WithId<Fic>[]>([])
   const [showOldFics, setShowOldFics] = useState<boolean>(false)
+  const [goalType, setGoalType] = useState<GoalType>('overall')
 
   const onCompleted = (response: WithId<Goal> | null) => {
     if (response != null) {
@@ -52,7 +55,7 @@ const GoalForm = ({
     e.preventDefault();
 
     const formData = Object.fromEntries(new FormData(e.target).entries()) as Record<string, string>;
-    const payload: Goal & { id: number | null } = {
+    const payload: Omit<Goal, 'totalWordsWritten'> & { id: number | null } = {
       id: parseInt(formData.id, 10) || null,
       startDate: formData.startDate,
       name: formData.name,
@@ -71,8 +74,16 @@ const GoalForm = ({
   }
 
   useEffect(() => {
-    selectFics().then(af => setAllFics(_.orderBy(af, ({ name }) => name.toLowerCase())))
-  }, [])
+    if (values?.fandom != null) {
+      setGoalType('fandom')
+    } else if (values?.fic != null) {
+      setGoalType('fic')
+    } else if (values?.ship != null) {
+      setGoalType('ship')
+    } else {
+      setGoalType('overall')
+    }
+  }, [values?.fandom, values?.fic, values?.ship])
 
   return <form
     onSubmit={handleSubmit}
@@ -112,45 +123,58 @@ const GoalForm = ({
       defaultValue={values?.targetWordCount}
     />
 
-    <Input
+    <Dropdown
+      label="Color"
+      name="color"
+      defaultValue={values?.color || 'pink'}
+      options={["pink", "orange", "lime", "emerald", "cyan", "indigo", "rainbow", "gray"]}
+    />
+
+    <ButtonGroup
+      label="Goal Type"
+      options={['overall', 'fandom', 'fic', 'ship']}
+      value={goalType}
+      onChange={setGoalType}
+      smallButtons
+    />
+
+    {goalType === 'fandom' && <Input
       name="fandom"
       label="Fandom"
       type="text"
       defaultValue={values?.fandom}
-    />
+    />}
 
-    <Input
+    {goalType === 'fic' &&
+      <div className='flex flex-row gap-2'>
+        <Dropdown
+          label="Fic"
+          name="ficId"
+          defaultValue={values?.ficId}
+          options={(showOldFics ? allFics : fics).map(fic => ({ value: fic.id, label: `${fic.name} (${fic.fandom})` }))}
+        />
+        {!showOldFics && (
+          <Button
+            icon={Restore}
+            onClick={async () => {
+              const allFics = await selectFics()
+              await setAllFics(_.orderBy(allFics, ({ name }) => name.toLowerCase()))
+              setShowOldFics(true)
+            }}
+            style="transparent"
+            small
+            className='self-end'
+            aria-label="Show Older Fics"
+          />
+        )}
+      </div>}
+
+    {goalType === 'ship' && <Input
       name="ship"
       label="Ship"
       type="text"
       defaultValue={values?.ship}
-    />
-
-    <Dropdown
-      label="Color"
-      name="color"
-      defaultValue={values?.color}
-      options={["pink", "orange", "lime", "emerald", "cyan", "indigo", "rainbow", "gray"]}
-    />
-
-    <div className='flex flex-row gap-2'>
-      <Dropdown
-        label="Fic"
-        name="ficId"
-        defaultValue={values?.ficId}
-        options={(showOldFics ? allFics : fics).map(fic => ({ value: fic.id, label: `${fic.name} (${fic.fandom})` }))}
-      />
-      {!showOldFics && (
-        <Button
-          icon={Restore}
-          onClick={() => setShowOldFics(true)}
-          style="transparent"
-          small
-          className='self-end'
-          aria-label="Show Older Fics"
-        />
-      )}
-    </div>
+    />}
 
     <Button
       type="submit"
