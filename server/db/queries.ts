@@ -190,6 +190,10 @@ export const deleteFic = (id: string) => {
   const deleteQuery = db.prepare(`DELETE FROM fic WHERE id = ?`);
   deleteQuery.run(id);
 };
+export const deleteGoal = (id: string) => {
+  const deleteQuery = db.prepare(`DELETE FROM goal WHERE id = ?`);
+  deleteQuery.run(id);
+};
 
 export const deleteEntriesByYear = (year: string) => {
   const deleteQuery = db.prepare(

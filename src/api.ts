@@ -94,6 +94,7 @@ export const insertGoal = (goal: Goal) =>
   post<Goal, WithId<Goal>>(`goals`, goal);
 export const putGoal = (goal: WithId<Goal>) =>
   put<WithId<Goal>, WithId<Goal>>(`goals/${goal.id}`, goal);
+export const deleteGoal = (id: number) => restDelete(`goals/${id}`);
 export const selectShips = () => get<Ship[]>(`ships`);
 export const insertFics = (fics: Fic[]) => post<Fic[], Fic[]>(`fics`, fics);
 export const putFic = (fic: Fic) => put<Fic, Fic>(`fics/${fic.id}`, fic);

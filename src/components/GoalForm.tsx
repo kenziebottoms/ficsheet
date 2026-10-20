@@ -3,7 +3,7 @@ import { parse } from 'date-fns';
 import { DeleteForever, Flag, Restore } from '@mui/icons-material';
 import _ from 'lodash';
 
-import { deleteEntry, insertGoal, putGoal, selectFics } from '@/api';
+import { deleteGoal, insertGoal, putGoal, selectFics } from '@/api';
 
 import { DataCacheContext } from '@/contexts/DataCache/DataCacheContext';
 import { YearContext } from '@/contexts/Year/YearContext';
@@ -163,7 +163,7 @@ const GoalForm = ({
       <Button
         style="cautionary"
         icon={DeleteForever}
-        onClick={() => deleteEntry(values.id as number).then(() => onCompleted(null))}
+        onClick={() => deleteGoal(values.id as number).then(() => onCompleted(null))}
         className='mt-4'
       >
         Delete goal

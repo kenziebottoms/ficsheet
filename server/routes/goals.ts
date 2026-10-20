@@ -1,8 +1,13 @@
-import express from "express";
+import express, { type Request } from "express";
 
 import { type WithId, type Goal } from "../../src/types.ts";
 
-import { getGoalsByYear, insertGoal, updateGoal } from "../db/queries.ts";
+import {
+  deleteGoal,
+  getGoalsByYear,
+  insertGoal,
+  updateGoal,
+} from "../db/queries.ts";
 import { type RequestWithId } from "../types.ts";
 
 import { validateId } from "./entries.ts";
@@ -31,6 +36,27 @@ goalsRouter.post("/", (req, res) => {
   console.log("posting goal: ", req.body);
   const result = insertGoal(req.body satisfies Goal);
   return res.json(result).status(200);
+});
+
+/**
+ * Validate `id` param
+ */
+goalsRouter.use("/:id", (req: Request<{ id?: string }>, res, next) => {
+  const { id } = req.params;
+  if (!validateId(id)) {
+    return res.status(400).send("please supply a valid id");
+  }
+  next();
+});
+
+/**
+ * DELETE /api/goals/:id
+ * BODY: Goal
+ */
+goalsRouter.delete("/:id", (req: RequestWithId, res) => {
+  console.log("deleting goal: ", req.params.id);
+  deleteGoal(req.params.id);
+  return res.json(req.params.id).status(204);
 });
 
 /**
