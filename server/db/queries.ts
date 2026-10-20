@@ -25,7 +25,7 @@ export const selectEntries = (
 export const selectGoals = (whereClause?: string): WithId<Goal>[] => {
   const goals = select<WithId<Goal>>(
     `goal.id, goal.name, goal.color, goal.fic_id AS ficId, \
-    fic.fandom, fic.ship, \
+    goal.fandom, goal.ship, IIF(goal.fic_id, fic.name, NULL) as fic, \
     goal.start_date as startDate, goal.end_date as endDate, \
     goal.target_word_count as targetWordCount, \
     COALESCE(SUM(word_count.[count]), 0) AS totalWordsWritten \
