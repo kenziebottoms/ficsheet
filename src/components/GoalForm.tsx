@@ -98,36 +98,43 @@ const GoalForm = ({
       hidden
     />
 
-    <Input
-      name="name"
-      label="Name"
-      type="text"
-      defaultValue={values?.name}
-    />
+    <div className='flex flex-row flex-wrap gap-2'>
+      <Input
+        name="name"
+        label="Name"
+        type="text"
+        className='grow'
+        defaultValue={values?.name}
+      />
+      <Dropdown
+        label="Color"
+        name="color"
+        defaultValue={values?.color || 'pink'}
+        className='grow'
+        options={["pink", "orange", "lime", "emerald", "cyan", "indigo", "rainbow", "gray"]}
+      />
+    </div>
 
-    <DateInput
-      name="startDate"
-      label="Start Date"
-      defaultValue={values?.startDate ? parse(values?.startDate, 'yyyy-MM-dd', new Date()) : new Date()}
-    />
-    <DateInput
-      name="endDate"
-      label="End Date"
-      defaultValue={values?.endDate ? parse(values?.endDate, 'yyyy-MM-dd', new Date()) : null}
-    />
+    <div className='flex flex-row flex-wrap gap-2'>
+      <DateInput
+        name="startDate"
+        label="Start Date"
+        className="grow"
+        defaultValue={values?.startDate ? parse(values?.startDate, 'yyyy-MM-dd', new Date()) : new Date()}
+      />
+      <DateInput
+        name="endDate"
+        label="End Date"
+        className="grow"
+        defaultValue={values?.endDate ? parse(values?.endDate, 'yyyy-MM-dd', new Date()) : null}
+      />
+    </div>
 
     <Input
       name="targetWordCount"
       label="Target Word Count"
       type="number"
       defaultValue={values?.targetWordCount}
-    />
-
-    <Dropdown
-      label="Color"
-      name="color"
-      defaultValue={values?.color || 'pink'}
-      options={["pink", "orange", "lime", "emerald", "cyan", "indigo", "rainbow", "gray"]}
     />
 
     <ButtonGroup
