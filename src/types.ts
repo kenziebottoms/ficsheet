@@ -74,6 +74,7 @@ export type Goal = {
   color: GoalColor;
   totalWordsWritten: number;
 };
+export type GoalType = "overall" | "fandom" | "fic" | "ship";
 
 export type MonthContextValue = {
   month: number | null;
