@@ -5,11 +5,13 @@ type Props = {
   name: string;
   label: string;
   defaultValue?: Date | null;
+  className?: string;
 }
 const DateInput = ({
   name,
   label,
   defaultValue,
+  className = '',
 }: Props) => {
   const [value, setValue] = useState<Date | null>(defaultValue ?? new Date());
 
@@ -17,7 +19,7 @@ const DateInput = ({
     setValue(defaultValue ?? null)
   }, [defaultValue])
 
-  return <div className='flex flex-col'>
+  return <div className={`flex flex-col ${className}`}>
     <label>
       <div>{label}</div>
       <input

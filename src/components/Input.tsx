@@ -3,6 +3,7 @@ import { useEffect, useState, type FocusEventHandler, type KeyboardEventHandler 
 type Props<T extends string | number> = {
   name: string;
   type: 'text' | 'number';
+  className?: string;
   label: string;
   defaultValue?: T | null;
   required?: boolean;
@@ -16,6 +17,7 @@ type Props<T extends string | number> = {
 const Input = <T extends string | number>({
   name,
   type,
+  className = '',
   label,
   defaultValue,
   required,
@@ -34,7 +36,7 @@ const Input = <T extends string | number>({
     }
   }, [defaultValue])
 
-  return <div className={`flex flex-col w-full ${hidden ? 'hidden' : ''}`}>
+  return <div className={`flex flex-col ${hidden ? 'hidden' : ''} ${className}`}>
     <label>
       <div>{label}</div>
       <input

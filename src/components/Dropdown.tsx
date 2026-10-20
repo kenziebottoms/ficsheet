@@ -6,6 +6,7 @@ import type { DropdownOption } from "@/types";
 type Props<T extends string | number> = {
   name: string;
   label: string;
+  className?: string;
   placeholder?: string;
   options: (T | DropdownOption<T>)[];
   defaultValue?: T | null;
@@ -13,6 +14,7 @@ type Props<T extends string | number> = {
 const Dropdown = <T extends string | number>({
   name,
   label,
+  className = '',
   placeholder,
   options: _options,
   defaultValue,
@@ -32,7 +34,7 @@ const Dropdown = <T extends string | number>({
     }
   })
 
-  return <div className='flex flex-col w-full'>
+  return <div className={`flex flex-col ${className}`}>
     <label>
       <div>{label}</div>
       <select
