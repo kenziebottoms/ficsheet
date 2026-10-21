@@ -43,7 +43,7 @@ const Badge = ({
       {title}
     </h5>}
     <div className={[
-      "py-2 px-3 text-center rounded-b-lg text-3xl font-light font-mono grow flex flex-col items-center justify-center",
+      "py-2 px-3 text-center rounded-b-lg text-2xl grow flex flex-col items-center justify-center",
       BadgeBodyClassNames[style]
     ].join(" ")}>
       {children}
