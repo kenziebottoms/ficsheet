@@ -1,27 +1,22 @@
-import { use, useEffect, useState, type SubmitEventHandler } from 'react';
+import { use, useState, type SubmitEventHandler } from 'react';
 import { addDays, isBefore, parse } from 'date-fns';
-import { Add, DeleteForever, EditCalendar, Restore } from '@mui/icons-material';
-import _ from 'lodash';
+import { Add, ArrowDropDown, DeleteForever, EditCalendar } from '@mui/icons-material';
 
-import { deleteEntry, selectFics, submitEntryForm } from '@/api';
+import { deleteEntry, submitEntryForm } from '@/api';
+
+import Button from '@/components/Button';
+import DateInput from '@/components/DateInput';
+import FicDropdown from '@/components/FicDropdown';
+import Input from '@/components/Input';
+import TextArea from '@/components/TextArea';
+import Toggle from '@/components/Toggle';
 
 import { DataCacheContext } from '@/contexts/DataCache/DataCacheContext';
 import { YearContext } from '@/contexts/Year/YearContext';
 
-import type {
-  EntryFormValues,
-  Fic,
-  WithId,
-  WordCountEntry
-} from '@/types';
+import type { EntryFormValues, WordCountEntry } from '@/types';
 import { countWords } from '@/utils';
 
-import Button from './Button';
-import DateInput from './DateInput';
-import Dropdown from './Dropdown';
-import Input from './Input';
-import TextArea from './TextArea';
-import Toggle from './Toggle';
 
 type Props = {
   className?: string;
@@ -34,10 +29,8 @@ const EntryForm = ({
   onCompleted: _onCompleted = () => { },
 }: Props) => {
   const { year, refreshYears } = use(YearContext)
-  const { fics, refreshData } = use(DataCacheContext)
+  const { refreshData } = use(DataCacheContext)
 
-  const [allFics, setAllFics] = useState<WithId<Fic>[]>([])
-  const [showOldFics, setShowOldFics] = useState<boolean>(false)
   const [showTextarea, setShowTextarea] = useState<boolean>(!values)
   const [typeNewFic, setTypeNewFic] = useState<boolean>(false)
 
@@ -77,10 +70,6 @@ const EntryForm = ({
   // default to today (unless it's after midnight but before 4AM, then default to "yesterday")
   const defaultDate = isBefore(new Date(), new Date().setHours(4)) ? addDays(new Date(), -1) : new Date()
 
-  useEffect(() => {
-    selectFics().then(af => setAllFics(_.orderBy(af, ({ name }) => name.toLowerCase())))
-  }, [])
-
   return <form
     onSubmit={handleSubmit}
     className={[className, 'flex flex-col gap-4 rounded-md p-3'].join(' ')}
@@ -107,33 +96,22 @@ const EntryForm = ({
           name="fic"
           type="text"
           defaultValue={values?.fic}
+          className='grow'
         /> :
-        <Dropdown
+        <FicDropdown
           label="Fic"
           name="ficId"
           defaultValue={values?.ficId}
-          options={(showOldFics ? allFics : fics).map(fic => ({ value: fic.id, label: `${fic.name} (${fic.fandom})` }))}
+          className="grow"
         />}
-      {!showOldFics && !typeNewFic && (
-        <Button
-          icon={Restore}
-          onClick={() => setShowOldFics(true)}
-          style="transparent"
-          small
-          className='self-end'
-          aria-label="Show Older Fics"
-        />
-      )}
-      {!typeNewFic && (
-        <Button
-          icon={Add}
-          onClick={() => setTypeNewFic(true)}
-          style="transparent"
-          small
-          className='self-end'
-          aria-label="Add new fic"
-        />
-      )}
+      <Button
+        icon={typeNewFic ? ArrowDropDown : Add}
+        onClick={() => setTypeNewFic(!typeNewFic)}
+        style="transparent"
+        small
+        className='self-end pt-1.5 pb-1.5'
+        label={typeNewFic ? "Select existing fic" : "Add new fic"}
+      />
     </div>
 
     {typeNewFic && <Input
