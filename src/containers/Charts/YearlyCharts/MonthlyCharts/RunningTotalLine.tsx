@@ -32,11 +32,15 @@ const RunningTotalLine = ({
     setShowProjection(isThisYear && month == null)
   }, [year, month])
 
-  if (year == null || runningTotal == null || runningTotal.length < 1) return null;
+  const loadingState = <Widget title="Running Total" className={`${className} w-200 h-95 flex flex-col items-center justify-center`}>
+    <Spinner style="subtle" />
+  </Widget>
+
+  if (year == null || runningTotal == null || runningTotal.length < 1) return loadingState;
 
   const filteredTotals = filterByYearAndMonth(runningTotal, year, month, true)
 
-  if (filteredTotals.length === 0) return null;
+  if (filteredTotals.length === 0) return loadingState
 
   const daysInYear = isLeapYear(year) ? 366 : 365
   const daysPast = getDayOfYear(new Date())
@@ -60,7 +64,7 @@ const RunningTotalLine = ({
       className="self-end -mt-8"
     />}
 
-    {runningTotal.length > 0 ? <LineChart
+    <LineChart
       dataset={points.map(addTimestamp)}
       xAxis={[
         {
@@ -94,9 +98,7 @@ const RunningTotalLine = ({
       colors={[colors[0]]}
       yAxis={[{ valueFormatter: largeNumberFormatter }]}
       sx={showProjection ? { 'svg > g > g > g:last-child > path': { strokeDasharray: '10 10' } } : undefined}
-    /> : <div className='w-200 h-95 flex flex-col items-center justify-center'>
-      <Spinner style="subtle" />
-    </div>}
+    />
   </Widget>
 }
 
