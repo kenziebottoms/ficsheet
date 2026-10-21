@@ -44,7 +44,7 @@ export const selectGoals = (whereClause?: string): WithId<Goal>[] => {
     ) \
     ${whereClause ?? ""} \
     GROUP BY goal.id \
-    HAVING (goal.end_date IS NULL OR totalWordsWritten < targetWordCount);`,
+    HAVING (goal.end_date IS NOT NULL OR totalWordsWritten < targetWordCount);`,
   );
   return goals;
 };
