@@ -22,7 +22,7 @@ const ProjectedAnnualWordCount = ({
   const { dailyEntries, runningTotal, refreshData } = use(DataCacheContext)
   const [showEntryForm, setShowEntryForm] = useState<boolean>(false)
 
-  if (runningTotal.length === 0) {
+  if (dailyEntries.length === 0 || runningTotal.length === 0) {
     return null
   }
 
