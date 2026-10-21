@@ -1,11 +1,14 @@
-import { useState } from "react";
-import { differenceInDays, isPast, parse } from "date-fns";
+import { use, useState } from "react";
+import { differenceInDays, isBefore, isPast, lastDayOfMonth, parse } from "date-fns";
 import { CalendarToday, Edit, EditCalendar, EventAvailable, Favorite, Flag, OutlinedFlag, TextSnippet, WindPower, type SvgIconComponent } from "@mui/icons-material";
 import { Gauge, gaugeClasses } from "@mui/x-charts";
 
 import Button from "@/components/Button";
 import EntryForm from "@/components/EntryForm";
 import Modal from "@/components/Modal";
+
+import { MonthContext } from "@/contexts/Month/MonthContext";
+import { YearContext } from "@/contexts/Year/YearContext";
 
 import type { Goal, GoalColor, WordCountEntry } from "@/types";
 
@@ -49,9 +52,21 @@ const GoalTracker = ({
   goal: Goal & { id?: number };
   onEdit: () => void;
 }) => {
+  const { month } = use(MonthContext)
+  const { year } = use(YearContext)
+
   const [entryFormValues, setEntryFormValues] = useState<Partial<WordCountEntry> | null>(null)
   const parsedStartDate = parse(goal.startDate, 'yyyy-MM-dd', new Date())
   const parsedEndDate: Date | null = goal.endDate == null ? null : parse(goal.endDate, 'yyyy-MM-dd', new Date())
+
+  if (year == null) {
+    return null;
+  }
+
+  const goalEndsBeforeFirstOfMonth = month != null && parsedEndDate != null && isBefore(parsedEndDate, new Date(year, month, 1))
+  const goalStartsAfterLastOfMonth = month != null && parsedEndDate != null && isBefore(lastDayOfMonth(new Date(year, month, 1)), parsedStartDate)
+
+  if (goalEndsBeforeFirstOfMonth || goalStartsAfterLastOfMonth) return null;
 
   return <div className={`rounded-xl flex flex-row flex-wrap lg:flex-nowrap items-center justify-center md:justify-between gap-x-2 gap-y-1 p-1 ${bgClassNames[goal.color]}`}>
     <div className="flex flex-row gap-1 items-center grow lg:grow-0 w-3/4 lg:w-auto">
