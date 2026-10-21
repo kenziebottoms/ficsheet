@@ -146,6 +146,7 @@ export type DataCache = {
   dailyTotals: DailyTotal[];
   fandoms: Fandom[];
   fics: WithId<Fic>[];
+  allFics: WithId<Fic>[];
   goals: WithId<Goal>[];
   runningTotal: RunningTotal[];
   refreshData: (year?: number) => void;

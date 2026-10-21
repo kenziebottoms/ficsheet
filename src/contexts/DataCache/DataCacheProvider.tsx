@@ -20,6 +20,7 @@ type Props = PropsWithChildren & {
 export const DataCacheProvider = ({ year, children }: Props) => {
   const [fandoms, setFandoms] = useState<Fandom[]>([])
   const [fics, setFics] = useState<WithId<Fic>[]>([])
+  const [allFics, setAllFics] = useState<WithId<Fic>[]>([])
   const [goals, setGoals] = useState<WithId<Goal>[]>([])
   const [dailyEntries, setDailyEntries] = useState<WithId<WordCountEntry>[]>([])
   const [dailyTotals, setDailyTotals] = useState<DailyTotal[]>([])
@@ -27,6 +28,7 @@ export const DataCacheProvider = ({ year, children }: Props) => {
 
   const refreshData = (y?: number) => {
     selectFandoms(y || year).then(setFandoms)
+    selectFics().then(setAllFics)
     selectFics(y || year).then(setFics)
     selectGoals(y || year).then(setGoals)
     selectAllWordCounts(y || year).then(setDailyEntries)
@@ -59,6 +61,7 @@ export const DataCacheProvider = ({ year, children }: Props) => {
       dailyTotals,
       fandoms,
       fics,
+      allFics,
       goals,
       runningTotal,
       refreshData,
