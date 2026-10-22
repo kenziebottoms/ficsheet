@@ -51,7 +51,7 @@ export const YearProvider = ({ initialValue, children }: Props) => {
           </Button>)}
         </div>
       </div>
-      <div className={`${ButtonBackgroundClassNames[year == null ? 'primary' : 'secondary']} -mt-3 rounded-xl p-3 space-y-3`}>
+      <div className={`${ButtonBackgroundClassNames[year == null ? 'primary' : 'secondary']} -mt-3 pt-1 space-y-3`}>
         {year == null ?
           <AllTime /> :
           <DataCacheProvider year={year}>
