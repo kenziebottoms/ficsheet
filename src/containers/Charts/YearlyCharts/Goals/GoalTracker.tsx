@@ -93,7 +93,7 @@ const GoalTracker = ({
           valueMin={0}
           valueMax={goal.targetWordCount}
           value={Math.min(goal.totalWordsWritten, goal.targetWordCount)}
-          className={`text-sm ${goal.endDate == null ? '' : '-mr-2'}`}
+          className={`text-sm ${goal.endDate == null ? '' : '-mr-4'}`}
           sx={{
             [`& .${gaugeClasses.valueArc}`]: {
               fill: dialColors[goal.color],
