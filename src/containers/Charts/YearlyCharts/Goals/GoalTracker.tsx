@@ -13,6 +13,7 @@ import { YearContext } from "@/contexts/Year/YearContext";
 import type { Goal, GoalColor, WordCountEntry } from "@/types";
 
 import { reformatDate } from "@/utils";
+import { DataCacheContext } from "@/contexts/DataCache/DataCacheContext";
 
 const bgClassNames: Record<GoalColor, string> = {
   'rainbow': "bg-linear-45/shorter from-indigo-600 via-orange-400 to-indigo-500 from-40% via-80% to-85%",
@@ -54,6 +55,7 @@ const GoalTracker = ({
 }) => {
   const { month } = use(MonthContext)
   const { year } = use(YearContext)
+  const { refreshData } = use(DataCacheContext)
 
   const [entryFormValues, setEntryFormValues] = useState<Partial<WordCountEntry> | null>(null)
   const parsedStartDate = parse(goal.startDate, 'yyyy-MM-dd', new Date())
@@ -106,7 +108,7 @@ const GoalTracker = ({
           height={50}
           valueMin={0}
           valueMax={Math.ceil(differenceInDays(parsedEndDate, parsedStartDate))}
-          value={differenceInDays(new Date(), parsedStartDate)}
+          value={Math.max(0, differenceInDays(new Date(), parsedStartDate))}
           className='text-sm -ml-10 mr-2'
           sx={{
             [`& .${gaugeClasses.valueArc}`]: {
@@ -156,6 +158,10 @@ const GoalTracker = ({
         <EntryForm
           className='bg-zinc-800'
           values={entryFormValues}
+          onCompleted={() => {
+            setEntryFormValues(null)
+            refreshData()
+          }}
         />
       </Modal>
     </>}
