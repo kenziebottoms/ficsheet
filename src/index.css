@@ -91,6 +91,10 @@ h6 {
   font-size: 0.8rem;
 }
 
+input, select {
+  height: 2.75rem;
+  box-sizing: border-box;
+}
 input, select, textarea {
   @apply bg-zinc-900;
 }

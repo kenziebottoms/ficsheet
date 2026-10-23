@@ -35,7 +35,7 @@ const FicDropdown = ({
         onClick={() => setShowOldFics(true)}
         style="transparent"
         small
-        className='self-end pt-1.5 pb-1.5'
+        className='self-end pt-2 pb-2'
         label="Show Older Fics"
       />
     )}
