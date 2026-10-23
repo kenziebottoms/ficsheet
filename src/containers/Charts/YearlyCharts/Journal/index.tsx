@@ -63,7 +63,7 @@ const Journal = () => {
       />
     </Modal>}
     <div className='space-y-2'>
-      <div className='bg-zinc-900 p-2 rounded-md flex flex-row justify-end gap-4'>
+      <div className='bg-zinc-900 p-2 rounded-md flex flex-row flex-wrap justify-end gap-4'>
         <Button
           style="cautionary"
           icon={confirmDelete ? AutoDelete : Delete}
