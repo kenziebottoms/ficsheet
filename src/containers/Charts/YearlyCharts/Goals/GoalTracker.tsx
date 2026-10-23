@@ -1,19 +1,16 @@
-import { use, useState } from "react";
+import { use } from "react";
 import { differenceInDays, isBefore, isPast, lastDayOfMonth, parse } from "date-fns";
 import { CalendarToday, Edit, EditCalendar, EventAvailable, Favorite, Flag, OutlinedFlag, TextSnippet, WindPower, type SvgIconComponent } from "@mui/icons-material";
 import { Gauge, gaugeClasses } from "@mui/x-charts";
 
 import Button from "@/components/Button";
-import EntryForm from "@/components/EntryForm";
-import Modal from "@/components/Modal";
 
 import { MonthContext } from "@/contexts/Month/MonthContext";
 import { YearContext } from "@/contexts/Year/YearContext";
 
-import type { Goal, GoalColor, WordCountEntry } from "@/types";
+import type { Goal, GoalColor } from "@/types";
 
 import { reformatDate } from "@/utils";
-import { DataCacheContext } from "@/contexts/DataCache/DataCacheContext";
 
 const bgClassNames: Record<GoalColor, string> = {
   'rainbow': "bg-linear-45/shorter from-indigo-600 via-orange-400 to-indigo-500 from-40% via-80% to-85%",
@@ -49,15 +46,15 @@ const titleClassNames: Record<GoalColor, string> = {
 const GoalTracker = ({
   goal,
   onEdit,
+  onLog,
 }: {
   goal: Goal & { id?: number };
   onEdit: () => void;
+  onLog: () => void;
 }) => {
   const { month } = use(MonthContext)
   const { year } = use(YearContext)
-  const { refreshData } = use(DataCacheContext)
 
-  const [entryFormValues, setEntryFormValues] = useState<Partial<WordCountEntry> | null>(null)
   const parsedStartDate = parse(goal.startDate, 'yyyy-MM-dd', new Date())
   const parsedEndDate: Date | null = goal.endDate == null ? null : parse(goal.endDate, 'yyyy-MM-dd', new Date())
 
@@ -145,25 +142,11 @@ const GoalTracker = ({
 
     {goal.ficId != null && <>
       <Button
-        onClick={() => setEntryFormValues({ ficId: goal.ficId })}
+        onClick={onLog}
         icon={EditCalendar}
       >
         Log
       </Button>
-
-      <Modal
-        open={entryFormValues != null}
-        setOpen={(newOpen: boolean) => !newOpen && setEntryFormValues(null)}
-      >
-        <EntryForm
-          className='bg-zinc-800'
-          values={entryFormValues}
-          onCompleted={() => {
-            setEntryFormValues(null)
-            refreshData()
-          }}
-        />
-      </Modal>
     </>}
   </div>
 }
