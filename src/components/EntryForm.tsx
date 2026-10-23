@@ -109,7 +109,7 @@ const EntryForm = ({
         onClick={() => setTypeNewFic(!typeNewFic)}
         style="transparent"
         small
-        className='self-end pt-1.5 pb-1.5'
+        className='self-end pt-2 pb-2'
         label={typeNewFic ? "Select existing fic" : "Add new fic"}
       />
     </div>
