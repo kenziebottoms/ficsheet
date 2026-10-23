@@ -93,8 +93,8 @@ const RunningTotalLine = ({
           showMark: false,
         }
       ]}
-      width={650}
-      height={380}
+      width={500}
+      height={350}
       colors={[colors[0]]}
       yAxis={[{ valueFormatter: largeNumberFormatter }]}
       sx={showProjection ? { 'svg > g > g > g:last-child > path': { strokeDasharray: '10 10' } } : undefined}

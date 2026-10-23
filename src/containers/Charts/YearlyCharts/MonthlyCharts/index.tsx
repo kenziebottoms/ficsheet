@@ -36,8 +36,8 @@ const MonthlyCharts = () => {
   }))
 
   return <>
-    <div className="flex flex-row flex-wrap gap-3 items-stretch">
-      <div className="flex flex-row lg:flex-col flex-wrap gap-2 grow">
+    <div className="flex flex-col md:flex-row md:flex-wrap gap-3 items-stretch">
+      <div className="flex flex-col sm:flex-row md:flex-col flex-wrap gap-2 grow">
         <Badge
           title="Total"
           style="primary"
@@ -47,7 +47,7 @@ const MonthlyCharts = () => {
           <div className="text-sm">words</div>
         </Badge>
         <Badge
-          title={<>Longest<br />Streak</>}
+          title="Longest Streak"
           style="secondary"
           className="grow"
         >
@@ -66,7 +66,7 @@ const MonthlyCharts = () => {
 
       <RunningTotalLine className="grow" />
 
-      <div className="flex flex-row flex-wrap 2xl:flex-col gap-2 items-stretch grow">
+      <div className="flex flex-col sm:flex-row flex-wrap xl:flex-col gap-2 items-stretch grow">
         <Badge title="Top Fandom" style="primary" className="grow">
           <div className='font-sans text-white'>{_.maxBy(fandomTotals, 'count')?.fandom}</div>
           <div className="text-sm">{_.maxBy(fandomTotals, 'count')?.count.toLocaleString()} words written</div>

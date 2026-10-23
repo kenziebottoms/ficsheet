@@ -29,7 +29,7 @@ const YearlyCharts = () => {
 
   return <div className="bg-zinc-900 pt-2 space-y-3">
     <MonthProvider>
-      <div className="bg-zinc-800 px-5 py-2 rounded-full text-zinc-400 flex flex-row flex-wrap justify-around gap-3">
+      <div className="bg-zinc-800 px-2 md:px-5 py-2 rounded-xl md:rounded-full text-zinc-400 grid grid-cols-1 sm:grid-cols-2 md:flex md:flex-row md:flex-wrap justify-around gap-2">
         {(['charts', 'fics', 'goals', 'journal'] as const).map(tab =>
           <Button
             key={tab}
