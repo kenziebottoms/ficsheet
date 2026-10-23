@@ -1,4 +1,4 @@
-import { use } from "react";
+import { memo, use } from "react";
 import { differenceInDays, isBefore, isPast, lastDayOfMonth, parse } from "date-fns";
 import { CalendarToday, Edit, EditCalendar, EventAvailable, Favorite, Flag, OutlinedFlag, TextSnippet, WindPower, type SvgIconComponent } from "@mui/icons-material";
 import { Gauge, gaugeClasses } from "@mui/x-charts";
@@ -8,7 +8,7 @@ import Button from "@/components/Button";
 import { MonthContext } from "@/contexts/Month/MonthContext";
 import { YearContext } from "@/contexts/Year/YearContext";
 
-import type { Goal, GoalColor } from "@/types";
+import type { Goal, GoalColor, WithId, WordCountEntry } from "@/types";
 
 import { reformatDate } from "@/utils";
 
@@ -43,14 +43,14 @@ const titleClassNames: Record<GoalColor, string> = {
   gray: "text-zinc-300"
 }
 
-const GoalTracker = ({
+const GoalTracker = memo(({
   goal,
-  onEdit,
-  onLog,
+  setGoalFormValues,
+  setEntryFormValues,
 }: {
   goal: Goal & { id?: number };
-  onEdit: () => void;
-  onLog: () => void;
+  setGoalFormValues: (goalFormValues: Partial<WithId<Goal>> | null) => void;
+  setEntryFormValues: (entryFormValues: Partial<WithId<WordCountEntry>> | null) => void;
 }) => {
   const { month } = use(MonthContext)
   const { year } = use(YearContext)
@@ -79,7 +79,7 @@ const GoalTracker = ({
           className="opacity-0 group-hover:opacity-80"
           small
           icon={Edit}
-          onClick={onEdit}
+          onClick={() => setGoalFormValues(goal)}
         />
       </div>
     </div>
@@ -142,13 +142,13 @@ const GoalTracker = ({
 
     {goal.ficId != null && <>
       <Button
-        onClick={onLog}
+        onClick={() => setEntryFormValues({ ficId: goal.ficId })}
         icon={EditCalendar}
       >
         Log
       </Button>
     </>}
   </div>
-}
+})
 
 export default GoalTracker

@@ -45,8 +45,8 @@ const Goals = () => {
       {goals.map(goal => <GoalTracker
         key={goal.id}
         goal={goal}
-        onEdit={() => setGoalFormValues(goal)}
-        onLog={() => setEntryFormValues({ ficId: goal.ficId })}
+        setGoalFormValues={setGoalFormValues}
+        setEntryFormValues={setEntryFormValues}
       />)}
 
       <Modal
