@@ -89,3 +89,6 @@ export const reformatDate = (
   const date = parse(dateString, originalFormat, new Date());
   return format(date, newFormat);
 };
+
+export const sleep = (ms: number) =>
+  new Promise((resolve) => setTimeout(resolve, ms));
