@@ -2,9 +2,6 @@ import { useState } from 'react';
 import { Flag, PieChart, TableChart, TextSnippet, type SvgIconComponent } from '@mui/icons-material';
 
 import Button from '@/components/Button';
-import FicForm from '@/components/FicForm';
-import Modal from '@/components/Modal';
-
 
 import { MonthProvider } from '@/contexts/Month/MonthProvider';
 
@@ -24,8 +21,6 @@ const TabIcons: Record<MonthlyChartTabName, SvgIconComponent> = {
 
 const YearlyCharts = () => {
   const [activeTab, setActiveTab] = useState<MonthlyChartTabName>('charts')
-  const [showFicForm, setShowFicForm] = useState<boolean>(false)
-
 
   return <div className="bg-zinc-900 pt-2 space-y-3">
     <MonthProvider>
@@ -50,15 +45,6 @@ const YearlyCharts = () => {
       {activeTab === 'journal' && <Journal />}
 
       {activeTab === 'fics' && <FicManager />}
-      <Modal
-        open={showFicForm}
-        setOpen={setShowFicForm}
-      >
-        <FicForm
-          className='bg-zinc-800'
-          onCompleted={() => setShowFicForm(false)}
-        />
-      </Modal>
     </MonthProvider>
   </div>
 }
