@@ -1,5 +1,6 @@
 import { useEffect, useState, type PropsWithChildren } from "react";
-import { Insights } from "@mui/icons-material";
+
+import Logo from '@/assets/ficsheet.svg';
 
 import { selectAvailableYears } from "@/api";
 
@@ -33,11 +34,15 @@ export const YearProvider = ({ initialValue, children }: Props) => {
       availableYears,
       refreshYears,
     }}>
-      <div className="w-full flex flex-col md:flex-row items-center gap-2 pt-2">
-        <h3 className='text-xs md:mb-2 md:px-3 flex flex-row items-center gap-2'>
-          <Insights htmlColor="#9f9fa9" />
+      <div className="w-full flex flex-col md:flex-row items-center pt-2">
+        <h3 className='shrink-0 text-xs md:mb-2 md:px-3 flex flex-row items-center gap-2'>
+          <img
+            src={Logo}
+            alt="FicSheet logo"
+            className="w-8 h-8"
+          />
           <div>
-            <span className='text-primary-medium'>fic</span>sheet
+            fic<span className='text-primary-highlight'>sheet</span>
           </div>
         </h3>
         <div className="w-full flex flex-row items-center gap-2 overflow-x-auto px-2">
