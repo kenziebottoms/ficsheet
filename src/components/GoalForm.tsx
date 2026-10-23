@@ -1,15 +1,13 @@
 import { use, useEffect, useState, type SubmitEventHandler } from 'react';
 import { parse } from 'date-fns';
-import { DeleteForever, Flag, Restore } from '@mui/icons-material';
-import _ from 'lodash';
+import { DeleteForever, Flag } from '@mui/icons-material';
 
-import { deleteGoal, insertGoal, putGoal, selectFics } from '@/api';
+import { deleteGoal, insertGoal, putGoal, } from '@/api';
 
 import { DataCacheContext } from '@/contexts/DataCache/DataCacheContext';
 import { YearContext } from '@/contexts/Year/YearContext';
 
 import type {
-  Fic,
   Goal,
   GoalColor,
   GoalType,
@@ -17,10 +15,11 @@ import type {
 } from '@/types';
 
 import Button from './Button';
+import ButtonGroup from './ButtonGroup';
 import DateInput from './DateInput';
 import Dropdown from './Dropdown';
+import FicDropdown from './FicDropdown';
 import Input from './Input';
-import ButtonGroup from './ButtonGroup';
 
 type Props = {
   className?: string;
@@ -33,10 +32,8 @@ const GoalForm = ({
   onCompleted: _onCompleted = () => { },
 }: Props) => {
   const { year, refreshYears } = use(YearContext)
-  const { fics, refreshData } = use(DataCacheContext)
+  const { refreshData } = use(DataCacheContext)
 
-  const [allFics, setAllFics] = useState<WithId<Fic>[]>([])
-  const [showOldFics, setShowOldFics] = useState<boolean>(false)
   const [goalType, setGoalType] = useState<GoalType>('overall')
 
   const onCompleted = (response: WithId<Goal> | null) => {
@@ -152,29 +149,11 @@ const GoalForm = ({
       defaultValue={values?.fandom}
     />}
 
-    {goalType === 'fic' &&
-      <div className='flex flex-row gap-2'>
-        <Dropdown
-          label="Fic"
-          name="ficId"
-          defaultValue={values?.ficId}
-          options={(showOldFics ? allFics : fics).map(fic => ({ value: fic.id, label: `${fic.name} (${fic.fandom})` }))}
-        />
-        {!showOldFics && (
-          <Button
-            icon={Restore}
-            onClick={async () => {
-              const allFics = await selectFics()
-              await setAllFics(_.orderBy(allFics, ({ name }) => name.toLowerCase()))
-              setShowOldFics(true)
-            }}
-            style="transparent"
-            small
-            className='self-end'
-            aria-label="Show Older Fics"
-          />
-        )}
-      </div>}
+    {goalType === 'fic' && <FicDropdown
+      label="Fic"
+      name="ficId"
+      defaultValue={values?.ficId}
+    />}
 
     {goalType === 'ship' && <Input
       name="ship"
