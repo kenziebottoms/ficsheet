@@ -1,4 +1,4 @@
-import { use, useState } from 'react'
+import { use, useEffect, useState } from 'react'
 import { EditCalendar, OutlinedFlag } from '@mui/icons-material'
 
 import { DataCacheContext } from '@/contexts/DataCache/DataCacheContext'
@@ -11,6 +11,8 @@ import Modal from '@/components/Modal'
 
 import type { Goal, WithId, WordCountEntry } from '@/types'
 
+import { sleep } from '@/utils'
+
 import GoalTracker from './GoalTracker'
 
 const Goals = () => {
@@ -18,6 +20,19 @@ const Goals = () => {
   const { goals, refreshData } = use(DataCacheContext)
   const [goalFormValues, setGoalFormValues] = useState<Partial<WithId<Goal>> | null>(null)
   const [entryFormValues, setEntryFormValues] = useState<Partial<WithId<WordCountEntry>> | null>(null)
+  const [showGoalForm, setShowGoalForm] = useState(false)
+  const [showEntryForm, setShowEntryForm] = useState(false)
+
+  useEffect(() => {
+    if (goalFormValues != null) {
+      setShowGoalForm(true)
+    }
+  }, [goalFormValues])
+  useEffect(() => {
+    if (entryFormValues != null) {
+      setShowEntryForm(true)
+    }
+  }, [entryFormValues])
 
   if (year == null || !goals) return null;
 
@@ -50,13 +65,15 @@ const Goals = () => {
       />)}
 
       <Modal
-        open={goalFormValues != null}
-        setOpen={(newOpen: boolean) => !newOpen && setGoalFormValues(null)}
+        open={showGoalForm}
+        setOpen={setShowGoalForm}
       >
         <GoalForm
           className='bg-zinc-800'
           values={goalFormValues}
-          onCompleted={() => {
+          onCompleted={async () => {
+            setShowGoalForm(false)
+            await sleep(100)
             setGoalFormValues(null)
             refreshData()
           }}
@@ -64,13 +81,15 @@ const Goals = () => {
       </Modal>
 
       <Modal
-        open={entryFormValues != null}
-        setOpen={(newOpen: boolean) => !newOpen && setEntryFormValues(null)}
+        open={showEntryForm}
+        setOpen={setShowEntryForm}
       >
         <EntryForm
           className='bg-zinc-800'
           values={entryFormValues}
-          onCompleted={() => {
+          onCompleted={async () => {
+            setShowEntryForm(false)
+            await sleep(100)
             setEntryFormValues(null)
             refreshData()
           }}
