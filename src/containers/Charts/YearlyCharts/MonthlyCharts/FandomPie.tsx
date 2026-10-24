@@ -23,8 +23,8 @@ const FandomPie = ({
   return <Widget title="Word Count By Fandom" className={className}>
     <PieChart
       series={[{ data }]}
-      width={400}
-      height={400}
+      width={300}
+      height={300}
       colors={getDynamicColorPalette(fandoms.length)}
     />
   </Widget>

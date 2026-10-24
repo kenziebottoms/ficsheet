@@ -27,7 +27,7 @@ const DayOfWeekRadar = ({
         })),
       }}
       height={380}
-      width={400}
+      width={350}
     />
   </Widget>
 }

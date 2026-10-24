@@ -23,8 +23,8 @@ const ShipPie = ({
   return <Widget title="Word Count By Ship" className={className}>
     <PieChart
       series={[{ data }]}
-      width={400}
-      height={400}
+      width={300}
+      height={300}
       colors={getDynamicColorPalette(ships.length)}
     />
   </Widget>
