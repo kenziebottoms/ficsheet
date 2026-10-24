@@ -35,13 +35,13 @@ const Badge = ({
     BadgeContainerClassNames[style],
     'flex flex-col rounded-lg border-2 bg-background text-center',
   ].join(" ")}>
-    {title && <h5 className={[
+    {title && <h4 className={[
       ButtonTextClassNames[style],
       ButtonBackgroundClassNames[style],
       'py-2 px-3 rounded-t-md leading-6 shadow-md/50'
     ].join(" ")}>
       {title}
-    </h5>}
+    </h4>}
     <div className={[
       "py-2 px-3 text-center rounded-b-lg text-2xl grow flex flex-col items-center justify-center",
       BadgeBodyClassNames[style]
