@@ -79,6 +79,11 @@ const RunningTotalLine = ({
           }
         }
       ]}
+      yAxis={[{
+        valueFormatter: largeNumberFormatter,
+        min: points[0].running_total,
+        max: points[points.length - 1].running_total,
+      }]}
       series={[
         {
           data: _.map(showProjection ? points.slice(0, -1) : points, 'running_total'),
@@ -96,7 +101,6 @@ const RunningTotalLine = ({
       width={500}
       height={350}
       colors={[colors[0]]}
-      yAxis={[{ valueFormatter: largeNumberFormatter }]}
       sx={showProjection ? { 'svg > g > g > g:last-child > path': { strokeDasharray: '10 10' } } : undefined}
     />
   </Widget>
