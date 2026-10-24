@@ -1,56 +1,73 @@
-import { useEffect, type PropsWithChildren } from 'react'
+import { useEffect, useState, type PropsWithChildren } from 'react'
+import { Close } from '@mui/icons-material';
 
-import Button from './Button';
+import Button from '@/components/Button';
+
 import { ButtonBackgroundClassNames } from './constants';
 
 type Props = PropsWithChildren & {
-  className?: string;
   open: boolean;
   setOpen: (newOpen: boolean) => void;
+  className?: string;
 }
 const Modal = ({
-  open,
-  setOpen,
+  open: isRendered,
+  setOpen: setIsRendered,
   className,
   children
 }: Props) => {
+  /**
+   * Manage visibility independently of render status so that both the
+   * pre- and post-transition class names for animation are rendered.
+   */
+  const [isVisible, setIsVisible] = useState(false)
+
+  const closeModal = () => setIsVisible(false);
 
   const handleEscape = (e: KeyboardEvent) => {
     if (e.key === 'Escape') {
       // don't do anything else with the escape key
       e.stopPropagation()
-      setOpen(false);
+      closeModal();
     }
   };
 
   useEffect(() => {
-    if (open) {
+    setTimeout(() => setIsVisible(isRendered), 100)
+    if (isRendered) {
       document.addEventListener('keydown', handleEscape);
     }
     return () => {
       document.removeEventListener('keydown', handleEscape);
     };
-  }, [open]);
+  }, [isRendered]);
 
-  if (!open) return null;
+  useEffect(() => {
+    if (!isVisible) {
+      setTimeout(() => setIsRendered(false), 100)
+    }
+  }, [isVisible])
+
+  if (!isVisible && !isRendered) return null;
 
   return <div className='fixed z-10 inset-0 overflow-y-auto'>
-    <div className="fixed inset-0 transition-opacity" aria-hidden="true">
-      <div className="absolute inset-0 bg-zinc-900/75 flex flex-row justify-end" onClick={() => setOpen(false)}>
+    <div className={`fixed inset-0 transition-opacity duration-100 ${isVisible ? 'opacity-75' : 'opacity-0'}`} aria-hidden="true">
+      <div className="absolute inset-0 bg-zinc-900 flex flex-row justify-end" onClick={closeModal}>
       </div>
     </div>
     <div className={[
-      'absolute mx-auto top-1/8 left-1/4 w-1/2 p-3 rounded-lg',
+      `absolute mx-auto top-1/8 left-1/4 w-1/2 p-3 rounded-lg transition-all duration-100`,
+      isVisible ? 'opacity-100 -translate-y-4' : 'opacity-0 translate-y-0',
       className,
       ButtonBackgroundClassNames.secondary,
     ].join(" ")}>
       <Button
-        onClick={() => setOpen(false)}
+        onClick={closeModal}
         style="secondary"
-        className='right-0 top-0 -mr-11 absolute'
+        className='right-0 top-0 -mr-11 absolute pl-1 pt-1 pr-1 pb-1'
         small
       >
-        x
+        <Close />
       </Button>
       {children}
     </div>
