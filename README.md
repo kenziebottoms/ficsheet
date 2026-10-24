@@ -3,16 +3,19 @@
 A TypeScript/React app to track and visualize periodic writing goals and trends.
 
 ## Features:
-- **Just paste.** Paste your word count directly into the app and only your daily word count will be stored. None of your writing is stored anywhere!
-- **Fic analytics.** Drill down into your writing data and get colorful, dynamic charts and graphs for any year or month.
+- **Just paste.** Paste your writing directly into the app and only your daily word count will be stored. None of your writing is stored anywhere!
+- **Writing activity analytics.** Drill down into your writing data and get colorful, dynamic charts and graphs for any year or month.
+- **Make and track goals.** Set a start date, a target word count, and if you want, an end date. (And a color.) Keep an eye on the goals tab to see if you're on track. Can be project-specific or apply to any writing you log in that timeframe.
 - **Host your own data.** If you run the app locally, you get all the bells and whistles, but no data leaves your computer. Be sure to save backups in multiple places to prevent data loss.
   > Next up: web hosting for everyone! I'm in the process of tracking down and setting up privacy-first hosting.
 - **Export to clipboard.** Copy JSON backups, save them, edit them.
 - **Import from file.** Import saved backups. Great for if you need to move devices but want to keep that local-first experience.
 
-![A screenshot of an app dashboard in shades of pin, orange and purple. There are several stats badges, charts, and graphs showing writing activity broken down by fandom and fanfic.](thumb.png)
-![A screenshot of the form used to log daily word count.](thumb2.png)
-![A screenshot of the All Time tab, featuring all-time fandom, ship, and fic charts and line charts comparing each year's daily word count.](thumb3.png)
+![A screenshot of an app dashboard in shades of pink, orange and purple. There are several stats badges, charts, and graphs showing writing activity broken down by categories.](thumb_charts.png)
+![A screenshot of the fic manager.](thumb_fics.png)
+![A screenshot of the goal tracker.](thumb_goals.png)
+![A screenshot of the form used to log daily word count.](thumb_journal.png)
+![A screenshot of the All Time tab, featuring all-time fandom, ship, and fic charts and line charts comparing each year's daily word count.](thumb_all_time.png)
 
 ## Local development
 
