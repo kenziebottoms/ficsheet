@@ -1,4 +1,4 @@
-export const colors = ["#4f46e5", "#fb923c", "#f6339a", "#0ea5e9"];
+export const colors = ["#615fff", "#fb923c", "#f6339a", "#0ea5e9"];
 
 export const getDynamicColorPalette = (numberOfItems: number) => {
   if (numberOfItems > 6) {
@@ -10,14 +10,14 @@ export const getDynamicColorPalette = (numberOfItems: number) => {
       "#84cc16",
       "#059669",
       "#23b9ff",
-      "#4f46e5",
+      "#615fff",
       "#c026d3",
       "#fff",
       "#8c8c98",
       "#000",
     ];
   } else if (numberOfItems > 4) {
-    return ["#e11d48", "#f97316", "#facc15", "#22c55e", "#4f46e5", "#c026d3"];
+    return ["#e11d48", "#f97316", "#facc15", "#22c55e", "#615fff", "#c026d3"];
   }
   return colors.slice(0, numberOfItems);
 };

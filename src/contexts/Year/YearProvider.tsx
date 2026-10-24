@@ -42,7 +42,7 @@ export const YearProvider = ({ initialValue, children }: Props) => {
             className="w-8 h-8"
           />
           <div>
-            fic<span className='text-primary-highlight'>sheet</span>
+            fic<span className='text-primary-medium'>sheet</span>
           </div>
         </h3>
         <div className="w-full flex flex-row items-center gap-2 overflow-x-auto px-2">
