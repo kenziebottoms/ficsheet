@@ -45,8 +45,8 @@ const Journal = () => {
   }
 
   return <>
-    {editedEntry != null && <Modal
-      open
+    <Modal
+      open={editedEntry != null}
       setOpen={(newOpen: boolean) => {
         if (!newOpen) {
           setEditedEntry(null)
@@ -61,7 +61,7 @@ const Journal = () => {
           refreshData()
         }}
       />
-    </Modal>}
+    </Modal>
     <div className='space-y-2'>
       <div className='bg-zinc-900 p-2 rounded-md flex flex-row flex-wrap justify-end gap-4'>
         <Button
