@@ -1,6 +1,7 @@
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import Charts from '@/containers/Charts';
+import Footer from '@/components/Footer';
 
 function App() {
 
@@ -9,6 +10,7 @@ function App() {
     <ThemeProvider theme={createTheme({ palette: { mode: 'dark' } })}>
       <div className='w-100vw h-full flex flex-col lg:flex-row lg:flex-wrap'>
         <Charts />
+        <Footer />
       </div>
     </ThemeProvider>
   )
