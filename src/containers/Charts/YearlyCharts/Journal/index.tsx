@@ -1,7 +1,7 @@
 import { use, useEffect, useState } from "react";
-import { AutoDelete, AutoMode, ContentPasteGoOutlined, Delete } from "@mui/icons-material";
+import { AutoDelete, ContentPasteGoOutlined, Delete } from "@mui/icons-material";
 
-import { deleteEntriesByYear, exportData, importFicsForYear } from "@/api";
+import { deleteEntriesByYear, exportData } from "@/api";
 
 import { DataCacheContext } from "@/contexts/DataCache/DataCacheContext";
 import { YearContext } from "@/contexts/Year/YearContext";
@@ -71,15 +71,6 @@ const Journal = () => {
           small
         >
           {confirmDelete && <em>Please</em>} Delete {year}
-        </Button>
-
-        <Button
-          style="cautionary"
-          icon={AutoMode}
-          onClick={() => importFicsForYear(year).then(() => refreshData(year))}
-          small
-        >
-          Import Fics
         </Button>
 
         <div className='grow' />
