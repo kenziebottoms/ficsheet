@@ -140,7 +140,7 @@ const GoalTracker = memo(({
 
     <div className="whitespace-nowrap bg-white/50 rounded-full py-1 px-3 font-sans text-zinc-900">{goal.totalWordsWritten.toLocaleString()} / {goal.targetWordCount.toLocaleString()}</div>
 
-    {goal.ficId != null && <>
+    {goal.totalWordsWritten < goal.targetWordCount && goal.ficId != null && (goal.endDate != null && !isPast(goal.endDate)) && <>
       <Button
         onClick={() => setEntryFormValues({ ficId: goal.ficId })}
         icon={EditCalendar}
