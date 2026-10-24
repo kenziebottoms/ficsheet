@@ -50,14 +50,16 @@ const Modal = ({
 
   if (!isVisible && !isRendered) return null;
 
+  const isOpeningOrClosing = !isVisible || !isRendered
+
   return <div className='fixed z-10 inset-0 overflow-y-auto'>
-    <div className={`fixed inset-0 transition-opacity duration-100 ${isVisible ? 'opacity-75' : 'opacity-0'}`} aria-hidden="true">
+    <div className={`fixed inset-0 transition-opacity duration-100 ${isOpeningOrClosing ? 'opacity-0' : 'opacity-75'}`} aria-hidden="true">
       <div className="absolute inset-0 bg-zinc-900 flex flex-row justify-end" onClick={closeModal}>
       </div>
     </div>
     <div className={[
       `absolute mx-auto top-1/8 left-1/4 w-1/2 p-3 rounded-lg transition-all duration-100`,
-      isVisible ? 'opacity-100 -translate-y-4' : 'opacity-0 translate-y-0',
+      isOpeningOrClosing ? 'opacity-0 translate-y-0' : 'opacity-100 -translate-y-4',
       className,
       ButtonBackgroundClassNames.secondary,
     ].join(" ")}>
