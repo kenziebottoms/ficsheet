@@ -1,5 +1,6 @@
 import { use, useEffect, useState } from 'react'
 import { EditCalendar, OutlinedFlag } from '@mui/icons-material'
+import { isPast, parse } from 'date-fns'
 
 import { DataCacheContext } from '@/contexts/DataCache/DataCacheContext'
 import { YearContext } from '@/contexts/Year/YearContext'
@@ -8,6 +9,7 @@ import Button from '@/components/Button'
 import GoalForm from '@/components/GoalForm'
 import EntryForm from '@/components/EntryForm'
 import Modal from '@/components/Modal'
+import Toggle from '@/components/Toggle'
 
 import type { Goal, WithId, WordCountEntry } from '@/types'
 
@@ -22,6 +24,8 @@ const Goals = () => {
   const [entryFormValues, setEntryFormValues] = useState<Partial<WithId<WordCountEntry>> | null>(null)
   const [showGoalForm, setShowGoalForm] = useState(false)
   const [showEntryForm, setShowEntryForm] = useState(false)
+  const [hideCompleted, setHideCompleted] = useState(true)
+  const [hidePast, setHidePast] = useState(year === new Date().getFullYear())
 
   useEffect(() => {
     if (goalFormValues != null) {
@@ -36,28 +40,50 @@ const Goals = () => {
 
   if (year == null || !goals) return null;
 
+  const filteredGoals = goals
+    .filter(goal => !hideCompleted || goal.targetWordCount > goal.totalWordsWritten)
+    .filter(goal => !hidePast || goal.endDate == null || !isPast(parse(goal.endDate, 'yyyy-MM-dd', new Date())))
+
   return <div className='space-y-2'>
-    <div className='bg-zinc-900 p-2 rounded-md flex flex-row justify-end gap-4'>
-      <Button
-        style="transparent"
-        icon={EditCalendar}
-        onClick={() => setEntryFormValues({})}
-        small
-      >
-        Log Word Count
-      </Button>
-      <Button
-        style="transparent"
-        icon={OutlinedFlag}
-        onClick={() => setGoalFormValues({})}
-        small
-      >
-        Add Goal
-      </Button>
+    <div className='bg-zinc-900 p-2 rounded-md flex flex-row justify-between gap-4'>
+      <div />
+      <div className='flex flex-row gap-4'>
+        <Toggle
+          label="Hide completed"
+          value={hideCompleted}
+          onChange={setHideCompleted}
+          className="text-sm"
+        />
+        <Toggle
+          label="Hide ended"
+          value={hidePast}
+          onChange={setHidePast}
+          className="text-sm"
+        />
+      </div>
+
+      <div className='flex flex-row gap-2'>
+        <Button
+          style="transparent"
+          icon={EditCalendar}
+          onClick={() => setEntryFormValues({})}
+          small
+        >
+          Log Word Count
+        </Button>
+        <Button
+          style="transparent"
+          icon={OutlinedFlag}
+          onClick={() => setGoalFormValues({})}
+          small
+        >
+          Add Goal
+        </Button>
+      </div>
     </div>
 
     <div className='flex flex-col gap-2 bg-zinc-800 rounded-md p-2'>
-      {goals.map(goal => <GoalTracker
+      {filteredGoals.map(goal => <GoalTracker
         key={goal.id}
         goal={goal}
         setGoalFormValues={setGoalFormValues}
