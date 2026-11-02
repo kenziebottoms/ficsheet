@@ -11,16 +11,6 @@ export type DailyTotal = {
   daily_total: number;
 };
 
-export type EntryFormValues = {
-  id: number | null;
-  date: string;
-  fic: string | null;
-  ficId: number | null;
-  fandom: string | null;
-  ship: string | null;
-  count: number;
-};
-
 export const DaysOfWeek = [
   "Sunday",
   "Monday",
@@ -35,6 +25,16 @@ export type DayOfWeek = (typeof DaysOfWeek)[number];
 export type DropdownOption<T> = {
   value: T;
   label: string;
+};
+
+export type EntryFormValues = {
+  id: number | null;
+  date: string;
+  fic: string | null;
+  ficId: number | null;
+  fandom: string | null;
+  ship: string | null;
+  count: number;
 };
 
 export type Fandom = {
