@@ -2,7 +2,10 @@
  * Non-referential types, alphabetical
  */
 
-export type Bin = { x0: number; x1: number; count: number };
+export type Bin = {
+  bin: string;
+  count: number;
+};
 
 export type ContainerProps = {
   className?: string;

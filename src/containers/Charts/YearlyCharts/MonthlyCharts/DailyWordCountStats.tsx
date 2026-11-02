@@ -6,6 +6,7 @@ import Badge from '@/components/Badge'
 import { MonthContext } from '@/contexts/Month/MonthContext'
 
 import DailyWordCountScatterPlot from './DailyWordCountScatterPlot'
+import DailyWordCountHistogram from './DailyWordCountHistogram'
 
 const DailyWordCountStats = ({
   className = ''
@@ -14,7 +15,10 @@ const DailyWordCountStats = ({
 
   return (
     <div className={`${className} bg-zinc-900 p-2 rounded-md w-auto flex flex-row flex-wrap gap-2 grow`}>
+      <h3 className='w-full text-center text-primary-medium'>Daily Word Count</h3>
+
       <DailyWordCountScatterPlot className="grow" />
+
       <div className='flex flex-col sm:flex-row lg:flex-col flex-wrap gap-2 grow'>
         <Badge title="Maximum" style="primary" className='grow'>
           <div>
@@ -35,6 +39,8 @@ const DailyWordCountStats = ({
           </div>
         </Badge>
       </div>
+
+      <DailyWordCountHistogram className="grow" />
     </div>
   )
 }

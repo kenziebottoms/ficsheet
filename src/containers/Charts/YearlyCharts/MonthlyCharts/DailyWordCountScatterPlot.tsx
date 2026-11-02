@@ -29,7 +29,7 @@ const DailyWordCountScatterPlot = ({
   if (data.length === 0) return null;
 
   return (
-    <Widget title="Daily Word Count" className={`flex flex-col ${className}`}>
+    <Widget title="Scatter Plot" className={`flex flex-col ${className}`}>
       <Toggle
         label="Show 0"
         value={showZero}
@@ -39,7 +39,7 @@ const DailyWordCountScatterPlot = ({
       <ScatterChart
         series={[{ data, markerSize: 2 }]}
         colors={[colors[2]]}
-        width={600}
+        width={450}
         height={300}
       />
     </Widget>
