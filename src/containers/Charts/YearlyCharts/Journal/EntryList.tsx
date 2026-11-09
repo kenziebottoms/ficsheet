@@ -1,7 +1,7 @@
-import { memo, use } from 'react'
+import { memo, use, useState } from 'react'
 import { isFuture, lastDayOfMonth, lastDayOfYear } from "date-fns";
 import _ from 'lodash';
-import { Add } from '@mui/icons-material';
+import { Add, ArrowDropDown, ArrowDropUp } from '@mui/icons-material';
 
 import Button from '@/components/Button';
 import Table from '@/components/Table'
@@ -26,19 +26,31 @@ const EntryList = memo(({
   const { runningTotal } = use(DataCacheContext)
   const { month, filteredEntries, filteredDailyTotals } = use(MonthContext)
 
+  const [sortRecentFirst, setSortRecentFirst] = useState(false)
+
   if (year == null) return null;
 
   const dates = getDatesBetween(new Date(year, month ?? 0, 1), (month == null ? lastDayOfYear : lastDayOfMonth)(new Date(year, month ?? 0, 1)))
     .filter(date => !isFuture(date))
   const filteredDates = dates.filter(date => showEmpty || _.filter(filteredEntries, { date }).length > 0)
+  if (sortRecentFirst) {
+    filteredDates.reverse()
+  }
 
   return <Table
     headers={[
-      'Date',
+      <button type="button" className='cursor-pointer' aria-label='Sort by date'>
+        Date {sortRecentFirst ? <ArrowDropDown /> : <ArrowDropUp />}
+      </button>,
       'Entries',
       'Daily Total',
       'Running Total',
     ]}
+    onHeaderClick={(headerIndex) => {
+      if (headerIndex === 0) {
+        setSortRecentFirst(!sortRecentFirst)
+      }
+    }}
     data={filteredDates
       .map((date) => ({ date, entries: _.filter(filteredEntries, { date }) }))
       .map(({ date, entries }) => [
