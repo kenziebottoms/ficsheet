@@ -65,19 +65,20 @@ const Goals = () => {
       <div className='flex flex-row gap-2'>
         <Button
           style="transparent"
-          icon={EditCalendar}
-          onClick={() => setEntryFormValues({})}
-          small
-        >
-          Log Word Count
-        </Button>
-        <Button
-          style="transparent"
           icon={OutlinedFlag}
           onClick={() => setGoalFormValues({})}
           small
         >
           Add Goal
+        </Button>
+        <Button
+          style="primary"
+          icon={EditCalendar}
+          onClick={() => setEntryFormValues({})}
+          small
+          className='px-4'
+        >
+          Log Word Count
         </Button>
       </div>
     </div>

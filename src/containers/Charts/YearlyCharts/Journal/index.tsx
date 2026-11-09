@@ -1,5 +1,5 @@
 import { use, useEffect, useState } from "react";
-import { AutoDelete, ContentPasteGoOutlined, Delete } from "@mui/icons-material";
+import { AutoDelete, ContentPasteGoOutlined, Delete, EditCalendar } from "@mui/icons-material";
 
 import { deleteEntriesByYear, exportData } from "@/api";
 
@@ -80,14 +80,25 @@ const Journal = () => {
           className="text-sm"
         />
 
-        <Button
-          style="transparent"
-          icon={ContentPasteGoOutlined}
-          onClick={handleExport}
-          small
-        >
-          Export to Clipboard
-        </Button>
+        <div className="flex flex-row gap-2">
+          <Button
+            style="transparent"
+            icon={ContentPasteGoOutlined}
+            onClick={handleExport}
+            small
+          >
+            Export to Clipboard
+          </Button>
+          <Button
+            style="primary"
+            icon={EditCalendar}
+            onClick={() => setEditedEntry({})}
+            small
+            className='px-4 self-stretch'
+          >
+            Log Word Count
+          </Button>
+        </div>
       </div>
       <div className="overflow-auto w-full">
         <EntryList
