@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { format, parse } from 'date-fns';
 
 type Props = {
@@ -14,10 +14,6 @@ const DateInput = ({
   className = '',
 }: Props) => {
   const [value, setValue] = useState<Date | null>(defaultValue ?? new Date());
-
-  useEffect(() => {
-    setValue(defaultValue ?? null)
-  }, [defaultValue])
 
   return <div className={`flex flex-col ${className}`}>
     <label>
