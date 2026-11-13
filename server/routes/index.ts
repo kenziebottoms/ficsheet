@@ -10,6 +10,7 @@ import {
   select,
 } from "../db/queries.ts";
 
+import authRouter from "./auth.ts";
 import entriesRouter from "./entries.ts";
 import ficsRouter from "./fics.ts";
 import goalsRouter from "./goals.ts";
@@ -21,6 +22,8 @@ const apiRouter = express.Router({
 });
 
 /** Root URL: /api */
+
+apiRouter.use("/auth", authRouter);
 
 apiRouter.use("/entries", entriesRouter);
 
