@@ -143,8 +143,10 @@ export const updateGoal = (goal: WithId<Goal>): WithId<Goal> => {
   return goal;
 };
 
-export const getEntriesByYear = (year?: number | string) =>
-  selectEntries(`${getYearlyWhereClause(year)} ORDER BY date ASC`);
+export const getEntriesByYear = (
+  year?: number | string | null,
+  orderBy = "date ASC",
+) => selectEntries(`${getYearlyWhereClause(year)} ORDER BY ${orderBy};`);
 export const getFandomsByYear = (year?: number | string) =>
   select<Fandom>(`fic.fandom as name, min(date) as firstWritten, max(date) as lastWritten,
     SUM(count) as totalWordsWritten \

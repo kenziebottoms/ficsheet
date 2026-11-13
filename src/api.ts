@@ -75,8 +75,14 @@ export const importFic = (entryId: number) =>
 export const importFicsForYear = (year: number) =>
   post<never, WithId<WordCountEntry>[]>(`year/${year}/entries/importFics`);
 export const deleteEntry = (id: number) => restDelete(`entries/${id}`);
-export const selectAllWordCounts = (year?: number) =>
-  get<WithId<WordCountEntry>[]>(`${year ? `year/${year}/` : ""}entries`);
+export const selectAllWordCounts = (
+  year: number | null,
+  orderBy?: string,
+  dir?: string,
+) =>
+  get<WithId<WordCountEntry>[]>(
+    `${year ? `year/${year}/` : ""}entries${orderBy ? `?orderBy=${orderBy}${dir ? `&dir=${dir}` : ""}` : ""}`,
+  );
 export const selectDailyTotals = (year: number) =>
   get<DailyTotal[]>(`year/${year}/dailyTotals`).then((nonEmptyDailyTotals) =>
     getDatesBetween(new Date(year, 0, 1), new Date(year, 11, 31)).map(

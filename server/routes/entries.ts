@@ -89,9 +89,36 @@ entriesRouter.post("/form", (req, res) => {
 /**
  * GET /api/entries
  */
-entriesRouter.get("/", (_req, res) => {
+entriesRouter.get("/", (req, res) => {
   console.log("fetching word count entries");
-  const data = getEntriesByYear();
+  const { orderBy, dir } = req.query as Record<string, string>;
+  if (dir != null && !["ASC", "DESC"].includes(dir)) {
+    return res
+      .status(400)
+      .send("Please supply a valid sort direction (ASC|DESC).");
+  }
+  if (
+    orderBy != null &&
+    ![
+      "word_count.id",
+      "date",
+      "fic",
+      "fandom",
+      "ship",
+      "ficId",
+      "count",
+    ].includes(orderBy)
+  ) {
+    return res
+      .status(400)
+      .send(
+        "Please supply a valid order property (word_count.id|date|fic|fandom|ship|ficId|count).",
+      );
+  }
+  const data = getEntriesByYear(
+    null,
+    orderBy != null && dir != null ? `${orderBy} ${dir}` : undefined,
+  );
   return res.json(data).status(200);
 });
 
