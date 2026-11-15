@@ -13,6 +13,6 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/" element={<App />} />
         <Route path="/admin" element={<AdminPanel />} />
       </Routes>
-    </BrowserRouter>,
+    </BrowserRouter>
   </StrictMode>,
 )
