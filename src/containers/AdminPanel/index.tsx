@@ -11,8 +11,20 @@ import RecentGoals from "./RecentGoals"
 const AdminPanel = () => {
   const [activeTable, setActiveTable] = useState('word_count')
 
-  return <div className="bg-zinc-800 p-2">
-    <div className="rounded-xl bg-zinc-900 p-2 flex flex-row gap-2">
+  return <div className="bg-orange-800 p-2 space-y-2">
+    <div className="rounded-xl bg-zinc-900 p-2 flex flex-row items-center gap-2">
+      <span className="opacity-75">Inspect table:</span>
+      {[
+        'fic',
+        'goal',
+        'word_count',
+      ].map(table => <Button
+        style={activeTable === table ? 'secondary' : 'subtle'}
+        onClick={() => setActiveTable(table)}
+      >
+        {table}
+      </Button>)}
+      <div className="grow" />
       <Link to="/">
         <Button
           style="primary"
@@ -21,17 +33,13 @@ const AdminPanel = () => {
           Back to app
         </Button>
       </Link>
-      {['word_count', 'fic', 'goal'].map(table => <Button
-        style={activeTable === table ? 'secondary' : 'subtle'}
-        onClick={() => setActiveTable(table)}
-      >
-        {table}
-      </Button>)}
     </div>
-    {activeTable === 'word_count' && <RecentEntries />}
-    {activeTable === 'fic' && <RecentFics />}
-    {activeTable === 'goal' && <RecentGoals />}
-  </div >
+    <div className="bg-zinc-800 rounded-lg overflow-x-auto">
+      {activeTable === 'word_count' && <RecentEntries />}
+      {activeTable === 'fic' && <RecentFics />}
+      {activeTable === 'goal' && <RecentGoals />}
+    </div>
+  </div>
 }
 
 export default AdminPanel
