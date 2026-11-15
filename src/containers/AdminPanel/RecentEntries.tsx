@@ -13,7 +13,7 @@ const RecentEntries = () => {
   useEffect(() => {
     startTransition(async () => {
       const response = await selectAllWordCounts(null, 'word_count.id', "DESC");
-      setData(response.slice(0, 100).map(response => ([
+      setData(response.slice(0, 50).map(response => ([
         response.id,
         response.date,
         response.count,
