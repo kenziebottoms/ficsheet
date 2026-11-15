@@ -165,8 +165,8 @@ export const getGoalsByYear = (year?: number | string) => {
     `${getYearlyWhereClause(year, "goal.start_date")} OR (goal.start_date < '${validatedYear}-01-01' AND goal.end_date IS NULL)`,
   );
 };
-export const getAllFics = () =>
-  select<WithId<Fic>>(`* FROM fic ORDER BY id ASC`);
+export const getAllFics = (orderBy = "id", dir = "ASC") =>
+  select<WithId<Fic>>(`* FROM fic ORDER BY ${orderBy} ${dir};`);
 export const getAllShips = () =>
   select<Ship>(
     `ship as name, fic.fandom, SUM(count) as totalWordsWritten, min(date) as firstWritten, max(date) as lastWritten \

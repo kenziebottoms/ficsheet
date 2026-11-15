@@ -104,8 +104,14 @@ export const deleteGoal = (id: number) => restDelete(`goals/${id}`);
 export const selectShips = () => get<Ship[]>(`ships`);
 export const insertFics = (fics: Fic[]) => post<Fic[], Fic[]>(`fics`, fics);
 export const putFic = (fic: Fic) => put<Fic, Fic>(`fics/${fic.id}`, fic);
-export const selectFics = (year?: number) =>
-  get<WithId<Fic>[]>(`${year ? `year/${year}/` : ""}fics`);
+export const selectFics = (
+  year: number | null,
+  orderBy?: string,
+  dir?: string,
+) =>
+  get<WithId<Fic>[]>(
+    `${year ? `year/${year}/` : ""}fics${orderBy ? `?orderBy=${orderBy}&dir=${dir}` : ""}`,
+  );
 export const deleteFic = (id: number) => restDelete(`fics/${id}`);
 
 export const selectRunningTotal = (year?: number) =>
