@@ -22,7 +22,11 @@ export const selectEntries = (
   );
   return entries;
 };
-export const selectGoals = (whereClause?: string): WithId<Goal>[] => {
+export const selectGoals = (
+  whereClause = "",
+  orderBy = "goal.start_date",
+  dir = "ASC",
+): WithId<Goal>[] => {
   const goals = select<WithId<Goal>>(
     `goal.id, goal.name, goal.color, goal.fic_id AS ficId, \
     goal.fandom, goal.ship, goal_fic.name as fic, \
@@ -44,7 +48,8 @@ export const selectGoals = (whereClause?: string): WithId<Goal>[] => {
     ) \
     ${whereClause ?? ""} \
     GROUP BY goal.id \
-    HAVING (goal.end_date IS NOT NULL OR totalWordsWritten < targetWordCount);`,
+    HAVING (goal.end_date IS NOT NULL OR totalWordsWritten < targetWordCount )\
+    ORDER BY ${orderBy} ${dir};`,
   );
   return goals;
 };
@@ -159,10 +164,16 @@ export const getFicsByYear = (year?: number | string) =>
     FROM word_count JOIN fic ON word_count.fic_id = fic.id \
     ${getYearlyWhereClause(year)} GROUP BY fic.id ORDER BY name ASC`,
   );
-export const getGoalsByYear = (year?: number | string) => {
-  const validatedYear = validateYear(year);
+export const getGoalsByYear = (
+  year: number | string | null,
+  orderBy = "goal.start_date",
+  dir = "ASC",
+) => {
+  const validatedYear = validateYear(year || undefined);
   return selectGoals(
     `${getYearlyWhereClause(year, "goal.start_date")} OR (goal.start_date < '${validatedYear}-01-01' AND goal.end_date IS NULL)`,
+    orderBy,
+    dir,
   );
 };
 export const getAllFics = (orderBy = "id", dir = "ASC") =>

@@ -22,9 +22,33 @@ const goalsRouter = express.Router({
 /**
  * GET /api/goals
  */
-goalsRouter.get("/", (_req, res) => {
+goalsRouter.get("/", (req, res) => {
   console.log("fetching goals");
-  const data = getGoalsByYear();
+  const { orderBy, dir } = req.query as Record<string, string>;
+  if (dir != null && !["ASC", "DESC"].includes(dir)) {
+    return res
+      .status(400)
+      .send("Please supply a valid sort direction (ASC|DESC).");
+  }
+  if (
+    orderBy != null &&
+    ![
+      "goal.id",
+      "target_word_count",
+      "fandom",
+      "ship",
+      "goal.name",
+      "start_date",
+      "end_date",
+    ].includes(orderBy)
+  ) {
+    return res
+      .status(400)
+      .send(
+        "Please supply a valid order property (goal.id|target_word_count|fandom|ship|goal.name|start_date|end_date).",
+      );
+  }
+  const data = getGoalsByYear(null, orderBy, dir);
   return res.json(data).status(200);
 });
 

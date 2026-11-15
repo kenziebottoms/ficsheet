@@ -94,8 +94,14 @@ export const selectDailyTotals = (year: number) =>
   );
 export const selectFandoms = (year?: number) =>
   get<Fandom[]>(`${year ? `year/${year}/` : ""}fandoms`);
-export const selectGoals = (year?: number) =>
-  get<WithId<Goal>[]>(`${year ? `year/${year}/` : ""}goals`);
+export const selectGoals = (
+  year: number | null,
+  orderBy = "goal.start_date",
+  dir = "ASC",
+) =>
+  get<WithId<Goal>[]>(
+    `${year ? `year/${year}/` : ""}goals${orderBy ? `?orderBy=${orderBy}&dir=${dir}` : ""}`,
+  );
 export const insertGoal = (goal: Omit<Goal, "totalWordsWritten">) =>
   post<Omit<Goal, "totalWordsWritten">, WithId<Goal>>(`goals`, goal);
 export const putGoal = (goal: WithId<Goal>) =>
