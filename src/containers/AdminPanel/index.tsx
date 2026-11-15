@@ -6,6 +6,7 @@ import Button from '@/components/Button'
 
 import RecentEntries from "./RecentEntries"
 import RecentFics from "./RecentFics"
+import RecentGoals from "./RecentGoals"
 
 const AdminPanel = () => {
   const [activeTable, setActiveTable] = useState('word_count')
@@ -20,7 +21,7 @@ const AdminPanel = () => {
           Back to app
         </Button>
       </Link>
-      {['word_count', 'fic'].map(table => <Button
+      {['word_count', 'fic', 'goal'].map(table => <Button
         style={activeTable === table ? 'secondary' : 'subtle'}
         onClick={() => setActiveTable(table)}
       >
@@ -29,6 +30,7 @@ const AdminPanel = () => {
     </div>
     {activeTable === 'word_count' && <RecentEntries />}
     {activeTable === 'fic' && <RecentFics />}
+    {activeTable === 'goal' && <RecentGoals />}
   </div >
 }
 
