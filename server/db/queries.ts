@@ -167,7 +167,7 @@ export const getGoalsByYear = (
   year: number | string | null,
   orderClause = "ORDER BY goal.start_date ASC",
 ) => {
-  const validatedYear = validateYear(year || undefined);
+  const validatedYear = validateYear(year);
   return selectGoals(
     `${getYearlyWhereClause(year, "goal.start_date")} OR (goal.start_date < '${validatedYear}-01-01' AND goal.end_date IS NULL)`,
     orderClause,
@@ -231,7 +231,7 @@ export function select<TRow>(query: string): TRow[] {
 }
 
 /** Return a parsed valid positive integer or false given a string? number. */
-export const validateYear = (year?: string | number): number | false => {
+export const validateYear = (year?: string | number | null): number | false => {
   if (!year) return false;
   const parsedYear = parseInt(`${year}`, 10);
   // falsy check covers null, undefined, NaN, 0, negative values
