@@ -19,6 +19,8 @@ const AdminPanel = () => {
         'goal',
         'word_count',
       ].map(table => <Button
+        key={table}
+        small
         style={activeTable === table ? 'secondary' : 'subtle'}
         onClick={() => setActiveTable(table)}
       >
