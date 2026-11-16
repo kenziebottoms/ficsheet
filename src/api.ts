@@ -77,11 +77,10 @@ export const importFicsForYear = (year: number) =>
 export const deleteEntry = (id: number) => restDelete(`entries/${id}`);
 export const selectAllWordCounts = (
   year: number | null,
-  orderBy?: string,
-  dir?: string,
+  queryParams?: string,
 ) =>
   get<WithId<WordCountEntry>[]>(
-    `${year ? `year/${year}/` : ""}entries${orderBy ? `?orderBy=${orderBy}${dir ? `&dir=${dir}` : ""}` : ""}`,
+    `${year ? `year/${year}/` : ""}entries${queryParams}`,
   );
 export const selectDailyTotals = (year: number) =>
   get<DailyTotal[]>(`year/${year}/dailyTotals`).then((nonEmptyDailyTotals) =>
@@ -94,14 +93,8 @@ export const selectDailyTotals = (year: number) =>
   );
 export const selectFandoms = (year?: number) =>
   get<Fandom[]>(`${year ? `year/${year}/` : ""}fandoms`);
-export const selectGoals = (
-  year: number | null,
-  orderBy = "goal.start_date",
-  dir = "ASC",
-) =>
-  get<WithId<Goal>[]>(
-    `${year ? `year/${year}/` : ""}goals${orderBy ? `?orderBy=${orderBy}&dir=${dir}` : ""}`,
-  );
+export const selectGoals = (year: number | null, queryParams = "") =>
+  get<WithId<Goal>[]>(`${year ? `year/${year}/` : ""}goals${queryParams}`);
 export const insertGoal = (goal: Omit<Goal, "totalWordsWritten">) =>
   post<Omit<Goal, "totalWordsWritten">, WithId<Goal>>(`goals`, goal);
 export const putGoal = (goal: WithId<Goal>) =>
@@ -110,14 +103,8 @@ export const deleteGoal = (id: number) => restDelete(`goals/${id}`);
 export const selectShips = () => get<Ship[]>(`ships`);
 export const insertFics = (fics: Fic[]) => post<Fic[], Fic[]>(`fics`, fics);
 export const putFic = (fic: Fic) => put<Fic, Fic>(`fics/${fic.id}`, fic);
-export const selectFics = (
-  year: number | null,
-  orderBy?: string,
-  dir?: string,
-) =>
-  get<WithId<Fic>[]>(
-    `${year ? `year/${year}/` : ""}fics${orderBy ? `?orderBy=${orderBy}&dir=${dir}` : ""}`,
-  );
+export const selectFics = (year: number | null, queryParams = "") =>
+  get<WithId<Fic>[]>(`${year ? `year/${year}/` : ""}fics${queryParams}`);
 export const deleteFic = (id: number) => restDelete(`fics/${id}`);
 
 export const selectRunningTotal = (year?: number) =>

@@ -12,7 +12,7 @@ const RecentGoals = () => {
 
   useEffect(() => {
     startTransition(async () => {
-      const response = await selectGoals(null, 'goal.id', "DESC");
+      const response = await selectGoals(null, '?orderBy=goal.id&dir=DESC');
       setData(response.slice(0, 50).map(response => ([
         response.id,
         response.name,

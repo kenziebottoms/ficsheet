@@ -12,7 +12,7 @@ const RecentFics = () => {
 
   useEffect(() => {
     startTransition(async () => {
-      const response = await selectFics(null, 'fic.id', 'DESC');
+      const response = await selectFics(null, '?orderBy=fic.id&dir=DESC');
       setData(response.slice(0, 50).map(response => ([
         response.id,
         response.name,
