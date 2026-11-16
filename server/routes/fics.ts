@@ -30,7 +30,7 @@ ficsRouter.get("/", (req, res) => {
       .status(400)
       .send("Please supply a valid order property (fic.id|fandom|ship|name).");
   }
-  const data = getAllFics(orderBy, dir);
+  const data = getAllFics(`ORDER BY ${orderBy ?? "fic.id"} ${dir ?? "ASC"}`);
   return res.json(data).status(200);
 });
 

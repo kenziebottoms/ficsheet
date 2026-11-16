@@ -117,7 +117,7 @@ entriesRouter.get("/", (req, res) => {
   }
   const data = getEntriesByYear(
     null,
-    orderBy != null && dir != null ? `${orderBy} ${dir}` : undefined,
+    `ORDER BY ${orderBy ?? "date"} ${dir ?? "DESC"}`,
   );
   return res.json(data).status(200);
 });

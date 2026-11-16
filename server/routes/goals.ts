@@ -48,7 +48,10 @@ goalsRouter.get("/", (req, res) => {
         "Please supply a valid order property (goal.id|target_word_count|fandom|ship|goal.name|start_date|end_date).",
       );
   }
-  const data = getGoalsByYear(null, orderBy, dir);
+  const data = getGoalsByYear(
+    null,
+    `ORDER BY ${orderBy ?? "start_date"} ${dir ?? "DESC"}`,
+  );
   return res.json(data).status(200);
 });
 

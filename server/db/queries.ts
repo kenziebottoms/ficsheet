@@ -24,8 +24,7 @@ export const selectEntries = (
 };
 export const selectGoals = (
   whereClause = "",
-  orderBy = "goal.start_date",
-  dir = "ASC",
+  orderClause = "ORDER BY goal.start_date ASC",
 ): WithId<Goal>[] => {
   const goals = select<WithId<Goal>>(
     `goal.id, goal.name, goal.color, goal.fic_id AS ficId, \
@@ -46,10 +45,10 @@ export const selectGoals = (
       AND (goal.fandom IS NULL OR goal.fandom = word_counts.fandom) \
       AND (goal.ship IS NULL OR goal.ship = word_counts.ship) \
     ) \
-    ${whereClause ?? ""} \
+    ${whereClause} \
     GROUP BY goal.id \
     HAVING (goal.end_date IS NOT NULL OR totalWordsWritten < targetWordCount )\
-    ORDER BY ${orderBy} ${dir};`,
+    ${orderClause};`,
   );
   return goals;
 };
@@ -150,8 +149,8 @@ export const updateGoal = (goal: WithId<Goal>): WithId<Goal> => {
 
 export const getEntriesByYear = (
   year: number | string | null,
-  orderBy = "date ASC",
-) => selectEntries(`${getYearlyWhereClause(year)} ORDER BY ${orderBy};`);
+  orderClause = "ORDER BY date ASC",
+) => selectEntries(`${getYearlyWhereClause(year)} ${orderClause};`);
 export const getFandomsByYear = (year?: number | string) =>
   select<Fandom>(`fic.fandom as name, min(date) as firstWritten, max(date) as lastWritten,
     SUM(count) as totalWordsWritten \
@@ -166,18 +165,16 @@ export const getFicsByYear = (year?: number | string) =>
   );
 export const getGoalsByYear = (
   year: number | string | null,
-  orderBy = "goal.start_date",
-  dir = "ASC",
+  orderClause = "ORDER BY goal.start_date ASC",
 ) => {
   const validatedYear = validateYear(year || undefined);
   return selectGoals(
     `${getYearlyWhereClause(year, "goal.start_date")} OR (goal.start_date < '${validatedYear}-01-01' AND goal.end_date IS NULL)`,
-    orderBy,
-    dir,
+    orderClause,
   );
 };
-export const getAllFics = (orderBy = "id", dir = "ASC") =>
-  select<WithId<Fic>>(`* FROM fic ORDER BY ${orderBy} ${dir};`);
+export const getAllFics = (orderClause = `ORDER BY fic.id ASC`) =>
+  select<WithId<Fic>>(`* FROM fic ${orderClause};`);
 export const getAllShips = () =>
   select<Ship>(
     `ship as name, fic.fandom, SUM(count) as totalWordsWritten, min(date) as firstWritten, max(date) as lastWritten \
