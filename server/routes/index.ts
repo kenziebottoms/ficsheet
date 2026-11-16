@@ -29,7 +29,7 @@ apiRouter.use("/entries", entriesRouter);
  */
 apiRouter.get("/export", (_req, res) => {
   console.log(`fetching fics (all time)`);
-  const entries = getEntriesByYear(null);
+  const entries = getEntriesByYear();
   const fics = getFicsByYear();
   return res.json({ entries, fics }).status(200);
 });

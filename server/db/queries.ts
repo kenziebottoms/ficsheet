@@ -148,7 +148,7 @@ export const updateGoal = (goal: WithId<Goal>): WithId<Goal> => {
 };
 
 export const getEntriesByYear = (
-  year: number | string | null,
+  year?: number | string | null,
   orderClause = "ORDER BY date ASC",
 ) => selectEntries(`${getYearlyWhereClause(year)} ${orderClause};`);
 export const getFandomsByYear = (year?: number | string) =>
