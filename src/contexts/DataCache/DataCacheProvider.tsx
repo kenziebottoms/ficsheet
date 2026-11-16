@@ -28,7 +28,7 @@ export const DataCacheProvider = ({ year, children }: Props) => {
 
   const refreshData = (y?: number) => {
     selectFandoms(y || year).then(setFandoms)
-    selectFics().then(setAllFics)
+    selectFics(y || year).then(setAllFics)
     selectFics(y || year).then(setFics)
     selectGoals(y || year).then(setGoals)
     selectAllWordCounts(y || year).then(setDailyEntries)

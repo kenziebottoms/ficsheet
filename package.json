@@ -24,6 +24,7 @@
     "lodash": "^4.17.23",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "react-router": "^8.5.1",
     "tailwindcss": "^4.2.0",
     "ts-node": "^10.9.2"
   },

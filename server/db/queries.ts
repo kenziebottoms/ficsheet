@@ -22,7 +22,10 @@ export const selectEntries = (
   );
   return entries;
 };
-export const selectGoals = (whereClause?: string): WithId<Goal>[] => {
+export const selectGoals = (
+  whereClause = "",
+  orderClause = "ORDER BY goal.start_date ASC",
+): WithId<Goal>[] => {
   const goals = select<WithId<Goal>>(
     `goal.id, goal.name, goal.color, goal.fic_id AS ficId, \
     goal.fandom, goal.ship, goal_fic.name as fic, \
@@ -42,9 +45,10 @@ export const selectGoals = (whereClause?: string): WithId<Goal>[] => {
       AND (goal.fandom IS NULL OR goal.fandom = word_counts.fandom) \
       AND (goal.ship IS NULL OR goal.ship = word_counts.ship) \
     ) \
-    ${whereClause ?? ""} \
+    ${whereClause} \
     GROUP BY goal.id \
-    HAVING (goal.end_date IS NOT NULL OR totalWordsWritten < targetWordCount);`,
+    HAVING (goal.end_date IS NOT NULL OR totalWordsWritten < targetWordCount )\
+    ${orderClause};`,
   );
   return goals;
 };
@@ -143,8 +147,10 @@ export const updateGoal = (goal: WithId<Goal>): WithId<Goal> => {
   return goal;
 };
 
-export const getEntriesByYear = (year?: number | string) =>
-  selectEntries(`${getYearlyWhereClause(year)} ORDER BY date ASC`);
+export const getEntriesByYear = (
+  year?: number | string | null,
+  orderClause = "ORDER BY date ASC",
+) => selectEntries(`${getYearlyWhereClause(year)} ${orderClause};`);
 export const getFandomsByYear = (year?: number | string) =>
   select<Fandom>(`fic.fandom as name, min(date) as firstWritten, max(date) as lastWritten,
     SUM(count) as totalWordsWritten \
@@ -157,14 +163,18 @@ export const getFicsByYear = (year?: number | string) =>
     FROM word_count JOIN fic ON word_count.fic_id = fic.id \
     ${getYearlyWhereClause(year)} GROUP BY fic.id ORDER BY name ASC`,
   );
-export const getGoalsByYear = (year?: number | string) => {
+export const getGoalsByYear = (
+  year: number | string | null,
+  orderClause = "ORDER BY goal.start_date ASC",
+) => {
   const validatedYear = validateYear(year);
   return selectGoals(
     `${getYearlyWhereClause(year, "goal.start_date")} OR (goal.start_date < '${validatedYear}-01-01' AND goal.end_date IS NULL)`,
+    orderClause,
   );
 };
-export const getAllFics = () =>
-  select<WithId<Fic>>(`* FROM fic ORDER BY id ASC`);
+export const getAllFics = (orderClause = `ORDER BY fic.id ASC`) =>
+  select<WithId<Fic>>(`* FROM fic ${orderClause};`);
 export const getAllShips = () =>
   select<Ship>(
     `ship as name, fic.fandom, SUM(count) as totalWordsWritten, min(date) as firstWritten, max(date) as lastWritten \
@@ -221,7 +231,7 @@ export function select<TRow>(query: string): TRow[] {
 }
 
 /** Return a parsed valid positive integer or false given a string? number. */
-export const validateYear = (year?: string | number): number | false => {
+export const validateYear = (year?: string | number | null): number | false => {
   if (!year) return false;
   const parsedYear = parseInt(`${year}`, 10);
   // falsy check covers null, undefined, NaN, 0, negative values

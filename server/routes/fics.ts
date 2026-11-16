@@ -16,7 +16,21 @@ const ficsRouter = express.Router({
 
 ficsRouter.get("/", (req, res) => {
   console.log("Getting fics (all time)");
-  const data = getAllFics();
+  const { orderBy = "fic.id", dir = "ASC" } = req.query as Record<
+    string,
+    string
+  >;
+  if (!["ASC", "DESC"].includes(dir)) {
+    return res
+      .status(400)
+      .send("Please supply a valid sort direction (ASC|DESC).");
+  }
+  if (!["fic.id", "fandom", "ship", "name"].includes(orderBy)) {
+    return res
+      .status(400)
+      .send("Please supply a valid order property (fic.id|fandom|ship|name).");
+  }
+  const data = getAllFics(`ORDER BY ${orderBy} ${dir}`);
   return res.json(data).status(200);
 });
 

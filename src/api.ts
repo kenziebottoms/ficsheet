@@ -75,8 +75,10 @@ export const importFic = (entryId: number) =>
 export const importFicsForYear = (year: number) =>
   post<never, WithId<WordCountEntry>[]>(`year/${year}/entries/importFics`);
 export const deleteEntry = (id: number) => restDelete(`entries/${id}`);
-export const selectAllWordCounts = (year?: number) =>
-  get<WithId<WordCountEntry>[]>(`${year ? `year/${year}/` : ""}entries`);
+export const selectAllWordCounts = (year: number | null, queryParams = "") =>
+  get<WithId<WordCountEntry>[]>(
+    `${year ? `year/${year}/` : ""}entries${queryParams}`,
+  );
 export const selectDailyTotals = (year: number) =>
   get<DailyTotal[]>(`year/${year}/dailyTotals`).then((nonEmptyDailyTotals) =>
     getDatesBetween(new Date(year, 0, 1), new Date(year, 11, 31)).map(
@@ -88,8 +90,8 @@ export const selectDailyTotals = (year: number) =>
   );
 export const selectFandoms = (year?: number) =>
   get<Fandom[]>(`${year ? `year/${year}/` : ""}fandoms`);
-export const selectGoals = (year?: number) =>
-  get<WithId<Goal>[]>(`${year ? `year/${year}/` : ""}goals`);
+export const selectGoals = (year: number | null, queryParams = "") =>
+  get<WithId<Goal>[]>(`${year ? `year/${year}/` : ""}goals${queryParams}`);
 export const insertGoal = (goal: Omit<Goal, "totalWordsWritten">) =>
   post<Omit<Goal, "totalWordsWritten">, WithId<Goal>>(`goals`, goal);
 export const putGoal = (goal: WithId<Goal>) =>
@@ -98,8 +100,8 @@ export const deleteGoal = (id: number) => restDelete(`goals/${id}`);
 export const selectShips = () => get<Ship[]>(`ships`);
 export const insertFics = (fics: Fic[]) => post<Fic[], Fic[]>(`fics`, fics);
 export const putFic = (fic: Fic) => put<Fic, Fic>(`fics/${fic.id}`, fic);
-export const selectFics = (year?: number) =>
-  get<WithId<Fic>[]>(`${year ? `year/${year}/` : ""}fics`);
+export const selectFics = (year: number | null, queryParams = "") =>
+  get<WithId<Fic>[]>(`${year ? `year/${year}/` : ""}fics${queryParams}`);
 export const deleteFic = (id: number) => restDelete(`fics/${id}`);
 
 export const selectRunningTotal = (year?: number) =>
