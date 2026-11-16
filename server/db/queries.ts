@@ -149,7 +149,7 @@ export const updateGoal = (goal: WithId<Goal>): WithId<Goal> => {
 };
 
 export const getEntriesByYear = (
-  year?: number | string | null,
+  year: number | string | null,
   orderBy = "date ASC",
 ) => selectEntries(`${getYearlyWhereClause(year)} ORDER BY ${orderBy};`);
 export const getFandomsByYear = (year?: number | string) =>
