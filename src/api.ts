@@ -75,10 +75,7 @@ export const importFic = (entryId: number) =>
 export const importFicsForYear = (year: number) =>
   post<never, WithId<WordCountEntry>[]>(`year/${year}/entries/importFics`);
 export const deleteEntry = (id: number) => restDelete(`entries/${id}`);
-export const selectAllWordCounts = (
-  year: number | null,
-  queryParams?: string,
-) =>
+export const selectAllWordCounts = (year: number | null, queryParams = "") =>
   get<WithId<WordCountEntry>[]>(
     `${year ? `year/${year}/` : ""}entries${queryParams}`,
   );
