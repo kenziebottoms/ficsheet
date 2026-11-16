@@ -1,4 +1,6 @@
 import { useEffect, useState, type PropsWithChildren } from "react";
+import { Link } from "react-router";
+import { Troubleshoot } from "@mui/icons-material";
 
 import Logo from '@/assets/ficsheet.svg';
 
@@ -54,6 +56,16 @@ export const YearProvider = ({ initialValue, children }: Props) => {
           >
             {y ?? 'All Time'}
           </Button>)}
+          <Link to="/admin">
+            <Button
+              style="cautionary"
+              small
+              icon={Troubleshoot}
+              className="mb-2"
+            >
+              Admin
+            </Button>
+          </Link>
         </div>
       </div>
       <div className={`${ButtonBackgroundClassNames[year == null ? 'primary' : 'secondary']} -mt-3 pt-1 space-y-3`}>
