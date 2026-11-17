@@ -1,8 +1,6 @@
-import { use, useState } from 'react';
+import { useState } from 'react';
 import { LineChart, } from '@mui/x-charts'
 import { format, isLeapYear, isPast, isValid, parse } from 'date-fns';
-
-import { YearContext } from '@/contexts/Year/YearContext';
 
 import Toggle from '@/components/Toggle';
 import Widget from '@/components/Widget';
@@ -21,12 +19,13 @@ type RunningTotalMap = {
 };
 
 const YearlyRunningWordCountLineChart = ({
+  availableYears,
   runningTotals
 }: {
+  availableYears: number[];
   runningTotals?: RunningTotal[][];
 }) => {
   const thisYear = new Date().getFullYear();
-  const { availableYears } = use(YearContext)
   const [yearToDate, setYearToDate] = useState<boolean>(true)
 
   if (runningTotals == null || runningTotals.length < 1) return null
@@ -41,7 +40,7 @@ const YearlyRunningWordCountLineChart = ({
   dates.forEach(({ date }, dateIndex) => {
     availableYears.filter(y => y != null).forEach((year, yearIndex) => {
       let yesterdaysTotal = 0;
-      const dailyTotal = runningTotals[yearIndex].find(({ date: d }) => d.substring(5) === date.substring(5))
+      const dailyTotal = (runningTotals[yearIndex] || []).find(({ date: d }) => d.substring(5) === date.substring(5))
       if (dateIndex > 0) {
         yesterdaysTotal = dates[dateIndex - 1][`${year}`] ?? 0;
       }

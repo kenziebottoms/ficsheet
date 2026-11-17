@@ -1,11 +1,8 @@
-import { use, useEffect, useState, type SubmitEventHandler } from 'react';
+import { useEffect, useState, type SubmitEventHandler } from 'react';
 import { parse } from 'date-fns';
 import { DeleteForever, Flag } from '@mui/icons-material';
 
 import { deleteGoal, insertGoal, putGoal, } from '@/api';
-
-import { DataCacheContext } from '@/contexts/DataCache/DataCacheContext';
-import { YearContext } from '@/contexts/Year/YearContext';
 
 import type {
   Goal,
@@ -29,23 +26,9 @@ type Props = {
 const GoalForm = ({
   className = '',
   values,
-  onCompleted: _onCompleted = () => { },
+  onCompleted = () => { },
 }: Props) => {
-  const { year, refreshYears } = use(YearContext)
-  const { refreshData } = use(DataCacheContext)
-
   const [goalType, setGoalType] = useState<GoalType>('overall')
-
-  const onCompleted = (response: WithId<Goal> | null) => {
-    if (response != null) {
-      const yearOfLastEntry = parseInt(response.startDate.slice(0, 4), 10)
-      if (yearOfLastEntry !== year) {
-        refreshData(yearOfLastEntry)
-        refreshYears()
-      }
-    }
-    _onCompleted(response)
-  }
 
   const handleSubmit: SubmitEventHandler<HTMLFormElement> = e => {
     // Prevent the browser from reloading the page

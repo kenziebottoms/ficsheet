@@ -5,8 +5,8 @@ import { Gauge, gaugeClasses } from "@mui/x-charts";
 
 import Button from "@/components/Button";
 
+import { DataCacheContext } from "@/contexts/DataCache/DataCacheContext";
 import { MonthContext } from "@/contexts/Month/MonthContext";
-import { YearContext } from "@/contexts/Year/YearContext";
 
 import type { Goal, GoalColor, WithId, WordCountEntry } from "@/types";
 
@@ -53,14 +53,10 @@ const GoalTracker = memo(({
   setEntryFormValues: (entryFormValues: Partial<WithId<WordCountEntry>> | null) => void;
 }) => {
   const { month } = use(MonthContext)
-  const { year } = use(YearContext)
+  const { year } = use(DataCacheContext)
 
   const parsedStartDate = parse(goal.startDate, 'yyyy-MM-dd', new Date())
   const parsedEndDate: Date | null = goal.endDate == null ? null : parse(goal.endDate, 'yyyy-MM-dd', new Date())
-
-  if (year == null) {
-    return null;
-  }
 
   const goalEndsBeforeFirstOfMonth = month != null && parsedEndDate != null && isBefore(parsedEndDate, new Date(year, month, 1))
   const goalStartsAfterLastOfMonth = month != null && parsedEndDate != null && isBefore(lastDayOfMonth(new Date(year, month, 1)), parsedStartDate)

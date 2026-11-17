@@ -6,17 +6,16 @@ import Timeline from '@/components/Timeline';
 import Widget from '@/components/Widget'
 
 import { DataCacheContext } from '@/contexts/DataCache/DataCacheContext';
-import { YearContext } from '@/contexts/Year/YearContext';
 
 import { MonthNames, type TimelineData } from '@/types';
 
 const FandomTimelineBarChart = () => {
-  const { year } = use(YearContext)
-  const { fandoms } = use(DataCacheContext)
+  const { fandoms, year } = use(DataCacheContext)
 
   const earliestDate = _.minBy(fandoms, 'firstWritten')?.firstWritten;
   const latestDate = _.maxBy(fandoms, 'lastWritten')?.lastWritten;
-  if (year == null || earliestDate == null || latestDate == null) return null;
+
+  if (earliestDate == null || latestDate == null) return null;
 
   const dayBeforeEarliestDate = parse(`${year - 1}-12-01`, 'yyyy-MM-dd', new Date())
   const fandomTemperatures: TimelineData[] = _.orderBy(fandoms, 'firstWritten').map((fandom) => {

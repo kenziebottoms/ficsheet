@@ -4,7 +4,6 @@ import { AutoDelete, ContentPasteGoOutlined, Delete, EditCalendar } from "@mui/i
 import { deleteEntriesByYear, exportData } from "@/api";
 
 import { DataCacheContext } from "@/contexts/DataCache/DataCacheContext";
-import { YearContext } from "@/contexts/Year/YearContext";
 
 import Button from "@/components/Button";
 import EntryForm from "@/components/EntryForm";
@@ -18,8 +17,7 @@ import { copyPrettyJson } from '@/utils';
 import EntryList from "./EntryList";
 
 const Journal = () => {
-  const { year } = use(YearContext)
-  const { refreshData } = use(DataCacheContext)
+  const { refreshData, year } = use(DataCacheContext)
 
   const [editedEntry, setEditedEntry] = useState<Partial<WordCountEntry> | null>(null)
   const [showEmpty, setShowEmpty] = useState<boolean>(false)
@@ -33,8 +31,6 @@ const Journal = () => {
       }, 5000)
     }
   }, [confirmDelete])
-
-  if (year == null) return null;
 
   const handleExport = () => {
     exportData(year).then(copyPrettyJson)
