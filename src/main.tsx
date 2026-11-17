@@ -14,7 +14,7 @@ createRoot(document.getElementById('root')!).render(
       <BrowserRouter>
         <Routes>
           <Route path="admin" element={<AdminPanel />} />
-          <Route index path=":year?" element={<App />} />
+          <Route index path="*" element={<App />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>

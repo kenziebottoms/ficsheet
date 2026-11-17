@@ -19,7 +19,7 @@ const Charts = ({
 
   useEffect(() => {
     if (!year) {
-      navigate(`/${new Date().getFullYear()}`)
+      navigate(`/year/${new Date().getFullYear()}`)
     }
   }, [year])
 
