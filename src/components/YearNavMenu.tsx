@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { NavLink, useNavigate, useParams } from 'react-router'
-import { ArrowDropDownSharp, Remove } from '@mui/icons-material';
+import { ArrowDropDownSharp } from '@mui/icons-material';
 
 import Button from '@/components/Button'
 
@@ -8,6 +8,8 @@ const YearNavMenu = ({ availableYears }: { availableYears: number[] }) => {
   const [showYears, setShowYears] = useState(false)
   const navigate = useNavigate()
   const { year } = useParams()
+  const thisYear = new Date().getFullYear()
+  const yearIsHistorical = (year != null && parseInt(year, 10) < thisYear)
 
   useEffect(() => {
     setShowYears(false)
@@ -25,18 +27,29 @@ const YearNavMenu = ({ availableYears }: { availableYears: number[] }) => {
       )}
     </NavLink>
 
+    <NavLink to={`/year/${thisYear}`} className="block">
+      {({ isActive }) => (
+        <Button
+          style={isActive ? 'secondary' : 'subtle'}
+          className={`${isActive ? 'rounded-b-none py-2' : 'mb-2'} whitespace-nowrap transition-all duration-100 capitalize`}
+        >
+          {thisYear}
+        </Button>
+      )}
+    </NavLink>
+
     <div>
       <Button
-        icon={showYears ? Remove : ArrowDropDownSharp}
-        className={`text-white whitespace-nowrap ${year ? 'rounded-b-none py-2' : 'mb-2'} w-30`}
-        style="secondary"
-        onClick={() => year ? setShowYears(!showYears) : navigate(`/year/${new Date().getFullYear()}`)}
+        icon={yearIsHistorical ? ArrowDropDownSharp : undefined}
+        className={`text-white whitespace-nowrap ${yearIsHistorical ? 'rounded-b-none py-2' : 'mb-2'} w-30`}
+        style={yearIsHistorical ? "secondary" : "subtle"}
+        onClick={() => yearIsHistorical ? setShowYears(!showYears) : navigate(`/year/${thisYear - 1}`)}
       >
-        {year || new Date().getFullYear()}
+        {yearIsHistorical ? year : 'History'}
       </Button>
 
       <div className={`block p-2 bg-pink-700 rounded-lg shadow-lg/60 absolute top-8 w-30 max-h-80 overflow-y-auto space-y-1 transition-all duration-100 ${showYears ? 'opacity-100 translate-y-4 z-10' : 'opacity-0 translate-y-0 -z-10'}`}>
-        {availableYears.map(y => <NavLink
+        {availableYears.slice(1).map(y => <NavLink
           key={y}
           to={`/year/${y}`}
           className="block w-full"
