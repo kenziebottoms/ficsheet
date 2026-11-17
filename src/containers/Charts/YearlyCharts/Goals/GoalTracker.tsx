@@ -5,12 +5,12 @@ import { Gauge, gaugeClasses } from "@mui/x-charts";
 
 import Button from "@/components/Button";
 
+import { DataCacheContext } from "@/contexts/DataCache/DataCacheContext";
 import { MonthContext } from "@/contexts/Month/MonthContext";
 
 import type { Goal, GoalColor, WithId, WordCountEntry } from "@/types";
 
 import { reformatDate } from "@/utils";
-import { DataCacheContext } from "@/contexts/DataCache/DataCacheContext";
 
 const bgClassNames: Record<GoalColor, string> = {
   'rainbow': "bg-linear-45/shorter from-indigo-600 via-orange-400 to-indigo-500 from-40% via-80% to-85%",
@@ -57,10 +57,6 @@ const GoalTracker = memo(({
 
   const parsedStartDate = parse(goal.startDate, 'yyyy-MM-dd', new Date())
   const parsedEndDate: Date | null = goal.endDate == null ? null : parse(goal.endDate, 'yyyy-MM-dd', new Date())
-
-  if (year == null) {
-    return null;
-  }
 
   const goalEndsBeforeFirstOfMonth = month != null && parsedEndDate != null && isBefore(parsedEndDate, new Date(year, month, 1))
   const goalStartsAfterLastOfMonth = month != null && parsedEndDate != null && isBefore(lastDayOfMonth(new Date(year, month, 1)), parsedStartDate)
