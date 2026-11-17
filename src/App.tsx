@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
-import { Route, Routes } from 'react-router';
+import { NavLink, Route, Routes } from 'react-router';
+import { Troubleshoot } from '@mui/icons-material';
 
 import { selectAvailableYears } from '@/api'
 
 import AllTime from '@/containers/AllTime';
 import Charts from '@/containers/Charts';
 
+import Button from '@/components/Button';
 import Footer from '@/components/Footer';
 import Logo from '@/components/Logo';
 import YearNavMenu from '@/components/YearNavMenu';
@@ -24,6 +26,16 @@ function App() {
       <div className="w-full flex flex-col md:flex-row items-center pt-2">
         <Logo />
         <YearNavMenu availableYears={availableYears} />
+        <NavLink to="/admin">
+          <Button
+            style="cautionary"
+            small
+            icon={Troubleshoot}
+            className="mb-2"
+          >
+            Admin
+          </Button>
+        </NavLink>
       </div>
       <Routes>
         <Route path="all-time" element={<AllTime availableYears={availableYears} />} />
