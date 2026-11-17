@@ -14,9 +14,9 @@ const YearNavMenu = ({ availableYears }: { availableYears: number[] }) => {
         </Button>)}
     </NavLink>
 
-    {availableYears.map(y => <NavLink
-      key={y}
-      to={`/${y}`}
+    {availableYears.map(year => <NavLink
+      key={year}
+      to={`/${year}`}
       className="block"
     >
       {({ isActive }) => (
@@ -24,7 +24,7 @@ const YearNavMenu = ({ availableYears }: { availableYears: number[] }) => {
           style={isActive ? 'secondary' : 'subtle'}
           className={`${isActive ? 'rounded-b-none py-2' : 'mb-2'} whitespace-nowrap transition-all duration-100 capitalize`}
         >
-          {y}
+          {year}
         </Button>
       )}
     </NavLink>)}
