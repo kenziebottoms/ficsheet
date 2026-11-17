@@ -2,11 +2,11 @@ import { useEffect, useState, type PropsWithChildren } from "react";
 import { Link } from "react-router";
 import { Troubleshoot } from "@mui/icons-material";
 
-import Logo from '@/assets/ficsheet.svg';
 
 import { selectAvailableYears } from "@/api";
 
 import Button from "@/components/Button";
+import Logo from '@/components/Logo';
 import { ButtonBackgroundClassNames } from "@/components/constants";
 
 import AllTime from "@/containers/AllTime";
@@ -37,16 +37,7 @@ export const YearProvider = ({ initialValue, children }: Props) => {
       refreshYears,
     }}>
       <div className="w-full flex flex-col md:flex-row items-center pt-2">
-        <h3 className='shrink-0 text-xs md:mb-2 md:px-3 flex flex-row items-center gap-2'>
-          <img
-            src={Logo}
-            alt="FicSheet logo"
-            className="w-8 h-8"
-          />
-          <div>
-            fic<span className='text-primary-medium'>sheet</span>
-          </div>
-        </h3>
+        <Logo />
         <div className="w-full flex flex-row items-center gap-2 overflow-x-auto px-2">
           {availableYears.map(y => <Button
             key={y}
