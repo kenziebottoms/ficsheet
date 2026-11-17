@@ -1,12 +1,11 @@
-import { use, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ContentPaste } from '@mui/icons-material'
 
 import { exportData, selectFandoms, selectRunningTotal, selectShips } from '@/api'
 
 import Badge from '@/components/Badge'
 import Button from '@/components/Button'
-
-import { YearContext } from '@/contexts/Year/YearContext'
+import { ButtonBackgroundClassNames } from '@/components/constants'
 
 import type { Fandom, RunningTotal, Ship } from '@/types'
 
@@ -18,9 +17,7 @@ import ShipLeaderboard from './ShipLeaderboard'
 import LifetimeWordCountLineChart from './LifetimeWordCountLineChart'
 import YearlyRunningWordCountLineChart from './YearlyRunningWordCountLineChart'
 
-const AllTime = () => {
-  const { availableYears } = use(YearContext)
-
+const AllTime = ({ availableYears }: { availableYears: number[] }) => {
   const [runningTotals, setRunningTotals] = useState<RunningTotal[][]>()
   const [lifetimeRunningTotal, setLifetimeRunningTotal] = useState<RunningTotal[]>([])
   const [fandoms, setFandoms] = useState<Fandom[]>([])
@@ -40,40 +37,45 @@ const AllTime = () => {
 
   if (runningTotals == null || lifetimeRunningTotal.length === 0) return null;
 
-  return <div className='p-3 bg-zinc-900 flex flex-col gap-3 items-center'>
-    <div className='flex flex-row gap-3'>
-      <Badge title='Total Words Written' style="primary">
-        {lifetimeRunningTotal[lifetimeRunningTotal.length - 1].running_total.toLocaleString()}
-      </Badge>
-      <Badge
-        title="Total Fandoms"
-        style="secondary"
-      >
-        {fandoms.length}
-      </Badge>
-      <Badge
-        title="Total Ships"
-        style="subtle"
-      >
-        {ships.length}
-      </Badge>
-      <Button
-        style="transparent"
-        icon={ContentPaste}
-        onClick={() => exportData().then(copyPrettyJson)}
-        className='self-start'
-      >
-        Export
-      </Button>
+  return <div className={`${ButtonBackgroundClassNames.primary} pt-1`}>
+    <div className='p-3 bg-zinc-900 flex flex-col gap-3 items-center'>
+      <div className='flex flex-row gap-3'>
+        <Badge title='Total Words Written' style="primary">
+          {lifetimeRunningTotal[lifetimeRunningTotal.length - 1].running_total.toLocaleString()}
+        </Badge>
+        <Badge
+          title="Total Fandoms"
+          style="secondary"
+        >
+          {fandoms.length}
+        </Badge>
+        <Badge
+          title="Total Ships"
+          style="subtle"
+        >
+          {ships.length}
+        </Badge>
+        <Button
+          style="transparent"
+          icon={ContentPaste}
+          onClick={() => exportData().then(copyPrettyJson)}
+          className='self-start'
+        >
+          Export
+        </Button>
+      </div>
+
+      <FandomLeaderboard fandoms={fandoms} />
+      <ShipLeaderboard ships={ships} />
+
+      <YearlyRunningWordCountLineChart
+        availableYears={availableYears}
+        runningTotals={runningTotals}
+      />
+      <AllTimeFandomPieChart fandoms={fandoms} />
+      <LifetimeWordCountLineChart lifetimeRunningTotal={lifetimeRunningTotal} />
     </div>
-
-    <FandomLeaderboard fandoms={fandoms} />
-    <ShipLeaderboard ships={ships} />
-
-    <YearlyRunningWordCountLineChart runningTotals={runningTotals} />
-    <AllTimeFandomPieChart fandoms={fandoms} />
-    <LifetimeWordCountLineChart lifetimeRunningTotal={lifetimeRunningTotal} />
-  </div >
+  </div>
 }
 
 export default AllTime

@@ -7,7 +7,6 @@ import Button from '@/components/Button';
 import Pill from '@/components/Pill';
 
 import { DataCacheContext } from '@/contexts/DataCache/DataCacheContext';
-import { YearContext } from '@/contexts/Year/YearContext';
 
 import type { WithId, WordCountEntry } from '@/types';
 
@@ -18,8 +17,7 @@ const EntryButton = ({
   entry: WithId<WordCountEntry>;
   onClick: (entry: WithId<WordCountEntry>) => void;
 }) => {
-  const { refreshData } = use(DataCacheContext)
-  const { year } = use(YearContext)
+  const { refreshData, year } = use(DataCacheContext)
 
   if (year == null) return null;
 

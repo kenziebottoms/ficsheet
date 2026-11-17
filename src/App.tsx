@@ -1,18 +1,36 @@
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useEffect, useState } from 'react';
+import { Route, Routes } from 'react-router';
 
+import { selectAvailableYears } from '@/api'
+
+import AllTime from '@/containers/AllTime';
 import Charts from '@/containers/Charts';
+
 import Footer from '@/components/Footer';
+import Logo from '@/components/Logo';
+import YearNavMenu from '@/components/YearNavMenu';
 
 function App() {
+  const [availableYears, setAvailableYears] = useState([new Date().getFullYear()])
+
+  const refreshYears = () => selectAvailableYears().then(setAvailableYears)
+
+  useEffect(() => {
+    refreshYears()
+  }, [])
 
   return (
-    // For rendering MUI charts in dark mode
-    <ThemeProvider theme={createTheme({ palette: { mode: 'dark' } })}>
-      <div className='w-100vw h-full flex flex-col lg:flex-row lg:flex-wrap'>
-        <Charts />
-        <Footer />
+    <div className='w-100vw h-full'>
+      <div className="w-full flex flex-col md:flex-row items-center pt-2">
+        <Logo />
+        <YearNavMenu availableYears={availableYears} />
       </div>
-    </ThemeProvider>
+      <Routes>
+        <Route path="all-time" element={<AllTime availableYears={availableYears} />} />
+        <Route index path=":year?" element={<Charts />} />
+      </Routes>
+      <Footer />
+    </div>
   )
 }
 

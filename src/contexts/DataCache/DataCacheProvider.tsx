@@ -57,6 +57,7 @@ export const DataCacheProvider = ({ year, children }: Props) => {
 
   return (
     <DataCacheContext.Provider value={{
+      year,
       dailyEntries,
       dailyTotals,
       fandoms,

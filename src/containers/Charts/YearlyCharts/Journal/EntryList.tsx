@@ -8,7 +8,6 @@ import Table from '@/components/Table'
 
 import { DataCacheContext } from '@/contexts/DataCache/DataCacheContext';
 import { MonthContext } from '@/contexts/Month/MonthContext'
-import { YearContext } from '@/contexts/Year/YearContext'
 
 import type { WordCountEntry } from '@/types';
 import { getDatesBetween } from '@/utils'
@@ -22,8 +21,7 @@ const EntryList = memo(({
   showEmpty: boolean;
   setEditedEntry: (entry: Partial<WordCountEntry>) => void;
 }) => {
-  const { year } = use(YearContext)
-  const { runningTotal } = use(DataCacheContext)
+  const { runningTotal, year } = use(DataCacheContext)
   const { month, filteredEntries, filteredDailyTotals } = use(MonthContext)
 
   const [sortRecentFirst, setSortRecentFirst] = useState(false)

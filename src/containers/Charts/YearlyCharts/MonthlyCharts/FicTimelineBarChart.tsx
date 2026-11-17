@@ -6,13 +6,11 @@ import Timeline from '@/components/Timeline';
 import Widget from '@/components/Widget'
 
 import { DataCacheContext } from '@/contexts/DataCache/DataCacheContext';
-import { YearContext } from '@/contexts/Year/YearContext';
 
 import { MonthNames, type TimelineData } from '@/types';
 
 const FicTimelineBarChart = () => {
-  const { year } = use(YearContext)
-  const { fics } = use(DataCacheContext)
+  const { fics, year } = use(DataCacheContext)
 
   const earliestDate = _.minBy(fics, 'firstWritten')?.firstWritten;
   const latestDate = _.maxBy(fics, 'lastWritten')?.lastWritten;
@@ -23,8 +21,8 @@ const FicTimelineBarChart = () => {
     return {
       label: fic.name,
       range: [[
-        differenceInMonths(parse(fic.firstWritten, 'yyyy-MM-dd', new Date()), dayBeforeEarliestDate),
-        differenceInMonths(parse(fic.lastWritten, 'yyyy-MM-dd', new Date()), dayBeforeEarliestDate),
+        differenceInMonths(parse(fic.firstWritten || '', 'yyyy-MM-dd', new Date()), dayBeforeEarliestDate),
+        differenceInMonths(parse(fic.lastWritten || '', 'yyyy-MM-dd', new Date()), dayBeforeEarliestDate),
       ]]
     }
   })

@@ -54,8 +54,8 @@ export type Fic = {
   name: string;
   fandom: string;
   ship: string | null;
-  firstWritten: string;
-  lastWritten: string;
+  firstWritten?: string;
+  lastWritten?: string;
 };
 
 export type GoalColor =
@@ -135,18 +135,12 @@ export type WordCountEntry = {
   count: number;
 };
 
-export type YearContextValue = {
-  year: number | null;
-  setYear: (newYear: number | null) => void;
-  availableYears: (number | null)[];
-  refreshYears: () => void;
-};
-
 /**
  * Referential types
  */
 
 export type DataCache = {
+  year: number;
   dailyEntries: WithId<WordCountEntry>[];
   dailyTotals: DailyTotal[];
   fandoms: Fandom[];
