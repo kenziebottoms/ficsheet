@@ -14,7 +14,8 @@ const FandomTimelineBarChart = () => {
 
   const earliestDate = _.minBy(fandoms, 'firstWritten')?.firstWritten;
   const latestDate = _.maxBy(fandoms, 'lastWritten')?.lastWritten;
-  if (year == null || earliestDate == null || latestDate == null) return null;
+
+  if (earliestDate == null || latestDate == null) return null;
 
   const dayBeforeEarliestDate = parse(`${year - 1}-12-01`, 'yyyy-MM-dd', new Date())
   const fandomTemperatures: TimelineData[] = _.orderBy(fandoms, 'firstWritten').map((fandom) => {

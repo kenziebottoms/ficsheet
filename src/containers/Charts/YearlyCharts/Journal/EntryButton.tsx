@@ -19,8 +19,6 @@ const EntryButton = ({
 }) => {
   const { refreshData, year } = use(DataCacheContext)
 
-  if (year == null) return null;
-
   return <div className="flex flex-row items-stretch">
     <Pill style="primary" className="rounded-r-none">
       {entry.fic}

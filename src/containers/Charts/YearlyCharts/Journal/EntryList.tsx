@@ -26,8 +26,6 @@ const EntryList = memo(({
 
   const [sortRecentFirst, setSortRecentFirst] = useState(false)
 
-  if (year == null) return null;
-
   const dates = getDatesBetween(new Date(year, month ?? 0, 1), (month == null ? lastDayOfYear : lastDayOfMonth)(new Date(year, month ?? 0, 1)))
     .filter(date => !isFuture(date))
   const filteredDates = dates.filter(date => showEmpty || _.filter(filteredEntries, { date }).length > 0)

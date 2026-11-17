@@ -32,8 +32,6 @@ const Journal = () => {
     }
   }, [confirmDelete])
 
-  if (year == null) return null;
-
   const handleExport = () => {
     exportData(year).then(copyPrettyJson)
   }

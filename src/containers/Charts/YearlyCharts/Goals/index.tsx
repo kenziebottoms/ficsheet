@@ -36,9 +36,7 @@ const Goals = () => {
     }
   }, [entryFormValues])
 
-  if (year == null || !goals) return null;
-
-  const filteredGoals = goals
+  const filteredGoals = (goals || [])
     .filter(goal => !hideCompleted || goal.targetWordCount > goal.totalWordsWritten)
     .filter(goal => !hidePast || goal.endDate == null || !isPast(parse(goal.endDate, 'yyyy-MM-dd', new Date())))
 

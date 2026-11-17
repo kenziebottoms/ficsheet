@@ -28,18 +28,12 @@ export const MonthProvider = ({ initialValue, children }: Props) => {
   }, [year])
 
   useEffect(() => {
-    if (year != null) {
-      setFilteredEntries(filterByYearAndMonth(dailyEntries, year, month, true))
-    }
+    setFilteredEntries(filterByYearAndMonth(dailyEntries, year, month, true))
   }, [dailyEntries, year, month])
 
   useEffect(() => {
-    if (year != null) {
-      setFilteredDailyTotals(filterByYearAndMonth(dailyTotals, year, month, true))
-    }
+    setFilteredDailyTotals(filterByYearAndMonth(dailyTotals, year, month, true))
   }, [dailyTotals, year, month])
-
-  if (year == null) return null;
 
   return (
     <div>
