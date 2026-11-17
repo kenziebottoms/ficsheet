@@ -20,7 +20,7 @@ const YearMenuLayout = ({
           style="cautionary"
           small
           icon={Troubleshoot}
-          className="mb-2"
+          className="mb-2 mr-2"
         >
           Admin
         </Button>

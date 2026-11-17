@@ -24,6 +24,7 @@ function App() {
         <Route path="all" element={<AllTime availableYears={availableYears} />} />
         <Route index path=":year?" element={<Charts />} />
       </Route>
+      <Route index path=":year?" element={<Charts />} />
     </Routes>
   )
 }
