@@ -1,4 +1,4 @@
-import { use, useState, type SubmitEventHandler } from 'react';
+import { useState, type SubmitEventHandler } from 'react';
 import { addDays, isBefore, parse } from 'date-fns';
 import { Add, ArrowDropDown, DeleteForever, EditCalendar } from '@mui/icons-material';
 
@@ -10,9 +10,6 @@ import FicDropdown from '@/components/FicDropdown';
 import Input from '@/components/Input';
 import TextArea from '@/components/TextArea';
 import Toggle from '@/components/Toggle';
-
-import { DataCacheContext } from '@/contexts/DataCache/DataCacheContext';
-import { YearContext } from '@/contexts/Year/YearContext';
 
 import type { EntryFormValues, WordCountEntry } from '@/types';
 import { countWords } from '@/utils';
@@ -26,24 +23,10 @@ type Props = {
 const EntryForm = ({
   className = '',
   values,
-  onCompleted: _onCompleted = () => { },
+  onCompleted = () => { },
 }: Props) => {
-  const { year, refreshYears } = use(YearContext)
-  const { refreshData } = use(DataCacheContext)
-
   const [showTextarea, setShowTextarea] = useState<boolean>(!values)
   const [typeNewFic, setTypeNewFic] = useState<boolean>(false)
-
-  const onCompleted = (response: WordCountEntry[]) => {
-    if (response.length > 0) {
-      const yearOfLastEntry = parseInt(response[0]?.date.slice(0, 4), 10)
-      if (yearOfLastEntry !== year) {
-        refreshData(yearOfLastEntry)
-        refreshYears()
-      }
-    }
-    _onCompleted(response)
-  }
 
   const handleSubmit: SubmitEventHandler<HTMLFormElement> = e => {
     // Prevent the browser from reloading the page

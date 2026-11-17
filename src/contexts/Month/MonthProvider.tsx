@@ -8,7 +8,6 @@ import { MonthNames, type DailyTotal, type WithId, type WordCountEntry } from "@
 import { filterByYearAndMonth } from "@/containers/Charts/YearlyCharts/utils";
 
 import { DataCacheContext } from "@/contexts/DataCache/DataCacheContext";
-import { YearContext } from "@/contexts/Year/YearContext";
 
 import { MonthContext } from "./MonthContext";
 
@@ -16,8 +15,7 @@ type Props = PropsWithChildren & {
   initialValue?: number | null;
 }
 export const MonthProvider = ({ initialValue, children }: Props) => {
-  const { year } = use(YearContext)
-  const { dailyEntries, dailyTotals } = use(DataCacheContext)
+  const { dailyEntries, dailyTotals, year } = use(DataCacheContext)
   const thisYear = new Date().getFullYear()
 
   // month=null means select the entire year
@@ -30,18 +28,12 @@ export const MonthProvider = ({ initialValue, children }: Props) => {
   }, [year])
 
   useEffect(() => {
-    if (year != null) {
-      setFilteredEntries(filterByYearAndMonth(dailyEntries, year, month, true))
-    }
+    setFilteredEntries(filterByYearAndMonth(dailyEntries, year, month, true))
   }, [dailyEntries, year, month])
 
   useEffect(() => {
-    if (year != null) {
-      setFilteredDailyTotals(filterByYearAndMonth(dailyTotals, year, month, true))
-    }
+    setFilteredDailyTotals(filterByYearAndMonth(dailyTotals, year, month, true))
   }, [dailyTotals, year, month])
-
-  if (year == null) return null;
 
   return (
     <div>

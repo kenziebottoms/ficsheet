@@ -5,7 +5,6 @@ import { format, getDayOfYear, isLeapYear, isValid, } from 'date-fns';
 
 import { DataCacheContext } from '@/contexts/DataCache/DataCacheContext';
 import { MonthContext } from '@/contexts/Month/MonthContext';
-import { YearContext } from '@/contexts/Year/YearContext';
 
 import Spinner from '@/components/Spinner';
 import Toggle from '@/components/Toggle';
@@ -20,8 +19,7 @@ import { addTimestamp, filterByYearAndMonth } from '../utils';
 const RunningTotalLine = ({
   className = '',
 }) => {
-  const { runningTotal } = use(DataCacheContext)
-  const { year } = use(YearContext)
+  const { runningTotal, year } = use(DataCacheContext)
   const { month } = use(MonthContext)
 
   const isThisYear = year === new Date().getFullYear()
@@ -36,7 +34,7 @@ const RunningTotalLine = ({
     <Spinner style="subtle" />
   </Widget>
 
-  if (year == null || runningTotal == null || runningTotal.length < 1) return loadingState;
+  if (runningTotal == null || runningTotal.length < 1) return loadingState;
 
   const filteredTotals = filterByYearAndMonth(runningTotal, year, month, true)
 

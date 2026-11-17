@@ -2,7 +2,6 @@ import { use, type SubmitEventHandler } from 'react';
 import { DeleteForever, Task } from '@mui/icons-material';
 
 import { DataCacheContext } from '@/contexts/DataCache/DataCacheContext';
-import { YearContext } from '@/contexts/Year/YearContext';
 
 import type { Fic } from '@/types';
 
@@ -26,8 +25,7 @@ const FicForm = ({
   values,
   onCompleted: _onCompleted = () => { },
 }: Props) => {
-  const { year } = use(YearContext)
-  const { refreshData } = use(DataCacheContext)
+  const { refreshData, year } = use(DataCacheContext)
 
   const onCompleted = (response: Fic | null) => {
     if (year != null) {

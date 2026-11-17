@@ -4,7 +4,6 @@ import _ from 'lodash'
 import { parse } from 'date-fns';
 
 import { DataCacheContext } from '@/contexts/DataCache/DataCacheContext';
-import { YearContext } from '@/contexts/Year/YearContext';
 
 import Spinner from '@/components/Spinner';
 import Widget from '@/components/Widget';
@@ -19,10 +18,7 @@ import { filterByYearAndMonth } from '../utils';
 const MonthlyFandomBar = ({
   className = ''
 }) => {
-  const { dailyEntries } = use(DataCacheContext)
-  const { year } = use(YearContext)
-
-  if (year == null) return null;
+  const { dailyEntries, year } = use(DataCacheContext)
 
   const entries = filterByYearAndMonth(dailyEntries, year, null, true)
   const fandoms = _.uniq(_.map(entries, 'fandom'))

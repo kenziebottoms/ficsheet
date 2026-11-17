@@ -3,7 +3,6 @@ import { EditCalendar, OutlinedFlag } from '@mui/icons-material'
 import { isPast, parse } from 'date-fns'
 
 import { DataCacheContext } from '@/contexts/DataCache/DataCacheContext'
-import { YearContext } from '@/contexts/Year/YearContext'
 
 import Button from '@/components/Button'
 import GoalForm from '@/components/GoalForm'
@@ -18,8 +17,7 @@ import { sleep } from '@/utils'
 import GoalTracker from './GoalTracker'
 
 const Goals = () => {
-  const { year } = use(YearContext)
-  const { goals, refreshData } = use(DataCacheContext)
+  const { goals, refreshData, year } = use(DataCacheContext)
   const [goalFormValues, setGoalFormValues] = useState<Partial<WithId<Goal>> | null>(null)
   const [entryFormValues, setEntryFormValues] = useState<Partial<WithId<WordCountEntry>> | null>(null)
   const [showGoalForm, setShowGoalForm] = useState(false)
@@ -38,9 +36,7 @@ const Goals = () => {
     }
   }, [entryFormValues])
 
-  if (year == null || !goals) return null;
-
-  const filteredGoals = goals
+  const filteredGoals = (goals || [])
     .filter(goal => !hideCompleted || goal.targetWordCount > goal.totalWordsWritten)
     .filter(goal => !hidePast || goal.endDate == null || !isPast(parse(goal.endDate, 'yyyy-MM-dd', new Date())))
 
