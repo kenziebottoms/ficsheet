@@ -15,7 +15,7 @@ const YearNavMenu = ({ availableYears }: { availableYears: number[] }) => {
     setShowYears(false)
   }, [year])
 
-  return <div className="w-full flex flex-row items-center gap-2 overflow-x-auto px-2">
+  return <>
     <NavLink to="/year/all" className="block">
       {({ isActive }) => (
         <Button
@@ -76,7 +76,7 @@ const YearNavMenu = ({ availableYears }: { availableYears: number[] }) => {
       >
         {thisYear - 1}
       </Button>}
-  </div>
+  </>
 }
 
 export default YearNavMenu
