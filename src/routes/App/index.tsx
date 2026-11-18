@@ -3,11 +3,9 @@ import { Route, Routes } from 'react-router';
 
 import { selectAvailableYears } from '@/api'
 
-import YearMenuLayout from '@/components/YearMenuLayout';
-
-import AllTime from '@/containers/AllTime';
-import Charts from '@/containers/Charts';
-
+import AllTime from './AllTime';
+import Charts from './Charts';
+import YearMenuLayout from './YearMenuLayout';
 
 function App() {
   const [availableYears, setAvailableYears] = useState([new Date().getFullYear()])

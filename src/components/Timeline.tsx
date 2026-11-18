@@ -1,4 +1,4 @@
-import { getDynamicColorPalette } from '@/containers/Charts/constants';
+import { getDynamicColorPalette } from '@/routes/App/Charts/constants';
 import type { TimelineData } from '@/types'
 
 const Timeline = ({
