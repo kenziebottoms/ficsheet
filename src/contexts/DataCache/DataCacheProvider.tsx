@@ -10,7 +10,7 @@ import {
   selectRunningTotal,
 } from "@/api";
 import { type WordCountEntry, type RunningTotal, type DailyTotal, type Fic, type Fandom, type WithId, type Goal } from "@/types";
-import { getDatesBetween } from "@/utils";
+import { getDatesBetween } from "@/utils/dates";
 
 import { DataCacheContext } from "./DataCacheContext";
 

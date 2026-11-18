@@ -5,7 +5,7 @@ import _ from 'lodash'
 import Widget from "@/components/Widget"
 
 import { MonthContext } from "@/contexts/Month/MonthContext"
-import { computeHistogramBins } from "@/utils"
+import { computeHistogramBins } from "@/utils/charts"
 
 const DailyWordCountHistogram = ({
   className = ''
