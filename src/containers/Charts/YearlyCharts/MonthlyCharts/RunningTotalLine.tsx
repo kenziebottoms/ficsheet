@@ -11,10 +11,9 @@ import Toggle from '@/components/Toggle';
 import Widget from '@/components/Widget';
 
 import { largeNumberFormatter } from '@/utils';
+import { addTimestamp, filterByYearAndMonth } from '@/utils/dates';
 
 import { colors } from '../../constants';
-
-import { addTimestamp, filterByYearAndMonth } from '../utils';
 
 const RunningTotalLine = ({
   className = '',

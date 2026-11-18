@@ -1,6 +1,11 @@
 import { suite, expect, test } from "vitest";
 
-import { countWords, getMedian, largeNumberFormatter } from "./index";
+import {
+  countWords,
+  getLongestStreak,
+  getMedian,
+  largeNumberFormatter,
+} from "./index";
 
 suite("countWords", () => {
   test.for([
@@ -22,6 +27,22 @@ suite("countWords", () => {
   ] as [string, number][])("countWords(%s): %i", ([input, expectedOutput]) => {
     expect(countWords(input)).toEqual(expectedOutput);
   });
+});
+
+suite("getLongestStreak", () => {
+  test.for([
+    [[true, false, true, false, true], 1],
+    [[true, true, true, false, true], 3],
+    [[true, true, true, true, true], 5],
+    [[true, true, true, true, true, false], 5],
+    [[false, false, false, false, false], 0],
+    [[true, true, false, true, true, true], 3],
+  ] as [boolean[], number][])(
+    "getLongestStreak(%i, %i)",
+    ([input, expectedOutput]) => {
+      expect(getLongestStreak(input, (x) => x)).toEqual(expectedOutput);
+    },
+  );
 });
 
 suite("getMedian", () => {

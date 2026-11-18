@@ -10,10 +10,10 @@ import Widget from '@/components/Widget';
 
 import { MonthNames, type WordCountEntry } from '@/types';
 import { largeNumberFormatter } from '@/utils';
+import { filterByYearAndMonth } from '@/utils/dates';
 
 import { getDynamicColorPalette } from '../../constants';
 
-import { filterByYearAndMonth } from '../utils';
 
 const MonthlyFandomBar = ({
   className = ''
