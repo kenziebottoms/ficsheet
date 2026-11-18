@@ -7,6 +7,7 @@ import {
   type Goal,
   type Ship,
   type WordCountEntry,
+  type User,
 } from "../../src/types.ts";
 
 import { validateId } from "../routes/entries.ts";
@@ -51,6 +52,10 @@ export const selectGoals = (
     ${orderClause};`,
   );
   return goals;
+};
+export const selectUsers = (whereClause = ""): WithId<User>[] => {
+  const users = select<WithId<User>>(`* from user ${whereClause};`);
+  return users;
 };
 
 export const getEntry = (

@@ -8,6 +8,7 @@ import {
   getFandomsByYear,
   getFicsByYear,
   select,
+  selectUsers,
 } from "../db/queries.ts";
 
 import authRouter from "./auth.ts";
@@ -67,6 +68,15 @@ apiRouter.get("/runningTotal", (_req, res) => {
 apiRouter.get("/ships", (_req, res) => {
   console.log("Getting ships (all time)");
   const data = getAllShips();
+  return res.json(data).status(200);
+});
+
+/**
+ * GET /api/users
+ */
+apiRouter.get("/users", (_req, res) => {
+  console.log("fetching users");
+  const data = selectUsers();
   return res.json(data).status(200);
 });
 
