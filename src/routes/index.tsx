@@ -6,7 +6,7 @@ import App from './App'
 const Router = () => {
   return <BrowserRouter>
     <Routes>
-      <Route path="admin" element={<AdminPanel />} />
+      {import.meta.env.DEV && <Route path="admin" element={<AdminPanel />} />}
       <Route index path="*" element={<App />} />
     </Routes>
   </BrowserRouter>
