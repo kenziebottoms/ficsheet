@@ -7,7 +7,8 @@ import Widget from '@/components/Widget';
 
 import type { RunningTotal } from '@/types';
 
-import { getDatesBetween, largeNumberFormatter } from '@/utils';
+import { largeNumberFormatter } from '@/utils';
+import { getDatesBetween } from '@/utils/dates';
 
 import { addTimestamp } from '../Charts/YearlyCharts/utils';
 import { blendColors, getDynamicColorPalette } from '../Charts/constants';

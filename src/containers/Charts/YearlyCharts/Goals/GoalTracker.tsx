@@ -10,7 +10,7 @@ import { MonthContext } from "@/contexts/Month/MonthContext";
 
 import type { Goal, GoalColor, WithId, WordCountEntry } from "@/types";
 
-import { reformatDate } from "@/utils";
+import { reformatDate } from "@/utils/dates";
 
 const bgClassNames: Record<GoalColor, string> = {
   'rainbow': "bg-linear-45/shorter from-indigo-600 via-orange-400 to-indigo-500 from-40% via-80% to-85%",

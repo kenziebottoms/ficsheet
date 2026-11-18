@@ -10,7 +10,7 @@ import { DataCacheContext } from '@/contexts/DataCache/DataCacheContext';
 import { MonthContext } from '@/contexts/Month/MonthContext'
 
 import type { WordCountEntry } from '@/types';
-import { getDatesBetween } from '@/utils'
+import { getDatesBetween } from '@/utils/dates'
 
 import EntryButton from './EntryButton';
 

@@ -12,7 +12,7 @@ import {
   type Goal,
 } from "@/types";
 
-import { getDatesBetween } from "./utils";
+import { getDatesBetween } from "@/utils/dates";
 
 const API_URL = "http://localhost:2000/api";
 
