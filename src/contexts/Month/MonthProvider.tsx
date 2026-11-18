@@ -5,7 +5,7 @@ import { ButtonBackgroundClassNames } from "@/components/constants";
 
 import { MonthNames, type DailyTotal, type WithId, type WordCountEntry } from "@/types";
 
-import { filterByYearAndMonth } from "@/containers/Charts/YearlyCharts/utils";
+import { filterByYearAndMonth } from "@/utils/dates";
 
 import { DataCacheContext } from "@/contexts/DataCache/DataCacheContext";
 

@@ -7,9 +7,9 @@ import Widget from '@/components/Widget'
 import type { RunningTotal } from '@/types'
 
 import { largeNumberFormatter } from '@/utils';
+import { addTimestamp } from '@/utils/dates';
 
 import { colors } from '../Charts/constants';
-import { addTimestamp } from '../Charts/YearlyCharts/utils';
 
 const LifetimeWordCountLineChart = ({
   lifetimeRunningTotal
