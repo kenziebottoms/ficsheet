@@ -21,7 +21,7 @@ const YearMenuLayout = ({
 
       <div className='grow' />
 
-      <NavLink to="/admin" className="grow-0 shrink-0">
+      {import.meta.env.DEV && <NavLink to="/admin" className="grow-0 shrink-0">
         <Button
           style="transparent"
           small
@@ -29,7 +29,7 @@ const YearMenuLayout = ({
         >
           Admin
         </Button>
-      </NavLink>
+      </NavLink>}
 
       <NavLink to="/logout" className="grow-0 shrink-0">
         <Button
