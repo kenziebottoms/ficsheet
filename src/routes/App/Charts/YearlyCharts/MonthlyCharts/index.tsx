@@ -5,7 +5,7 @@ import Badge from "@/components/Badge";
 
 import { MonthContext } from "@/contexts/Month/MonthContext";
 
-import { getLongestStreak } from "../utils";
+import { getLongestStreak } from "@/utils";
 
 import DailyWordCountStats from "./DailyWordCountStats";
 import DayOfWeekRadar from "./DayOfWeekRadar";
