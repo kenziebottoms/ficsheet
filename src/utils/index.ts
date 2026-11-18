@@ -18,6 +18,31 @@ export const countWords = (input?: string | null) => {
   return pastedWords.split(/\s+/g).length;
 };
 
+/**
+ * @returns the largest number of `items` in a row that satisfy the condition `evaluator(item)`
+ */
+export const getLongestStreak = <T>(
+  items: T[],
+  evaluator: (item: T) => boolean,
+): number => {
+  let highestStreak = 0;
+  let streak = 0;
+  items.forEach((item) => {
+    if (evaluator(item)) {
+      streak++;
+    } else {
+      if (streak > highestStreak) {
+        highestStreak = streak;
+      }
+      streak = 0;
+    }
+  });
+  if (streak > highestStreak) {
+    highestStreak = streak;
+  }
+  return highestStreak;
+};
+
 export const getMedian = (data: number[]) => {
   const sortedData = data.slice().sort((a, b) => a - b);
   if (sortedData.length % 2 === 0) {
