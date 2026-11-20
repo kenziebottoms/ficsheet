@@ -2,7 +2,7 @@ import { useEffect, useState, type FocusEventHandler, type KeyboardEventHandler 
 
 type Props<T extends string | number> = {
   name: string;
-  type: 'text' | 'number';
+  type: 'text' | 'number' | 'email' | 'password';
   className?: string;
   label: string;
   defaultValue?: T | null;
