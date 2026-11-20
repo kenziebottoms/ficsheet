@@ -8,8 +8,10 @@ import {
   getFandomsByYear,
   getFicsByYear,
   select,
+  selectUsers,
 } from "../db/queries.ts";
 
+import authRouter from "./auth.ts";
 import entriesRouter from "./entries.ts";
 import ficsRouter from "./fics.ts";
 import goalsRouter from "./goals.ts";
@@ -21,6 +23,8 @@ const apiRouter = express.Router({
 });
 
 /** Root URL: /api */
+
+apiRouter.use("/auth", authRouter);
 
 apiRouter.use("/entries", entriesRouter);
 
@@ -64,6 +68,15 @@ apiRouter.get("/runningTotal", (_req, res) => {
 apiRouter.get("/ships", (_req, res) => {
   console.log("Getting ships (all time)");
   const data = getAllShips();
+  return res.json(data).status(200);
+});
+
+/**
+ * GET /api/users
+ */
+apiRouter.get("/users", (_req, res) => {
+  console.log("fetching users");
+  const data = selectUsers();
   return res.json(data).status(200);
 });
 

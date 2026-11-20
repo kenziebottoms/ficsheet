@@ -121,6 +121,11 @@ export type TimelineData = {
   range: [number, number][];
 };
 
+export type User = {
+  username: string;
+  email: string;
+};
+
 export type WithId<T> = T & {
   id: number;
 };

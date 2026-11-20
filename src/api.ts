@@ -10,6 +10,7 @@ import {
   type Ship,
   type WithId,
   type Goal,
+  type User,
 } from "@/types";
 
 import { getDatesBetween } from "@/utils/dates";
@@ -92,6 +93,8 @@ export const selectFandoms = (year?: number) =>
   get<Fandom[]>(`${year ? `year/${year}/` : ""}fandoms`);
 export const selectGoals = (year: number | null, queryParams = "") =>
   get<WithId<Goal>[]>(`${year ? `year/${year}/` : ""}goals${queryParams}`);
+export const selectUsers = (queryParams = "") =>
+  get<WithId<User>[]>(`users${queryParams}`);
 export const insertGoal = (goal: Omit<Goal, "totalWordsWritten">) =>
   post<Omit<Goal, "totalWordsWritten">, WithId<Goal>>(`goals`, goal);
 export const putGoal = (goal: WithId<Goal>) =>
