@@ -6,6 +6,7 @@ import { selectAvailableYears } from '@/api'
 import AllTime from './AllTime';
 import Charts from './Charts';
 import YearMenuLayout from './YearMenuLayout';
+import Redirect from '@/components/Redirect';
 
 function App() {
   const [availableYears, setAvailableYears] = useState([new Date().getFullYear()])
@@ -18,11 +19,11 @@ function App() {
 
   return (
     <Routes>
+      <Route index element={<Redirect to={`/year/${new Date().getFullYear()}`} />} />
       <Route path="year" element={<YearMenuLayout availableYears={availableYears} />}>
         <Route path="all" element={<AllTime availableYears={availableYears} />} />
         <Route index path=":year?" element={<Charts />} />
       </Route>
-      <Route index path=":year?" element={<Charts />} />
     </Routes>
   )
 }
