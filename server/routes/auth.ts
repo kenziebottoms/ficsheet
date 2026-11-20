@@ -7,10 +7,10 @@ const authRouter = express.Router({
   mergeParams: true,
 });
 
-/** Root URL: /api/auth */
+/** Root URL: /api */
 
 /**
- * POST /api/auth/signup
+ * POST /api/signup
  * BODY: SignUpFormValues
  */
 authRouter.post("/signup", async (req, res) => {

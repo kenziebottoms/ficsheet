@@ -24,7 +24,7 @@ const apiRouter = express.Router({
 
 /** Root URL: /api */
 
-apiRouter.use("/auth", authRouter);
+apiRouter.use("/", authRouter);
 
 apiRouter.use("/entries", entriesRouter);
 
