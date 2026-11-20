@@ -74,6 +74,7 @@ yearRouter.post("/entries/importFics", (req: YearRequest, res) => {
   console.log(`importing fics (${req.params.year})`);
   const entries = getEntriesByYear(req.params.year);
   const results = entries.map(importFicForEntry);
+  // LTTB: pattern matching
   const errors = results.filter(
     (result) =>
       _.get(result, "status") != null && _.get(result, "status") !== 304,
