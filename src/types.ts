@@ -144,6 +144,12 @@ export type WordCountEntry = {
  * Referential types
  */
 
+export type AuthContextValue = {
+  user: WithId<User> | null;
+  setUser: (newUser: WithId<User> | null) => void;
+  setShowWelcomeModal: (newShow: boolean) => void;
+};
+
 export type DataCache = {
   year: number;
   dailyEntries: WithId<WordCountEntry>[];
