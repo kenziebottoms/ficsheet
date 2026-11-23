@@ -1,4 +1,4 @@
-import { useEffect, useState, type PropsWithChildren } from 'react'
+import { useEffect, useRef, useState, type PropsWithChildren } from 'react'
 import { Close } from '@mui/icons-material';
 
 import Button from '@/components/Button';
@@ -16,13 +16,17 @@ const Modal = ({
   className,
   children
 }: Props) => {
+  const firstRender = useRef<boolean>(true)
   /**
    * Manage visibility independently of render status so that both the
    * pre- and post-transition class names for animation are rendered.
    */
   const [isVisible, setIsVisible] = useState(false)
 
-  const closeModal = () => setIsVisible(false);
+  const closeModal = () => {
+    firstRender.current = false;
+    setIsVisible(false)
+  };
 
   const handleEscape = (e: KeyboardEvent) => {
     if (e.key === 'Escape') {
@@ -33,17 +37,18 @@ const Modal = ({
   };
 
   useEffect(() => {
-    setTimeout(() => setIsVisible(isRendered), 100)
-    if (isRendered) {
-      document.addEventListener('keydown', handleEscape);
-    }
+    document.addEventListener('keydown', handleEscape);
     return () => {
       document.removeEventListener('keydown', handleEscape);
     };
+  }, [])
+
+  useEffect(() => {
+    setTimeout(() => setIsVisible(isRendered), 100)
   }, [isRendered]);
 
   useEffect(() => {
-    if (!isVisible) {
+    if (!firstRender.current && !isVisible) {
       setTimeout(() => setIsRendered(false), 100)
     }
   }, [isVisible])
