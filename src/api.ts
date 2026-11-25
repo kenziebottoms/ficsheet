@@ -20,7 +20,7 @@ const API_URL = "http://localhost:2000/api";
 const GlobalHeaders = new Headers();
 GlobalHeaders.set("Content-Type", "application/json");
 
-async function get<TReturnType>(
+export async function get<TReturnType>(
   path: string,
   options?: Partial<RequestInit>,
 ): Promise<TReturnType> {
@@ -36,7 +36,7 @@ async function get<TReturnType>(
   return result as TReturnType;
 }
 
-async function post<TRequestBody, TReturnType>(
+export async function post<TRequestBody, TReturnType>(
   path: string,
   body?: TRequestBody,
 ): Promise<TReturnType> {
@@ -45,7 +45,7 @@ async function post<TRequestBody, TReturnType>(
     body: body == null ? undefined : JSON.stringify(body),
   });
 }
-async function put<TRequestBody, TReturnType>(
+export async function put<TRequestBody, TReturnType>(
   path: string,
   body: TRequestBody,
 ): Promise<TReturnType> {
@@ -54,7 +54,7 @@ async function put<TRequestBody, TReturnType>(
     body: JSON.stringify(body),
   });
 }
-async function restDelete(path: string): Promise<null> {
+export async function restDelete(path: string): Promise<null> {
   return get(path, {
     method: "DELETE",
   });
