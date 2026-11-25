@@ -9,6 +9,7 @@ import {
   type WordCountEntry,
   type User,
 } from "../../src/types.ts";
+import { type SignUpFormValues } from "../../src/forms/types.ts";
 
 import { validateId } from "../routes/entries.ts";
 import { type ApiError } from "../types.ts";
@@ -119,6 +120,18 @@ export const insertGoal = (goal: Goal): WithId<Goal> => {
   );
   return {
     ...goal,
+    id: result.lastInsertRowid as number,
+  };
+};
+
+export const insertUser = (user: User & { password: string }): WithId<User> => {
+  const { username, email, password } = user;
+  const insert = db.prepare(
+    `INSERT INTO user (username, email, password) VALUES (?, ?, ?)`,
+  );
+  const result = insert.run(username, email, password);
+  return {
+    ...user,
     id: result.lastInsertRowid as number,
   };
 };
@@ -343,4 +356,14 @@ export const importFicForEntry = (
       message: "Failed to create fic.",
     };
   }
+};
+
+export const createUserFromSignUpForm = (
+  formValues: SignUpFormValues,
+): WithId<User> | ApiError => {
+  console.log("formValues");
+  return {
+    status: 200,
+    message: "Placeholder",
+  };
 };
