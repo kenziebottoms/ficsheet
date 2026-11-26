@@ -34,7 +34,7 @@ export const createTables = () => {
       username TEXT UNIQUE NOT NULL,
       email TEXT UNIQUE NOT NULL,
       salt TEXT UNIQUE NOT NULL,
-      hashedPassword TEXT NOT NULL
+      hashed_password TEXT NOT NULL
     ) STRICT;
   `);
   console.log("tables created");

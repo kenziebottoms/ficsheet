@@ -53,9 +53,9 @@ export const selectGoals = (
   );
   return goals;
 };
-export const selectUsers = (whereClause = ""): WithId<User>[] => {
-  const users = select<WithId<User>>(
-    `id, username, email from user ${whereClause};`,
+export const selectUsers = (whereClause = ""): WithId<Required<User>>[] => {
+  const users = select<WithId<Required<User>>>(
+    `id, username, email, hashed_password as hashedPassword, salt from user ${whereClause};`,
   );
   return users;
 };

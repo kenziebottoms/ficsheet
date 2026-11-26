@@ -44,25 +44,34 @@ export function verifyPassword(
       return reject({
         cause: "Please provide a valid salt.",
       });
-    }
-    if (!user.hashedPassword) {
+    } else if (!user.hashedPassword) {
       return reject({
         cause: "The user does not have a valid hashed password.",
       });
-    }
-    crypto.pbkdf2(
-      passwordAttempt,
-      user.salt,
-      ITERATIONS,
-      PASSWORD_LENGTH,
-      DIGEST,
-      (error, hash) => {
-        if (error) {
-          return reject(error);
-        }
+    } else {
+      crypto.pbkdf2(
+        passwordAttempt,
+        user.salt,
+        ITERATIONS,
+        PASSWORD_LENGTH,
+        DIGEST,
+        (error, hash) => {
+          if (error) {
+            return reject(error);
+          } else if (
+            !crypto.timingSafeEqual(
+              Buffer.from(user.hashedPassword as string, ENCODING),
+              hash,
+            )
+          ) {
+            return reject({
+              cause: "Incorrect username or password.",
+            });
+          }
 
-        resolve(user.hashedPassword === hash.toString(ENCODING));
-      },
-    );
+          resolve(user.hashedPassword === hash.toString(ENCODING));
+        },
+      );
+    }
   });
 }
