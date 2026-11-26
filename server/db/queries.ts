@@ -133,7 +133,7 @@ export const insertGoal = (goal: Goal): WithId<Goal> => {
 export const insertUser = (user: Required<User>): WithId<User> => {
   const { username, email, hashedPassword, salt } = user;
   const insert = db.prepare(
-    `INSERT INTO user (username, email, hashedPassword, salt) VALUES (?, ?, ?, ?)`,
+    `INSERT INTO user (username, email, hashed_password, salt) VALUES (?, ?, ?, ?)`,
   );
   const result = insert.run(username, email, hashedPassword, salt);
   return {
