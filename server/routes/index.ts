@@ -11,7 +11,7 @@ import {
   selectUsers,
 } from "../db/queries.ts";
 
-import authRouter from "./auth.ts";
+import authRouter from "./auth/index.ts";
 import entriesRouter from "./entries.ts";
 import ficsRouter from "./fics.ts";
 import goalsRouter from "./goals.ts";

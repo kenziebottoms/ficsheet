@@ -33,7 +33,8 @@ export const createTables = () => {
       id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
       username TEXT UNIQUE NOT NULL,
       email TEXT UNIQUE NOT NULL,
-      password TEXT NOT NULL
+      salt TEXT UNIQUE NOT NULL,
+      hashedPassword TEXT NOT NULL
     ) STRICT;
   `);
   console.log("tables created");

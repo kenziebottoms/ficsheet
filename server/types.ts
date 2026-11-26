@@ -7,3 +7,8 @@ export type ApiError = {
   status: number;
   message?: string;
 };
+
+export type Password = {
+  hash: string;
+  salt: string;
+};
