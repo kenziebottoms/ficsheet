@@ -25,11 +25,11 @@ const WelcomeModal = ({
     />}
     {activeFormType == null && <>
       <div className="text-lg text-center mb-2">Are you new here?</div>
-      <div className='bg-zinc-900 p-2 rounded-lg flex flex-row flex-wrap items-stretch h-20 gap-2'>
+      <div className='bg-zinc-900 p-2 rounded-lg flex flex-row flex-wrap items-stretch gap-2'>
         <Button
           style="secondary"
           icon={Login}
-          className='grow'
+          className='grow h-20'
           onClick={() => setActiveFormType('login')}
         >
           Log in
@@ -37,7 +37,7 @@ const WelcomeModal = ({
         <Button
           style="primary"
           icon={PersonAdd}
-          className='grow'
+          className='grow h-20'
           onClick={() => setActiveFormType('signup')}
         >
           Sign up
@@ -46,7 +46,7 @@ const WelcomeModal = ({
           style="subtle"
           onClick={() => setOpen(false)}
           icon={Visibility}
-          className='grow'
+          className='grow h-20'
         >
           Guest mode
         </Button>
