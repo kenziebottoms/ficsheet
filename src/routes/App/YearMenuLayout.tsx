@@ -17,7 +17,7 @@ const YearMenuLayout = ({
   const { user, setShowWelcomeModal } = use(AuthContext)
 
   return <div className='w-100vw h-full'>
-    <div className="w-full flex flex-col gap-2 md:flex-row items-center justify-between pt-2 pr-2">
+    <div className="w-full flex flex-col gap-2 sm:flex-row items-center justify-between pt-2 pr-2">
       <Link to="/" className='block grow-0 shrink-0'>
         <Logo />
       </Link>
