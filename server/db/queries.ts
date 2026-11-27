@@ -55,12 +55,20 @@ export const selectGoals = (
 };
 export const selectUsers = (whereClause = ""): WithId<Required<User>>[] => {
   const users = select<WithId<Required<User>>>(
+    `id, username, email from user ${whereClause};`,
+  );
+  return users;
+};
+export const selectUsersWithPassword = (
+  whereClause = "",
+): WithId<Required<User>>[] => {
+  const users = select<WithId<Required<User>>>(
     `id, username, email, hashed_password as hashedPassword, salt from user ${whereClause};`,
   );
   return users;
 };
 export const selectUserByUsername = (username: string): WithId<User> | null => {
-  const userLookup = selectUsers(`WHERE username = '${username}'`);
+  const userLookup = selectUsersWithPassword(`WHERE username = '${username}'`);
   if (userLookup && userLookup.length > 0) return userLookup[0];
   return null;
 };
