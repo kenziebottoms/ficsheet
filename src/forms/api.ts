@@ -7,9 +7,9 @@ export const submitSignUpForm = (
   formData: Omit<SignUpFormValues, "confirmPassword">,
 ) =>
   post<Omit<SignUpFormValues, "confirmPassword">, WithId<User>>(
-    `signup`,
+    "auth/signup",
     formData,
   );
 
 export const submitLogInForm = (formData: LogInFormValues) =>
-  post<LogInFormValues, WithId<User>>("login", formData);
+  post<LogInFormValues, WithId<User>>("auth/login", formData);

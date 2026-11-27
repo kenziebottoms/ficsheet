@@ -1,4 +1,5 @@
 import express from "express";
+import session from "express-session";
 import cors from "cors";
 
 import { createTables } from "./db/setup.ts";
@@ -10,6 +11,15 @@ const PORT = 2000;
 
 app.use(cors());
 app.use(express.json());
+
+app.use(
+  session({
+    secret: "keyboard cat",
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: true },
+  }),
+);
 
 app.use("/api", apiRouter);
 

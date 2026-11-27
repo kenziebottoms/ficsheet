@@ -1,8 +1,9 @@
 import type { Request } from "express";
 import type { User, WithId } from "../src/types";
 
-export type YearRequest = Request<{ year: string }>;
-export type RequestWithId = Request<{ id: string }>;
+export type UserRequest = Request<{ user: User }>;
+export type YearRequest = UserRequest & Request<{ year: string }>;
+export type RequestWithId = UserRequest & Request<{ id: string }>;
 
 export type ApiError = {
   status: number;

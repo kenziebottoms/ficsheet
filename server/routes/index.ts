@@ -12,6 +12,7 @@ import {
 } from "../db/queries.ts";
 
 import authRouter from "./auth/index.ts";
+import passport from "./auth/passportStrategy.ts";
 import entriesRouter from "./entries.ts";
 import ficsRouter from "./fics.ts";
 import goalsRouter from "./goals.ts";
@@ -24,7 +25,9 @@ const apiRouter = express.Router({
 
 /** Root URL: /api */
 
-apiRouter.use("/", authRouter);
+apiRouter.use("/auth", authRouter);
+
+apiRouter.use(passport.authenticate("session"));
 
 apiRouter.use("/entries", entriesRouter);
 

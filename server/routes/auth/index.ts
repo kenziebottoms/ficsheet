@@ -4,25 +4,32 @@ import passport from "./passportStrategy.ts";
 import { hashPassword } from "./password.ts";
 import type { SignUpFormValues } from "../../../src/forms/types.js";
 import { insertUser } from "../../db/queries.ts";
-import type { Password } from "../../types.ts";
-import _ from "lodash";
+import { UserRequest } from "../../types.ts";
 
 const authRouter = express.Router({
   // pass nested route params to children
   mergeParams: true,
 });
 
-/** Root URL: /api */
+/** Root URL: /api/auth */
 
 /**
- * POST /api/login
+ * POST /api/auth/login
  */
-authRouter.post("/login", passport.authenticate("local"));
+authRouter.post(
+  "/login",
+  passport.authenticate("local"),
+  function (req: UserRequest, res) {
+    return res.status(200).json({
+      user: req.params.user,
+    });
+  },
+);
 
 /**
- * POST /api/signup
+ * POST /api/auth/signup
  */
-authRouter.post("/signup", function (req, res, next) {
+authRouter.post("/signup", function (req, res) {
   const formData = req.body as SignUpFormValues;
 
   hashPassword(formData.password)
