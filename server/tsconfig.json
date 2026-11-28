@@ -3,6 +3,12 @@
   "compilerOptions": {
     "allowImportingTsExtensions": true,
     "noEmit": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "types": [
+      "express",
+      "express-session",
+      "passport",
+      "passport-local"
+    ]
   }
 }
