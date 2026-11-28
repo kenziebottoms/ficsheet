@@ -1,10 +1,12 @@
-import express from "express";
+import express, { type Request } from "express";
 
 import passport from "./passportStrategy.ts";
 import { hashPassword } from "./password.ts";
-import type { SignUpFormValues } from "../../../src/forms/types.js";
+
 import { insertUser } from "../../db/queries.ts";
-import { UserRequest } from "../../types.ts";
+import type { PassportSession } from "../../types.ts";
+
+import type { SignUpFormValues } from "../../../src/forms/types.js";
 
 const authRouter = express.Router({
   // pass nested route params to children
@@ -16,15 +18,13 @@ const authRouter = express.Router({
 /**
  * POST /api/auth/login
  */
-authRouter.post(
-  "/login",
-  passport.authenticate("local"),
-  function (req: UserRequest, res) {
-    return res.status(200).json({
-      user: req.params.user,
-    });
-  },
-);
+authRouter.post("/login", passport.authenticate("local"), (req, res) => {
+  const session = req.session as PassportSession;
+  if (session.passport == null) {
+    return res.status(401).send("Unauthenticated");
+  }
+  return res.status(200).json(session.passport.user);
+});
 
 /**
  * POST /api/auth/signup
