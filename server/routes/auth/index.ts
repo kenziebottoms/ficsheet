@@ -40,7 +40,10 @@ authRouter.post("/signup", function (req, res) {
         salt,
         hashedPassword: hash,
       });
-      return res.status(201).json({ user });
+      return res.status(201).json({
+        id: user.id,
+        username: user.username,
+      });
     })
     .catch((err) => {
       return res.status(400).json({
