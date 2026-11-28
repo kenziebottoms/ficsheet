@@ -2,6 +2,8 @@ import { use } from 'react';
 import { Link, NavLink, Outlet } from 'react-router';
 import { Login, Logout, Troubleshoot } from '@mui/icons-material';
 
+import { logOut } from '@/api';
+
 import Button from '@/components/Button';
 import Footer from '@/components/Footer';
 import Logo from '@/components/Logo';
@@ -14,7 +16,7 @@ const YearMenuLayout = ({
 }: {
   availableYears: number[];
 }) => {
-  const { user, setShowWelcomeModal } = use(AuthContext)
+  const { user, setUser, setShowWelcomeModal } = use(AuthContext)
 
   return <div className='w-100vw h-full'>
     <div className="w-full flex flex-col gap-2 sm:flex-row items-center justify-between pt-2 pr-2">
@@ -51,6 +53,7 @@ const YearMenuLayout = ({
         small
         icon={Logout}
         className="whitespace-nowrap"
+        onClick={() => logOut().then(() => setUser(null))}
       >
         Log out
       </Button>}

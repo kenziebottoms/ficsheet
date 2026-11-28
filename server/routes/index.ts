@@ -12,11 +12,11 @@ import {
 } from "../db/queries.ts";
 
 import authRouter from "./auth/index.ts";
-import passport from "./auth/passportStrategy.ts";
 import entriesRouter from "./entries.ts";
 import ficsRouter from "./fics.ts";
 import goalsRouter from "./goals.ts";
 import yearRouter from "./year.ts";
+import passport from "./auth/passportStrategy.ts";
 
 const apiRouter = express.Router({
   // pass nested route params to children
@@ -27,7 +27,10 @@ const apiRouter = express.Router({
 
 apiRouter.use("/auth", authRouter);
 
-// TODO: require authentication
+apiRouter.use(
+  "/",
+  passport.authenticate("jwt-cookiecombo", { session: false }),
+);
 
 apiRouter.use("/entries", entriesRouter);
 

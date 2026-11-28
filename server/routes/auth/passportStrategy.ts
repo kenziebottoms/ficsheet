@@ -1,10 +1,13 @@
 import { selectUserByUsername } from "../../db/queries.ts";
+
+import type { User, WithId } from "../../../src/types.ts";
 import type { ApiError, PassportCallback } from "../../types.ts";
 
 import { verifyPassword } from "./password.ts";
 
 var passport = require("passport");
 var LocalStrategy = require("passport-local");
+var JwtCookieComboStrategy = require("passport-jwt-cookiecombo");
 
 export const VAGUE_INVALID_LOGIN_RESPONSE: ApiError = {
   status: 401,
@@ -55,6 +58,15 @@ passport.use(
       })
       .catch(callback);
   }),
+);
+
+passport.use(
+  new JwtCookieComboStrategy(
+    { secretOrPublicKey: "JWT_SECRET" },
+    (payload: { user: WithId<User> }, callback: PassportCallback) => {
+      return callback(null, payload.user || false);
+    },
+  ),
 );
 
 export default passport;

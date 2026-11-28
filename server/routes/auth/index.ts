@@ -1,4 +1,5 @@
-import express, { type Request } from "express";
+import express from "express";
+import jwt from "jsonwebtoken";
 
 import passport from "./passportStrategy.ts";
 import { hashPassword } from "./password.ts";
@@ -28,10 +29,22 @@ authRouter.post("/login", (req, res) => {
       return res.status(401).json({ message: "Authentication failed" });
     }
     console.log(`user ${user.username} logged in`);
-    return res.status(200).json({
-      id: user.id,
-      username: user.username,
-    });
+
+    jwt.sign(
+      { user },
+      "JWT_SECRET",
+      (err: Error | null, token: string | undefined) => {
+        if (err) {
+          return res.json(err);
+        }
+
+        console.log("setting cookie");
+        return res.cookie("jwt", token, { signed: true }).status(200).json({
+          id: user.id,
+          username: user.username,
+        });
+      },
+    );
   })(req, res);
 });
 
@@ -57,11 +70,10 @@ authRouter.post("/signup", function (req, res) {
     .catch((err: ApiError) => res.status(err.status).json(err));
 });
 
-// TODO: require authentication
-authRouter.use("/", (req, res, next) => {
-  console.log("req.user", req.user);
-  return next();
-});
+authRouter.use(
+  "/",
+  passport.authenticate("jwt-cookiecombo", { session: false }),
+);
 
 /**
  * GET /api/auth/me
@@ -76,13 +88,11 @@ authRouter.get("/me", (req, res) => {
 /**
  * POST /api/auth/logout
  */
-authRouter.post("/logout", (req, res, next) => {
-  req.logout(function (err) {
-    if (err) {
-      return next(err);
-    }
-    return res.sendStatus(200);
-  });
+authRouter.post("/logout", (req, res) => {
+  return res
+    .clearCookie("jwt")
+    .status(200)
+    .json({ message: "Succeessfully logged out." });
 });
 
 export default authRouter;

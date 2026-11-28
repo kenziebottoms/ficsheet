@@ -26,6 +26,7 @@ export async function get<TReturnType>(
 ): Promise<TReturnType> {
   const response: Response = await fetch(`${API_URL}/${path}`, {
     headers: GlobalHeaders,
+    credentials: "include",
     ...options,
   });
   if (!response.ok) {
@@ -117,4 +118,5 @@ export const selectAvailableYears = () => get<number[]>("years");
 export const submitEntryForm = (formData: EntryFormValues) =>
   post<EntryFormValues, WithId<WordCountEntry>>(`entries/form`, formData);
 
-export const logOut = () => post<never, boolean>(`auth/logout`);
+export const logOut = () => post(`auth/logout`);
+export const whoAmI = () => get<WithId<User>>(`auth/me`);
