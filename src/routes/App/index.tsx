@@ -22,8 +22,9 @@ function App() {
     <Routes>
       <Route index element={<Redirect to={`/year/${new Date().getFullYear()}`} />} />
       <Route path="year" element={<YearMenuLayout availableYears={availableYears} />}>
+        <Route index element={<Redirect to={`/year/${new Date().getFullYear()}`} />} />
         <Route path="all" element={<AllTime availableYears={availableYears} />} />
-        <Route index path=":year?" element={<Charts />} />
+        <Route index path=":year" element={<Charts />} />
       </Route>
     </Routes>
   )
