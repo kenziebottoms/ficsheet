@@ -8,6 +8,7 @@ import {
   getFandomsByYear,
   getFicsByYear,
   select,
+  selectAvailableYears,
   selectUsers,
 } from "../db/queries.ts";
 
@@ -91,9 +92,7 @@ apiRouter.get("/users", (_req, res) => {
  * returns a numerically sorted array of years represented by the entries in `word_count`
  */
 apiRouter.get("/years", (_req, res) => {
-  const data = select<{ year: string }>(
-    `DISTINCT strftime('%Y', date) as year FROM word_count ORDER BY year DESC`,
-  ).map(({ year }) => parseInt(year, 10));
+  const data = selectAvailableYears();
   return res.json(data).status(200);
 });
 

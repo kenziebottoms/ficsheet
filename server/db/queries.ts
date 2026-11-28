@@ -75,6 +75,13 @@ export const selectUserByUsername = (
   return null;
 };
 
+export const selectAvailableYears = (): number[] => {
+  const data = select<{ year: string }>(
+    `DISTINCT strftime('%Y', date) as year FROM word_count ORDER BY year DESC`,
+  );
+  return data.map(({ year }) => parseInt(year, 10));
+};
+
 export const getEntry = (
   id: string | number,
 ): WithId<WordCountEntry> | null => {
