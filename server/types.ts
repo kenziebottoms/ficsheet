@@ -27,3 +27,8 @@ export type PassportSession = Session & {
     user: Pick<WithId<User>, "id" | "username">;
   };
 };
+
+export type UserWithPassword = User & {
+  salt: string;
+  hashedPassword: string;
+};

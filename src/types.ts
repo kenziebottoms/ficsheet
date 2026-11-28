@@ -124,8 +124,6 @@ export type TimelineData = {
 export type User = {
   username: string;
   email: string;
-  salt?: string;
-  hashedPassword?: string;
 };
 
 export type WithId<T> = T & {

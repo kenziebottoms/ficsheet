@@ -11,7 +11,7 @@ import {
 } from "../../src/types.ts";
 
 import { validateId } from "../routes/entries.ts";
-import { type ApiError } from "../types.ts";
+import type { ApiError, UserWithPassword } from "../types.ts";
 
 export const db = new DatabaseSync("ficsheet.sqlite");
 
@@ -53,21 +53,23 @@ export const selectGoals = (
   );
   return goals;
 };
-export const selectUsers = (whereClause = ""): WithId<Required<User>>[] => {
-  const users = select<WithId<Required<User>>>(
+export const selectUsers = (whereClause = ""): WithId<User>[] => {
+  const users = select<WithId<User>>(
     `id, username, email from user ${whereClause};`,
   );
   return users;
 };
 export const selectUsersWithPassword = (
   whereClause = "",
-): WithId<Required<User>>[] => {
-  const users = select<WithId<Required<User>>>(
+): WithId<UserWithPassword>[] => {
+  const users = select<WithId<UserWithPassword>>(
     `id, username, email, hashed_password as hashedPassword, salt from user ${whereClause};`,
   );
   return users;
 };
-export const selectUserByUsername = (username: string): WithId<User> | null => {
+export const selectUserByUsername = (
+  username: string,
+): WithId<UserWithPassword> | null => {
   const userLookup = selectUsersWithPassword(`WHERE username = '${username}'`);
   if (userLookup && userLookup.length > 0) return userLookup[0];
   return null;
@@ -138,14 +140,15 @@ export const insertGoal = (goal: Goal): WithId<Goal> => {
   };
 };
 
-export const insertUser = (user: Required<User>): WithId<User> => {
+export const insertUser = (user: UserWithPassword): WithId<User> => {
   const { username, email, hashedPassword, salt } = user;
   const insert = db.prepare(
     `INSERT INTO user (username, email, hashed_password, salt) VALUES (?, ?, ?, ?)`,
   );
   const result = insert.run(username, email, hashedPassword, salt);
   return {
-    ...user,
+    username: user.username,
+    email: user.email,
     id: result.lastInsertRowid as number,
   };
 };
