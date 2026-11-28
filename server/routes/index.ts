@@ -8,7 +8,6 @@ import {
   getFandomsByYear,
   getFicsByYear,
   select,
-  selectAvailableYears,
   selectUsers,
 } from "../db/queries.ts";
 
@@ -84,15 +83,6 @@ apiRouter.get("/ships", (_req, res) => {
 apiRouter.get("/users", (_req, res) => {
   console.log("fetching users");
   const data = selectUsers();
-  return res.json(data).status(200);
-});
-
-/**
- * GET /api/years
- * returns a numerically sorted array of years represented by the entries in `word_count`
- */
-apiRouter.get("/years", (_req, res) => {
-  const data = selectAvailableYears();
   return res.json(data).status(200);
 });
 

@@ -113,7 +113,6 @@ export const selectRunningTotal = (year?: number) =>
   get<RunningTotal[]>(`${year ? `year/${year}/` : ""}runningTotal`);
 export const deleteEntriesByYear = (year: number) =>
   restDelete(`year/${year}/entries`);
-export const selectAvailableYears = () => get<number[]>("years");
 
 export const submitEntryForm = (formData: EntryFormValues) =>
   post<EntryFormValues, WithId<WordCountEntry>>(`entries/form`, formData);
