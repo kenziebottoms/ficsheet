@@ -119,4 +119,8 @@ export const submitEntryForm = (formData: EntryFormValues) =>
   post<EntryFormValues, WithId<WordCountEntry>>(`entries/form`, formData);
 
 export const logOut = () => post(`auth/logout`);
-export const whoAmI = () => get<WithId<User>>(`auth/me`);
+export const whoAmI = () =>
+  get<{
+    user: WithId<User>;
+    availableYears: number[];
+  }>(`auth/me`);

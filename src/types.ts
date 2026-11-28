@@ -148,6 +148,8 @@ export type AuthContextValue = {
   user: WithId<User> | null;
   setUser: (newUser: WithId<User> | null) => void;
   setShowWelcomeModal: (newShow: boolean) => void;
+  availableYears: number[];
+  setAvailableYears: (newYears: number[]) => void;
 };
 
 export type DataCache = {

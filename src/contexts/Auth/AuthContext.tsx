@@ -6,4 +6,6 @@ export const AuthContext = createContext({
   user: null,
   setUser: () => { },
   setShowWelcomeModal: () => { },
+  availableYears: [],
+  setAvailableYears: () => { },
 } as AuthContextValue);

@@ -9,10 +9,14 @@ import WelcomeModal from "./WelcomeModal";
 
 export const AuthProvider = ({ children }: PropsWithChildren) => {
   const [user, setUser] = useState<WithId<User> | null>(null)
+  const [availableYears, setAvailableYears] = useState<number[]>([])
   const [showWelcomeModal, setShowWelcomeModal] = useState(true)
 
   useEffect(() => {
-    whoAmI().then(setUser)
+    whoAmI().then((response) => {
+      setUser(response.user)
+      setAvailableYears(response.availableYears)
+    })
   }, [])
 
   return (
@@ -20,6 +24,8 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       user,
       setUser,
       setShowWelcomeModal,
+      availableYears,
+      setAvailableYears,
     }}>
       {user == null && <WelcomeModal
         open={showWelcomeModal}

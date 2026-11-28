@@ -11,11 +11,7 @@ import YearNavMenu from '@/components/YearNavMenu';
 
 import { AuthContext } from '@/contexts/Auth/AuthContext';
 
-const YearMenuLayout = ({
-  availableYears,
-}: {
-  availableYears: number[];
-}) => {
+const YearMenuLayout = () => {
   const { user, setUser, setShowWelcomeModal } = use(AuthContext)
 
   return <div className='w-100vw h-full'>
@@ -24,7 +20,7 @@ const YearMenuLayout = ({
         <Logo />
       </Link>
 
-      <YearNavMenu availableYears={availableYears} />
+      <YearNavMenu />
 
       <div className='grow' />
 

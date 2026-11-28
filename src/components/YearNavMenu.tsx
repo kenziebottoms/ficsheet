@@ -1,10 +1,12 @@
-import { useEffect, useState } from 'react';
+import { use, useEffect, useState } from 'react';
 import { NavLink, useNavigate, useParams } from 'react-router'
 import { ArrowDropDownSharp, Close } from '@mui/icons-material';
 
 import Button from '@/components/Button'
+import { AuthContext } from '@/contexts/Auth/AuthContext';
 
-const YearNavMenu = ({ availableYears }: { availableYears: number[] }) => {
+const YearNavMenu = () => {
+  const { availableYears } = use(AuthContext)
   const [showYears, setShowYears] = useState(false)
   const navigate = useNavigate()
   const { year } = useParams()

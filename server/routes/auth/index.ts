@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import passport from "./passportStrategy.ts";
 import { hashPassword } from "./password.ts";
 
-import { insertUser } from "../../db/queries.ts";
+import { insertUser, selectAvailableYears } from "../../db/queries.ts";
 import type { ApiError } from "../../types.ts";
 
 import type { User, WithId } from "../../../src/types.ts";
@@ -82,7 +82,11 @@ authRouter.get("/me", (req, res) => {
   if (req.user == null) {
     return res.status(401).json({ message: "Unauthenticated" });
   }
-  return res.status(200).json(req.user);
+  const availableYears = selectAvailableYears();
+  return res.status(200).json({
+    user: req.user,
+    availableYears,
+  });
 });
 
 /**
