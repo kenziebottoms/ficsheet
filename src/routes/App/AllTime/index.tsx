@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { use, useEffect, useState } from 'react'
 import { ContentPaste } from '@mui/icons-material'
 
 import { exportData, selectFandoms, selectRunningTotal, selectShips } from '@/api'
@@ -6,6 +6,8 @@ import { exportData, selectFandoms, selectRunningTotal, selectShips } from '@/ap
 import Badge from '@/components/Badge'
 import Button from '@/components/Button'
 import { ButtonBackgroundClassNames } from '@/components/constants'
+
+import { AuthContext } from '@/contexts/Auth/AuthContext'
 
 import type { Fandom, RunningTotal, Ship } from '@/types'
 
@@ -17,7 +19,8 @@ import ShipLeaderboard from './ShipLeaderboard'
 import LifetimeWordCountLineChart from './LifetimeWordCountLineChart'
 import YearlyRunningWordCountLineChart from './YearlyRunningWordCountLineChart'
 
-const AllTime = ({ availableYears }: { availableYears: number[] }) => {
+const AllTime = () => {
+  const { availableYears } = use(AuthContext)
   const [runningTotals, setRunningTotals] = useState<RunningTotal[][]>()
   const [lifetimeRunningTotal, setLifetimeRunningTotal] = useState<RunningTotal[]>([])
   const [fandoms, setFandoms] = useState<Fandom[]>([])
@@ -68,10 +71,7 @@ const AllTime = ({ availableYears }: { availableYears: number[] }) => {
       <FandomLeaderboard fandoms={fandoms} />
       <ShipLeaderboard ships={ships} />
 
-      <YearlyRunningWordCountLineChart
-        availableYears={availableYears}
-        runningTotals={runningTotals}
-      />
+      <YearlyRunningWordCountLineChart runningTotals={runningTotals} />
       <AllTimeFandomPieChart fandoms={fandoms} />
       <LifetimeWordCountLineChart lifetimeRunningTotal={lifetimeRunningTotal} />
     </div>

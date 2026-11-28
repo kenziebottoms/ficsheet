@@ -7,12 +7,8 @@ import { type RequestWithId } from "../types.ts";
 
 import { validateId } from "./entries.ts";
 
-const ficsRouter = express.Router({
-  // pass nested route params to children
-  mergeParams: true,
-});
-
 /** Root URL: /api/fics */
+const ficsRouter = express.Router();
 
 ficsRouter.get("/", (req, res) => {
   console.log("Getting fics (all time)");

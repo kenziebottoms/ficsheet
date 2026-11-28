@@ -1,5 +1,4 @@
-import { useEffect } from "react";
-import { useNavigate, useParams } from "react-router";
+import { useParams } from "react-router";
 
 import Spinner from "@/components/Spinner";
 import { ButtonBackgroundClassNames } from "@/components/constants";
@@ -15,13 +14,6 @@ const Charts = ({
   className = ''
 }: Props) => {
   const { year } = useParams();
-  const navigate = useNavigate()
-
-  useEffect(() => {
-    if (!year) {
-      navigate(`/year/${new Date().getFullYear()}`)
-    }
-  }, [year])
 
   if (year == null) return <Spinner />
 

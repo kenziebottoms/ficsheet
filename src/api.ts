@@ -10,6 +10,7 @@ import {
   type Ship,
   type WithId,
   type Goal,
+  type User,
 } from "@/types";
 
 import { getDatesBetween } from "@/utils/dates";
@@ -19,23 +20,25 @@ const API_URL = "http://localhost:2000/api";
 const GlobalHeaders = new Headers();
 GlobalHeaders.set("Content-Type", "application/json");
 
-async function get<TReturnType>(
+export async function get<TReturnType>(
   path: string,
   options?: Partial<RequestInit>,
 ): Promise<TReturnType> {
   const response: Response = await fetch(`${API_URL}/${path}`, {
     headers: GlobalHeaders,
+    credentials: "include",
     ...options,
   });
   if (!response.ok) {
-    throw new Error(`Response status: ${response.status}`);
+    const { message } = await response.json();
+    throw new Error(message);
   }
 
   const result = await response.json();
   return result as TReturnType;
 }
 
-async function post<TRequestBody, TReturnType>(
+export async function post<TRequestBody, TReturnType>(
   path: string,
   body?: TRequestBody,
 ): Promise<TReturnType> {
@@ -44,7 +47,7 @@ async function post<TRequestBody, TReturnType>(
     body: body == null ? undefined : JSON.stringify(body),
   });
 }
-async function put<TRequestBody, TReturnType>(
+export async function put<TRequestBody, TReturnType>(
   path: string,
   body: TRequestBody,
 ): Promise<TReturnType> {
@@ -53,7 +56,7 @@ async function put<TRequestBody, TReturnType>(
     body: JSON.stringify(body),
   });
 }
-async function restDelete(path: string): Promise<null> {
+export async function restDelete(path: string): Promise<null> {
   return get(path, {
     method: "DELETE",
   });
@@ -92,6 +95,8 @@ export const selectFandoms = (year?: number) =>
   get<Fandom[]>(`${year ? `year/${year}/` : ""}fandoms`);
 export const selectGoals = (year: number | null, queryParams = "") =>
   get<WithId<Goal>[]>(`${year ? `year/${year}/` : ""}goals${queryParams}`);
+export const selectUsers = (queryParams = "") =>
+  get<WithId<User>[]>(`users${queryParams}`);
 export const insertGoal = (goal: Omit<Goal, "totalWordsWritten">) =>
   post<Omit<Goal, "totalWordsWritten">, WithId<Goal>>(`goals`, goal);
 export const putGoal = (goal: WithId<Goal>) =>
@@ -108,7 +113,13 @@ export const selectRunningTotal = (year?: number) =>
   get<RunningTotal[]>(`${year ? `year/${year}/` : ""}runningTotal`);
 export const deleteEntriesByYear = (year: number) =>
   restDelete(`year/${year}/entries`);
-export const selectAvailableYears = () => get<number[]>("years");
 
 export const submitEntryForm = (formData: EntryFormValues) =>
   post<EntryFormValues, WithId<WordCountEntry>>(`entries/form`, formData);
+
+export const logOut = () => post(`auth/logout`);
+export const whoAmI = () =>
+  get<{
+    user: WithId<User>;
+    availableYears: number[];
+  }>(`auth/me`);

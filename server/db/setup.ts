@@ -29,6 +29,13 @@ export const createTables = () => {
       target_word_count INTEGER NOT NULL,
       color TEXT NOT NULL
     ) STRICT;
+    CREATE TABLE IF NOT EXISTS user (
+      id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+      username TEXT UNIQUE NOT NULL,
+      email TEXT UNIQUE NOT NULL,
+      salt TEXT UNIQUE NOT NULL,
+      hashed_password TEXT NOT NULL
+    ) STRICT;
   `);
   console.log("tables created");
 };
@@ -38,7 +45,8 @@ export const dropTables = () => {
   db.exec(`
     DROP TABLE IF EXISTS word_count;
     DROP TABLE IF EXISTS fic;
-    DROP TABLE IF EXISTS goals;
+    DROP TABLE IF EXISTS goal;
+    DROP TABLE IF EXISTS user;
   `);
 };
 

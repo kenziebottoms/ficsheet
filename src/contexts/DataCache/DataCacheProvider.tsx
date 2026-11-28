@@ -1,4 +1,4 @@
-import { useEffect, useState, type PropsWithChildren } from "react";
+import { use, useEffect, useState, type PropsWithChildren } from "react";
 import _ from "lodash";
 
 import {
@@ -9,6 +9,7 @@ import {
   selectGoals,
   selectRunningTotal,
 } from "@/api";
+import { AuthContext } from "@/contexts/Auth/AuthContext";
 import { type WordCountEntry, type RunningTotal, type DailyTotal, type Fic, type Fandom, type WithId, type Goal } from "@/types";
 import { getDatesBetween } from "@/utils/dates";
 
@@ -18,6 +19,8 @@ type Props = PropsWithChildren & {
   year: number;
 }
 export const DataCacheProvider = ({ year, children }: Props) => {
+  const { user } = use(AuthContext)
+
   const [fandoms, setFandoms] = useState<Fandom[]>([])
   const [fics, setFics] = useState<WithId<Fic>[]>([])
   const [allFics, setAllFics] = useState<WithId<Fic>[]>([])
@@ -52,8 +55,10 @@ export const DataCacheProvider = ({ year, children }: Props) => {
   }
 
   useEffect(() => {
-    refreshData(year)
-  }, [year])
+    if (user) {
+      refreshData(year)
+    }
+  }, [year, user])
 
   return (
     <DataCacheContext.Provider value={{

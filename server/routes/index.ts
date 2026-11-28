@@ -8,12 +8,15 @@ import {
   getFandomsByYear,
   getFicsByYear,
   select,
+  selectUsers,
 } from "../db/queries.ts";
 
+import authRouter from "./auth/index.ts";
 import entriesRouter from "./entries.ts";
 import ficsRouter from "./fics.ts";
 import goalsRouter from "./goals.ts";
 import yearRouter from "./year.ts";
+import passport from "./auth/passportStrategy.ts";
 
 const apiRouter = express.Router({
   // pass nested route params to children
@@ -21,6 +24,13 @@ const apiRouter = express.Router({
 });
 
 /** Root URL: /api */
+
+apiRouter.use("/auth", authRouter);
+
+apiRouter.use(
+  "/",
+  passport.authenticate("jwt-cookiecombo", { session: false }),
+);
 
 apiRouter.use("/entries", entriesRouter);
 
@@ -68,13 +78,11 @@ apiRouter.get("/ships", (_req, res) => {
 });
 
 /**
- * GET /api/years
- * returns a numerically sorted array of years represented by the entries in `word_count`
+ * GET /api/users
  */
-apiRouter.get("/years", (_req, res) => {
-  const data = select<{ year: string }>(
-    `DISTINCT strftime('%Y', date) as year FROM word_count ORDER BY year DESC`,
-  ).map(({ year }) => parseInt(year, 10));
+apiRouter.get("/users", (_req, res) => {
+  console.log("fetching users");
+  const data = selectUsers();
   return res.json(data).status(200);
 });
 

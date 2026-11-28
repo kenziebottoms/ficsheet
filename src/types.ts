@@ -121,6 +121,11 @@ export type TimelineData = {
   range: [number, number][];
 };
 
+export type User = {
+  username: string;
+  email: string;
+};
+
 export type WithId<T> = T & {
   id: number;
 };
@@ -138,6 +143,14 @@ export type WordCountEntry = {
 /**
  * Referential types
  */
+
+export type AuthContextValue = {
+  user: WithId<User> | null;
+  setUser: (newUser: WithId<User> | null) => void;
+  setShowWelcomeModal: (newShow: boolean) => void;
+  availableYears: number[];
+  setAvailableYears: (newYears: number[]) => void;
+};
 
 export type DataCache = {
   year: number;

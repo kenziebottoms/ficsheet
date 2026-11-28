@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { use, useState } from 'react';
 import { LineChart, } from '@mui/x-charts'
 import { format, isLeapYear, isPast, isValid, parse } from 'date-fns';
 
 import Toggle from '@/components/Toggle';
 import Widget from '@/components/Widget';
+
+import { AuthContext } from '@/contexts/Auth/AuthContext';
 
 import type { RunningTotal } from '@/types';
 
@@ -19,12 +21,11 @@ type RunningTotalMap = {
 };
 
 const YearlyRunningWordCountLineChart = ({
-  availableYears,
   runningTotals
 }: {
-  availableYears: number[];
   runningTotals?: RunningTotal[][];
 }) => {
+  const { availableYears } = use(AuthContext)
   const thisYear = new Date().getFullYear();
   const [yearToDate, setYearToDate] = useState<boolean>(true)
 

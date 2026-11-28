@@ -1,32 +1,58 @@
+import { use } from 'react';
 import { Link, NavLink, Outlet } from 'react-router';
-import { Troubleshoot } from '@mui/icons-material';
+import { Login, Logout, Troubleshoot } from '@mui/icons-material';
+
+import { logOut } from '@/api';
 
 import Button from '@/components/Button';
 import Footer from '@/components/Footer';
 import Logo from '@/components/Logo';
 import YearNavMenu from '@/components/YearNavMenu';
 
-const YearMenuLayout = ({
-  availableYears,
-}: {
-  availableYears: number[];
-}) => {
+import { AuthContext } from '@/contexts/Auth/AuthContext';
+
+const YearMenuLayout = () => {
+  const { user, setUser, setShowWelcomeModal } = use(AuthContext)
+
   return <div className='w-100vw h-full'>
-    <div className="w-full flex flex-col md:flex-row items-center pt-2">
+    <div className="w-full flex flex-col gap-2 sm:flex-row items-center justify-between pt-2 pr-2">
       <Link to="/" className='block grow-0 shrink-0'>
         <Logo />
       </Link>
-      <YearNavMenu availableYears={availableYears} />
-      <NavLink to="/admin">
+
+      <YearNavMenu />
+
+      <div className='grow' />
+
+      {import.meta.env.DEV && <NavLink to="/admin" className="grow-0 shrink-0">
         <Button
-          style="cautionary"
+          style="transparent"
           small
           icon={Troubleshoot}
-          className="mb-2 mr-2"
         >
           Admin
         </Button>
-      </NavLink>
+      </NavLink>}
+
+      {user == null && <Button
+        style="cautionary"
+        small
+        icon={Login}
+        className="whitespace-nowrap"
+        onClick={() => setShowWelcomeModal(true)}
+      >
+        Log in
+      </Button>}
+
+      {user != null && <Button
+        style="cautionary"
+        small
+        icon={Logout}
+        className="whitespace-nowrap"
+        onClick={() => logOut().then(() => setUser(null))}
+      >
+        Log out
+      </Button>}
     </div>
     <Outlet />
     <Footer />
