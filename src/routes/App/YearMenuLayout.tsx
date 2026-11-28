@@ -46,16 +46,14 @@ const YearMenuLayout = ({
         Log in
       </Button>}
 
-      {user != null && <NavLink to="/logout" className="grow-0 shrink-0">
-        <Button
-          style="cautionary"
-          small
-          icon={Logout}
-          className="whitespace-nowrap"
-        >
-          Log out
-        </Button>
-      </NavLink>}
+      {user != null && <Button
+        style="cautionary"
+        small
+        icon={Logout}
+        className="whitespace-nowrap"
+      >
+        Log out
+      </Button>}
     </div>
     <Outlet />
     <Footer />
