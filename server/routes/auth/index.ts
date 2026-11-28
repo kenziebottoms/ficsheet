@@ -20,24 +20,18 @@ const authRouter = express.Router({
  * POST /api/auth/login
  */
 authRouter.post("/login", (req, res) => {
-  passport.authenticate(
-    "local",
-    { failureMessage: true },
-    (err: ApiError, user: WithId<User>) => {
-      if (err) {
-        return res.status(err.status).json(err);
-      }
-      if (user == null) {
-        return res
-          .status(VAGUE_INVALID_LOGIN_RESPONSE.status)
-          .json(VAGUE_INVALID_LOGIN_RESPONSE);
-      }
-      return res.status(200).json({
-        id: user.id,
-        username: user.username,
-      });
-    },
-  )(req, res);
+  passport.authenticate("local", (err: ApiError, user: WithId<User>) => {
+    if (err) {
+      return res.status(err.status).json(err);
+    }
+    if (user == null) {
+      return res.status(401).json({ message: "Authentication failed" });
+    }
+    return res.status(200).json({
+      id: user.id,
+      username: user.username,
+    });
+  })(req, res);
 });
 
 /**
