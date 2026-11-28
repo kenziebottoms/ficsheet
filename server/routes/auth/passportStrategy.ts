@@ -25,36 +25,38 @@ export const VAGUE_INVALID_LOGIN_RESPONSE: ApiError = {
  * user is authenticated; otherwise, not.
  */
 passport.use(
-  new LocalStrategy(
-    (username: string, password: string, callback: PassportCallback) => {
-      if (!username || !password) {
-        return callback({
-          status: 400,
-          message: "Please provide a username and a password.",
+  new LocalStrategy(function verify(
+    username: string,
+    password: string,
+    callback: PassportCallback,
+  ) {
+    if (!username || !password) {
+      return callback({
+        status: 400,
+        message: "Please provide a username and a password.",
+      });
+    }
+    const user = selectUserByUsername(username);
+    if (!user) {
+      console.log(`No such user '${username}'`);
+      return callback(VAGUE_INVALID_LOGIN_RESPONSE);
+    }
+
+    console.log(`Verifying password for user '${username}'`);
+    verifyPassword(password, user)
+      .then((passwordIsValid) => {
+        if (!passwordIsValid) {
+          console.log(`Invalid password for user '${username}'`);
+          return callback(VAGUE_INVALID_LOGIN_RESPONSE);
+        }
+
+        return callback(null, {
+          id: user.id,
+          username: user.username,
         });
-      }
-      const user = selectUserByUsername(username);
-      if (!user) {
-        console.log(`No such user '${username}'`);
-        return callback(VAGUE_INVALID_LOGIN_RESPONSE);
-      }
-
-      console.log(`Verifying password for user '${username}'`);
-      verifyPassword(password, user)
-        .then((passwordIsValid) => {
-          if (!passwordIsValid) {
-            console.log(`Invalid password for user '${username}'`);
-            return callback(VAGUE_INVALID_LOGIN_RESPONSE);
-          }
-
-          return callback(null, {
-            id: user.id,
-            username: user.username,
-          });
-        })
-        .catch(callback);
-    },
-  ),
+      })
+      .catch(callback);
+  }),
 );
 
 /* Configure session management.
