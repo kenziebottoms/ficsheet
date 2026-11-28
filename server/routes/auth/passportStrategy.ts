@@ -1,12 +1,17 @@
 import { type WithId, type User } from "../../../src/types.ts";
 
 import { selectUserByUsername } from "../../db/queries.ts";
-import { type PassportCallback } from "../../types.ts";
+import type { ApiError, PassportCallback } from "../../types.ts";
 
 import { verifyPassword } from "./password.ts";
 
 var passport = require("passport");
 var LocalStrategy = require("passport-local");
+
+export const VAGUE_INVALID_LOGIN_RESPONSE: ApiError = {
+  status: 401,
+  message: "Incorrect username or password.",
+};
 
 /* Configure password authentication strategy.
  *
@@ -22,33 +27,32 @@ var LocalStrategy = require("passport-local");
 passport.use(
   new LocalStrategy(
     (username: string, password: string, callback: PassportCallback) => {
-      if (!username) {
-        return callback(null, false, {
-          message: "Please provide a username.",
-        });
-      }
-      if (!password) {
-        return callback(null, false, {
-          message: "Please provide a password.",
+      if (!username || !password) {
+        return callback({
+          status: 400,
+          message: "Please provide a username and a password.",
         });
       }
       const user = selectUserByUsername(username);
       if (!user) {
-        return callback(null, false, {
-          message: "Incorrect username or password.",
-        });
+        console.log(`No such user '${username}'`);
+        return callback(VAGUE_INVALID_LOGIN_RESPONSE);
       }
 
+      console.log(`Verifying password for user '${username}'`);
       verifyPassword(password, user)
-        .catch(callback)
         .then((passwordIsValid) => {
-          if (passwordIsValid) {
-            return callback(null, user);
+          if (!passwordIsValid) {
+            console.log(`Invalid password for user '${username}'`);
+            return callback(VAGUE_INVALID_LOGIN_RESPONSE);
           }
-          return callback(null, false, {
-            message: "Incorrect username or password.",
+
+          return callback(null, {
+            id: user.id,
+            username: user.username,
           });
-        });
+        })
+        .catch(callback);
     },
   ),
 );
@@ -63,10 +67,6 @@ passport.use(
  * by verifying the session.  The same user information that was serialized at
  * session establishment will be restored when the session is authenticated by
  * the `deserializeUser` function.
- *
- * Since every request to the app needs the user ID and username, in order to
- * fetch todo records and render the user element in the navigation bar, that
- * information is stored in the session.
  */
 passport.serializeUser(function (
   user: WithId<User>,

@@ -29,7 +29,8 @@ export async function get<TReturnType>(
     ...options,
   });
   if (!response.ok) {
-    throw new Error(`Response status: ${response.status}`);
+    const { message } = await response.json();
+    throw new Error(message);
   }
 
   const result = await response.json();

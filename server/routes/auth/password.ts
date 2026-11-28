@@ -1,6 +1,8 @@
 import * as crypto from "crypto";
-import { type Password } from "../../types.ts";
-import { type User } from "../../../src/types.ts";
+
+import type { Password, UserWithPassword } from "../../types.ts";
+
+import { VAGUE_INVALID_LOGIN_RESPONSE } from "./passportStrategy.ts";
 
 const PASSWORD_LENGTH = 256;
 const SALT_LENGTH = 64;
@@ -12,7 +14,8 @@ export const hashPassword = (password: string): Promise<Password> =>
   new Promise((resolve, reject) => {
     if (!password) {
       return reject({
-        cause: "Please provide a non-empty password.",
+        status: 400,
+        message: "Please provide a non-empty password.",
       });
     }
     var salt = crypto.randomBytes(SALT_LENGTH).toString(ENCODING);
@@ -37,41 +40,31 @@ export const hashPassword = (password: string): Promise<Password> =>
 
 export function verifyPassword(
   passwordAttempt: string,
-  user: User,
+  user: UserWithPassword,
 ): Promise<boolean> {
-  return new Promise<boolean>((resolve, reject) => {
-    if (!user.salt) {
-      return reject({
-        cause: "Please provide a valid salt.",
-      });
-    } else if (!user.hashedPassword) {
-      return reject({
-        cause: "The user does not have a valid hashed password.",
-      });
-    } else {
-      crypto.pbkdf2(
-        passwordAttempt,
-        user.salt,
-        ITERATIONS,
-        PASSWORD_LENGTH,
-        DIGEST,
-        (error, hash) => {
-          if (error) {
-            return reject(error);
-          } else if (
-            !crypto.timingSafeEqual(
-              Buffer.from(user.hashedPassword as string, ENCODING),
-              hash,
-            )
-          ) {
-            return reject({
-              cause: "Incorrect username or password.",
-            });
-          }
+  return new Promise<boolean>((resolve, reject) =>
+    crypto.pbkdf2(
+      passwordAttempt,
+      user.salt,
+      ITERATIONS,
+      PASSWORD_LENGTH,
+      DIGEST,
+      (error, hash) => {
+        if (error) {
+          return reject(error);
+        }
+        if (
+          !crypto.timingSafeEqual(
+            Buffer.from(user.hashedPassword, ENCODING),
+            hash,
+          )
+        ) {
+          console.log("hash not timing safe equal");
+          return reject(VAGUE_INVALID_LOGIN_RESPONSE);
+        }
 
-          resolve(user.hashedPassword === hash.toString(ENCODING));
-        },
-      );
-    }
-  });
+        return resolve(user.hashedPassword === hash.toString(ENCODING));
+      },
+    ),
+  );
 }

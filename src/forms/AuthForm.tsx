@@ -1,20 +1,23 @@
-import { useState, type SubmitEventHandler } from "react";
+import { use, useState, type SubmitEventHandler } from "react";
 import { Login, PersonAdd } from "@mui/icons-material";
 
 import Button from "@/components/Button";
 import Input from "@/components/Input";
+
+import { AuthContext } from "@/contexts/Auth/AuthContext";
+
+import type { User, WithId } from "@/types";
 
 import { submitLogInForm, submitSignUpForm } from './api'
 
 const AuthForm = ({
   signUp: _signUp = false,
   className = '',
-  onCompleted = () => { }
 }: {
   signUp?: boolean;
   className?: string;
-  onCompleted?: () => void;
 }) => {
+  const { setUser } = use(AuthContext)
   const [signUp, setSignUp] = useState(_signUp)
   const [error, setError] = useState<string | null>(null)
 
@@ -30,19 +33,24 @@ const AuthForm = ({
       return setError("Passwords do not match.")
     }
 
+    let userTransaction: () => Promise<WithId<User>>;
+
     if (formData.email) {
-      return submitSignUpForm({
+      userTransaction = () => submitSignUpForm({
         username: formData.username,
         email: formData.email,
         password: formData.password,
-      }).then(onCompleted)
+      })
     } else {
-
-      return submitLogInForm({
+      userTransaction = () => submitLogInForm({
         username: formData.username,
         password: formData.password
-      }).then(onCompleted)
+      })
     }
+
+    userTransaction()
+      .then(setUser)
+      .catch(err => setError(err.message))
   }
 
   return <form onSubmit={handleSubmit} className={`${className} flex flex-col gap-4 rounded-md p-3`}>
@@ -60,21 +68,25 @@ const AuthForm = ({
       name="email"
       type="email"
       label="Email"
+      required
     />}
     <Input
       name="username"
       type="text"
       label="Username"
+      required
     />
     <Input
       name="password"
       type="password"
       label="Password"
+      required
     />
     {signUp && <Input
       name="confirmPassword"
       type="password"
       label="Confirm Password"
+      required
     />}
 
     {error !== null && <div className="text-secondary">{error}</div>}

@@ -21,7 +21,6 @@ const WelcomeModal = ({
     {activeFormType != null && <AuthForm
       className='bg-zinc-800'
       signUp={activeFormType === 'signup'}
-      onCompleted={() => setActiveFormType(null)}
     />}
     {activeFormType == null && <>
       <div className="text-lg text-center mb-2">Are you new here?</div>

@@ -1,11 +1,12 @@
 import express, { type Request } from "express";
 
-import passport from "./passportStrategy.ts";
+import passport, { VAGUE_INVALID_LOGIN_RESPONSE } from "./passportStrategy.ts";
 import { hashPassword } from "./password.ts";
 
 import { insertUser } from "../../db/queries.ts";
-import type { PassportSession } from "../../types.ts";
+import type { ApiError } from "../../types.ts";
 
+import type { User, WithId } from "../../../src/types.ts";
 import type { SignUpFormValues } from "../../../src/forms/types.js";
 
 const authRouter = express.Router({
@@ -18,12 +19,25 @@ const authRouter = express.Router({
 /**
  * POST /api/auth/login
  */
-authRouter.post("/login", passport.authenticate("local"), (req, res) => {
-  const session = req.session as PassportSession;
-  if (session.passport == null) {
-    return res.status(401).send("Unauthenticated");
-  }
-  return res.status(200).json(session.passport.user);
+authRouter.post("/login", (req, res) => {
+  passport.authenticate(
+    "local",
+    { failureMessage: true },
+    (err: ApiError, user: WithId<User>) => {
+      if (err) {
+        return res.status(err.status).json(err);
+      }
+      if (user == null) {
+        return res
+          .status(VAGUE_INVALID_LOGIN_RESPONSE.status)
+          .json(VAGUE_INVALID_LOGIN_RESPONSE);
+      }
+      return res.status(200).json({
+        id: user.id,
+        username: user.username,
+      });
+    },
+  )(req, res);
 });
 
 /**
@@ -45,11 +59,7 @@ authRouter.post("/signup", function (req, res) {
         username: user.username,
       });
     })
-    .catch((err) => {
-      return res.status(400).json({
-        message: err.message,
-      });
-    });
+    .catch((err: ApiError) => res.status(err.status).json(err));
 });
 
 export default authRouter;

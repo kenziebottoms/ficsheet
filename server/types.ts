@@ -18,9 +18,8 @@ export type Password = {
 };
 
 export type PassportCallback = (
-  error: unknown | null,
+  error: ApiError | null,
   user?: WithId<Pick<User, "username">> | false,
-  context?: { message: string } | null,
 ) => void;
 export type PassportSession = Session & {
   passport: {
