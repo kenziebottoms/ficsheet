@@ -10,12 +10,8 @@ import type { ApiError } from "../../types.ts";
 import type { User, WithId } from "../../../src/types.ts";
 import type { SignUpFormValues } from "../../../src/forms/types.js";
 
-const authRouter = express.Router({
-  // pass nested route params to children
-  mergeParams: true,
-});
-
 /** Root URL: /api/auth */
+const authRouter = express.Router();
 
 /**
  * POST /api/auth/login

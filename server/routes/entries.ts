@@ -19,12 +19,8 @@ import {
 import { seedTables } from "../db/setup.ts";
 import { type ApiError, type RequestWithId } from "../types.ts";
 
-const entriesRouter = express.Router({
-  // pass nested route params to children
-  mergeParams: true,
-});
-
 /** Root URL: /api/entries/:id */
+const entriesRouter = express.Router();
 
 /**
  * POST /api/entries

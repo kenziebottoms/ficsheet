@@ -12,12 +12,8 @@ import { type RequestWithId } from "../types.ts";
 
 import { validateId } from "./entries.ts";
 
-const goalsRouter = express.Router({
-  // pass nested route params to children
-  mergeParams: true,
-});
-
 /** Root URL: /api/goals */
+const goalsRouter = express.Router();
 
 /**
  * GET /api/goals
