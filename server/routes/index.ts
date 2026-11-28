@@ -27,7 +27,7 @@ const apiRouter = express.Router({
 
 apiRouter.use("/auth", authRouter);
 
-apiRouter.use(passport.authenticate("session"));
+// TODO: require authentication
 
 apiRouter.use("/entries", entriesRouter);
 

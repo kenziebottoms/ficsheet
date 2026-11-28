@@ -27,23 +27,12 @@ authRouter.post("/login", (req, res) => {
     if (user == null) {
       return res.status(401).json({ message: "Authentication failed" });
     }
+    console.log(`user ${user.username} logged in`);
     return res.status(200).json({
       id: user.id,
       username: user.username,
     });
   })(req, res);
-});
-
-/**
- * POST /api/auth/logout
- */
-authRouter.post("/logout", (req, res, next) => {
-  req.logout(function (err) {
-    if (err) {
-      return next(err);
-    }
-    return res.sendStatus(200);
-  });
 });
 
 /**
@@ -66,6 +55,34 @@ authRouter.post("/signup", function (req, res) {
       });
     })
     .catch((err: ApiError) => res.status(err.status).json(err));
+});
+
+// TODO: require authentication
+authRouter.use("/", (req, res, next) => {
+  console.log("req.user", req.user);
+  return next();
+});
+
+/**
+ * GET /api/auth/me
+ */
+authRouter.get("/me", (req, res) => {
+  if (req.user == null) {
+    return res.status(401).json({ message: "Unauthenticated" });
+  }
+  return res.status(200).json(req.user);
+});
+
+/**
+ * POST /api/auth/logout
+ */
+authRouter.post("/logout", (req, res, next) => {
+  req.logout(function (err) {
+    if (err) {
+      return next(err);
+    }
+    return res.sendStatus(200);
+  });
 });
 
 export default authRouter;

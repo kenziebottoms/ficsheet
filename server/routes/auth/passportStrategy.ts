@@ -1,5 +1,3 @@
-import { type WithId, type User } from "../../../src/types.ts";
-
 import { selectUserByUsername } from "../../db/queries.ts";
 import type { ApiError, PassportCallback } from "../../types.ts";
 
@@ -58,34 +56,5 @@ passport.use(
       .catch(callback);
   }),
 );
-
-/* Configure session management.
- *
- * When a login session is established, information about the user will be
- * stored in the session.  This information is supplied by the `serializeUser`
- * function, which is yielding the user ID and username.
- *
- * As the user interacts with the app, subsequent requests will be authenticated
- * by verifying the session.  The same user information that was serialized at
- * session establishment will be restored when the session is authenticated by
- * the `deserializeUser` function.
- */
-passport.serializeUser(function (
-  user: WithId<User>,
-  callback: PassportCallback,
-) {
-  process.nextTick(function () {
-    callback(null, { id: user.id, username: user.username });
-  });
-});
-
-passport.deserializeUser(function (
-  user: WithId<User>,
-  callback: PassportCallback,
-) {
-  process.nextTick(function () {
-    return callback(null, user);
-  });
-});
 
 export default passport;
