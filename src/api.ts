@@ -116,3 +116,5 @@ export const selectAvailableYears = () => get<number[]>("years");
 
 export const submitEntryForm = (formData: EntryFormValues) =>
   post<EntryFormValues, WithId<WordCountEntry>>(`entries/form`, formData);
+
+export const logOut = () => post<never, boolean>(`auth/logout`);

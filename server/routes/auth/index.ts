@@ -1,6 +1,6 @@
 import express, { type Request } from "express";
 
-import passport, { VAGUE_INVALID_LOGIN_RESPONSE } from "./passportStrategy.ts";
+import passport from "./passportStrategy.ts";
 import { hashPassword } from "./password.ts";
 
 import { insertUser } from "../../db/queries.ts";
@@ -32,6 +32,18 @@ authRouter.post("/login", (req, res) => {
       username: user.username,
     });
   })(req, res);
+});
+
+/**
+ * POST /api/auth/logout
+ */
+authRouter.post("/logout", (req, res, next) => {
+  req.logout(function (err) {
+    if (err) {
+      return next(err);
+    }
+    return res.sendStatus(200);
+  });
 });
 
 /**
