@@ -8,7 +8,6 @@ import apiRouter from "./routes/index.ts";
 
 const app = express();
 const PORT = 2000;
-export const COOKIE_KEY = "keyboard cat";
 
 app.use(cookieParser("JWT_SECRET"));
 app.use(
