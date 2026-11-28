@@ -3,10 +3,11 @@ import { Route, Routes } from 'react-router';
 
 import { selectAvailableYears } from '@/api'
 
+import Redirect from '@/components/Redirect';
+
 import AllTime from './AllTime';
 import Charts from './Charts';
 import YearMenuLayout from './YearMenuLayout';
-import Redirect from '@/components/Redirect';
 
 function App() {
   const [availableYears, setAvailableYears] = useState([new Date().getFullYear()])
